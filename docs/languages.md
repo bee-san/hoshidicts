@@ -1253,7 +1253,8 @@ as Yomitan's translator does (`_getDeinflections` and
    passes (11.4) are followed after the passes, before the terms only
    frequency and pitch dictionaries have (`LookupOptions::metadata_only_terms`).
    Both count the references' terms as ordinary matches: a pass reads only
-   prefixes longer than every one of them.
+   prefixes longer than every one of them, and the frequency and pitch rows of
+   a term a reference reached are that term's, not a term of their own.
 5. A row that is only references, wherever it is found, is never a term; a
    term left without rows is dropped. A row that also has other definitions
    keeps them, and its glossary is returned without the references
@@ -1585,9 +1586,15 @@ alphanumerics; kanji variants; iteration marks; kanji numbers; middle dots.
 Today's code is kept, unmodified apart from being placed in
 `namespace hoshidicts_legacy`, as a reference in `tests/reference/`:
 `legacy_deinflector.cpp`, `legacy_text_processor.cpp` (with the kanji-variant
-table), `legacy_query.cpp` and `legacy_lookup.cpp` (the `Lookup` of 35e2dab),
-with copies of the internal headers they use (`query_internal.hpp`,
-`text_processor.hpp`, `query.hpp`, `lookup.hpp`, `deinflector.hpp`).
+table), `legacy_query.cpp` and `legacy_lookup.cpp` (the `Lookup` of 35e2dab,
+with `a95758b` below), with copies of the internal headers they use
+(`query_internal.hpp`, `text_processor.hpp`, `query.hpp`, `lookup.hpp`,
+`deinflector.hpp`).
+One change to the Japanese pipeline has been made since, in `src/` and in the
+oracle alike: `a95758b` (bee-san/hachidori#658, the commit Hachidori pins)
+returns, with `metadata_only_terms`, every reading that only frequency and
+pitch rows have, after the terms with glossaries that match as far, not only
+the terms that match further than all of them.
 Forward declarations of types that shared code defines (`BlobPins`,
 `memory::page_cache`, zstd's `ZSTD_DDict_s`) stay outside the namespace. The
 oracle shares only code the framework pull request leaves unchanged:

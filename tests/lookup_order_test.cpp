@@ -370,8 +370,10 @@ int main() {
   // --- Terms only frequency and pitch dictionaries have
   // (LookupOptions::metadata_only_terms, off by default, bee-san/hachidori#620).
   // When on, a frequency or pitch row keyed by text that needs no deinflection
-  // is a term without glossaries, where it reads further than every term with
-  // glossaries. -----------------------------------------------------------------
+  // is a term without glossaries, unless a term with glossaries is that text
+  // with that reading. It comes after the terms with glossaries that read as
+  // far, so it is first only where it reads further than all of them
+  // (bee-san/hachidori#658). ----------------------------------------------------
   {
     const std::filesystem::path out4 = root / "out4";
     std::filesystem::create_directories(out4);
@@ -385,7 +387,11 @@ int main() {
           // Six terms read た that tie on every key.
           R"(["田","た","","",0,["rice field"],4,""],["他","た","","",0,["other"],5,""],)"
           R"(["多","た","","",0,["many"],6,""],["太","た","","",0,["fat"],7,""],)"
-          R"(["汰","た","","",0,["select"],8,""],["打","た","","",0,["hit"],9,""]])"}});
+          R"(["汰","た","","",0,["select"],8,""],["打","た","","",0,["hit"],9,""],)"
+          // A name without a reading, as JMnedict stores names (hachidori#658).
+          R"(["銃五","","","",0,["Jūgo, a surname"],10,""],)"
+          R"(["日本","にほん","","",0,["Japan"],11,""],["日本語","にほんご","","",0,["Japanese"],12,""],)"
+          R"(["日","ひ","","",0,["day"],13,""]])"}});
     // 重複語's two readings are listed against both their lexical order and
     // their ranks, so each order a test expects is the one it names.
     const std::string frequency = import_dict(
@@ -401,7 +407,14 @@ int main() {
           R"(["トウキョウ","freq",{"value":70000,"displayValue":"70000"}],)"
           R"(["たかだ","freq",{"value":147490,"displayValue":"147490"}],)"
           R"(["重複語","freq",{"reading":"ちょうふくご","frequency":{"value":60000,"displayValue":"60000"}}],)"
-          R"(["重複語","freq",{"reading":"じゅうふくご","frequency":{"value":40000,"displayValue":"40000"}}]])"},
+          R"(["重複語","freq",{"reading":"じゅうふくご","frequency":{"value":40000,"displayValue":"40000"}}],)"
+          // Readings no term dictionary gives these defined expressions, and a
+          // row without a reading, which every reading of 日本 shares.
+          R"(["銃五","freq",{"reading":"じゅうご","frequency":{"value":12000,"displayValue":"12000"}}],)"
+          R"(["日本","freq",{"reading":"にほん","frequency":{"value":200,"displayValue":"200"}}],)"
+          R"(["日本","freq",{"reading":"にっぽん","frequency":{"value":4000,"displayValue":"4000"}}],)"
+          R"(["日本","freq",{"value":300,"displayValue":"300"}],)"
+          R"(["日","freq",{"value":50,"displayValue":"50"}]])"},
          // A kanji frequency is not a term frequency.
          {"kanji_meta_bank_1.json", R"([["鰯","freq",{"value":2000,"displayValue":"2000"}]])"}});
     const std::string pitch = import_dict(
@@ -410,6 +423,7 @@ int main() {
          {"term_meta_bank_1.json",
           R"([["東京タワー","pitch",{"reading":"とうきょうタワー","pitches":[{"position":5}]}],)"
           R"(["重複語","pitch",{"reading":"じゅうふくご","pitches":[{"position":0}]}],)"
+          R"(["銃五","pitch",{"reading":"じゅうご","pitches":[{"position":1}]}],)"
           R"(["寿限無","ipa",{"reading":"じゅげむ","transcriptions":[{"ipa":"dʑɯɡemɯ"}]}]])"}});
     DictionaryQuery query;
     check(query.add_term_dict(defined), "add defined");
@@ -482,14 +496,84 @@ int main() {
               katakana[0].preprocessor_steps > 0,
           "ピエン, on: expected ぴえん* through a preprocessed variant, got " + join(terms(katakana)));
 
-    // On: text a defined term matches as far keeps exactly its ordinary results:
-    // こと is 事's reading, and トウキョウ reads as 東京 through its hiragana
-    // variant, though both have rows of their own.
-    for (const auto* text : {"こと", "トウキョウ", "食べた"}) {
+    // On: a row of text that a term with glossaries reads as far is a term too,
+    // after that term (hachidori#658). こと is 事's reading and トウキョウ reads
+    // as 東京 through its hiragana variant, but no term is written こと or
+    // トウキョウ, so their rows without a reading read as their text. 食べた's
+    // forms have no rows.
+    const std::vector<std::pair<std::string, std::vector<std::string>>> after_cases = {
+        {"こと", {"事/こと", "こと/こと*"}},
+        {"トウキョウ", {"東京/とうきょう", "トウキョウ/トウキョウ*"}},
+        {"食べた", {"食べる/たべる"}}};
+    for (const auto& [text, want] : after_cases) {
       const auto got = find(text, on);
-      const auto want = find(text, {});
-      check(same(got, want), std::string(text) + ": on " + join(got) + " differs from off " + join(want));
+      check(same(got, want), text + ", on: expected " + join(want) + ", got " + join(got));
     }
+
+    // On: a reading that no term with glossaries has for its text is a term of
+    // its own (hachidori#658). 銃五 is defined without a reading, as JMnedict
+    // stores names, so off its rows for じゅうご never show.
+    check(same(find("銃五", {}), {"銃五/銃五"}), "銃五, off: expected [銃五/銃五], got " + join(find("銃五", {})));
+    const auto jugo = lookup.lookup("銃五", 32, 16, on);
+    check(same(terms(jugo), {"銃五/銃五", "銃五/じゅうご*"}),
+          "銃五, on: expected [銃五/銃五, 銃五/じゅうご*], got " + join(terms(jugo)));
+    if (jugo.size() == 2) {
+      check(jugo[0].term.frequencies.empty() && jugo[0].term.pitches.empty(),
+            "銃五, on: expected the defined 銃五 to have no rows, since they name じゅうご");
+      const auto& term = jugo[1].term;
+      check(jugo[1].matched == "銃五" && jugo[1].deinflected == "銃五" && term.frequencies.size() == 1 &&
+                term.frequencies[0].dict_name == "meta-frequency" && term.frequencies[0].frequencies.size() == 1 &&
+                term.frequencies[0].frequencies[0].value == 12000 && term.pitches.size() == 1 &&
+                term.pitches[0].dict_name == "meta-pitch" && term.pitches[0].pitches.size() == 1 &&
+                term.pitches[0].pitches[0].position == 1,
+            "銃五, on: expected じゅうご with meta-frequency's 12000 and meta-pitch's [1]");
+    }
+    // Neither a frequency sort nor a cap puts it before a term with glossaries
+    // that reads as far; the primary reading still comes first.
+    LookupOptions ranked = on;
+    ranked.frequency_order = LookupFrequencyOrder::Ascending;
+    ranked.frequency_dictionary = "meta-frequency";
+    const auto jugo_ranked = find("銃五", ranked);
+    check(same(jugo_ranked, {"銃五/銃五", "銃五/じゅうご*"}),
+          "銃五, on, ascending: expected [銃五/銃五, 銃五/じゅうご*], got " + join(jugo_ranked));
+    const auto jugo_capped = terms(lookup.lookup("銃五", 1, 16, on));
+    check(same(jugo_capped, {"銃五/銃五"}), "銃五, on, max_results 1: expected [銃五/銃五], got " + join(jugo_capped));
+    LookupOptions primary = on;
+    primary.primary_reading = "じゅうご";
+    const auto jugo_primary = find("銃五", primary);
+    check(same(jugo_primary, {"銃五/じゅうご*", "銃五/銃五"}),
+          "銃五, on, primary じゅうご: expected [銃五/じゅうご*, 銃五/銃五], got " + join(jugo_primary));
+
+    // On: a shorter match counts too. Only a row reads 日本 as にっぽん, so on
+    // 日本語 it comes after the terms with glossaries that read 日本 and before
+    // the shorter 日. It has にっぽん's row and the row without a reading;
+    // 日本/にほん keeps its own and that one, which adds no 日本/日本. 日's only
+    // row has no reading and 日 is defined, so it is 日/ひ's and adds no 日/日.
+    const auto nihongo_off = find("日本語", {});
+    check(same(nihongo_off, {"日本語/にほんご", "日本/にほん", "日/ひ"}),
+          "日本語, off: expected [日本語/にほんご, 日本/にほん, 日/ひ], got " + join(nihongo_off));
+    const auto nihongo = lookup.lookup("日本語", 32, 16, on);
+    check(same(terms(nihongo), {"日本語/にほんご", "日本/にほん", "日本/にっぽん*", "日/ひ"}),
+          "日本語, on: expected [日本語/にほんご, 日本/にほん, 日本/にっぽん*, 日/ひ], got " + join(terms(nihongo)));
+    const auto values = [](const TermResult& term) {
+      std::vector<std::string> out;
+      for (const auto& entry : term.frequencies) {
+        for (const auto& frequency : entry.frequencies) out.push_back(entry.dict_name + ":" + frequency.display_value);
+      }
+      return out;
+    };
+    if (nihongo.size() == 4) {
+      check(same(values(nihongo[1].term), {"meta-frequency:200", "meta-frequency:300"}),
+            "日本/にほん, on: expected its own rows, got " + join(values(nihongo[1].term)));
+      check(same(values(nihongo[2].term), {"meta-frequency:4000", "meta-frequency:300"}),
+            "日本/にっぽん, on: expected にっぽん's row and the one without a reading, got " +
+                join(values(nihongo[2].term)));
+      check(same(values(nihongo[3].term), {"meta-frequency:50"}),
+            "日/ひ, on: expected the row without a reading, got " + join(values(nihongo[3].term)));
+    }
+    const auto nihongo_capped = terms(lookup.lookup("日本語", 2, 16, on));
+    check(same(nihongo_capped, {"日本語/にほんご", "日本/にほん"}),
+          "日本語, on, max_results 2: expected [日本語/にほんご, 日本/にほん], got " + join(nihongo_capped));
 
     // On: a row has no part of speech, so like a term without one it matches
     // only text that needs no deinflection (ググった is not read as ググる).

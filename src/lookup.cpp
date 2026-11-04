@@ -680,22 +680,28 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // of speech, so, whatever the pack's untaggedTerms, it answers only the
   // deinflections that need none: the text as it is written, after
   // preprocessing, and the few rules that carry none, such as kansai-ben -うたら
-  // for -ったら. It counts only for a prefix longer than every match with
-  // glossaries, cat speech included, so it can only add terms in front of them.
-  // Each reading the rows name is one term, with the rows for that reading.
+  // for -ったら. Each reading the rows name is one term, with the rows for that
+  // reading and those without one, unless a term with glossaries is that text
+  // with that reading: it has those rows already. Rows without a reading are a
+  // term of the text read as itself only when they name none and no term with
+  // glossaries is written that way, for the same reason. These terms are ranked
+  // after the terms with glossaries that read as far (the merge below).
   if (metadata_only) {
-    size_t defined_len = 0;
-    for (const auto& candidate : candidates) {
-      defined_len = std::max(defined_len, candidate.matched_len);
-    }
+    const auto has_glossaries = [](const Candidate& c) { return c.term->first_glossary != UINT32_MAX; };
+    const auto defined_as = [&](std::string_view text) {
+      return std::ranges::any_of(candidates,
+                                 [&](const Candidate& c) { return has_glossaries(c) && c.term->expression == text; });
+    };
     for (const auto& probe : metadata_probes) {
-      if (probe.length <= defined_len) {
-        continue;
-      }
       const std::string& text = *probe.form;
+      bool reading_less = false;
       // The terms view these strings, which stay where they are when the
       // store grows.
-      const auto& readings = metadata_reading_store.emplace_back(query_.metadata_readings(text, pins, selection));
+      auto& readings =
+          metadata_reading_store.emplace_back(query_.metadata_readings(text, pins, selection, reading_less));
+      if (readings.empty() && reading_less && !defined_as(text)) {
+        readings.emplace_back(text);
+      }
       for (size_t i = 0; i < readings.size(); ++i) {
         RawTerm term{.expression = text,
                      .reading = readings[i],
@@ -712,6 +718,12 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
           terms.normalized->merged_readings.push_back({term.reading});
         }
         terms.terms.push_back(std::move(term));
+        const RawTerm& entry = terms.terms.front();
+        const std::string_view key = reading_key(terms, entry);
+        const Candidate* existing = find_candidate(key_hash(entry.expression, key), entry, key);
+        if (existing != nullptr && has_glossaries(*existing)) {
+          continue;
+        }
         collect_metadata(terms);
         if (terms.terms.front().frequencies.empty() && terms.terms.front().pitches.empty()) {
           continue;
@@ -902,8 +914,25 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   if (!metadata.empty()) {
     std::ranges::sort(metadata, by_key);
     std::ranges::stable_sort(metadata, by_rank);
+    // A metadata-only term goes after the terms with glossaries that read as
+    // far and before those that read less, so it moves none of them: it comes
+    // first only where it reads further than all of them, or has the primary
+    // reading they lack. Both lists are sorted by `less`, whose first keys
+    // these are, and a merge keeps the first list's terms first on a tie.
+    const auto by_length = [&](uint32_t ia, uint32_t ib) {
+      const Candidate& a = candidates[ia];
+      const Candidate& b = candidates[ib];
+      if (!primary_reading.empty()) {
+        const bool primary_a = matches_primary_reading(a);
+        const bool primary_b = matches_primary_reading(b);
+        if (primary_a != primary_b) {
+          return primary_a;
+        }
+      }
+      return a.matched_len > b.matched_len;
+    };
     merged.reserve(metadata.size() + kept.size());
-    std::ranges::merge(metadata, kept, std::back_inserter(merged), by_rank);
+    std::ranges::merge(kept, metadata, std::back_inserter(merged), by_length);
     merged.resize(std::min(merged.size(), retained_count));
     kept = merged;
   }

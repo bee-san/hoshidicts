@@ -242,7 +242,7 @@ endif()
 if(HOSHIDICTS_TESTS)
     enable_testing()
 
-    # The oracle: the Japanese pipeline at 35e2dab in namespace hoshidicts_legacy
+    # The oracle: the Japanese pipeline at 35e2dab, with a95758b, in namespace hoshidicts_legacy
     # (docs/languages.md 11.3, tests/reference/README.md). Linked only into tests.
     add_library(hoshidicts-legacy STATIC
         tests/reference/legacy_deinflector.cpp

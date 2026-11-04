@@ -284,13 +284,13 @@ class DictionaryQuery {
                            std::vector<FrequencyEntry>& out, BlobPins& pins, const Selection& selection) const;
   void collect_pitches(std::string_view expression, std::span<const std::string_view> readings,
                        std::vector<PitchEntry>& out, BlobPins& pins, const Selection& selection) const;
-  // The readings of the frequency and pitch rows keyed by `expression`, for a
-  // term only those dictionaries have (LookupOptions::metadata_only_terms):
-  // each reading a row names, once, in the order the frequency dictionaries and
-  // then the pitch dictionaries list them; `expression` itself when only rows
-  // without a reading have it; none when no row has it.
-  std::vector<std::string> metadata_readings(std::string_view expression, BlobPins& pins,
-                                             const Selection& selection) const;
+  // The readings the frequency and pitch rows keyed by `expression` name, for
+  // terms only those dictionaries have (LookupOptions::metadata_only_terms):
+  // each once, in the order the frequency dictionaries and then the pitch
+  // dictionaries list them. Sets `reading_less` when a row without a reading
+  // has `expression` too.
+  std::vector<std::string> metadata_readings(std::string_view expression, BlobPins& pins, const Selection& selection,
+                                             bool& reading_less) const;
   size_t long_key_length(std::string_view text, const Selection& selection) const;
   KanjiResult query_kanji(const std::string& kanji, const Selection& selection) const;
   void materialize(TermResult& term) const;

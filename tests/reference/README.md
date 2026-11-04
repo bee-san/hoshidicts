@@ -1,10 +1,11 @@
-# The oracle: hoshidicts at 35e2dab
+# The oracle: hoshidicts at 35e2dab, with a95758b
 
 These files are today's Japanese pipeline at
-[35e2dab](https://github.com/bee-san/hoshidicts/commit/35e2dab), kept as a
-reference for the language framework (`docs/languages.md`, section 11.3). The
-parity tests (`ja-deinflect-parity`, `ja-process-parity`, `ja-lookup-parity`)
-compare the new engine with them and require identical output.
+[35e2dab](https://github.com/bee-san/hoshidicts/commit/35e2dab), with the one
+change below applied, kept as a reference for the language framework
+(`docs/languages.md`, section 11.3). The parity tests (`ja-deinflect-parity`,
+`ja-process-parity`, `ja-lookup-parity`) compare the new engine with them and
+require identical output.
 
 | File | Copied from |
 | --- | --- |
@@ -31,4 +32,11 @@ builds it as the static library `hoshidicts-legacy` with `HOSHIDICTS_TESTS`,
 and links it only into tests and `tools/export-legacy-japanese.cpp`.
 
 Never edit these files to follow a change in `src/`: they are what the new
-code is measured against.
+code is measured against. The exception is a change to the Japanese pipeline
+itself, made in `src/` and here alike. There is one:
+[`a95758b`](https://github.com/bee-san/hoshidicts/commit/a95758b79c1fa7107f83abd6baafa97a8ef8bc80)
+(bee-san/hachidori#658), which Hachidori pins, applied unchanged to
+`legacy_lookup.cpp`, `legacy_query.cpp`, `query.hpp` and `lookup.hpp`. With
+`metadata_only_terms` it returns every reading that only frequency and pitch
+rows have, after the terms with glossaries that match as far, not only the
+terms that match further than all of them.

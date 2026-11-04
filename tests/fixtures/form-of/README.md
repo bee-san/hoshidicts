@@ -26,7 +26,7 @@ character resolution.
 | `gone` → go | A reference to a missing lemma: nothing |
 | `went` → wend → wander | One hop |
 | `book` (a lemma row and → bake) | A reference is followed only where its row passes the part-of-speech filter (`booked`), or its dictionary is in `pos_filter_exempt` |
-| `strode` → stride | The lemma is only in `lemmas`: a selection without it finds nothing |
+| `strode` → stride | The lemma is only in `lemmas`: a selection without it finds nothing; with `metadata_only_terms`, strode's own frequency row (5) is a term after stride |
 | `caféd` | A reference with JSON escapes |
 | `oddity` | Arrays that name no term: an ordinary row |
 | `puedo` → poder, with `podar` and `poder` | Dictionary-confirmed: poder before podar on a tie (9.6) |

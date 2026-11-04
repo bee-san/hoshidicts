@@ -520,12 +520,17 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
     LookupOptions only_lemmas;
     only_lemmas.dictionaries = std::vector<std::string>{d.lemmas};
     check(run("strode", "fo", only_lemmas).empty(), "a selection without the row's dictionary");
-    // With metadata-only terms on, the followed lemma covers strode, so its
-    // frequency row adds no term.
+    // With metadata-only terms on, the followed lemma keeps its own frequency
+    // row, and strode's row is a term of its own after it: the row that names
+    // strode is only a reference, so no term with glossaries is written strode
+    // (bee-san/hachidori#658).
     LookupOptions metadata;
     metadata.metadata_only_terms = true;
-    check(brief(run("strode", "fo", metadata)) == "stride(strode;stride;past*)",
-          "the followed lemma is a match with glossaries: " + brief(run("strode", "fo", metadata)));
+    const auto with_metadata = run("strode", "fo", metadata);
+    check(brief(with_metadata) == "stride(strode;stride;past*) strode(strode;strode;)" &&
+              frequencies(with_metadata[0].term) == "forms:7" && with_metadata[1].term.glossaries.empty() &&
+              frequencies(with_metadata[1].term) == "forms:5",
+          "the followed lemma is a match with glossaries, and strode's row comes after it: " + brief(with_metadata));
   }
   // lookup_dictionary follows references within its dictionary.
   {
