@@ -26,9 +26,12 @@
 // transforms that make its deinflection, `kept` or `left out`.
 //
 // It also rewrites tests/yomitan.tsv (Yomitan's test, as
-// tools/port-yomitan-tests.mjs writes it): the reasons column becomes `*`
-// (the final rules reach most lemmas through own transforms, whose ids are not
-// Yomitan's), and a row whose only rule is left out becomes a negative.
+// tools/port-yomitan-tests.mjs writes it, or as this script last wrote it):
+// the reasons column becomes `*` (the final rules reach most lemmas through
+// own transforms, whose ids are not Yomitan's), and a row is a negative when
+// every Yomitan rule that makes its deinflection is left out with
+// `rows: 'negative'`. A left-out rule whose rows another rule of the final set
+// still reads (`rows: 'positive'`) leaves them as they are.
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
@@ -70,11 +73,13 @@ const CATEGORY = {
   'nominalization': /^$/,
 };
 
-// Yomitan rules removed for measured harm (README.md, "Rule provenance").
+// Yomitan rules removed for measured harm (README.md, "Rule provenance"). `rows` says what their rows of
+// tests/yomitan.tsv become: negatives, or positives that another rule of the final set reads.
 const LEFT_OUT = {
-  'nominalization ος→εω': 'a derivation: reads -ος nouns and adjectives as -έω verbs (φίλος → φιλέω, καλός → καλέω, οἶκος → οἰκέω)',
-  'dative singular ω→ον': 'recovers no corpus row and adds a false candidate; in real text it makes 5 first results wrong (ἴτω → ἴτον) and 1 right',
-  'dative singular ω→ος': 'recovers no corpus row; in real text it makes 1 first result wrong (μάθω → μάθος) and none right',
+  'nominalization ος→εω': {reason: 'a derivation: reads -ος nouns and adjectives as -έω verbs (φίλος → φιλέω, καλός → καλέω, οἶκος → οἰκέω)', rows: 'negative'},
+  'dative singular ω→ον': {reason: 'recovers no row of any test file; in real text it makes 15 first results wrong (μόρῳ → μόρον, ἴτω → ἴτον, κεφαλαίῳ → κεφάλαιον) and 1 right (μαντηίῳ → μαντεῖον); its row of tests/yomitan.tsv is the own dual', rows: 'positive'},
+  'dative singular ω→ος': {reason: 'recovers no row of any test file; in real text it makes 1 first result wrong (μάθω → μάθος), changes 1 wrong one (σθένω) and makes none right; its row of tests/yomitan.tsv is the own dual', rows: 'positive'},
+  'dative singular α→ας': {reason: 'recovers no row of any test file and adds a false candidate on tests/cases.tsv; its row of tests/yomitan.tsv is the own vocative', rows: 'positive'},
 };
 // Yomitan rules kept although an own rule makes the same deinflection, for a measured gain: the own rule's stem
 // minimum leaves out a one-letter stem (ᾦων → ᾦον).
@@ -127,7 +132,7 @@ for (const t of yomitan.transforms) {
       }
     } else if (LEFT_OUT[name]) {
       fate = 'left out';
-      leftOut.push({transform: t.id, rule: y, reason: LEFT_OUT[name]});
+      leftOut.push({transform: t.id, rule: y, ...LEFT_OUT[name]});
     } else {
       fate = 'kept';
       if (!kept.has(t.id)) kept.set(t.id, {...t, rules: []});
@@ -184,9 +189,12 @@ const testFile = join(here, '..', 'tests', 'yomitan.tsv');
 const NOTE = [
   '# Converted by tools/port-yomitan-tests.mjs; sources/build-final.mjs then sets the reasons column to * (any trace): the final rules reach',
   '# these lemmas through this pack\'s own transforms, whose ids are not Yomitan\'s. A row whose rule the final set leaves out is a negative',
-  `# (valid 0): ${leftOut.map((x) => `${x.transform} ${x.rule.inflected} → ${x.rule.deinflected}`).join(', ') || 'none'} (README.md, "Rule provenance").`,
+  `# (valid 0): ${leftOut.filter((x) => x.rows === 'negative').map((x) => `${x.transform} ${x.rule.inflected} → ${x.rule.deinflected}`).join(', ') || 'none'} (README.md, "Rule provenance").`,
 ];
-const leftOutIds = new Set(leftOut.map((x) => x.transform));
+/** The Yomitan rules that make a row's deinflection, in the transform its reasons name (any transform for *). */
+const rulesOf = (source, term, reasons) => yomitan.transforms.filter((t) => reasons === '*' || reasons === t.id)
+  .flatMap((t) => t.rules.filter((y) => source.endsWith(y.inflected) && source.slice(0, source.length - y.inflected.length) + y.deinflected === term)
+    .map((y) => `${t.id} ${y.inflected}→${y.deinflected}`));
 const test = readFileSync(testFile, 'utf8').split('\n').filter((line) => !line.startsWith('# Converted by tools/port-yomitan-tests.mjs') &&
   !line.startsWith('# these lemmas through') && !line.startsWith('# (valid 0)'));
 let negatives = 0;
@@ -194,8 +202,8 @@ writeFileSync(testFile, test.flatMap((line) => {
   if (line.startsWith('# category')) return [...NOTE, line];
   if (line === '' || line.startsWith('#')) return [line];
   const cells = line.split('\t');
-  const reasons = cells[5].split('|');
-  if (reasons.length === 1 && leftOutIds.has(reasons[0])) {
+  const made = rulesOf(cells[2], cells[3], cells[5]);
+  if (made.length > 0 && made.every((name) => LEFT_OUT[name]?.rows === 'negative')) {
     cells[1] = '0';
     ++negatives;
   }

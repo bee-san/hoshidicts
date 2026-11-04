@@ -231,31 +231,23 @@
     "lookup.preprocessors[8].variants[0][1].strip": [
       [768, 879]
     ],
-    "transforms[6].rules[14].then[1].strip": [
+    "transforms[0].rules[0].stemCharacters": [],
+    "transforms[0].rules[1].stemCharacters": [],
+    "transforms[0].rules[2].stemCharacters": [],
+    "transforms[0].rules[3].stemCharacters": [],
+    "transforms[7].rules[14].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[16].rules[0].then[1].strip": [
+    "transforms[17].rules[0].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[17].rules[1].then[1].strip": [
+    "transforms[18].rules[1].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[19].rules[3].then[1].strip": [
-      [768, 769],
-      [834, 834]
-    ],
-    "transforms[20].rules[4].then[1].strip": [
-      [768, 769],
-      [834, 834]
-    ],
-    "transforms[20].rules[6].then[1].strip": [
-      [768, 769],
-      [834, 834]
-    ],
-    "transforms[20].rules[8].then[1].strip": [
+    "transforms[20].rules[3].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
@@ -263,107 +255,107 @@
       [768, 769],
       [834, 834]
     ],
-    "transforms[21].rules[7].then[1].strip": [
+    "transforms[21].rules[6].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[21].rules[9].then[1].strip": [
+    "transforms[21].rules[8].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[24].rules[4].then[1].strip": [
+    "transforms[22].rules[4].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[24].rules[7].then[1].strip": [
+    "transforms[22].rules[7].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[24].rules[10].then[1].strip": [
+    "transforms[22].rules[9].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[26].rules[1].then[1].strip": [
+    "transforms[25].rules[4].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[26].rules[4].then[1].strip": [
+    "transforms[25].rules[7].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[26].rules[7].then[1].strip": [
+    "transforms[25].rules[10].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[44].rules[1].then[1].strip": [
+    "transforms[27].rules[1].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[44].rules[3].then[1].strip": [
+    "transforms[27].rules[4].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[44].rules[4].then[1].strip": [
+    "transforms[27].rules[7].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[50].rules[2].then[1].strip": [
+    "transforms[45].rules[1].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[50].rules[5].then[1].strip": [
+    "transforms[45].rules[3].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[51].rules[4].then[1].strip": [
+    "transforms[45].rules[4].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[51].rules[7].then[1].strip": [
+    "transforms[51].rules[2].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[52].rules[6].then[1].strip": [
+    "transforms[51].rules[5].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[52].rules[8].then[1].strip": [
+    "transforms[52].rules[4].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[52].rules[10].then[1].strip": [
+    "transforms[52].rules[7].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[52].rules[12].then[1].strip": [
+    "transforms[53].rules[6].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[53].rules[5].then[1].strip": [
+    "transforms[53].rules[8].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[53].rules[7].then[1].strip": [
+    "transforms[53].rules[10].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[53].rules[9].then[1].strip": [
+    "transforms[53].rules[12].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[53].rules[11].then[1].strip": [
+    "transforms[54].rules[5].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[55].rules[5].then[1].strip": [
+    "transforms[54].rules[7].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[55].rules[7].then[1].strip": [
+    "transforms[54].rules[9].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[55].rules[9].then[1].strip": [
+    "transforms[54].rules[11].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
@@ -375,55 +367,59 @@
       [768, 769],
       [834, 834]
     ],
-    "transforms[57].rules[2].then[1].strip": [
+    "transforms[56].rules[9].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[75].rules[2].then[1].strip": [
+    "transforms[57].rules[5].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[80].rules[4].then[1].strip": [
+    "transforms[57].rules[7].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[80].rules[6].then[1].strip": [
+    "transforms[58].rules[2].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[81].rules[3].then[1].strip": [
+    "transforms[76].rules[2].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[98].rules[1].then[1].strip": [
+    "transforms[81].rules[4].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[98].rules[4].then[1].strip": [
+    "transforms[81].rules[6].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[160].rules[2].then[1].strip": [
+    "transforms[82].rules[3].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[198].rules[1].then[1].strip": [
+    "transforms[99].rules[1].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[199].rules[2].then[1].strip": [
+    "transforms[99].rules[4].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[199].rules[3].then[1].strip": [
+    "transforms[161].rules[2].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[200].rules[0].then[1].strip": [
+    "transforms[199].rules[1].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[200].rules[1].then[1].strip": [
+    "transforms[200].rules[2].then[1].strip": [
+      [768, 769],
+      [834, 834]
+    ],
+    "transforms[200].rules[3].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
@@ -431,15 +427,23 @@
       [768, 769],
       [834, 834]
     ],
+    "transforms[201].rules[1].then[1].strip": [
+      [768, 769],
+      [834, 834]
+    ],
     "transforms[202].rules[0].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[202].rules[1].then[1].strip": [
+    "transforms[203].rules[0].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[204].rules[0].stemEndsWith": [
+    "transforms[203].rules[1].then[1].strip": [
+      [768, 769],
+      [834, 834]
+    ],
+    "transforms[205].rules[0].stemEndsWith": [
       [913, 913],
       [917, 917],
       [919, 919],
@@ -487,11 +491,11 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[204].rules[0].then[1].strip": [
+    "transforms[205].rules[0].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[204].rules[1].stemEndsWith": [
+    "transforms[205].rules[1].stemEndsWith": [
       [913, 913],
       [917, 917],
       [919, 919],
@@ -539,19 +543,19 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[204].rules[1].then[1].strip": [
+    "transforms[205].rules[1].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[204].rules[2].then[1].strip": [
+    "transforms[205].rules[2].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[204].rules[3].then[1].strip": [
+    "transforms[205].rules[3].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[208].rules[13].stemStartsWith": [
+    "transforms[209].rules[13].stemStartsWith": [
       [914, 916],
       [918, 918],
       [920, 920],
@@ -569,7 +573,7 @@
       [8164, 8165],
       [8172, 8172]
     ],
-    "transforms[208].rules[34].stemStartsWith": [
+    "transforms[209].rules[34].stemStartsWith": [
       [905, 906],
       [910, 912],
       [919, 919],
@@ -606,52 +610,52 @@
       [8186, 8186],
       [8188, 8188]
     ],
-    "transforms[209].rules[0].then[1].strip": [
+    "transforms[210].rules[0].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[209].rules[1].then[1].strip": [
+    "transforms[210].rules[1].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[209].rules[2].then[1].strip": [
+    "transforms[210].rules[2].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[209].rules[3].then[1].strip": [
+    "transforms[210].rules[3].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[209].rules[4].then[1].strip": [
+    "transforms[210].rules[4].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[209].rules[5].then[1].strip": [
+    "transforms[210].rules[5].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[223].rules[0].stemCharacters": [],
-    "transforms[224].rules[0].then[1].strip": [
-      [768, 769],
-      [834, 834]
-    ],
+    "transforms[224].rules[0].stemCharacters": [],
     "transforms[225].rules[0].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[225].rules[1].then[1].strip": [
+    "transforms[226].rules[0].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[226].rules[0].stemCharacters": [],
-    "transforms[227].rules[1].stemCharacters": [],
-    "transforms[228].rules[0].stemCharacters": [],
-    "transforms[229].rules[1].stemCharacters": [],
+    "transforms[226].rules[1].then[1].strip": [
+      [768, 769],
+      [834, 834]
+    ],
+    "transforms[227].rules[0].stemCharacters": [],
+    "transforms[228].rules[1].stemCharacters": [],
+    "transforms[229].rules[0].stemCharacters": [],
     "transforms[230].rules[1].stemCharacters": [],
-    "transforms[230].rules[3].stemCharacters": [],
     "transforms[231].rules[1].stemCharacters": [],
+    "transforms[231].rules[3].stemCharacters": [],
     "transforms[232].rules[1].stemCharacters": [],
-    "transforms[235].rules[0].stemContains": [
+    "transforms[233].rules[1].stemCharacters": [],
+    "transforms[236].rules[0].stemContains": [
       [902, 902],
       [904, 906],
       [908, 908],
@@ -693,10 +697,10 @@
       [8186, 8186],
       [8188, 8188]
     ],
-    "transforms[235].rules[0].stemNotEndsWith": [
+    "transforms[236].rules[0].stemNotEndsWith": [
       [32, 32]
     ],
-    "transforms[235].rules[1].stemContains": [
+    "transforms[236].rules[1].stemContains": [
       [902, 902],
       [904, 906],
       [908, 908],
@@ -750,14 +754,14 @@
       [8182, 8184],
       [8186, 8186]
     ],
-    "transforms[235].rules[1].stemNotEndsWith": [
+    "transforms[236].rules[1].stemNotEndsWith": [
       [32, 32]
     ],
-    "transforms[235].rules[1].then[1].strip": [
+    "transforms[236].rules[1].then[1].strip": [
       [768, 769],
       [834, 834]
     ],
-    "transforms[235].rules[2].stemContains": [
+    "transforms[236].rules[2].stemContains": [
       [902, 902],
       [904, 906],
       [908, 908],
@@ -799,8 +803,8 @@
       [8186, 8186],
       [8188, 8188]
     ],
-    "transforms[235].rules[3].stemCharacters": [],
-    "transforms[237].rules[0].stemContains": [
+    "transforms[236].rules[3].stemCharacters": [],
+    "transforms[238].rules[0].stemContains": [
       [902, 902],
       [904, 906],
       [908, 908],
@@ -854,11 +858,11 @@
       [8182, 8184],
       [8186, 8186]
     ],
-    "transforms[238].rules[0].stemCharacters": [],
-    "transforms[239].rules[0].stemNotEndsWith": [
+    "transforms[239].rules[0].stemCharacters": [],
+    "transforms[240].rules[0].stemNotEndsWith": [
       [32, 32]
     ],
-    "transforms[240].rules[0].stemCharacters": [
+    "transforms[241].rules[0].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -898,7 +902,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[1].stemCharacters": [
+    "transforms[241].rules[1].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -938,7 +942,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[16].stemCharacters": [
+    "transforms[241].rules[16].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -978,7 +982,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[17].stemCharacters": [
+    "transforms[241].rules[17].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1018,7 +1022,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[18].stemCharacters": [
+    "transforms[241].rules[18].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1058,7 +1062,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[19].stemCharacters": [
+    "transforms[241].rules[19].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1098,7 +1102,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[20].stemCharacters": [
+    "transforms[241].rules[20].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1138,7 +1142,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[21].stemCharacters": [
+    "transforms[241].rules[21].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1178,7 +1182,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[22].stemCharacters": [
+    "transforms[241].rules[22].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1218,7 +1222,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[23].stemCharacters": [
+    "transforms[241].rules[23].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1258,7 +1262,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[24].stemCharacters": [
+    "transforms[241].rules[24].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1298,7 +1302,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[25].stemCharacters": [
+    "transforms[241].rules[25].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1338,7 +1342,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[26].stemCharacters": [
+    "transforms[241].rules[26].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1378,7 +1382,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[27].stemCharacters": [
+    "transforms[241].rules[27].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1418,7 +1422,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[28].stemCharacters": [
+    "transforms[241].rules[28].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],
@@ -1458,7 +1462,7 @@
       [8179, 8179],
       [8188, 8188]
     ],
-    "transforms[240].rules[29].stemCharacters": [
+    "transforms[241].rules[29].stemCharacters": [
       [913, 929],
       [931, 939],
       [945, 971],

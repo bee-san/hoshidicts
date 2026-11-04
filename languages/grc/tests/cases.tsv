@@ -504,3 +504,8 @@ trace	1	ποιεῖ	ποιέω	v	ind-act-3sg
 trace	1	δίκα	δίκη	n	doric-alpha
 trace	1	αὐτοῦ	αὐτός	*	pronoun
 trace	1	ξυνθήκη	συνθήκη	*	spelling
+constraint	0	ος	ός	*	*
+constraint	0	προκείμενα	προκείμεἷς	*	*
+trace	1	ἔλεγον	λέγω	v	exceptions
+trace	1	ἐμοῦ	ἐγώ	*	exceptions
+trace	1	ἔχθιστος	ἐχθρός	adj	comparison

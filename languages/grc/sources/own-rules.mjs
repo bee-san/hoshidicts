@@ -10,7 +10,7 @@
 // preprocessors) and on the same text without any diacritic, which is how
 // wiktionary-to-yomitan writes its form-of rows. See README.md, "Rule design".
 
-import {writeFileSync} from 'node:fs';
+import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {
@@ -321,7 +321,7 @@ function buildNominal() {
   for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['όν', 'acc-sg'], ['έ', 'voc-sg'], ['οί', 'nom-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['οῖσι', 'dat-pl'], ['οῖσιν', 'dat-pl'], ['ούς', 'acc-pl'], ['ώ', 'nav-du'], ['οῖν', 'gd-du'], ['οῖο', 'gen-sg']]) literal(c, e, 'ός', NA);
   for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['ά', 'na-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['ώ', 'nav-du'], ['οῖν', 'gd-du']]) literal(c, e, 'όν', NA);
   // Attic second declension (νεώς, λεώς, λαγώς) and contracted -οῦς, -οῦν (νοῦς, πλοῦς, ὀστοῦν).
-  for (const [e, c] of [['ω', 'gen-sg'], ['ῳ', 'dat-sg'], ['ων', 'acc-sg'], ['ῳ', 'nom-pl'], ['ων', 'gen-pl'], ['ῳς', 'dat-pl'], ['ως', 'acc-pl']]) nominalBoth(c, e, 'ως', {recede: false});
+  for (const [e, c] of [['ω', 'gen-sg'], ['ῳ', 'dat-sg'], ['ων', 'acc-sg'], ['ῳ', 'nom-pl'], ['ων', 'gen-pl'], ['ῳς', 'dat-pl'], ['ως', 'acc-pl']]) nominalBoth(c, e, 'ως');
   for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['οῦν', 'acc-sg'], ['οῖ', 'nom-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['οῦς', 'acc-pl']]) literal(c, e, 'οῦς', NA);
   for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['ᾶ', 'na-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl']]) literal(c, e, 'οῦν', NA);
 
@@ -389,15 +389,15 @@ function buildNominal() {
   // Accusative singular in -ν of barytone -ις, -υς and of -ους (χάριν, ἔριν, ὄρνιν).
   for (const [e, l] of [['ιν', 'ις'], ['υν', 'υς'], ['ουν', 'ους']]) nominalBoth('acc-sg', e, l);
   // Vocative singular: the bare stem (δαῖμον, ῥῆτορ, πάτερ, παῖ, γύναι).
-  for (const [e, l] of [['ον', 'ων'], ['ορ', 'ωρ'], ['ερ', 'ηρ'], ['ι', 'ις'], ['υ', 'υς'], ['ευ', 'ευς'], ['ες', 'ης'], ['ου', 'ους'], ['οι', 'ω'], ['αν', 'ας'], ['ον', 'ους']]) nominalBoth('voc-sg', e, l, {recede: true});
+  for (const [e, l] of [['ον', 'ων'], ['ορ', 'ωρ'], ['ερ', 'ηρ'], ['ι', 'ις'], ['υ', 'υς'], ['ευ', 'ευς'], ['ες', 'ης'], ['ου', 'ους'], ['οι', 'ω'], ['αν', 'ας'], ['ον', 'ους']]) nominalBoth('voc-sg', e, l);
   // Comparatives in -ων: -ω (= -ονα) and -ους (= -ονες, -ονας).
-  for (const [e, c] of [['ω', 'acc-sg'], ['ους', 'nom-pl'], ['ους', 'acc-pl'], ['ω', 'na-pl']]) nominal(c, e, 'ων', ADJ, {recede: true});
+  for (const [e, c] of [['ω', 'acc-sg'], ['ους', 'nom-pl'], ['ους', 'acc-pl'], ['ω', 'na-pl']]) nominal(c, e, 'ων', ADJ);
 
   // σ-stems: neuter -ος (γένος, γένους), masculine and adjective -ης (Σωκράτης, ἀληθής, τριήρης).
   // The Attic genitive plural is -ῶν (γενῶν), below: a stem-accented -ων is a participle (μένων) or another word.
   const sStemNeut = [['ους', 'gen-sg'], ['εος', 'gen-sg'], ['ευς', 'gen-sg'], ['ει', 'dat-sg'], ['εϊ', 'dat-sg'], ['η', 'na-pl'], ['εα', 'na-pl'],
     ['εων', 'gen-pl'], ['εσι', 'dat-pl'], ['εσιν', 'dat-pl'], ['εσσι', 'dat-pl'], ['εσσιν', 'dat-pl'], ['ει', 'nav-du'], ['οιν', 'gd-du'], ['εοιν', 'gd-du'], ['εσφι', 'epic-phi'], ['εσφιν', 'epic-phi']];
-  for (const [e, c] of sStemNeut) nominalBoth(c, e, 'ος', {recede: true});
+  for (const [e, c] of sStemNeut) nominalBoth(c, e, 'ος');
   suffix('gen-pl', 'ῶν', 'ος', [], NA, {stem: {stemMinLength: 2}, then: THEN_STRIP_ACCENTS, writtenOnly: true});
   // The accusative -η of a barytone -ης (Σωκράτη) is left to the dictionary: it is also the plural of neuter -ος (ἔτη).
   const sStemMasc = [['ους', 'gen-sg'], ['εος', 'gen-sg'], ['ευς', 'gen-sg'], ['ει', 'dat-sg'], ['εϊ', 'dat-sg'], ['ην', 'acc-sg'], ['εα', 'acc-sg'],
@@ -416,11 +416,11 @@ function buildNominal() {
     ['ι', 'voc-sg'], ['εις', 'nom-pl'], ['ιες', 'nom-pl'], ['ηες', 'nom-pl'], ['εων', 'gen-pl'], ['ιων', 'gen-pl'], ['εσι', 'dat-pl'], ['εσιν', 'dat-pl'],
     ['ισι', 'dat-pl'], ['ισιν', 'dat-pl'], ['εις', 'acc-pl'], ['ιας', 'acc-pl'], ['ηας', 'acc-pl'], ['ει', 'nav-du'], ['εοιν', 'gd-du'],
     ['εϊ', 'dat-sg'], ['ηϊ', 'dat-sg'], ['εες', 'nom-pl'], ['εε', 'nav-du'], ['ιος', 'gen-sg']];
-  for (const [e, c] of iStem) nominalBoth(c, e, 'ις', {recede: true});
+  for (const [e, c] of iStem) nominalBoth(c, e, 'ις');
   const uStem = [['εως', 'gen-sg'], ['υος', 'gen-sg'], ['εος', 'gen-sg'], ['ει', 'dat-sg'], ['υι', 'dat-sg'], ['υν', 'acc-sg'], ['εις', 'nom-pl'], ['υες', 'nom-pl'], ['εες', 'nom-pl'], ['εας', 'acc-pl'],
     ['εων', 'gen-pl'], ['υων', 'gen-pl'], ['εσι', 'dat-pl'], ['εσιν', 'dat-pl'], ['υσι', 'dat-pl'], ['υσιν', 'dat-pl'], ['εις', 'acc-pl'], ['υας', 'acc-pl'], ['υς', 'acc-pl'], ['ει', 'nav-du']];
-  for (const [e, c] of uStem) nominalBoth(c, e, 'υς', {recede: true});
-  for (const [e, c] of [['εως', 'gen-sg'], ['εος', 'gen-sg'], ['ει', 'dat-sg'], ['η', 'na-pl'], ['εα', 'na-pl'], ['εων', 'gen-pl'], ['εσι', 'dat-pl'], ['εσιν', 'dat-pl']]) nominalBoth(c, e, 'υ', {recede: true});
+  for (const [e, c] of uStem) nominalBoth(c, e, 'υς');
+  for (const [e, c] of [['εως', 'gen-sg'], ['εος', 'gen-sg'], ['ει', 'dat-sg'], ['η', 'na-pl'], ['εα', 'na-pl'], ['εων', 'gen-pl'], ['εσι', 'dat-pl'], ['εσιν', 'dat-pl']]) nominalBoth(c, e, 'υ');
   // ευ-stems (βασιλεύς, ἱερεύς): always accented on the ending; Epic and Ionic -ῆος, -ῆα, -έος.
   const euStem = [['έως', 'gen-sg'], ['ῆος', 'gen-sg'], ['έος', 'gen-sg'], ['εῖ', 'dat-sg'], ['ῆι', 'dat-sg'], ['ῆϊ', 'dat-sg'], ['έϊ', 'dat-sg'], ['έα', 'acc-sg'], ['ῆα', 'acc-sg'],
     ['εῦ', 'voc-sg'], ['ῆς', 'nom-pl'], ['εῖς', 'nom-pl'], ['ῆες', 'nom-pl'], ['έες', 'nom-pl'], ['έων', 'gen-pl'], ['ήων', 'gen-pl'], ['εῦσι', 'dat-pl'], ['εῦσιν', 'dat-pl'],
@@ -466,7 +466,7 @@ function buildNominal() {
   }
   // Adverbs: -ως from the genitive plural (σοφῶς, δικαίως, ἀληθῶς, ταχέως, εὐδαιμόνως).
   transform('adverb', 'adverb', 'Adverb of manner in -ως made from an adjective (σοφῶς, δικαίως, ἀληθῶς, ταχέως); comparative adverb in -τερον, superlative in -τατα.');
-  for (const [e, l] of [['ως', 'ος'], ['ως', 'ης'], ['ονως', 'ων'], ['εως', 'υς'], ['οντως', 'ων'], ['αντως', 'ας'], ['εντως', 'εις'], ['ουντως', 'ων']]) nominal('adverb', e, l, ADJ, {recede: true});
+  for (const [e, l] of [['ως', 'ος'], ['ως', 'ης'], ['ονως', 'ων'], ['εως', 'υς'], ['οντως', 'ων'], ['αντως', 'ας'], ['εντως', 'εις'], ['ουντως', 'ων']]) nominal('adverb', e, l, ADJ);
   for (const [e, l] of [['ῶς', 'ός'], ['ῶς', 'ής'], ['έως', 'ύς']]) literal('adverb', e, l, ADJ);
   for (const [e, l] of [['οτερον', 'ος'], ['ωτερον', 'ος'], ['οτατα', 'ος'], ['ωτατα', 'ος'], ['εστερον', 'ης'], ['εστατα', 'ης'], ['ιον', 'υς'], ['ιστα', 'υς'], ['ιον', 'ος'], ['ιστα', 'ος']]) suffix('adverb', e, l, [], ADJ, {then: THEN_STRIP_ACCENTS});
 }
@@ -1473,6 +1473,17 @@ const COMPARISON_LEMMAS = [
   [/^ελα(ττ|σσ)/u, 'ἐλάσσων'], [/^μει/u, 'μείων'], [/^θα(ττ|σσ)/u, 'θάσσων'],
 ];
 
+/**
+ * The comparative in -ίων and the superlative in -ιστος of an adjective in -ρός, which lose the ρ (ἐχθρός: ἐχθίων,
+ * ἔχθιστος): generic rules read them as a noun of the bare stem (ἔχθιστος → ἔχθος "hatred"). `stem` is written as
+ * the forms with a recessive accent on it write it (ἔχθ), `plain` as the others (ἐχθ).
+ */
+function rhoComparison(stem, plain) {
+  const cmp = ['ίων', 'ίονος', 'ίονι', 'ίονα', 'ίω', 'ίονες', 'ίους', 'ιόνων', 'ίοσι', 'ίοσιν'].map((e) => plain + e);
+  const sup = ['ίστη', 'ίστου', 'ίστης', 'ίστῳ', 'ίστῃ', 'ίστην', 'ίστων', 'ίστοις', 'ίσταις', 'ίστους', 'ίστας'].map((e) => plain + e);
+  return [...cmp, stem + 'ιον', ...sup, ...['ιστος', 'ιστον', 'ιστοι', 'ισται', 'ιστα'].map((e) => stem + e)];
+}
+
 function closed(tid, name, description, lemma, forms, opts = {}) {
   transform(tid, name, description);
   for (const f of forms) {
@@ -1583,6 +1594,9 @@ function buildClosedClasses() {
   closed('comparison', 'comparison', '', 'ὀλίγος', ['ὀλίγιστος', 'ὀλιγίστη', 'ὀλίγιστον', 'ὀλίγιστα', 'ἐλάττων', 'ἐλάσσων', 'μείων', 'μεῖον', 'μείονος', 'μείονα', 'μείους', 'μείονες'], {out: ['adj']});
   closed('comparison', 'comparison', '', 'καλός', ['καλλίων', 'κάλλιον', 'καλλίονος', 'καλλίονα', 'καλλίω', 'καλλίονες', 'καλλίους', 'κάλλιστος', 'καλλίστη', 'κάλλιστον', 'κάλλιστοι', 'κάλλισται', 'κάλλιστα', 'καλλίστου', 'καλλίστης', 'καλλίστων', 'καλλίστῳ', 'καλλίστην'], {out: ['adj']});
   closed('comparison', 'comparison', '', 'ῥᾴδιος', ['ῥᾴων', 'ῥᾷον', 'ῥᾴονος', 'ῥᾴονα', 'ῥᾴω', 'ῥᾴους', 'ῥᾷστος', 'ῥᾴστη', 'ῥᾷστον', 'ῥᾷστα'], {out: ['adj']});
+  for (const [lemma, stem, plain] of [['ἐχθρός', 'ἔχθ', 'ἐχθ'], ['αἰσχρός', 'αἴσχ', 'αἰσχ'], ['οἰκτρός', 'οἴκτ', 'οἰκτ']]) {
+    closed('comparison', 'comparison', '', lemma, rhoComparison(stem, plain), {out: ['adj']});
+  }
   closed('comparison', 'comparison', '', 'ταχύς', ['θάττων', 'θᾶττον', 'θάττονος', 'θάττονα', 'θάττω', 'θάττους', 'θάσσων', 'θᾶσσον', 'τάχιστος', 'τάχιστα', 'ταχίστη', 'τάχιστον', 'ταχίστην'], {out: ['adj']});
   flushClosed();
 }
@@ -1597,7 +1611,8 @@ function buildSpelling() {
     suffix('spelling-variant', a, b, ['v'], ['v']);
   }
   transform('spelling', 'spelling', 'The older spelling ξυν- for συν- (Thucydides and tragedy: ξυμφορά, ξυνίημι).');
-  for (const [a, b] of [['ξυν', 'συν'], ['ξυμ', 'συμ'], ['ξυγ', 'συγ'], ['ξυλ', 'συλ'], ['ξυσ', 'συσ'], ['ξυ', 'συ'], ['ξύν', 'σύν'], ['ξύμ', 'σύμ'], ['ξύγ', 'σύγ'], ['ξύλ', 'σύλ'], ['ξύ', 'σύ'], ['Ξυν', 'Συν'], ['Ξυμ', 'Συμ']]) {
+  // ξυ- covers ξυν-, ξυμ-, ξυγ-, ξυλ-, ξυσ- (the assimilated forms keep their consonant).
+  for (const [a, b] of [['ξυ', 'συ'], ['ξύ', 'σύ'], ['Ξυ', 'Συ'], ['Ξύ', 'Σύ']]) {
     prefix('spelling', a, b, [], []);
   }
 
@@ -1662,6 +1677,34 @@ function buildClitics() {
   }
 }
 
+
+// ---------------------------------------------------------------------------
+// Exceptions
+// ---------------------------------------------------------------------------
+
+// Forms that other rules read first as a rarer word: ἔλεγε as ἔλεγος "lament" for λέγω, ἐμοῦ as ἐμός for ἐγώ. Among
+// equal readings the engine puts the term found first first, and it reads a text without diacritics before the
+// text as written, where the dictionary's form-of rows name both terms in their own order; so each form is a whole
+// word in the first transform, as written, without accents and without any diacritic. sources/exceptions.tsv is
+// written by `measure.py exceptions` (README.md, "Rule provenance"); MANUAL adds a form that list does not have.
+const MANUAL_EXCEPTIONS = [
+  // The other form of the ἔλεγε collision, the example of both audits (17 lookups of the real text, which the
+  // list leaves out).
+  ['ἔλεγον', 'λέγω', 'v'],
+];
+
+function buildExceptions() {
+  transform('exceptions', 'common form', 'A common form that other rules read first as a rarer word, read first as the term the dictionary alone puts first (ἔλεγον, ἔλεγε → λέγω, not ἔλεγος; ἐμοῦ → ἐγώ, not ἐμός; ἔτη → ἔτος, not ἔτης).');
+  const rows = readFileSync(join(here, 'exceptions.tsv'), 'utf8').split('\n').filter((l) => l && !l.startsWith('#')).map((l) => l.split('\t').slice(0, 3));
+  for (const [form, term, tags] of [...rows, ...MANUAL_EXCEPTIONS]) {
+    const tag = tags.split(' ').find((t) => t in conditions && conditions[t].isDictionaryForm);
+    // graveToAcute has turned a grave into an acute before any rule reads the text (δεινὰ → δεινά).
+    const written = NFC(NFD(form).replace(/\u0300/gu, '\u0301'));
+    for (const spelling of new Set([written, stripAccents(written), stripAll(written)])) {
+      add('exceptions', {type: 'wholeWord', inflected: spelling, deinflected: NFC(term), conditionsIn: [], conditionsOut: tag ? [tag] : []});
+    }
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Output
@@ -1730,6 +1773,7 @@ function compact(rules) {
 }
 
 export function build() {
+  buildExceptions();
   buildNominal();
   thematicEndings();
   participles();

@@ -12,10 +12,13 @@
 // Each input line is looked up with Lookup::lookup (default 16 results, scan
 // length 16, no language options: what a host's hover does) and answered with
 // one JSON line: {"text", "results": [{"expression", "reading", "matched",
-// "trace": [ids], "formOf", "gloss"}]}. formOf is true when every glossary of
+// "rules", "trace": [ids], "formOf", "gloss"}]}. rules is the term's
+// part-of-speech tags (the rules column of its rows). formOf is true when every glossary of
 // the result has the definition tag non-lemma (a form-of row of kaikki- or
-// wiktionary-to-yomitan); gloss is the text of the first glossary (its JSON's
-// string values joined by spaces), at most 600 bytes.
+// wiktionary-to-yomitan); gloss is the text of the first glossary's definitions
+// (its JSON's string values joined by spaces, from wiktionary-to-yomitan's
+// "glosses" list to its "backlink", so without the grammar and etymology
+// preamble; the whole glossary when it has no such list), at most 600 bytes.
 
 #include <fstream>
 #include <iostream>
@@ -51,8 +54,14 @@ std::string quote(const std::string& s) {
   return out + "\"";
 }
 
-// The strings of a glossary's JSON, joined by spaces (the words a reader sees).
-std::string gloss_text(const std::string& json) {
+// The strings of a glossary's JSON, joined by spaces (the words a reader sees):
+// the definitions only, when the glossary marks them.
+std::string gloss_text(const std::string& full) {
+  std::string_view json = full;
+  if (const size_t at = json.find("\"glosses\""); at != std::string_view::npos) {
+    json = json.substr(at + 9);
+    if (const size_t end = json.find("\"backlink\""); end != std::string_view::npos) json = json.substr(0, end);
+  }
   std::string out;
   bool in = false, escape = false, key = false;
   std::string cur;
@@ -125,6 +134,7 @@ int main(int argc, char** argv) {
       const auto& r = results[i];
       if (i) out += ",";
       out += "{\"expression\":" + quote(r.term.expression) + ",\"reading\":" + quote(r.term.reading) +
+             ",\"rules\":" + quote(r.term.rules) +
              ",\"matched\":" + quote(r.matched) + ",\"formOf\":" + (form_of(r.term) ? "true" : "false") +
              ",\"gloss\":" + quote(r.term.glossaries.empty() ? std::string() : gloss_text(r.term.glossaries.front().glossary)) +
              ",\"trace\":[";

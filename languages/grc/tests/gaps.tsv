@@ -1,6 +1,6 @@
 # Source: 1000 pairs sampled with seed 1 by sources/build-corpus.py from UniMorph grc (CC BY-SA 3.0, the UniMorph
 # contributors, from English Wiktionary) and the Perseus Ancient Greek Dependency Treebank 2.1 (CC BY-SA 3.0 US,
-# the Perseus Digital Library, Tufts University); README.md has the revisions. The 99 rows the rules do not reach (README.md, "Known gaps").
+# the Perseus Digital Library, Tufts University); README.md has the revisions. The 98 rows the rules do not reach (README.md, "Known gaps").
 # category	valid	source	term	rule	reasons
 um-noun	1	διαίτης	δίαιτα	n	*
 um-noun	1	χαλαζῶν	χάλαζα	n	*
@@ -70,7 +70,6 @@ agdt-participle	1	ἕρξαντα	ἔρδω	v	*
 agdt-participle	1	καθελοῦσι	καθαιρέω	v	*
 agdt-participle	1	αἰνύμενος	αἴνυμαι	v	*
 agdt-participle	1	τεταρπόμενος	τέρπω	v	*
-agdt-participle	1	εἴπας	εἶπον	v	*
 agdt-participle	1	βεβρῶτες	βιβρώσκω	v	*
 agdt-participle	1	ἀλεὶς	εἴλω	v	*
 agdt-participle	1	καταλέγμενος	καταλέγω	v	*

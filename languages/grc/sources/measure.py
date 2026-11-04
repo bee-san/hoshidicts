@@ -5,8 +5,16 @@
     python3 measure.py text <hover.tsv> [--sample 60]   real text: first results judged against the treebank
     python3 measure.py behind <hover.tsv>               the same at words after an article, pronoun, particle or εἰμί
     python3 measure.py frequent <agdt dir>              the 10,000 most frequent forms of the whole treebank
-    python3 measure.py rules <hover.tsv | agdt dir>     the first results the rules change: the pack against the same
-                                                        pack without rules (the dictionary's form-of rows alone)
+    python3 measure.py rules <hover.tsv | agdt dir> [--forms 40]
+                                                        the first results the rules change: the pack against the same
+                                                        pack without rules (the dictionary's form-of rows alone); --forms
+                                                        lists the forms they make wrong, largest first
+    python3 measure.py exceptions <agdt dir> --exclude <files> [--min 10] > sources/exceptions.tsv
+                                                        the forms of the frequency list whose first result the rules
+                                                        (all but the transform `exceptions`) turn from right to wrong
+                                                        for at least --min tokens (net), and the other forms of the
+                                                        same collisions, with the lemma the dictionary alone puts
+                                                        first: the rules of the transform `exceptions`
     python3 measure.py compare <hover.tsv> --other <languages dir> [--trace <transform id>]
                                                         the first results that change between --languages and --other,
                                                         and the lookups of --other with a result through the transform
@@ -15,14 +23,18 @@
                                                         case and number agree with the treebank's tag?
 
 hover.tsv is what make-hovers-agdt.py writes. Options: --batch build/lookup-batch, --cli build/hoshidicts-cli,
---languages languages, --dictionary <wty-grc-en imported>. A lookup is a host's hover: the text from the word to the
-end of its sentence, 16 results, scan length 16, default options (lookup-batch). Every token is judged against its
-own treebank lemma (sense digits removed):
+--languages languages, --dictionary <wty-grc-en imported>, --exclude <treebank file names, comma-separated> (the
+frequency list without them). A lookup is a host's hover: the text from the word to the end of its sentence, 16
+results, scan length 16, default options (lookup-batch). Every token is judged against its own treebank lemma (sense
+digits removed):
 
 - right: the first result is the lemma;
 - variant: the same word written otherwise: other accents, vowel-length marks or capitals (not another breathing,
-  which makes another word: οἷος, οἶος), or the dictionary's own entry for the word as written whose definition
-  names the lemma or says it is the word elided or contracted (δ' "apocopic form of δέ");
+  which makes another word: οἷος, οἶος), when the lemma as the treebank spells it is not among the results, or when
+  the first result's definitions name it (πέρι "initial-stressed form of περί"); or the dictionary's own entry for
+  the word as written whose definitions name the lemma or say it is the word elided or contracted (δ' "apocopic form
+  of δέ"). The definitions are those the dictionary lists, not its grammar or etymology notes (lookup-batch's
+  gloss), and a word naming itself does not count. So ἐτός "in vain" for ἔτος "year", with ἔτος listed, is wrong;
 - wrong: another lemma, or the word's own entry for another word (τῷ "then", for the article); `listed` when the
   lemma is among the 16 results;
 - none: no result.
@@ -34,7 +46,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 ap = argparse.ArgumentParser()
-ap.add_argument('command', choices=['text', 'behind', 'frequent', 'rules', 'compare', 'benchmark', 'traces'])
+ap.add_argument('command', choices=['text', 'behind', 'frequent', 'rules', 'compare', 'benchmark', 'traces', 'exceptions'])
 ap.add_argument('input')
 ap.add_argument('--batch', default='build/lookup-batch')
 ap.add_argument('--cli', default='build/hoshidicts-cli')
@@ -45,6 +57,9 @@ ap.add_argument('--show', type=int, default=10)
 ap.add_argument('--n', type=int, default=10000)
 ap.add_argument('--other')
 ap.add_argument('--trace')
+ap.add_argument('--forms', type=int, default=0)
+ap.add_argument('--exclude', default='')
+ap.add_argument('--min', type=int, default=10)
 a = ap.parse_args()
 
 NFC = lambda s: unicodedata.normalize('NFC', s)
@@ -66,10 +81,23 @@ def lookup(texts, languages=None):
     return out
 
 
-def names(gloss, lemma):
-    """The definition names the lemma, or says the entry is an elided or contracted form (μ' "apocopic form of με")."""
-    return (re.search(r'(^|[^\w])' + re.escape(lemma) + r'($|[^\w])', gloss) is not None
-            or re.search(r'apocopic|elided|elision|crasis|contraction of', gloss) is not None)
+def as_read(s):
+    """The text as the rules read it: the pack's graveToAcute and one apostrophe."""
+    return NFC(unicodedata.normalize('NFD', s).replace('\u0300', '\u0301')).replace("'", '\u2019')
+
+
+GREEK_WORD = re.compile('[\u0370-\u03ff\u1f00-\u1fff][\u0300-\u036f\u0370-\u03ff\u1f00-\u1fff]*')
+ELIDED = re.compile(r'apocopic|elided|elision|crasis|contraction of')
+
+
+def definitions(gloss):
+    """The definitions of lookup-batch's gloss, without their example sentences and related-word lists."""
+    return ' '.join(re.split(r'details-entry-examples|extra-info|example-sentence|related-words', d)[0] for d in re.split(r'\bli\b', gloss))
+
+
+def names(gloss, lemma, first):
+    """The definitions name the lemma (accents and length marks aside), with a word other than the entry's own."""
+    return any(same_word(w, lemma) and NFC(w) != first for w in GREEK_WORD.findall(NFC(definitions(gloss))))
 
 
 def judge(results, gold, word):
@@ -79,10 +107,13 @@ def judge(results, gold, word):
     first = NFC(r['expression'])
     if first == gold:
         return 'right'
-    own = not r['trace'] and first.replace("'", '\u2019') == NFC(word).replace("'", '\u2019')
-    if same_word(first, gold) or (own and names(r.get('gloss', ''), gold)):
+    listed = any(NFC(x['expression']) == gold for x in results)
+    gloss = r.get('gloss', '')
+    named = names(gloss, gold, first)
+    own = as_read(first) == as_read(word)
+    if (same_word(first, gold) and (not listed or named)) or (own and (named or ELIDED.search(definitions(gloss)))):
         return 'variant'
-    return 'wrong-listed' if any(NFC(x['expression']) == gold for x in results) else 'wrong'
+    return 'wrong-listed' if listed else 'wrong'
 
 
 def trace(r):
@@ -123,7 +154,10 @@ def read_hovers(path):
 def frequent_forms(agdt):
     count = collections.Counter()
     golds = collections.defaultdict(collections.Counter)
+    exclude = {x for x in a.exclude.split(',') if x}
     for path in sorted(Path(agdt).glob('*.tb.xml')):
+        if path.name in exclude or path.name.removesuffix('.tb.xml') in exclude:
+            continue
         for w in ET.parse(path).iter('word'):
             form, lemma, pos = NFC(w.get('form') or ''), w.get('lemma') or '', w.get('postag') or ''
             if not form or not lemma or pos.startswith('u') or form.startswith('[') or not re.search('[\u0370-\u03ff\u1f00-\u1fff]', form):
@@ -135,9 +169,9 @@ def frequent_forms(agdt):
     return top, count, golds
 
 
-def no_rules_pack():
+def no_rules_pack(drop=None):
     """A copy of the pack whose transforms are only those its settings name (off by default): its lookups show
-    what the processors and the dictionary's form-of rows give alone."""
+    what the processors and the dictionary's form-of rows give alone. With drop, the pack without that transform."""
     tmp = Path(tempfile.mkdtemp(prefix='grc-norules-'))
     src = Path(a.languages) / 'grc'
     (tmp / 'grc').mkdir()
@@ -145,7 +179,7 @@ def no_rules_pack():
     lang = json.loads((src / 'language.json').read_text(encoding='utf-8'))
     keep = {t for s in lang.get('settings', []) for t in s.get('effect', {}).get('transforms', [])}
     rules = json.loads((src / 'transforms.json').read_text(encoding='utf-8'))
-    rules['transforms'] = [t for t in rules['transforms'] if t['id'] in keep]
+    rules['transforms'] = [t for t in rules['transforms'] if (t['id'] != drop if drop else t['id'] in keep)]
     (tmp / 'grc' / 'transforms.json').write_text(json.dumps(rules, ensure_ascii=False), encoding='utf-8')
     return tmp
 
@@ -213,6 +247,8 @@ elif a.command == 'rules':
     shutil.rmtree(bare)
     made, lost = collections.Counter(), collections.Counter()
     ex = collections.defaultdict(collections.Counter)
+    forms = collections.Counter()
+    form_ex = {}
     for word, gold, n, x, y in triples:
         ok_pack = judge(x, gold, word) in ('right', 'variant')
         ok_bare = judge(y, gold, word) in ('right', 'variant')
@@ -223,12 +259,43 @@ elif a.command == 'rules':
             k = trace(x[0]) if x else 'none'
             lost[k] += n
             ex[k][f'{word} → {x[0]["expression"] if x else None} (without rules {y[0]["expression"]})'] += n
+            forms[word] += n
+            form_ex[word] = f'{x[0]["expression"] if x else None} [{k}], without rules {y[0]["expression"]}'
     total = sum(t[2] for t in triples)
     print(f'{total} tokens: the rules make {made["n"]} right that the dictionary alone gets wrong, and {lost["n"]} wrong that it gets right')
     for k, n in lost.most_common(a.show + 1):
         if k == 'n':
             continue
         print(f'  {n:6d} {k}: ' + '; '.join(f'{e} ×{m}' for e, m in ex[k].most_common(4)))
+    if a.forms:
+        print(f'the {a.forms} forms the rules make wrong most often ({len(forms)} forms in all):')
+        for w, n in forms.most_common(a.forms):
+            print(f'  {n:6d} {w} → {form_ex[w]}')
+elif a.command == 'exceptions':
+    top, count, golds = frequent_forms(a.input)
+    bare, without = no_rules_pack(), no_rules_pack('exceptions')
+    res_pack = dict(zip(top, lookup(top, str(without))))
+    res_bare = dict(zip(top, lookup(top, str(bare))))
+    shutil.rmtree(bare)
+    shutil.rmtree(without)
+    ok = lambda res, g, w: judge(res, g, w) in ('right', 'variant')
+    rows = []
+    for w in top:
+        x, y = res_pack[w], res_bare[w]
+        if not y or not x:
+            continue
+        lost = sum(n for g, n in golds[w].items() if ok(y, g, w) and not ok(x, g, w))
+        gained = sum(n for g, n in golds[w].items() if ok(x, g, w) and not ok(y, g, w))
+        rows.append((w, x, y, lost - gained))
+    chosen = {(x[0]['expression'], y[0]['expression']) for w, x, y, net in rows if net >= a.min}
+    print(f'# Written by measure.py exceptions (README.md, "Rule provenance"): of the {len(top)} most frequent forms of the treebank without '
+          f'{a.exclude or "nothing"}, those whose first result')
+    print(f'# the rules (all but this transform) turn from right to wrong for at least {a.min} tokens net, and the other forms with a net loss of the same')
+    print('# collision (the same first result with the rules and without them). Each is read as the term the dictionary alone puts first.')
+    print('# form\tterm\ttags\tnet tokens\tfirst with the rules [trace]')
+    for w, x, y, net in rows:
+        if net >= a.min or (net >= 1 and (x[0]['expression'], y[0]['expression']) in chosen):
+            print(f'{w}\t{y[0]["expression"]}\t{y[0].get("rules", "")}\t{net}\t{x[0]["expression"]} [{trace(x[0])}]')
 elif a.command in ('text', 'behind'):
     items = read_hovers(a.input)
     results = lookup([it['text'] for it in items])

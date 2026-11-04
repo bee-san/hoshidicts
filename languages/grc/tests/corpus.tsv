@@ -1,6 +1,6 @@
 # Source: 1000 pairs sampled with seed 1 by sources/build-corpus.py from UniMorph grc (CC BY-SA 3.0, the UniMorph
 # contributors, from English Wiktionary) and the Perseus Ancient Greek Dependency Treebank 2.1 (CC BY-SA 3.0 US,
-# the Perseus Digital Library, Tufts University); README.md has the revisions. The 901 rows the rules reach; the others are in gaps.tsv.
+# the Perseus Digital Library, Tufts University); README.md has the revisions. The 902 rows the rules reach; the others are in gaps.tsv.
 # category	valid	source	term	rule	reasons
 um-noun	1	αὐλητάς	αὐλητής	n	*
 um-noun	1	Λιγύων	Λίγυς	n	*
@@ -595,6 +595,7 @@ agdt-participle	1	ἀναρπάξας	ἀναρπάζω	v	*
 agdt-participle	1	συμβαλούσας	συμβάλλω	v	*
 agdt-participle	1	συμμαχήσαντος	συμμαχέω	v	*
 agdt-participle	1	ἀποδειχθεὶς	ἀποδείκνυμι	v	*
+agdt-participle	1	εἴπας	εἶπον	v	*
 agdt-participle	1	διατρίβουσιν	διατρίβω	v	*
 agdt-participle	1	ἀφαιρούμενον	ἀφαιρέω	v	*
 agdt-participle	1	ταραχθείς	ταράσσω	v	*
