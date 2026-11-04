@@ -512,24 +512,24 @@ in `sources/`, run from the repository root.
      - Of 50 more positions per text that the script does not judge (no card
        for the whole word, or no lemma), 16, 11 and 31 are wrong (22 of
        Tatoeba's are Tom).
-5. **Performance** (host load 35-40 on 64 cores, so these are upper bounds).
+5. **Performance** (host load 32-35 on 64 cores, so these are upper bounds).
    - Native `benchmark-lookup --languages languages --language ar --term
      <imported wty-ar-en>` on the 135 texts of `sources/benchmark-words.txt`
      (each word of 20 sentences written for the pack, with the rest of its
-     sentence), 6 passes, the first dropped, three runs: p50 89.8-93.1 µs, p95
-     260.0-278.5 µs. The budget is 1 ms p50.
+     sentence), 6 passes, the first dropped, three runs: p50 82.7-90.6 µs, p95
+     234.8-264.8 µs. The budget is 1 ms p50.
    - Native pack load (`sources/pack-load.cpp`): `LanguageRegistry::add`
-     median 4.84-4.98 ms over 50 runs, three runs; the registry holds
-     7,064,272 bytes of heap. The 14,530 rules are mostly cross products,
+     median 4.74-4.77 ms over 50 runs, three runs; the registry holds
+     7,194,096 bytes of heap. The 14,579 rules are mostly cross products,
      indexed by their endings.
    - WebAssembly, Hachidori feat/multi-language 803f7b6 engines (built from
      hoshidicts b145feb), Node 22:
      - `sources/wasm-load.mjs`, 10 fresh engines each: `hdw_language_load`
-       median 13.74 ms single-thread and 14.70 ms threaded; live heap
-       +3,497,528 bytes. The budgets are 50 ms and 20 MB.
+       median 14.66 ms single-thread and 14.87 ms threaded; live heap
+       +3,558,336 bytes. The budgets are 50 ms and 20 MB.
      - `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=ar` on the
-       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 207 µs and
-       p95 533 µs single-thread, p50 230 µs and p95 584 µs threaded.
+       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 202 µs and
+       p95 509 µs single-thread, p50 221 µs and p95 539 µs threaded.
    - The pack has no `pattern` rule, so no pattern heap.
 6. **Hachidori** (feat/multi-language 803f7b6 with this branch in
    `third_party/hoshidicts` and `node scripts/sync-languages.mjs`;
@@ -585,7 +585,7 @@ in `sources/`, run from the repository root.
        their lists;
      - the « » and ” “ quote pairs and `untaggedTerms: filter` (measured in
        Text and scanning), which the conformance test does not exercise.
-   - `tests/` and `sources/` hold BYTES bytes.
+   - `tests/` and `sources/` hold 997,990 bytes.
 8. **Commands**:
 
    ```sh
