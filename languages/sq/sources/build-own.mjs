@@ -393,13 +393,15 @@ whole('n-pl', 'male', 'mal', NPL, N);
 // way: varre (graves) before the oblique of varrë (wound), ligjet (the laws)
 // before ligje (dirge).
 whole('n-pl', 'varre', 'varr', NPL, N);
+// vjetë (years) only as a whole word: no compound ends in it.
+whole('n-pl', 'vjetë', 'vit', NPL, N);
 // mijëra (thousands) is the plural of the untagged mijë: no conditions out.
 whole('n-pl', 'mijëra', 'mijë', NPL, []);
 whole('n-def-pl', 'ligjet', 'ligj', [], N);
 // Plurals that change the stem.
 for (const [plural, singular] of [
     ['djem', 'djalë'], ['kuaj', 'kalë'], ['duar', 'dorë'], ['dyer', 'derë'], ['net', 'natë'], ['netë', 'natë'],
-    ['gra', 'grua'], ['njerëz', 'njeri'], ['desh', 'dash'], ['qe', 'ka'], ['vjet', 'vit'], ['vjetë', 'vit'], ['etër', 'atë'],
+    ['gra', 'grua'], ['njerëz', 'njeri'], ['desh', 'dash'], ['qe', 'ka'], ['vjet', 'vit'], ['etër', 'atë'],
     ['bij', 'bir'], ['thonj', 'thua'], ['dhen', 'dele'], ['rrathë', 'rreth'],
     // The plural of a masculine noun in -ë, so its trace is plural, not the
     // feminine definite -a, which reaches burrë first otherwise.

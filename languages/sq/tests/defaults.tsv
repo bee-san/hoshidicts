@@ -558,6 +558,10 @@ negatives (per-rule constraint: adj-def-f s stemMinLength)	0	ës	ë	*	*
 negatives (per-rule constraint: adj-def-pl të stemEndsWith)	0	mëdhatë	madh	*	*
 negatives (per-rule constraint: adj-def-pl ve stemMinLength)	0	ëve	ë	*	*
 negatives (per-rule constraint: np-imp-2sg u circumfix stemMinLength)	0	u ke	kehem	*	*
+non-active	1	vritem	vras	v	np-pres-1sg
+definite adjective	1	i riu	ri	adj	adj-def-m|art
+negatives	0	e riu	ri	adj	*
+negatives	0	dyvjetë	dyvit	*	*
 negatives (constructed: n-def-sg-m stemCharacters)	0	e doti	e dot	*	*
 negatives (constructed: n-def-sg-m stemMinLength)	0	bi	b	*	*
 negatives (constructed: n-def-sg-m stemEndsWith)	0	doei	doe	*	*

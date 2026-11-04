@@ -1472,11 +1472,6 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[36].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
     "transforms[12].rules[37].stemCharacters": [
       [0, 31],
       [33, 55295],
@@ -1492,12 +1487,12 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[41].stemCharacters": [
+    "transforms[12].rules[40].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[43].stemCharacters": [
+    "transforms[12].rules[42].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -1507,7 +1502,7 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[46].stemCharacters": [
+    "transforms[12].rules[45].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -6942,6 +6937,9 @@
         ["mëdhatë", "mëdhatë"],
         ["ëve", "ëve"],
         ["u ke", "u ke"],
+        ["vritem", "vritem"],
+        ["e riu", "e riu"],
+        ["dyvjetë", "dyvjetë"],
         ["e doti", "e doti"],
         ["bi", "bi"],
         ["doei", "doei"],
@@ -7269,6 +7267,7 @@
         ["preka murin", "preka murin"],
         ["mijëra njerëz", "mijëra njerëz"],
         ["cilat janë", "cilat janë"],
+        ["shtëpia", "shtëpia"],
         ["Fëmijët lexonin libra në bibliotekën e qytetit.", "fëmijët lexonin libra në bibliotekën e qytetit."],
         ["lexoj", "lexoj"]
       ]
@@ -8885,6 +8884,9 @@
         ["mëdhatë", "Mëdhatë"],
         ["ëve", "Ëve"],
         ["u ke", "U ke"],
+        ["vritem", "Vritem"],
+        ["e riu", "E riu"],
+        ["dyvjetë", "Dyvjetë"],
         ["e doti", "E doti"],
         ["bi", "Bi"],
         ["doei", "Doei"],
@@ -9212,6 +9214,7 @@
         ["preka murin", "Preka murin"],
         ["mijëra njerëz", "Mijëra njerëz"],
         ["cilat janë", "Cilat janë"],
+        ["shtëpia", "Shtëpia"],
         ["Fëmijët lexonin libra në bibliotekën e qytetit.", "Fëmijët lexonin libra në bibliotekën e qytetit."],
         ["lexoj", "Lexoj"]
       ]
