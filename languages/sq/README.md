@@ -672,9 +672,12 @@ file is measured with every option on and with the defaults.
   (potatoes, 225) `patë`, goose; `gjer` (until, 405) "dormouse". Homographs
   the rows leave open: `treta` (109; `e treta`, the third) shows `tres`,
   to dissolve; `stërvitje` (223) and `ulje` (139), nouns wty-sq-en lacks,
-  show their verbs. `thirrje` (a call, 525) and `thirre` (you called, 369)
-  show `thirr`, soot: no rule reaches `thërras`. `ndjehem` (631, informal
-  for `ndihem`) shows `ndjej`, to forgive.
+  show their verbs. The forms of `thërras` (to call) on `thirr-` show
+  `thirr`, soot: `thirrur` (618), `thirri` (314), `thirra` (164) and the
+  nouns `thirrje` (a call, 525) and `thirre` (369). The pack has no table
+  for `thërras`, and wty-sq-en's own rows for `thirri` and `thirra` name
+  only `thirr`, which would rank first anyway (9.6). `ndjehem` (631,
+  informal for `ndihem`) shows `ndjej`, to forgive.
 - Participle adjectives in -ura and -uara (`Shtetet e Bashkuara`, `të
   njohura`) are traced as the aorist (1sg) and then the participle row:
   the aorist `a` → `` reads `bashkuar` + `a`, and a rule's trace beats the
