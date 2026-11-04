@@ -1,0 +1,1385 @@
+# Source: UniMorph ara (https://github.com/unimorph/ara), commit e9b7521ab75e3a7da6f996a428031164993e6f19, file ara
+# (sha256 01663d08dbc6bb2a4207749cb4c000926c72c7cf9ec3faa8521e4cb5e9d690f1), CC BY-SA 3.0, by the UniMorph contributors, from English Wiktionary.
+# 1496 rows sampled with seed 1 by sources/sample-corpus.py from the rows whose form wty-ar-en 2026.10.22 lists as a form of the lemma (README.md).
+# The rows of the sample the final rules reach; the others are in gaps.tsv (sources/split-corpus.py).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+v perf act	1	ازدهرنا	ازدهر	v	*
+v perf act	1	نامت	نام	v	*
+v perf act	1	ابتدأتا	ابتدأ	v	*
+v perf act	1	افتكرت	افتكر	v	*
+v perf act	1	اخضوضعتم	اخضوضع	v	*
+v perf act	1	ضايقوا	ضايق	v	*
+v perf act	1	سألن	سأل	v	*
+v perf act	1	شاهروا	شاهر	v	*
+v perf act	1	حاوطتن	حاوط	v	*
+v perf act	1	استمررتم	استمر	v	*
+v perf act	1	احتملت	احتمل	v	*
+v perf act	1	صفتا	صفا	v	*
+v perf act	1	أضافتا	أضاف	v	*
+v perf act	1	حميت	حمى	v	*
+v perf act	1	ربت	ربى	v	*
+v perf act	1	أبهمتن	أبهم	v	*
+v perf act	1	زدتن	زاد	v	*
+v perf act	1	اكتتبوا	اكتتب	v	*
+v perf act	1	اسلنطعنا	اسلنطع	v	*
+v perf act	1	والت	والى	v	*
+v perf act	1	احمررتن	احمر	v	*
+v perf act	1	اهتممتن	اهتم	v	*
+v perf act	1	أطعموا	أطعم	v	*
+v perf act	1	أشرت	أشار	v	*
+v perf act	1	أصبنا	أصاب	v	*
+v perf act	1	قرآ	قرأ	v	*
+v perf act	1	أحوجت	أحوج	v	*
+v perf act	1	حددتما	حدد	v	*
+v perf act	1	استنرتم	استنار	v	*
+v perf act	1	دندنتما	دندن	v	*
+v perf act	1	أضعتن	أضاع	v	*
+v perf act	1	فتشوا	فتش	v	*
+v perf act	1	استهزأتما	استهزأ	v	*
+v perf act	1	رضيتا	رضي	v	*
+v perf act	1	ضعتما	ضاع	v	*
+v perf act	1	كفيت	كفى	v	*
+v perf act	1	اشتغلتن	اشتغل	v	*
+v perf act	1	تسلتا	تسلى	v	*
+v perf act	1	اشتركوا	اشترك	v	*
+v perf act	1	استنفرت	استنفر	v	*
+v perf act	1	سعلتم	سعل	v	*
+v perf act	1	انحرفت	انحرف	v	*
+v perf act	1	أشارتا	أشار	v	*
+v perf act	1	دفأتما	دفأ	v	*
+v perf act	1	لعقتا	لعق	v	*
+v perf act	1	احقوقفتم	احقوقف	v	*
+v perf act	1	استعمرنا	استعمر	v	*
+v perf act	1	انصرفوا	انصرف	v	*
+v perf act	1	اذلوليتن	اذلولى	v	*
+v perf act	1	بصرتم	بصر	v	*
+v perf act	1	طالتا	طال	v	*
+v perf act	1	طلتن	طال	v	*
+v perf act	1	استقالت	استقال	v	*
+v perf act	1	انفردنا	انفرد	v	*
+v perf act	1	انتفختما	انتفخ	v	*
+v perf act	1	هندسوا	هندس	v	*
+v perf act	1	طارحتم	طارح	v	*
+v perf act	1	طفئتن	طفأ	v	*
+v perf act	1	حوقلتما	حوقل	v	*
+v perf act	1	واصلتن	واصل	v	*
+v perf act	1	أغرمتا	أغرم	v	*
+v perf act	1	صانوا	صان	v	*
+v perf act	1	اطمأنت	اطمأن	v	*
+v perf act	1	خلت	خلا	v	*
+v perf act	1	درين	درى	v	*
+v perf act	1	استضأتن	استضاء	v	*
+v perf act	1	جاورتا	جاور	v	*
+v perf act	1	كاثرت	كاثر	v	*
+v perf act	1	جمهرتن	جمهر	v	*
+v perf act	1	احتربتم	احترب	v	*
+v perf act	1	رغبتا	رغب	v	*
+v perf act	1	طهرتن	طهر	v	*
+v perf act	1	اختلطت	اختلط	v	*
+v perf act	1	استرجلتن	استرجل	v	*
+v perf act	1	غرغروا	غرغر	v	*
+v perf act	1	حوقلتم	حوقل	v	*
+v perf act	1	جرؤتم	جرؤ	v	*
+v perf act	1	صنتم	صان	v	*
+v perf act	1	أضفتن	أضاف	v	*
+v perf act	1	شاركتن	شارك	v	*
+v perf act	1	ألهمتما	ألهم	v	*
+v perf act	1	انقرضتما	انقرض	v	*
+v perf act	1	وطئتم	وطئ	v	*
+v perf act	1	نكنا	ناك	v	*
+v perf act	1	حوقلنا	حوقل	v	*
+v perf act	1	استشهدتم	استشهد	v	*
+v perf act	1	استسلمتم	استسلم	v	*
+v perf act	1	طاولتما	طاول	v	*
+v perf act	1	استيقظتن	استيقظ	v	*
+v perf act	1	أدمنا	أدمن	v	*
+v perf act	1	استكبرتن	استكبر	v	*
+v perf act	1	قاموا	قام	v	*
+v perf act	1	قهقهتما	قهقه	v	*
+v perf act	1	اشتططتما	اشتط	v	*
+v perf act	1	خلتا	خلا	v	*
+v perf act	1	عذبتا	عذب	v	*
+v perf act	1	ترجمت	ترجم	v	*
+v perf act	1	نكحن	نكح	v	*
+v perf act	1	تلفزتم	تلفز	v	*
+v perf act	1	سعتا	سعى	v	*
+v perf act	1	اكفهررت	اكفهر	v	*
+v perf act	1	قهقهتا	قهقه	v	*
+v perf act	1	أثارت	أثار	v	*
+v perf act	1	حطتم	حاط	v	*
+v perf act	1	عاكسنا	عاكس	v	*
+v perf act	1	ارجحنتا	ارجحن	v	*
+v perf act	1	غذوتما	غذا	v	*
+v perf act	1	مشيا	مشى	v	*
+v perf act	1	استلقيتم	استلقى	v	*
+v perf act	1	ذقت	ذاق	v	*
+v perf act	1	أودعوا	أودع	v	*
+v perf act	1	صحبن	صحب	v	*
+v perf act	1	جابوا	جاب	v	*
+v perf act	1	ناولتم	ناول	v	*
+v perf act	1	لاحظوا	لاحظ	v	*
+v perf act	1	استكتبت	استكتب	v	*
+v perf act	1	طفئتا	طفئ	v	*
+v perf act	1	درت	درى	v	*
+v perf act	1	صرت	صار	v	*
+v perf act	1	تهتما	تاه	v	*
+v perf act	1	تسليتن	تسلى	v	*
+v perf act	1	أبتا	أبى	v	*
+v perf act	1	قامت	قام	v	*
+v perf act	1	قاومتما	قاوم	v	*
+v perf act	1	بستم	باس	v	*
+v perf act	1	سخرت	سخر	v	*
+v perf act	1	أضاعوا	أضاع	v	*
+v perf act	1	اشتجرتن	اشتجر	v	*
+v perf act	1	استظهرت	استظهر	v	*
+v perf act	1	كافأن	كافأ	v	*
+v perf act	1	هددتما	هدد	v	*
+v perf act	1	استعددتما	استعد	v	*
+v perf act	1	احتفلتن	احتفل	v	*
+v perf act	1	كالمتا	كالم	v	*
+v perf act	1	افتكرتم	افتكر	v	*
+v perf act	1	أعرتن	أعار	v	*
+v perf act	1	ابيضضنا	ابيض	v	*
+v perf act	1	اجلعدتا	اجلعد	v	*
+v perf act	1	أربكتن	أربك	v	*
+v perf act	1	ساعدتما	ساعد	v	*
+v perf act	1	أذعتن	أذاع	v	*
+v perf act	1	انتصرت	انتصر	v	*
+v perf act	1	اعتنيتن	اعتنى	v	*
+v perf act	1	اكتشفتن	اكتشف	v	*
+v perf act	1	اختلفنا	اختلف	v	*
+v perf act	1	استعلمتم	استعلم	v	*
+v perf act	1	ترجمنا	ترجم	v	*
+v perf act	1	انحرفنا	انحرف	v	*
+v perf act	1	ابلاججنا	ابلاج	v	*
+v perf act	1	استسروا	استسر	v	*
+v perf act	1	استدرتم	استدار	v	*
+v perf act	1	افتكرتا	افتكر	v	*
+v perf act	1	فتشتن	فتش	v	*
+v perf act	1	استسقيتن	استسقى	v	*
+v perf act	1	التمستن	التمس	v	*
+v perf act	1	انشغفتن	انشغف	v	*
+v perf act	1	سالوا	سال	v	*
+v perf act	1	باركنا	بارك	v	*
+v perf act	1	ضفتن	ضاف	v	*
+v perf act	1	شفيتن	شفى	v	*
+v perf act	1	اخشوشبتا	اخشوشب	v	*
+v perf act	1	أشععت	أشع	v	*
+v perf act	1	انكتبتما	انكتب	v	*
+v perf act	1	حكون	حكا	v	*
+v perf act	1	تحاشيتم	تحاشى	v	*
+v perf act	1	دنا	دان	v	*
+v perf act	1	استفادتا	استفاد	v	*
+v perf act	1	اقتربوا	اقترب	v	*
+v perf act	1	اختلطوا	اختلط	v	*
+v perf act	1	افتعلتا	افتعل	v	*
+v perf act	1	ظللتما	ظلل	v	*
+v perf act	1	استمتعوا	استمتع	v	*
+v perf act	1	رانتا	ران	v	*
+v perf act	1	أسقيتم	أسقى	v	*
+v perf act	1	استوليتم	استولى	v	*
+v perf act	1	أرسلتم	أرسل	v	*
+v perf act	1	خالطتما	خالط	v	*
+v perf act	1	استثنت	استثنى	v	*
+v perf act	1	أفادت	أفاد	v	*
+v perf act	1	استدفأت	استدفأ	v	*
+v perf act	1	زرت	زار	v	*
+v perf act	1	طفت	طفا	v	*
+v perf act	1	رأت	رأى	v	*
+v perf act	1	قعدنا	قعد	v	*
+v perf act	1	استهدفتم	استهدف	v	*
+v perf act	1	علوتما	علا	v	*
+v perf act	1	ساءلا	ساءل	v	*
+v perf act	1	استوردوا	استورد	v	*
+v perf act	1	غنيتن	غنى	v	*
+v perf act	1	أعارا	أعار	v	*
+v perf act	1	حيتا	حيا	v	*
+v perf act	1	نفيت	نفى	v	*
+v perf act	1	بارتا	بارى	v	*
+v perf act	1	ذقتما	ذاق	v	*
+v perf act	1	أيقنوا	أيقن	v	*
+v perf act	1	انطفأتا	انطفأ	v	*
+v perf act	1	ارتزقتا	ارتزق	v	*
+v perf act	1	استمطروا	استمطر	v	*
+v perf act	1	أنبأت	أنبأ	v	*
+v perf act	1	انقادتا	انقاد	v	*
+v perf pass	1	استؤجرنا	استأجر	v	*
+v perf pass	1	استؤصلوا	استأصل	v	*
+v perf pass	1	روقبتا	راقب	v	*
+v perf pass	1	روجعتم	راجع	v	*
+v perf pass	1	ضيعتا	ضاع	v	*
+v perf pass	1	ملئن	ملأ	v	*
+v perf pass	1	دعينا	دعا	v	*
+v perf pass	1	بوركا	بارك	v	*
+v perf pass	1	أسئمت	أسأم	v	*
+v perf pass	1	مضي	مضى	v	*
+v perf pass	1	أهينتا	أهان	v	*
+v perf pass	1	حيط	حاط	v	*
+v perf pass	1	موثلنا	ماثل	v	*
+v perf pass	1	عوونتم	عاون	v	*
+v perf pass	1	جونستا	جانس	v	*
+v perf pass	1	نيكوا	ناك	v	*
+v perf pass	1	قومرن	قامر	v	*
+v perf pass	1	أهينت	أهان	v	*
+v perf pass	1	شيع	شاع	v	*
+v perf pass	1	حوربتم	حارب	v	*
+v perf pass	1	استقيلتا	استقال	v	*
+v perf pass	1	موزحتما	مازح	v	*
+v perf pass	1	طوولن	طاول	v	*
+v perf pass	1	حنئت	حنأ	v	*
+v perf pass	1	قوبلتا	قابل	v	*
+v perf pass	1	استنير	استنار	v	*
+v perf pass	1	روجع	راجع	v	*
+v perf pass	1	قوطعن	قاطع	v	*
+v perf pass	1	قورضنا	قارض	v	*
+v perf pass	1	أضئت	أضاء	v	*
+v perf pass	1	سئلتن	سأل	v	*
+v perf pass	1	نوولا	ناول	v	*
+v perf pass	1	صورعتا	صارع	v	*
+v perf pass	1	رئي	رأى	v	*
+v impf ind act	1	أختتن	اختتن	v	*
+v impf ind act	1	تحوقلان	حوقل	v	*
+v impf ind act	1	ترددن	ردد	v	*
+v impf ind act	1	تعترفان	اعترف	v	*
+v impf ind act	1	يهبطان	هبط	v	*
+v impf ind act	1	يجلنفعان	اجلنفع	v	*
+v impf ind act	1	ينبئان	أنبأ	v	*
+v impf ind act	1	تحاربون	حارب	v	*
+v impf ind act	1	تغرمين	أغرم	v	*
+v impf ind act	1	تهدرجون	هدرج	v	*
+v impf ind act	1	تزوران	زار	v	*
+v impf ind act	1	تستمسك	استمسك	v	*
+v impf ind act	1	يستلهمان	استلهم	v	*
+v impf ind act	1	تبهم	أبهم	v	*
+v impf ind act	1	تلعقين	لعق	v	*
+v impf ind act	1	يتلفز	تلفز	v	*
+v impf ind act	1	تفتعلون	افتعل	v	*
+v impf ind act	1	يسعلون	سعل	v	*
+v impf ind act	1	يبوحان	باح	v	*
+v impf ind act	1	نشير	أشار	v	*
+v impf ind act	1	يلتفت	التفت	v	*
+v impf ind act	1	يبطئون	بطأ	v	*
+v impf ind act	1	تستذكران	استذكر	v	*
+v impf ind act	1	أنام	نام	v	*
+v impf ind act	1	يعاقبان	عاقب	v	*
+v impf ind act	1	أستند	استند	v	*
+v impf ind act	1	تباليان	بالى	v	*
+v impf ind act	1	تجهزن	جهز	v	*
+v impf ind act	1	تخرنمسون	اخرنمس	v	*
+v impf ind act	1	تخرأ	خرئ	v	*
+v impf ind act	1	يتحاشون	تحاشى	v	*
+v impf ind act	1	تزور	زار	v	*
+v impf ind act	1	تستمعن	استمع	v	*
+v impf ind act	1	يقولان	قال	v	*
+v impf ind act	1	تعرن	أعار	v	*
+v impf ind act	1	يخوشون	خوش	v	*
+v impf ind act	1	ننتحل	انتحل	v	*
+v impf ind act	1	تستقرئان	استقرأ	v	*
+v impf ind act	1	تكاثران	كاثر	v	*
+v impf ind act	1	تغرمن	أغرم	v	*
+v impf ind act	1	تغنيان	غنى	v	*
+v impf ind act	1	تتلفنين	تلفن	v	*
+v impf ind act	1	تشتملان	اشتمل	v	*
+v impf ind act	1	تستذنب	استذنب	v	*
+v impf ind act	1	يدعون	ادعى	v	*
+v impf ind act	1	يناسبن	ناسب	v	*
+v impf ind act	1	يضللن	ضل	v	*
+v impf ind act	1	نضيع	ضيع	v	*
+v impf ind act	1	تحاربين	حارب	v	*
+v impf ind act	1	يحكي	حكى	v	*
+v impf ind act	1	يثابران	ثابر	v	*
+v impf ind act	1	يلحقن	ألحق	v	*
+v impf ind act	1	تترجمين	ترجم	v	*
+v impf ind act	1	تطفو	طفا	v	*
+v impf ind act	1	أستلهم	استلهم	v	*
+v impf ind act	1	تنصرفون	انصرف	v	*
+v impf ind act	1	أهنئ	هنأ	v	*
+v impf ind act	1	تلهمان	ألهم	v	*
+v impf ind act	1	ينتويان	انتوى	v	*
+v impf ind act	1	تحرران	حرر	v	*
+v impf ind act	1	تجتمعان	اجتمع	v	*
+v impf ind act	1	تغيبين	غاب	v	*
+v impf ind act	1	تتمنون	تمنى	v	*
+v impf ind act	1	يرببون	ربب	v	*
+v impf ind act	1	يخالطون	خالط	v	*
+v impf ind act	1	يناولون	ناول	v	*
+v impf ind act	1	تلتهمين	التهم	v	*
+v impf ind act	1	تأتيان	أتى	v	*
+v impf ind act	1	يحتسبن	احتسب	v	*
+v impf ind act	1	يتوبون	تاب	v	*
+v impf ind act	1	تستبدلان	استبدل	v	*
+v impf ind act	1	يحاربن	حارب	v	*
+v impf ind act	1	تباحث	باحث	v	*
+v impf ind act	1	تستمسكن	استمسك	v	*
+v impf ind act	1	تقهقهون	قهقه	v	*
+v impf ind act	1	تشيرين	أشار	v	*
+v impf ind act	1	يجهزن	جهز	v	*
+v impf ind act	1	يبوح	باح	v	*
+v impf ind act	1	تتمتمن	تمتم	v	*
+v impf ind act	1	نخروط	اخروط	v	*
+v impf ind act	1	تستيقظان	استيقظ	v	*
+v impf ind act	1	تتعالون	تعالى	v	*
+v impf ind act	1	ينتقمان	انتقم	v	*
+v impf ind act	1	أشيع	أشاع	v	*
+v impf ind act	1	تشيع	أشاع	v	*
+v impf ind act	1	أحارب	حارب	v	*
+v impf ind act	1	يرادون	راد	v	*
+v impf ind act	1	يستكتب	استكتب	v	*
+v impf ind act	1	أحدودب	احدودب	v	*
+v impf ind act	1	تبرمجن	برمج	v	*
+v impf ind act	1	تنفعل	انفعل	v	*
+v impf ind act	1	تتمنين	تمنى	v	*
+v impf ind act	1	ينجو	نجا	v	*
+v impf ind act	1	أستميت	استمات	v	*
+v impf ind act	1	تذلعب	اذلعب	v	*
+v impf ind act	1	تستسلمين	استسلم	v	*
+v impf ind act	1	ينتظم	انتظم	v	*
+v impf ind act	1	يخافان	خاف	v	*
+v impf ind act	1	تنكسرن	انكسر	v	*
+v impf ind act	1	تختارين	اختار	v	*
+v impf ind act	1	تتهيأن	تهيأ	v	*
+v impf ind act	1	نحاول	حاول	v	*
+v impf ind act	1	تخرطمين	خرطم	v	*
+v impf ind act	1	يستنفرن	استنفر	v	*
+v impf ind act	1	تستصبحون	استصبح	v	*
+v impf ind act	1	تخابرن	خابر	v	*
+v impf ind act	1	يفقسن	فقس	v	*
+v impf ind act	1	تتحدن	اتحد	v	*
+v impf ind act	1	تودع	أودع	v	*
+v impf ind act	1	تلحقان	ألحق	v	*
+v impf ind act	1	ينكربن	انكرب	v	*
+v impf ind act	1	يتصلون	اتصل	v	*
+v impf ind act	1	يوالون	والى	v	*
+v impf ind act	1	تشكون	شكا	v	*
+v impf ind act	1	تستقبحان	استقبح	v	*
+v impf ind act	1	يصيرون	صار	v	*
+v impf ind act	1	نستكتب	استكتب	v	*
+v impf ind act	1	تضيعان	ضاع	v	*
+v impf ind act	1	تتباءس	تباءس	v	*
+v impf ind act	1	تزدان	ازدان	v	*
+v impf ind act	1	يسترزق	استرزق	v	*
+v impf ind act	1	تطارحون	طارح	v	*
+v impf ind act	1	أستمطر	استمطر	v	*
+v impf ind act	1	أزحر	زحر	v	*
+v impf ind act	1	أجتهد	اجتهد	v	*
+v impf ind act	1	ينتفضون	انتفض	v	*
+v impf ind act	1	يعاونان	عاون	v	*
+v impf ind act	1	يخضاران	اخضار	v	*
+v impf ind act	1	تطفأن	طفأ	v	*
+v impf ind act	1	نجهز	جهز	v	*
+v impf ind act	1	تنامين	نام	v	*
+v impf ind act	1	تنتهون	انتهى	v	*
+v impf ind act	1	ألغي	ألغى	v	*
+v impf ind act	1	أمحو	محا	v	*
+v impf ind act	1	تطارحن	طارح	v	*
+v impf ind act	1	يداورن	داور	v	*
+v impf ind act	1	نخالف	خالف	v	*
+v impf ind act	1	تتقنين	أتقن	v	*
+v impf ind act	1	تستعمرون	استعمر	v	*
+v impf ind act	1	تسئم	أسأم	v	*
+v impf ind act	1	ينتظران	انتظر	v	*
+v impf ind act	1	يرتجيان	ارتجى	v	*
+v impf ind act	1	يمكنون	أمكن	v	*
+v impf ind act	1	يسقون	أسقى	v	*
+v impf ind act	1	نستأذن	استأذن	v	*
+v impf ind act	1	يستعلم	استعلم	v	*
+v impf ind act	1	تقتتلين	اقتتل	v	*
+v impf ind act	1	تستقيمون	استقام	v	*
+v impf ind act	1	تدممان	دمم	v	*
+v impf ind act	1	يتسلين	تسلى	v	*
+v impf ind act	1	تزدانون	ازدان	v	*
+v impf ind act	1	تصيحون	صاح	v	*
+v impf ind act	1	ترثعنن	ارثعن	v	*
+v impf ind act	1	تستعجلين	استعجل	v	*
+v impf ind act	1	تقتنعين	اقتنع	v	*
+v impf ind act	1	تبأسن	بئس	v	*
+v impf ind act	1	تسقون	سقى	v	*
+v impf ind act	1	تبدأ	بدأ	v	*
+v impf ind act	1	يقتضب	اقتضب	v	*
+v impf ind act	1	نجانس	جانس	v	*
+v impf ind act	1	تبرزن	برز	v	*
+v impf ind act	1	يحتوين	احتوى	v	*
+v impf ind act	1	يستجنان	استجن	v	*
+v impf ind act	1	تغرمون	أغرم	v	*
+v impf ind act	1	تستجيرين	استجار	v	*
+v impf ind act	1	تناقشان	ناقش	v	*
+v impf ind act	1	تصيبون	أصاب	v	*
+v impf ind act	1	أستهزئ	استهزأ	v	*
+v impf ind act	1	تعتادون	اعتاد	v	*
+v impf ind act	1	تذاكرين	ذاكر	v	*
+v impf ind act	1	تطأ	وطئ	v	*
+v impf ind act	1	ينسحبان	انسحب	v	*
+v impf ind act	1	يحقوقف	احقوقف	v	*
+v impf ind act	1	تصطليان	اصطلى	v	*
+v impf ind act	1	تستعبدين	استعبد	v	*
+v impf ind act	1	تعوج	اعوج	v	*
+v impf ind act	1	تتترك	تترك	v	*
+v impf ind act	1	يتغديان	تغدى	v	*
+v impf ind act	1	يذلوليان	اذلولى	v	*
+v impf ind act	1	ينكشفون	انكشف	v	*
+v impf ind act	1	يخشوشبون	اخشوشب	v	*
+v impf ind act	1	تبرهن	برهن	v	*
+v impf ind act	1	تستظهرون	استظهر	v	*
+v impf ind act	1	تسبكرون	اسبكر	v	*
+v impf ind act	1	أخطأ	خطئ	v	*
+v impf ind act	1	ينمن	نام	v	*
+v impf ind act	1	تستطيع	استطاع	v	*
+v impf ind act	1	تنحرفين	انحرف	v	*
+v impf ind act	1	أنيك	ناك	v	*
+v impf ind act	1	أنقطع	انقطع	v	*
+v impf ind act	1	يعتمل	اعتمل	v	*
+v impf ind act	1	تأبين	أبى	v	*
+v impf ind act	1	أدحو	دحا	v	*
+v impf ind act	1	يسافرن	سافر	v	*
+v impf ind act	1	أجامل	جامل	v	*
+v impf ind act	1	تشتغلون	اشتغل	v	*
+v impf ind act	1	يقتبلون	اقتبل	v	*
+v impf ind act	1	ينزوون	انزوى	v	*
+v impf ind pass	1	تقتضى	اقتضى	v	*
+v impf ind pass	1	نعطى	أعطى	v	*
+v impf ind pass	1	نستنبأ	استنبأ	v	*
+v impf ind pass	1	تداران	أدار	v	*
+v impf ind pass	1	نفسى	فسا	v	*
+v impf ind pass	1	يغنى	غنى	v	*
+v impf ind pass	1	يقال	قال	v	*
+v impf ind pass	1	تغذى	غذا	v	*
+v impf ind pass	1	أمحى	محا	v	*
+v impf ind pass	1	نلاقى	لاقى	v	*
+v impf ind pass	1	يستثنى	استثنى	v	*
+v impf ind pass	1	تذاعون	أذاع	v	*
+v impf ind pass	1	تذرى	ذرا	v	*
+v impf ind pass	1	يغطى	غطى	v	*
+v impf ind pass	1	تحيا	حيا	v	*
+v impf ind pass	1	تحكين	حكا	v	*
+v impf ind pass	1	ينارون	أنار	v	*
+v impf ind pass	1	تعار	أعار	v	*
+v impf ind pass	1	تضاف	ضاف	v	*
+v impf ind pass	1	يشاعان	أشاع	v	*
+v impf ind pass	1	ننادى	نادى	v	*
+v impf ind pass	1	ينديان	ندا	v	*
+v impf ind pass	1	يدانان	دان	v	*
+v impf ind pass	1	تضاءان	أضاء	v	*
+v impf ind pass	1	تثاران	أثار	v	*
+v impf ind pass	1	تزارون	زار	v	*
+v impf ind pass	1	تحمى	حمى	v	*
+v impf ind pass	1	يصابون	أصاب	v	*
+v impf ind pass	1	أرجى	رجا	v	*
+v impf ind pass	1	يفاجأ	فاجأ	v	*
+v impf ind pass	1	تطال	طال	v	*
+v impf ind pass	1	يناران	أنار	v	*
+v impf ind pass	1	يذرين	ذرا	v	*
+v impf ind pass	1	يكافأ	كافأ	v	*
+v impf ind pass	1	يستضاء	استضاء	v	*
+v impf ind pass	1	يباسون	باس	v	*
+v impf ind pass	1	ينفين	نفا	v	*
+v impf juss act	1	يهد	هاد	v	*
+v impf juss act	1	تستتيبي	استتاب	v	*
+v impf juss act	1	ترتعدا	ارتعد	v	*
+v impf juss act	1	تضيفا	أضاف	v	*
+v impf juss act	1	نجع	جاع	v	*
+v impf juss act	1	يدع	دعا	v	*
+v impf juss act	1	تدعوا	ادعى	v	*
+v impf juss act	1	تأتما	ائتم	v	*
+v impf juss act	1	يناووا	ناوى	v	*
+v impf juss act	1	تستميتا	استمات	v	*
+v impf juss act	1	تستوردا	استورد	v	*
+v impf juss act	1	تبدوا	بدا	v	*
+v impf juss act	1	ينقادا	انقاد	v	*
+v impf juss act	1	نستضئ	استضاء	v	*
+v impf juss act	1	نتغد	تغدى	v	*
+v impf juss act	1	يرتدوا	ارتدى	v	*
+v impf juss act	1	تستنفرا	استنفر	v	*
+v impf juss act	1	يذر	ذرا	v	*
+v impf juss act	1	نذع	أذاع	v	*
+v impf juss act	1	يدعوا	دعا	v	*
+v impf juss act	1	نشق	شاق	v	*
+v impf juss act	1	أخف	أخفى	v	*
+v impf juss act	1	تنصفا	أنصف	v	*
+v impf juss act	1	تقاومي	قاوم	v	*
+v impf juss act	1	تراقبا	راقب	v	*
+v impf juss act	1	تسع	سعى	v	*
+v impf juss act	1	يبق	بقي	v	*
+v impf juss act	1	أستو	استوى	v	*
+v impf juss act	1	يقتضبا	اقتضب	v	*
+v impf juss act	1	تهددا	هدد	v	*
+v impf juss act	1	يستخدما	استخدم	v	*
+v impf juss act	1	أساو	ساوى	v	*
+v impf juss act	1	تبتعدا	ابتعد	v	*
+v impf juss act	1	يواصلا	واصل	v	*
+v impf juss act	1	تكتحلا	اكتحل	v	*
+v impf juss act	1	يستعملا	استعمل	v	*
+v impf juss act	1	تخالفي	خالف	v	*
+v impf juss act	1	يستول	استولى	v	*
+v impf juss act	1	تحط	حاط	v	*
+v impf juss act	1	تخامرا	خامر	v	*
+v impf juss act	1	تسعيا	سعى	v	*
+v impf juss act	1	تشيري	أشار	v	*
+v impf juss act	1	تنعقدي	انعقد	v	*
+v impf juss act	1	يستأمنا	استأمن	v	*
+v impf juss act	1	تنفطرا	انفطر	v	*
+v impf juss act	1	ترببا	ربب	v	*
+v impf juss act	1	يصطلوا	اصطلى	v	*
+v impf juss act	1	تتلفزي	تلفز	v	*
+v impf juss act	1	تستقبلي	استقبل	v	*
+v impf juss act	1	يبقوا	بقي	v	*
+v impf juss act	1	أجع	جاع	v	*
+v impf juss act	1	ترتزقا	ارتزق	v	*
+v impf juss act	1	يختمرا	اختمر	v	*
+v impf juss act	1	تعلني	أعلن	v	*
+v impf juss act	1	يثبطا	ثبط	v	*
+v impf juss act	1	يقل	قال	v	*
+v impf juss act	1	ندم	دام	v	*
+v impf juss act	1	ينم	نما	v	*
+v impf juss act	1	يفرنسا	فرنس	v	*
+v impf juss act	1	تستظهري	استظهر	v	*
+v impf juss act	1	تستكبري	استكبر	v	*
+v impf juss act	1	تعتن	اعتنى	v	*
+v impf juss act	1	يتغدوا	تغدى	v	*
+v impf juss act	1	ينه	أنهى	v	*
+v impf juss act	1	يباروا	بارى	v	*
+v impf juss act	1	تستطيلا	استطال	v	*
+v impf juss act	1	تنهوا	أنهى	v	*
+v impf juss act	1	تقارضا	قارض	v	*
+v impf juss act	1	يسئما	أسأم	v	*
+v impf juss act	1	يصر	صار	v	*
+v impf juss act	1	يكتربا	اكترب	v	*
+v impf juss act	1	تشكوا	شكا	v	*
+v impf juss act	1	تستسقوا	استسقى	v	*
+v impf juss act	1	تأت	أتى	v	*
+v impf juss act	1	تبوسا	باس	v	*
+v impf juss act	1	يحاوطا	حاوط	v	*
+v impf juss act	1	يقترحا	اقترح	v	*
+v impf juss act	1	تمتثلي	امتثل	v	*
+v impf juss act	1	تدففا	دفف	v	*
+v impf juss act	1	تستأنيا	استأنى	v	*
+v impf juss act	1	تعتمرا	اعتمر	v	*
+v impf juss act	1	تضيعي	ضيع	v	*
+v impf juss act	1	يوافوا	وافى	v	*
+v impf juss act	1	تضيفي	ضاف	v	*
+v impf juss act	1	يرش	رشا	v	*
+v impf juss act	1	تمشوا	مشى	v	*
+v impf juss act	1	تذروا	ذرا	v	*
+v impf juss act	1	نكف	كفى	v	*
+v impf juss act	1	يستويا	استوى	v	*
+v impf juss act	1	تتفرنسا	تفرنس	v	*
+v impf juss act	1	تحرنجما	احرنجم	v	*
+v impf juss act	1	يشفيا	شفى	v	*
+v impf juss act	1	يحتط	احتاط	v	*
+v impf juss act	1	يستدفئا	استدفأ	v	*
+v impf juss act	1	تناقشا	ناقش	v	*
+v impf juss act	1	ترتح	ارتاح	v	*
+v impf juss act	1	تدحي	دحا	v	*
+v impf juss act	1	تستني	استن	v	*
+v impf juss act	1	نبار	بارى	v	*
+v impf juss act	1	تسترزقا	استرزق	v	*
+v impf juss act	1	يستحملا	استحمل	v	*
+v impf juss act	1	تؤدي	أدى	v	*
+v impf juss act	1	ينفوا	نفى	v	*
+v impf juss act	1	تنسي	نسى	v	*
+v impf juss act	1	يفاجئا	فاجأ	v	*
+v impf juss act	1	تقم	قام	v	*
+v impf juss act	1	تنتفضي	انتفض	v	*
+v impf juss act	1	يحتلما	احتلم	v	*
+v impf juss act	1	تذر	ذرى	v	*
+v impf juss act	1	يذوقا	ذاق	v	*
+v impf juss act	1	أمت	أمات	v	*
+v impf juss act	1	يحووا	حوى	v	*
+v impf juss act	1	تتمن	تمنى	v	*
+v impf juss act	1	تستوليا	استولى	v	*
+v impf juss act	1	يعتن	اعتنى	v	*
+v impf juss act	1	تجاوري	جاور	v	*
+v impf juss act	1	تشاركي	شارك	v	*
+v impf juss act	1	تتعشي	تعشى	v	*
+v impf juss act	1	تختارا	اختار	v	*
+v impf juss act	1	يضئ	أضاء	v	*
+v impf juss pass	1	يفاضا	فاض	v	*
+v impf juss pass	1	يدحيا	دحا	v	*
+v impf juss pass	1	يرانا	ران	v	*
+v impf juss pass	1	يزارا	زار	v	*
+v impf juss pass	1	تباسي	باس	v	*
+v impf juss pass	1	تفسيا	فسا	v	*
+v impf juss pass	1	يقأ	قاء	v	*
+v impf juss pass	1	تسائي	ساء	v	*
+v impf juss pass	1	تضافا	ضاف	v	*
+v impf juss pass	1	يضاعا	ضاع	v	*
+v impf juss pass	1	تفادي	أفاد	v	*
+v impf juss pass	1	تطاعي	طاع	v	*
+v impf juss pass	1	تذاقا	ذاق	v	*
+v impf juss pass	1	يوق	وقى	v	*
+v impf juss pass	1	تصابا	أصاب	v	*
+v impf juss pass	1	تفاضي	فاض	v	*
+v impf juss pass	1	تحنيا	حنى	v	*
+v impf juss pass	1	يثارا	أثار	v	*
+v impf juss pass	1	تنارا	أنار	v	*
+v imp	1	استمنين	استمنى	v	*
+v imp	1	اذر	ذرى	v	*
+v imp	1	داورا	داور	v	*
+v imp	1	ادعي	دعا	v	*
+v imp	1	امتدي	امتد	v	*
+v imp	1	اقتصدي	اقتصد	v	*
+v imp	1	اصغ	صغا	v	*
+v imp	1	ثبطا	ثبط	v	*
+v imp	1	أحبطا	أحبط	v	*
+v imp	1	استفدن	استفاد	v	*
+v imp	1	سمين	سمى	v	*
+v imp	1	أعجمن	أعجم	v	*
+v imp	1	أمتن	أمات	v	*
+v imp	1	اشمئزي	اشمأز	v	*
+v imp	1	اعتمرا	اعتمر	v	*
+v imp	1	استلهمن	استلهم	v	*
+v imp	1	استسلما	استسلم	v	*
+v imp	1	اكتحلا	اكتحل	v	*
+v imp	1	استأصلن	استأصل	v	*
+v imp	1	استكتبي	استكتب	v	*
+v imp	1	افقسي	فقس	v	*
+v imp	1	انثنيا	انثنى	v	*
+v imp	1	اضطرا	اضطر	v	*
+v imp	1	صادرا	صادر	v	*
+v imp	1	استرجلن	استرجل	v	*
+v imp	1	بيعي	باع	v	*
+v imp	1	قلدي	قلد	v	*
+v imp	1	رافقي	رافق	v	*
+v imp	1	اذلعبي	اذلعب	v	*
+v imp	1	استمسكا	استمسك	v	*
+v imp	1	جاورا	جاور	v	*
+v imp	1	استلقوا	استلقى	v	*
+v imp	1	اكتتبا	اكتتب	v	*
+v imp	1	اخرنمسن	اخرنمس	v	*
+v imp	1	أفدن	أفاد	v	*
+v imp	1	أسبغي	أسبغ	v	*
+v imp	1	امتلكن	امتلك	v	*
+v imp	1	ارميا	رمى	v	*
+v imp	1	احتاجي	احتاج	v	*
+v imp	1	لاقوا	لاقى	v	*
+v imp	1	تمتمي	تمتم	v	*
+v imp	1	ماثلن	ماثل	v	*
+v imp	1	بيعا	باع	v	*
+v imp	1	انعقدي	انعقد	v	*
+v imp	1	أبهما	أبهم	v	*
+v imp	1	ارتبكن	ارتبك	v	*
+v imp	1	شاغلا	شاغل	v	*
+v imp	1	صحي	صحى	v	*
+v imp	1	بالي	بالى	v	*
+v imp	1	انتظري	انتظر	v	*
+v imp	1	حيوا	حيا	v	*
+v imp	1	انكسري	انكسر	v	*
+v imp	1	قمن	قام	v	*
+v imp	1	اخطئي	خطئ	v	*
+v imp	1	توها	تاه	v	*
+v imp	1	جانسا	جانس	v	*
+v imp	1	استكلبن	استكلب	v	*
+v imp	1	أجلدي	أجلد	v	*
+v imp	1	استقيما	استقام	v	*
+v imp	1	طارحي	طارح	v	*
+v imp	1	هنئي	هنأ	v	*
+v imp	1	دببا	دبب	v	*
+v imp	1	انتظمن	انتظم	v	*
+v imp	1	استرزقي	استرزق	v	*
+v imp	1	صحوا	صحى	v	*
+v imp	1	استقل	استقال	v	*
+v imp	1	تتركا	تترك	v	*
+v imp	1	أجلدن	أجلد	v	*
+v imp	1	حاربا	حارب	v	*
+v imp	1	ريا	رأى	v	*
+v imp	1	خلوا	خلى	v	*
+v imp	1	انقلبن	انقلب	v	*
+v imp	1	اجتهدي	اجتهد	v	*
+v imp	1	قهقهن	قهقه	v	*
+v imp	1	اصطليا	اصطلى	v	*
+v imp	1	التقين	التقى	v	*
+v imp	1	أعجما	أعجم	v	*
+v imp	1	خولن	خول	v	*
+v imp	1	استجنن	استجن	v	*
+v imp	1	حنئن	حنأ	v	*
+v imp	1	افتقرا	افتقر	v	*
+v imp	1	استضيفا	استضاف	v	*
+v imp	1	اجلعدا	اجلعد	v	*
+v imp	1	أربكن	أربك	v	*
+v imp	1	باشري	باشر	v	*
+v imp	1	اعوجي	اعوج	v	*
+v imp	1	دفئي	دفأ	v	*
+v imp	1	انتصرا	انتصر	v	*
+v imp	1	استتبن	استتاب	v	*
+v imp	1	طاوعن	طاوع	v	*
+v imp	1	اعتزمي	اعتزم	v	*
+v imp	1	قابلا	قابل	v	*
+v imp	1	استردي	استرد	v	*
+v imp	1	ظاهرن	ظاهر	v	*
+v imp	1	ناويا	ناوى	v	*
+v imp	1	ابتاعي	ابتاع	v	*
+v imp	1	افتكرا	افتكر	v	*
+v imp	1	احوين	حوى	v	*
+v imp	1	ربيا	ربى	v	*
+v imp	1	اجرمزي	اجرمز	v	*
+v imp	1	بطئي	بطأ	v	*
+v imp	1	اجتمعي	اجتمع	v	*
+v imp	1	شاغلن	شاغل	v	*
+v imp	1	أضيفا	أضاف	v	*
+v imp	1	استخدمي	استخدم	v	*
+v imp	1	نافسن	نافس	v	*
+v imp	1	استحي	استحيا	v	*
+v imp	1	احكين	حكى	v	*
+v imp	1	خالطي	خالط	v	*
+v imp	1	اقترحا	اقترح	v	*
+v imp	1	انتظرا	انتظر	v	*
+v imp	1	استمتعي	استمتع	v	*
+v imp	1	اشتغلا	اشتغل	v	*
+v imp	1	انقض	انقضى	v	*
+v imp	1	افتتحي	افتتح	v	*
+v imp	1	اجرؤا	جرؤ	v	*
+v imp	1	احتاجا	احتاج	v	*
+v ptcp	1	ملفى	ألفى	v	*
+v ptcp	1	مشترك	اشترك	v	*
+v ptcp	1	مقتضب	اقتضب	v	*
+v ptcp	1	مستلم	استلم	v	*
+v ptcp	1	مسمى	سمى	v	*
+v ptcp	1	مصون	صان	v	*
+v ptcp	1	منتهى	انتهى	v	*
+v ptcp	1	متفق	اتفق	v	*
+v ptcp	1	مدري	درى	v	*
+v ptcp	1	مقتتل	اقتتل	v	*
+v ptcp	1	منتقم	انتقم	v	*
+v ptcp	1	نائم	نام	v	*
+v ptcp	1	مصوب	صوب	v	*
+v ptcp	1	مختلف	اختلف	v	*
+v ptcp	1	مزدان	ازدان	v	*
+v ptcp	1	معلن	أعلن	v	*
+v ptcp	1	منثن	انثنى	v	*
+v ptcp	1	محتمل	احتمل	v	*
+v ptcp	1	مستجار	استجار	v	*
+v ptcp	1	مصير	صار	v	*
+v ptcp	1	مستحق	استحق	v	*
+v ptcp	1	متقى	اتقى	v	*
+v ptcp	1	مستنسر	استنسر	v	*
+v ptcp	1	مهان	أهان	v	*
+v ptcp	1	معلو	علا	v	*
+v ptcp	1	مربك	أربك	v	*
+vn	1	استمساك	استمسك	v	*
+vn	1	اعتراف	اعترف	v	*
+vn	1	اشتراك	اشترك	v	*
+vn	1	إطعام	أطعم	v	*
+vn	1	تنسية	نسى	v	*
+vn	1	انصراف	انصرف	v	*
+vn	1	اشتهار	اشتهر	v	*
+vn	1	افتعال	افتعل	v	*
+vn	1	استعراب	استعرب	v	*
+vn	1	استخدام	استخدم	v	*
+vn	1	اعتمال	اعتمل	v	*
+vn	1	مشاهرة	شاهر	v	*
+vn	1	ازدهار	ازدهر	v	*
+n sg def	1	الانتساب	انتساب	n	*
+n sg def	1	الطبلة	طبلة	n	*
+n sg def	1	الرشاد	رشاد	n	*
+n sg def	1	الحطب	حطب	n	*
+n sg def	1	الشاش	شاش	n	*
+n sg def	1	التغسيل	تغسيل	n	*
+n sg def	1	الاستكفاف	استكفاف	n	*
+n sg def	1	التدميم	تدميم	n	*
+n sg def	1	الوالد	والد	n	*
+n sg def	1	الحزب	حزب	n	*
+n sg def	1	الإنشاء	إنشاء	n	*
+n sg def	1	الاسترزاق	استرزاق	n	*
+n sg def	1	التصعيد	تصعيد	n	*
+n sg def	1	السيدة	سيدة	n	*
+n sg def	1	الخبار	خبار	n	*
+n sg def	1	الفقوس	فقوس	n	*
+n sg def	1	الاستئناء	استئناء	n	*
+n sg def	1	التبصير	تبصير	n	*
+n sg def	1	الإشعار	إشعار	n	*
+n sg def	1	الإعمال	إعمال	n	*
+n sg def	1	المساية	مساية	n	*
+n sg def	1	الإثمد	إثمد	n	*
+n sg def	1	التسحير	تسحير	n	*
+n sg def	1	الوجوب	وجوب	n	*
+n sg def	1	الإذهاب	إذهاب	n	*
+n sg def	1	الفنان	فنان	n	*
+n sg def	1	الكثرة	كثرة	n	*
+n sg def	1	المعاكسة	معاكسة	n	*
+n sg def	1	الطحينة	طحينة	n	*
+n sg def	1	الدعوى	دعوى	n	*
+n sg def	1	النفاذ	نفاذ	n	*
+n sg def	1	الثبار	ثبار	n	*
+n sg def	1	الاستمطار	استمطار	n	*
+n sg def	1	الويكي	ويكي	n	*
+n sg def	1	البهار	بهار	n	*
+n sg def	1	الارتزاق	ارتزاق	n	*
+n sg def	1	التشجير	تشجير	n	*
+n sg def	1	الشابة	شابة	n	*
+n sg def	1	التطويع	تطويع	n	*
+n sg def	1	الفنطاس	فنطاس	n	*
+n sg def	1	الظهار	ظهار	n	*
+n sg def	1	السائح	سائح	n	*
+n sg def	1	البلاء	بلاء	n	*
+n sg def	1	التطبيل	تطبيل	n	*
+n sg def	1	التعريب	تعريب	n	*
+n sg def	1	الجرس	جرس	n	*
+n sg def	1	العضيض	عضيض	n	*
+n sg def	1	اللحظة	لحظة	n	*
+n sg def	1	المخابرة	مخابرة	n	*
+n sg def	1	السلسلة	سلسلة	n	*
+n sg def	1	الترفيع	ترفيع	n	*
+n sg def	1	العاطف	عاطف	n	*
+n sg def	1	التلويث	تلويث	n	*
+n sg def	1	الخلقة	خلقة	n	*
+n sg def	1	الفوتون	فوتون	n	*
+n sg def	1	المسألة	مسألة	n	*
+n sg def	1	الاستعمار	استعمار	n	*
+n sg def	1	التزبيد	تزبيد	n	*
+n sg def	1	الابليجاج	ابليجاج	n	*
+n sg def	1	الإشهار	إشهار	n	*
+n sg def	1	الأنتليجنسيا	أنتليجنسيا	n	*
+n sg def	1	الأذانة	أذانة	n	*
+n sg def	1	الغيمة	غيمة	n	*
+n sg def	1	الحيطة	حيطة	n	*
+n sg def	1	السراب	سراب	n	*
+n sg def	1	المخاط	مخاط	n	*
+n sg def	1	الجلابية	جلابية	n	*
+n sg def	1	التحرير	تحرير	n	*
+n sg def	1	الشاحنة	شاحنة	n	*
+n sg def	1	البروستات	بروستات	n	*
+n sg def	1	المواقعة	مواقعة	n	*
+n sg def	1	الببغاء	ببغاء	n	*
+n sg def	1	الإخافة	إخافة	n	*
+n sg def	1	الأنبوب	أنبوب	n	*
+n sg def	1	السكاف	سكاف	n	*
+n sg def	1	الانفراد	انفراد	n	*
+n sg def	1	النفوق	نفوق	n	*
+n sg def	1	الكيفية	كيفية	n	*
+n sg def	1	الإفقار	إفقار	n	*
+n sg def	1	المبنى	مبنى	n	*
+n sg def	1	الساندويتش	ساندويتش	n	*
+n sg def	1	التكميل	تكميل	n	*
+n sg def	1	الاغتصاب	اغتصاب	n	*
+n sg def	1	الاتباع	اتباع	n	*
+n sg def	1	العطول	عطول	n	*
+n sg def	1	الميلولة	ميلولة	n	*
+n sg def	1	الحراسة	حراسة	n	*
+n sg def	1	الأمير	أمير	n	*
+n sg def	1	الإرباك	إرباك	n	*
+n sg def	1	الكمول	كمول	n	*
+n sg def	1	الإكراه	إكراه	n	*
+n sg def	1	الكالسيوم	كالسيوم	n	*
+n sg def	1	الاعتمال	اعتمال	n	*
+n sg def	1	الإسماء	إسماء	n	*
+n sg def	1	الثاء	ثاء	n	*
+n sg def	1	الاستمرارية	استمرارية	n	*
+n sg def	1	الضجاع	ضجاع	n	*
+n sg def	1	الاخرنماس	اخرنماس	n	*
+n sg def	1	التثنية	تثنية	n	*
+n sg def	1	الإحساس	إحساس	n	*
+n sg def	1	القاضي	قاض	n	*
+n sg def	1	المميل	مميل	n	*
+n sg def	1	الاغتلام	اغتلام	n	*
+n sg def	1	الجامعة	جامعة	n	*
+n sg def	1	الوسيلة	وسيلة	n	*
+n sg def	1	التجسيد	تجسيد	n	*
+n sg def	1	الطوفان	طوفان	n	*
+n sg def	1	السماء	سماء	n	*
+n sg def	1	الخلاقة	خلاقة	n	*
+n sg def	1	الملاعبة	ملاعبة	n	*
+n sg def	1	التهيؤ	تهيؤ	n	*
+n sg def	1	التمرير	تمرير	n	*
+n sg def	1	المنظار	منظار	n	*
+n sg def	1	الممال	ممال	n	*
+n sg def	1	التفريض	تفريض	n	*
+n sg def	1	التقديس	تقديس	n	*
+n sg def	1	الإكثار	إكثار	n	*
+n sg def	1	المراسلة	مراسلة	n	*
+n sg def	1	المرشح	مرشح	n	*
+n sg def	1	البوسة	بوسة	n	*
+n sg def	1	الذراع	ذراع	n	*
+n sg def	1	الصومالية	صومالية	n	*
+n sg def	1	المصادرة	مصادرة	n	*
+n sg def	1	الماشي	ماش	n	*
+n sg def	1	المنافرة	منافرة	n	*
+n sg def	1	القيدودة	قيدودة	n	*
+n sg def	1	الرئة	رئة	n	*
+n sg def	1	الشهار	شهار	n	*
+n sg def	1	الكهربة	كهربة	n	*
+n sg def	1	التحنيء	تحنيء	n	*
+n sg def	1	الكمال	كمال	n	*
+n sg def	1	الصقر	صقر	n	*
+n sg def	1	النعناع	نعناع	n	*
+n sg def	1	الإهداف	إهداف	n	*
+n sg def	1	التهلكة	تهلكة	n	*
+n sg def	1	المطبخ	مطبخ	n	*
+n sg def	1	الإيجاب	إيجاب	n	*
+n sg def	1	التكحيل	تكحيل	n	*
+n sg def	1	البينونة	بينونة	n	*
+n sg def	1	الازدحام	ازدحام	n	*
+n sg def	1	البارود	بارود	n	*
+n sg def	1	الإقفال	إقفال	n	*
+n sg def	1	التخويش	تخويش	n	*
+n sg def	1	الصودا	صودا	n	*
+n sg def	1	الإشراك	إشراك	n	*
+n sg def	1	الإعجام	إعجام	n	*
+n sg def	1	المملكة	مملكة	n	*
+n sg def	1	الاخرواط	اخرواط	n	*
+n sg def	1	القفوز	قفوز	n	*
+n sg def	1	العنف	عنف	n	*
+n sg indef	1	قرمزا	قرمز	n	*
+n sg indef	1	ثباتا	ثبات	n	*
+n sg indef	1	احرنجاما	احرنجام	n	*
+n sg indef	1	تعشيقا	تعشيق	n	*
+n sg indef	1	إسقاطا	إسقاط	n	*
+n sg indef	1	استحفاظا	استحفاظ	n	*
+n sg indef	1	مأكلا	مأكل	n	*
+n sg indef	1	إرثا	إرث	n	*
+n sg indef	1	شبتا	شبت	n	*
+n sg indef	1	استحماما	استحمام	n	*
+n sg indef	1	خردلا	خردل	n	*
+n sg indef	1	شكرانا	شكران	n	*
+n sg indef	1	إحمادا	إحماد	n	*
+n sg indef	1	ترقيما	ترقيم	n	*
+n sg indef	1	اجتهادا	اجتهاد	n	*
+n sg indef	1	تخديشا	تخديش	n	*
+n sg indef	1	تفقيرا	تفقير	n	*
+n sg indef	1	ابتساما	ابتسام	n	*
+n sg indef	1	تضوؤا	تضوؤ	n	*
+n sg indef	1	إرشادا	إرشاد	n	*
+n sg indef	1	حرصا	حرص	n	*
+n sg indef	1	إغراما	إغرام	n	*
+n sg indef	1	تذبيحا	تذبيح	n	*
+n sg indef	1	تعصيرا	تعصير	n	*
+n sg indef	1	استذنابا	استذناب	n	*
+n sg indef	1	تديينا	تديين	n	*
+n sg indef	1	جوارا	جوار	n	*
+n sg indef	1	ازدرادا	ازدراد	n	*
+n sg indef	1	تطريبا	تطريب	n	*
+n sg indef	1	احتراقا	احتراق	n	*
+n sg indef	1	زنجبيلا	زنجبيل	n	*
+n sg indef	1	تحكيما	تحكيم	n	*
+n sg indef	1	قطوبا	قطوب	n	*
+n sg indef	1	مكوثا	مكوث	n	*
+n sg indef	1	بلاديوما	بلاديوم	n	*
+n sg indef	1	تقضيبا	تقضيب	n	*
+n sg indef	1	تكسيرا	تكسير	n	*
+n sg indef	1	قودا	قود	n	*
+n sg indef	1	حملانا	حملان	n	*
+n sg indef	1	هبوطا	هبوط	n	*
+n sg indef	1	علوا	علو	n	*
+n sg indef	1	اختصارا	اختصار	n	*
+n sg indef	1	استذكارا	استذكار	n	*
+n sg indef	1	شيعانا	شيعان	n	*
+n sg indef	1	لاجئا	لاجئ	n	*
+n sg indef	1	ملحسا	ملحس	n	*
+n sg indef	1	نلوفرا	نلوفر	n	*
+n sg indef	1	كمبيوترا	كمبيوتر	n	*
+n sg indef	1	مبيعا	مبيع	n	*
+n sg indef	1	إدرارا	إدرار	n	*
+n sg indef	1	تشويقا	تشويق	n	*
+n sg indef	1	اشتهارا	اشتهار	n	*
+n sg indef	1	بروكا	بروك	n	*
+n sg indef	1	حفيلا	حفيل	n	*
+n sg indef	1	كنيسا	كنيس	n	*
+n sg indef	1	تفضيلا	تفضيل	n	*
+n sg indef	1	احتياجا	احتياج	n	*
+n sg indef	1	ذكارا	ذكار	n	*
+n sg indef	1	تلويثا	تلويث	n	*
+n sg cstr	1	أخي	أخ	n	*
+n sg cstr	1	أخو	أخ	n	*
+n sg cstr	1	حمي	حم	n	*
+n sg cstr	1	حمو	حم	n	*
+n du	1	راعيتين	راعية	n	*
+n du	1	بساطي	بساط	n	*
+n du	1	ترابان	تراب	n	*
+n du	1	جهتين	جهة	n	*
+n du	1	الهديتين	هدية	n	*
+n du	1	تقسيمي	تقسيم	n	*
+n du	1	غالبتا	غالبة	n	*
+n du	1	طياران	طيار	n	*
+n du	1	أرنبي	أرنب	n	*
+n du	1	غلافي	غلاف	n	*
+n du	1	الدبلومان	دبلوم	n	*
+n du	1	السمتان	سمة	n	*
+n du	1	تحليلين	تحليل	n	*
+n du	1	تقصيران	تقصير	n	*
+n du	1	تلفزيونان	تلفزيون	n	*
+n du	1	كابوسا	كابوس	n	*
+n du	1	البارجتين	بارجة	n	*
+n du	1	سياحتي	سياحة	n	*
+n du	1	الوصيتان	وصية	n	*
+n du	1	صناعتي	صناعة	n	*
+n du	1	سيدان	سيد	n	*
+n du	1	حديدي	حديد	n	*
+n du	1	خالتا	خالة	n	*
+n du	1	البندقيتان	بندقية	n	*
+n du	1	كرتان	كرة	n	*
+n du	1	الإذنين	إذن	n	*
+n du	1	الرتبتان	رتبة	n	*
+n du	1	الأرنبين	أرنب	n	*
+n du	1	غريبتي	غريبة	n	*
+n du	1	طاولتا	طاولة	n	*
+n du	1	المقاطعتين	مقاطعة	n	*
+n du	1	المصنعان	مصنع	n	*
+n du	1	واقعتا	واقعة	n	*
+n du	1	كاتدرائيتي	كاتدرائية	n	*
+n du	1	جبهتان	جبهة	n	*
+n du	1	حالمان	حالم	n	*
+n du	1	مطرقتان	مطرقة	n	*
+n du	1	حصانين	حصان	n	*
+n du	1	دكانا	دكان	n	*
+n du	1	بندقيتان	بندقية	n	*
+n du	1	شعاري	شعار	n	*
+n du	1	ليلتي	ليلة	n	*
+n du	1	جحرين	جحر	n	*
+n du	1	فانوسين	فانوس	n	*
+n du	1	عاهرتي	عاهرة	n	*
+n du	1	الضرورتان	ضرورة	n	*
+n du	1	إقليمي	إقليم	n	*
+n du	1	السلسلتين	سلسلة	n	*
+n du	1	المغسلين	مغسل	n	*
+n du	1	نظارتين	نظارة	n	*
+n du	1	اللفافتين	لفافة	n	*
+n du	1	قفصا	قفص	n	*
+n du	1	الراكبان	راكب	n	*
+n du	1	الحملتين	حملة	n	*
+n du	1	الغبيتان	غبية	n	*
+n du	1	محلي	محل	n	*
+n du	1	الأستراليتان	أسترالية	n	*
+n du	1	الجناحان	جناح	n	*
+n du	1	فنلنديتي	فنلندية	n	*
+n du	1	نافذتين	نافذة	n	*
+n du	1	النايان	ناي	n	*
+n du	1	ياردتا	ياردة	n	*
+n du	1	الحذاءان	حذاء	n	*
+n du	1	القضيبين	قضيب	n	*
+n du	1	المواطنين	مواطن	n	*
+n du	1	الامتحانين	امتحان	n	*
+n du	1	مسألتا	مسألة	n	*
+n du	1	قيامتان	قيامة	n	*
+n du	1	غلاما	غلام	n	*
+n du	1	مصعدان	مصعد	n	*
+n du	1	البنطلونين	بنطلون	n	*
+n du	1	البرنامجان	برنامج	n	*
+n du	1	الكيبوتسان	كيبوتس	n	*
+n du	1	مطبخين	مطبخ	n	*
+n du	1	الطفلان	طفل	n	*
+n du	1	عشيرتا	عشيرة	n	*
+n du	1	زعيما	زعيم	n	*
+n du	1	إجازتي	إجازة	n	*
+n du	1	لبوتي	لبوة	n	*
+n du	1	حزمتي	حزمة	n	*
+n du	1	ضرسين	ضرس	n	*
+n du	1	وصيتا	وصية	n	*
+n du	1	امتحانا	امتحان	n	*
+n du	1	اللحافين	لحاف	n	*
+n du	1	القاضيين	قاض	n	*
+n du	1	ليلتان	ليلة	n	*
+n du	1	طبيبا	طبيب	n	*
+n du	1	المخرجين	مخرج	n	*
+n du	1	رغبتي	رغبة	n	*
+n du	1	سيارتان	سيارة	n	*
+n du	1	موضوعا	موضوع	n	*
+n du	1	حزامي	حزام	n	*
+n du	1	فنجانا	فنجان	n	*
+n du	1	الفائزتان	فائزة	n	*
+n du	1	صيدليتا	صيدلية	n	*
+n du	1	البرميلين	برميل	n	*
+n du	1	الملعقتين	ملعقة	n	*
+n du	1	دولتين	دولة	n	*
+n du	1	القافلتين	قافلة	n	*
+n du	1	أرمينيتين	أرمينية	n	*
+n du	1	فانوسي	فانوس	n	*
+n du	1	خالتان	خالة	n	*
+n du	1	عقربي	عقرب	n	*
+n du	1	ضرورتين	ضرورة	n	*
+n du	1	البطنين	بطن	n	*
+n du	1	دلفيني	دلفين	n	*
+n du	1	محاولتي	محاولة	n	*
+n du	1	عسكرا	عسكر	n	*
+n du	1	كتيبا	كتيب	n	*
+n du	1	كوبريان	كوبري	n	*
+n du	1	رغبتين	رغبة	n	*
+n du	1	استقبالا	استقبال	n	*
+n du	1	جنيهان	جنيه	n	*
+n du	1	شاهينا	شاهين	n	*
+n du	1	أدحوتا	أدحوة	n	*
+n du	1	الفاعلتان	فاعلة	n	*
+n du	1	بستانين	بستان	n	*
+n du	1	هدهدين	هدهد	n	*
+n pl def	1	الكنائس	كنيسة	n	*
+n pl def	1	الآلات	آلة	n	*
+n pl def	1	الطحالات	طحال	n	*
+n pl def	1	الأمكنة	مكان	n	*
+n pl def	1	المقابض	مقبض	n	*
+n pl def	1	الصفقات	صفقة	n	*
+n pl def	1	النظارات	نظارة	n	*
+n pl def	1	الحرابات	حراب	n	*
+n pl def	1	القطارات	قطار	n	*
+n pl def	1	العلاقات	علاقة	n	*
+n pl def	1	الظبيات	ظبية	n	*
+n pl def	1	الجرائم	جريمة	n	*
+n pl def	1	المفتون	مفت	n	*
+n pl def	1	الصناعات	صناعة	n	*
+n pl def	1	الراهبات	راهبة	n	*
+n pl def	1	الفجوات	فجوة	n	*
+n pl def	1	القادمات	قادمة	n	*
+n pl def	1	العواطف	عاطفة	n	*
+n pl def	1	الحالمون	حالم	n	*
+n pl def	1	الساحرات	ساحرة	n	*
+n pl def	1	الغبيات	غبية	n	*
+n pl def	1	الأيونات	أيون	n	*
+n pl def	1	الطيارون	طيار	n	*
+n pl def	1	المراسلات	مراسلة	n	*
+n pl def	1	الاحتلامات	احتلام	n	*
+n pl def	1	التقسيمات	تقسيم	n	*
+n pl def	1	الرفقاء	رفيق	n	*
+n pl def	1	المتكلمات	متكلمة	n	*
+n pl def	1	العضلات	عضلة	n	*
+n pl def	1	الأخمرة	خمار	n	*
+n pl def	1	الذكريات	ذكرى	n	*
+n pl def	1	الجرائد	جريدة	n	*
+n pl def	1	الوكلاء	وكيل	n	*
+n pl def	1	القهوات	قهوة	n	*
+n pl def	1	المحبون	محب	n	*
+n pl def	1	القيثارات	قيثارة	n	*
+n pl def	1	الوسائل	وسيلة	n	*
+n pl def	1	المنابر	منبر	n	*
+n pl def	1	الآفات	آفة	n	*
+n pl def	1	الدستوريات	دستورية	n	*
+n pl def	1	الثقافات	ثقافة	n	*
+n pl def	1	الثواني	ثانية	n	*
+n pl def	1	المصانع	مصنع	n	*
+n pl def	1	المسافات	مسافة	n	*
+n pl def	1	الدبلومات	دبلوم	n	*
+n pl def	1	المحاور	محور	n	*
+n pl def	1	المنافسات	منافسة	n	*
+n pl def	1	الشاحنات	شاحنة	n	*
+n pl def	1	المذاكرات	مذاكرة	n	*
+n pl def	1	الحوادث	حادثة	n	*
+n pl def	1	الأمراء	أمير	n	*
+n pl def	1	الإسرائيليات	إسرائيلية	n	*
+n pl indef	1	أجلادا	جلد	n	*
+n pl indef	1	ثروات	ثروة	n	*
+n pl indef	1	رئات	رئة	n	*
+n pl indef	1	عواصف	عاصفة	n	*
+n pl indef	1	مقاهي	مقهى	n	*
+n pl indef	1	قوابل	قابلة	n	*
+n pl indef	1	كرات	كرة	n	*
+n pl indef	1	مركبات	مركبة	n	*
+n pl indef	1	قارئون	قارئ	n	*
+n pl indef	1	قيامات	قيامة	n	*
+n pl indef	1	أهراما	هرم	n	*
+n pl indef	1	أعناب	عنب	n	*
+n pl indef	1	حركات	حركة	n	*
+n pl indef	1	بهلوانات	بهلوان	n	*
+n pl indef	1	أحناك	حنك	n	*
+n pl indef	1	أيونات	أيون	n	*
+n pl indef	1	مدونات	مدونة	n	*
+n pl indef	1	فواكه	فاكهة	n	*
+n pl indef	1	جلابيات	جلابية	n	*
+n pl indef	1	حوافر	حافر	n	*
+n pl indef	1	قواعد	قاعدة	n	*
+n pl indef	1	طريفات	طريفة	n	*
+n pl indef	1	نوريات	نورية	n	*
+n pl indef	1	قهوات	قهوة	n	*
+n pl indef	1	اعترافات	اعتراف	n	*
+n pl indef	1	أسلحة	سلاح	n	*
+n pl indef	1	انقلابات	انقلاب	n	*
+n pl indef	1	لحظات	لحظة	n	*
+n pl indef	1	سكافون	سكاف	n	*
+n pl indef	1	مفتشون	مفتش	n	*
+n pl indef	1	مطارات	مطار	n	*
+n pl indef	1	استخدامات	استخدام	n	*
+n pl indef	1	مدنيات	مدنية	n	*
+n pl indef	1	إسرائيليات	إسرائيلية	n	*
+n pl indef	1	بهارات	بهار	n	*
+n pl indef	1	حبيبات	حبيبة	n	*
+n pl indef	1	تلميذات	تلميذة	n	*
+n pl indef	1	ممثلات	ممثلة	n	*
+n pl indef	1	ذكريات	ذكرى	n	*
+n pl indef	1	موسوعات	موسوعة	n	*
+n pl indef	1	مشترون	مشتر	n	*
+n pl indef	1	نشوات	نشوة	n	*
+n pl indef	1	أبخرة	بخار	n	*
+n pl indef	1	رسامات	رسامة	n	*
+n pl cstr	1	بياعو	بياع	n	*
+n pl cstr	1	موظفو	موظف	n	*
+n pl cstr	1	مفتي	مفت	n	*
+n pl cstr	1	متعهدو	متعهد	n	*
+n pl cstr	1	خياطو	خياط	n	*
+n pl cstr	1	قفالو	قفال	n	*
+n pl cstr	1	مبتدئو	مبتدئ	n	*
+n pl cstr	1	دركيو	دركي	n	*
+n pl cstr	1	محبو	محب	n	*
+n pl cstr	1	دجالو	دجال	n	*
+adj sg def	1	الطري	طري	*	*
+adj sg def	1	البطيء	بطيء	*	*
+adj sg def	1	البارزة	بارز	*	*
+adj sg def	1	الخشنة	خشن	*	*
+adj sg def	1	الجاف	جاف	*	*
+adj sg def	1	الطاجيكية	طاجيكي	*	*
+adj sg def	1	المؤقت	مؤقت	*	*
+adj sg def	1	المحددة	محدد	*	*
+adj sg def	1	المتفوق	متفوق	*	*
+adj sg def	1	الأعنف	أعنف	*	*
+adj sg def	1	القرمزي	قرمزي	*	*
+adj sg def	1	المثالية	مثالي	*	*
+adj sg def	1	الفضيل	فضيل	*	*
+adj sg def	1	البطيئة	بطيء	*	*
+adj sg def	1	الطنان	طنان	*	*
+adj sg def	1	الخفيفة	خفيف	*	*
+adj sg def	1	الداكن	داكن	*	*
+adj sg def	1	الغليظة	غليظ	*	*
+adj sg def	1	المشهود	مشهود	*	*
+adj sg def	1	الرفيعة	رفيع	*	*
+adj sg def	1	الخفيض	خفيض	*	*
+adj sg def	1	الفانية	فان	*	*
+adj sg def	1	الفرحان	فرحان	*	*
+adj sg def	1	الشجيعة	شجيع	*	*
+adj sg def	1	المتفوقة	متفوق	*	*
+adj sg def	1	العنيد	عنيد	*	*
+adj sg def	1	الحقيق	حقيق	*	*
+adj sg def	1	السريع	سريع	*	*
+adj sg def	1	التونسية	تونسي	*	*
+adj sg def	1	المنوية	منوي	*	*
+adj sg def	1	الثامن	ثامن	*	*
+adj sg def	1	الممتلئ	ممتلئ	*	*
+adj sg def	1	المتحد	متحد	*	*
+adj sg def	1	المشمس	مشمس	*	*
+adj sg def	1	العريق	عريق	*	*
+adj sg def	1	القرير	قرير	*	*
+adj sg def	1	البليغ	بليغ	*	*
+adj sg def	1	الفريدة	فريد	*	*
+adj sg indef	1	صدئا	صدئ	*	*
+adj sg indef	1	متعمدة	متعمد	*	*
+adj sg indef	1	مهاجمة	مهاجم	*	*
+adj sg indef	1	مفضلا	مفضل	*	*
+adj sg indef	1	شيطانية	شيطاني	*	*
+adj sg indef	1	مشمئزة	مشمئز	*	*
+adj sg indef	1	مادية	مادي	*	*
+adj sg indef	1	كورية	كوري	*	*
+adj sg indef	1	ثقافية	ثقافي	*	*
+adj sg indef	1	جاهلا	جاهل	*	*
+adj sg indef	1	جزيئيا	جزيئي	*	*
+adj sg indef	1	ناعما	ناعم	*	*
+adj sg indef	1	سابقا	سابق	*	*
+adj sg indef	1	رتيبة	رتيب	*	*
+adj sg indef	1	تحتانية	تحتاني	*	*
+adj sg indef	1	مضيئا	مضيء	*	*
+adj sg indef	1	مثاليا	مثالي	*	*
+adj sg indef	1	ناقصا	ناقص	*	*
+adj sg indef	1	اتفاقيا	اتفاقي	*	*
+adj sg indef	1	مختونا	مختون	*	*
+adj sg indef	1	حقيقة	حقيق	*	*
+adj sg indef	1	منفصلا	منفصل	*	*
+adj sg indef	1	ثانيا	ثان	*	*
+adj sg indef	1	رجوليا	رجولي	*	*
+adj sg indef	1	خفيفة	خفيف	*	*
+adj sg indef	1	مبكرا	مبكر	*	*
+adj sg indef	1	مدورة	مدور	*	*
+adj sg indef	1	ملحونا	ملحون	*	*
+adj sg indef	1	شفوية	شفوي	*	*
+adj sg indef	1	فانية	فان	*	*
+adj sg indef	1	صريحا	صريح	*	*
+adj sg indef	1	أخيرا	أخير	*	*
+adj sg indef	1	أمريكية	أمريكي	*	*
+adj sg indef	1	شفهيا	شفهي	*	*
+adj sg indef	1	مسيحانيا	مسيحاني	*	*
+adj sg indef	1	ذهنية	ذهني	*	*
+adj sg indef	1	تاسعة	تاسع	*	*
+adj sg indef	1	وحيدة	وحيد	*	*
+adj sg indef	1	رتيبا	رتيب	*	*
+adj sg indef	1	سنويا	سنوي	*	*
+adj sg indef	1	منصوبا	منصوب	*	*
+adj sg indef	1	مشهودا	مشهود	*	*
+adj sg indef	1	سريعا	سريع	*	*
+adj sg indef	1	مستحيلة	مستحيل	*	*
+adj sg indef	1	نقدية	نقدي	*	*
+adj du	1	المربكين	مربك	*	*
+adj du	1	أضيقان	أضيق	*	*
+adj du	1	الاقتصاديتين	اقتصادي	*	*
+adj du	1	القضيبيتان	قضيبي	*	*
+adj du	1	المبلولين	مبلول	*	*
+adj du	1	التحتانيتان	تحتاني	*	*
+adj du	1	الإبليسيان	إبليسي	*	*
+adj du	1	الشيطانيتان	شيطاني	*	*
+adj du	1	مقطوعتان	مقطوع	*	*
+adj du	1	التعبانان	تعبان	*	*
+adj du	1	كاملتين	كامل	*	*
+adj du	1	سابقين	سابق	*	*
+adj du	1	أمويان	أموي	*	*
+adj du	1	الأزليان	أزلي	*	*
+adj du	1	الأفخران	أفخر	*	*
+adj du	1	محظوظتان	محظوظ	*	*
+adj du	1	الأميزان	أميز	*	*
+adj du	1	الفاخرتين	فاخر	*	*
+adj du	1	الفلكيتين	فلكي	*	*
+adj du	1	العاشرين	عاشر	*	*
+adj du	1	حزينين	حزين	*	*
+adj du	1	أوسعين	أوسع	*	*
+adj du	1	المتواضعين	متواضع	*	*
+adj du	1	أفخرين	أفخر	*	*
+adj du	1	الأزهدان	أزهد	*	*
+adj du	1	التامين	تام	*	*
+adj du	1	المسفوحتان	مسفوح	*	*
+adj du	1	المحتملتان	محتمل	*	*
+adj du	1	مجيدتان	مجيد	*	*
+adj du	1	عقليان	عقلي	*	*
+adj du	1	ماديين	مادي	*	*
+adj du	1	الشجيرتان	شجير	*	*
+adj du	1	الأفلاطونيان	أفلاطوني	*	*
+adj du	1	القزيميتين	قزيمي	*	*
+adj du	1	العاميان	عامي	*	*
+adj du	1	أحليان	أحلى	*	*
+adj du	1	جزيئيتين	جزيئي	*	*
+adj du	1	القبيحتين	قبيح	*	*
+adj pl	1	الجزائريون	جزائري	*	*
+adj pl	1	النقديات	نقدي	*	*
+adj pl	1	مملوءات	مملوء	*	*
+adj pl	1	الحقراء	حقير	*	*
+adj pl	1	مزعجون	مزعج	*	*
+adj pl	1	المتواضعون	متواضع	*	*
+adj pl	1	جهاديون	جهادي	*	*
+adj pl	1	البنفسجيون	بنفسجي	*	*
+adj pl	1	متميزون	متميز	*	*
+adj pl	1	مشمسون	مشمس	*	*
+adj pl	1	فخورات	فخور	*	*
+adj pl	1	متأكدون	متأكد	*	*
+adj pl	1	خارجيات	خارجي	*	*
+adj pl	1	فلسطينيون	فلسطيني	*	*
+adj pl	1	جاذبات	جاذب	*	*
+adj pl	1	الفارغات	فارغ	*	*
+adj pl	1	مكلفات	مكلف	*	*
+adj pl	1	المستثنيات	مستثنى	*	*
+adj pl	1	قضيبيون	قضيبي	*	*
+adj pl	1	الخصيبات	خصيب	*	*
+adj pl	1	مريحون	مريح	*	*
+adj pl	1	عقليات	عقلي	*	*
+adj pl	1	القريرات	قرير	*	*
+adj pl	1	العنيدات	عنيد	*	*
+adj pl	1	ذكيات	ذكي	*	*
+adj pl	1	المثقفون	مثقف	*	*
+adj pl	1	قريشيات	قريشي	*	*
+adj pl	1	الليبراليون	ليبرالي	*	*
+adj pl	1	قاريات	قاري	*	*
+adj pl	1	المتواضعات	متواضع	*	*
+adj pl	1	المتربون	مترب	*	*
+adj pl	1	شفهيون	شفهي	*	*
+adj pl	1	الحقيرات	حقير	*	*
+adj pl	1	الثقافيات	ثقافي	*	*
+adj pl	1	برتقاليون	برتقالي	*	*
+adj pl	1	الأيوبيات	أيوبي	*	*
+adj pl	1	ناقصات	ناقص	*	*
+adj pl	1	قرشيون	قرشي	*	*
+adj pl	1	الوطيئات	وطيء	*	*
+adj pl	1	قرمزيات	قرمزي	*	*
+adj pl	1	ليبراليون	ليبرالي	*	*
+adj pl	1	مثقفون	مثقف	*	*
+adj pl	1	أولمبيون	أولمبي	*	*
+adj pl	1	مشغولات	مشغول	*	*
+adj pl	1	المسفوحات	مسفوح	*	*
+adj pl	1	زائفات	زائف	*	*
+adj pl	1	الخصوصيات	خصوصي	*	*
+adj pl	1	الإلهيون	إلهي	*	*
+adj pl	1	مثاليات	مثالي	*	*
+adj pl	1	العواقل	عاقل	*	*
+adj pl	1	المناسبات	مناسب	*	*
+adj pl	1	اليوميات	يومي	*	*
+adj pl	1	المرهفون	مرهف	*	*
+adj pl	1	السريانيات	سرياني	*	*
+adj pl	1	الزمنيون	زمني	*	*
+adj pl	1	تحسينيات	تحسيني	*	*
+adj pl	1	رشداء	رشيد	*	*
+adj pl	1	جواذب	جاذب	*	*

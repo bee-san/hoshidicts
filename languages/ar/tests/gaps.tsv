@@ -1,0 +1,121 @@
+# Source: UniMorph ara (https://github.com/unimorph/ara), commit e9b7521ab75e3a7da6f996a428031164993e6f19, file ara
+# (sha256 01663d08dbc6bb2a4207749cb4c000926c72c7cf9ec3faa8521e4cb5e9d690f1), CC BY-SA 3.0, by the UniMorph contributors, from English Wiktionary.
+# 1496 rows sampled with seed 1 by sources/sample-corpus.py from the rows whose form wty-ar-en 2026.10.22 lists as a form of the lemma (README.md).
+# The rows of the sample the final rules do not reach (sources/split-corpus.py); reported, not enforced.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+v perf pass	1	تحوشيتن	تحاشى	v	*
+v perf pass	1	نوديتن	نادى	v	*
+v perf pass	1	سوويت	ساوى	v	*
+v perf pass	1	حوققنا	حاق	v	*
+v perf pass	1	نودينا	نادى	v	*
+v perf pass	1	صفين	صفا	v	*
+v impf ind act	1	تضوئون	ضاء	v	*
+v impf ind act	1	يوقنون	أيقن	v	*
+v impf ind pass	1	تؤتم	ائتم	v	*
+v impf ind pass	1	تؤضن	آض	v	*
+v impf ind pass	1	يؤوون	أوى	v	*
+v impf juss pass	1	يوطآ	وطئ	v	*
+v imp	1	سائلا	ساءل	v	*
+v imp	1	سم	سمى	v	*
+v imp	1	نس	نسى	v	*
+v ptcp	1	مسئم	أسأم	v	*
+v ptcp	1	سائل	سأل	v	*
+v ptcp	1	مملوء	ملأ	v	*
+v ptcp	1	محيى	حيا	v	*
+vn	1	دراية	درى	v	*
+vn	1	اتساخ	اتسخ	v	*
+vn	1	وسوسة	وسوس	v	*
+vn	1	زحير	زحر	v	*
+vn	1	استئمان	استأمن	v	*
+vn	1	صغو	صغا	v	*
+vn	1	استحمام	استحم	v	*
+n sg indef	1	لبا	لب	n	*
+n sg cstr	1	ذا	ذو	n	*
+n sg cstr	1	ذي	ذو	n	*
+n du	1	كامرتان	كامرا	n	*
+n du	1	ذكريي	ذكرى	n	*
+n pl def	1	القضاة	قاض	n	*
+n pl def	1	الجيف	جيفة	n	*
+n pl def	1	المحاريب	محراب	n	*
+n pl def	1	المزامير	مزمار	n	*
+n pl def	1	الطقوس	طقس	n	*
+n pl def	1	الضباب	ضب	n	*
+n pl def	1	الرتب	رتبة	n	*
+n pl def	1	الطرق	طريق	n	*
+n pl def	1	اليموم	يم	n	*
+n pl def	1	الوشوم	وشم	n	*
+n pl def	1	السطوح	سطح	n	*
+n pl def	1	الأوردة	وريد	n	*
+n pl def	1	الصحف	صحيفة	n	*
+n pl def	1	القحاب	قحبة	n	*
+n pl def	1	الأئمة	إمام	n	*
+n pl def	1	القواد	قائد	n	*
+n pl def	1	الخيام	خيمة	n	*
+n pl def	1	الرشا	رشوة	n	*
+n pl def	1	النواب	نائب	n	*
+n pl def	1	الأجبن	جبين	n	*
+n pl def	1	النوق	ناقة	n	*
+n pl def	1	الأفئدة	فؤاد	n	*
+n pl def	1	السماحيق	سمحاق	n	*
+n pl def	1	الدكاكين	دكان	n	*
+n pl def	1	السقوف	سقف	n	*
+n pl def	1	المطاليب	مطلوب	n	*
+n pl def	1	الشراشف	شرشف	n	*
+n pl def	1	الخصور	خصر	n	*
+n pl indef	1	قمصان	قميص	n	*
+n pl indef	1	بنوك	بنك	n	*
+n pl indef	1	ببورا	ببر	n	*
+n pl indef	1	سجاجيد	سجادة	n	*
+n pl indef	1	قلاع	قلعة	n	*
+n pl indef	1	ذيول	ذيل	n	*
+n pl indef	1	رهبانا	راهب	n	*
+n pl indef	1	صيغا	صيغة	n	*
+n pl indef	1	حموات	حماة	n	*
+n pl indef	1	مشاة	ماش	n	*
+n pl indef	1	بددة	بد	n	*
+n pl indef	1	خصورا	خصر	n	*
+n pl indef	1	دول	دولة	n	*
+n pl indef	1	تجارب	تجربة	n	*
+n pl indef	1	أيام	يوم	n	*
+n pl indef	1	آراء	رأي	n	*
+n pl indef	1	أناجر	أنجر	n	*
+n pl indef	1	قيما	قيمة	n	*
+n pl indef	1	أصحاب	صاحب	n	*
+n pl indef	1	نماذج	نموذج	n	*
+n pl indef	1	مواعز	معزة	n	*
+n pl indef	1	أسسا	أساس	n	*
+n pl indef	1	رخصا	رخصة	n	*
+n pl indef	1	زلازل	زلزال	n	*
+n pl indef	1	جباه	جبهة	n	*
+n pl indef	1	حمق	حمقاء	n	*
+n pl indef	1	أمعاء	معى	n	*
+n pl indef	1	فروع	فرع	n	*
+n pl indef	1	فكرا	فكرة	n	*
+n pl indef	1	فراعنة	فرعون	n	*
+n pl indef	1	قمما	قمة	n	*
+n pl indef	1	سراديب	سرداب	n	*
+n pl indef	1	حمقا	حمقاء	n	*
+n pl indef	1	ضبابا	ضب	n	*
+n pl indef	1	مزامير	مزمار	n	*
+n pl indef	1	أيورا	أير	n	*
+adj sg def	1	الجفى	أجف	*	*
+adj sg def	1	المتوفاة	متوفى	*	*
+adj sg indef	1	جرداء	أجرد	*	*
+adj sg indef	1	دكناء	أدكن	*	*
+adj sg indef	1	صماء	أصم	*	*
+adj sg indef	1	طرشاء	أطرش	*	*
+adj sg indef	1	متربيا	مترب	*	*
+adj du	1	الشفيين	أشف	*	*
+adj du	1	قصويين	أقصى	*	*
+adj pl	1	شقر	أشقر	*	*
+adj pl	1	المساويات	مساو	*	*
+adj pl	1	الأشداء	شديد	*	*
+adj pl	1	الجذبيات	أجذب	*	*
+adj pl	1	الشذاذ	شاذ	*	*
+adj pl	1	أقاصي	أقصى	*	*
+adj pl	1	فرغيات	أفرغ	*	*
+adj pl	1	جفيات	أجف	*	*
+adj pl	1	عقال	عاقل	*	*
+adj pl	1	الزوفيات	أزيف	*	*
+adj pl	1	الدكن	أدكن	*	*
+adj pl	1	صما	أصم	*	*

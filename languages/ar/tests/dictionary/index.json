@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts ar test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Arabic dictionary for languages/ar/tests/lookup.tsv, written for the pack. Like wiktionary-to-yomitan, it gives verbs and nouns the rules v and n, leaves adjectives, names and particles without rules, and has form-of rows ([lemma, [rules]]) for some inflected forms, among them inflected adjectives (كبيرة), which the rules do not reach in such a dictionary.",
+  "sourceLanguage": "ar",
+  "targetLanguage": "en"
+}

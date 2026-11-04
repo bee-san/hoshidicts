@@ -1,0 +1,307 @@
+# GPL-3.0-or-later; Copyright (C) 2025-2026 Yomitan Authors
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/arabic-transforms.test.js
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+noun prefixes	1	وبيت	بيت	n	*
+noun prefixes	1	فبيت	بيت	n	*
+noun prefixes	1	ببيت	بيت	n	*
+noun prefixes	1	وببيت	بيت	n	*
+noun prefixes	1	فببيت	بيت	n	*
+noun prefixes	1	كبيت	بيت	n	*
+noun prefixes	1	وكبيت	بيت	n	*
+noun prefixes	1	فكبيت	بيت	n	*
+noun prefixes	1	لبيت	بيت	n	*
+noun prefixes	1	ولبيت	بيت	n	*
+noun prefixes	1	فلبيت	بيت	n	*
+noun prefixes	1	البيت	بيت	n	*
+noun prefixes	1	والبيت	بيت	n	*
+noun prefixes	1	فالبيت	بيت	n	*
+noun prefixes	1	بالبيت	بيت	n	*
+noun prefixes	1	وبالبيت	بيت	n	*
+noun prefixes	1	فبالبيت	بيت	n	*
+noun prefixes	1	كالبيت	بيت	n	*
+noun prefixes	1	وكالبيت	بيت	n	*
+noun prefixes	1	فكالبيت	بيت	n	*
+noun prefixes	1	للبيت	بيت	n	*
+noun prefixes	1	وللبيت	بيت	n	*
+noun prefixes	1	فللبيت	بيت	n	*
+noun prefixes	1	لليل	ليل	n	*
+noun prefixes	1	ولليل	ليل	n	*
+noun prefixes	1	فلليل	ليل	n	*
+noun invalid prefixes	0	للليل	ليل	n	*
+singular noun suffixes	1	كتابه	كتاب	n	*
+singular noun suffixes	1	كتابها	كتاب	n	*
+singular noun suffixes	1	كتابهما	كتاب	n	*
+singular noun suffixes	1	كتابهم	كتاب	n	*
+singular noun suffixes	1	كتابهن	كتاب	n	*
+singular noun suffixes	1	كتابك	كتاب	n	*
+singular noun suffixes	1	كتابكما	كتاب	n	*
+singular noun suffixes	1	كتابكم	كتاب	n	*
+singular noun suffixes	1	كتابكن	كتاب	n	*
+singular noun suffixes	1	كتابي	كتاب	n	*
+singular noun suffixes	1	كتابنا	كتاب	n	*
+singular noun suffixes	1	بكتابه	كتاب	n	*
+singular noun suffixes	1	ككتابه	كتاب	n	*
+singular noun suffixes	1	لكتابه	كتاب	n	*
+singular noun suffixes	1	طويلة	طويل	n	*
+singular noun suffixes	1	زوجته	زوجة	n	*
+singular noun suffixes	1	زوجتك	زوجة	n	*
+singular noun suffixes	1	زوجتي	زوجة	n	*
+singular noun suffixes	1	أبدا	أبد	n	*
+singular noun suffixes	1	وأبدا	أبد	n	*
+singular noun invalid suffixes	0	الزوجته	زوجة	n	*
+singular noun invalid suffixes	0	للؤلؤته	لؤلؤة	n	*
+singular noun invalid suffixes	0	الأبدا	أبد	n	*
+singular noun invalid suffixes	0	بالأبدا	أبد	n	*
+singular noun invalid suffixes	0	كالأبدا	أبد	n	*
+singular noun invalid suffixes	0	للأبدا	أبد	n	*
+singular noun invalid suffixes	0	للاحقا	لاحق	n	*
+dual noun suffixes	1	ولدان	ولد	n	*
+dual noun suffixes	1	مطفآن	مطفأ	n	*
+dual noun suffixes	1	الولدان	ولد	n	*
+dual noun suffixes	1	لولدان	ولد	n	*
+dual noun suffixes	1	ولدا	ولد	n	*
+dual noun suffixes	1	ولداه	ولد	n	*
+dual noun suffixes	1	ولداك	ولد	n	*
+dual noun suffixes	1	ولداي	ولد	n	*
+dual noun suffixes	1	لولداي	ولد	n	*
+dual noun suffixes	1	ولدين	ولد	n	*
+dual noun suffixes	1	بولدين	ولد	n	*
+dual noun suffixes	1	كولدين	ولد	n	*
+dual noun suffixes	1	لولدين	ولد	n	*
+dual noun suffixes	1	الولدين	ولد	n	*
+dual noun suffixes	1	بالولدين	ولد	n	*
+dual noun suffixes	1	كالولدين	ولد	n	*
+dual noun suffixes	1	للولدين	ولد	n	*
+dual noun suffixes	1	لليلين	ليل	n	*
+dual noun suffixes	1	ولدي	ولد	n	*
+dual noun suffixes	1	ولديه	ولد	n	*
+dual noun suffixes	1	ولديك	ولد	n	*
+dual noun suffixes	1	ولدينا	ولد	n	*
+dual noun suffixes	1	بولديه	ولد	n	*
+dual noun suffixes	1	كولديه	ولد	n	*
+dual noun suffixes	1	لولديه	ولد	n	*
+dual noun suffixes	1	زوجتان	زوجة	n	*
+dual noun suffixes	1	الزوجتان	زوجة	n	*
+dual noun suffixes	1	لزوجتان	زوجة	n	*
+dual noun suffixes	1	زوجتا	زوجة	n	*
+dual noun suffixes	1	زوجتاه	زوجة	n	*
+dual noun suffixes	1	زوجتاك	زوجة	n	*
+dual noun suffixes	1	زوجتاي	زوجة	n	*
+dual noun suffixes	1	لزوجتاي	زوجة	n	*
+dual noun suffixes	1	زوجتين	زوجة	n	*
+dual noun suffixes	1	بزوجتين	زوجة	n	*
+dual noun suffixes	1	كزوجتين	زوجة	n	*
+dual noun suffixes	1	لزوجتين	زوجة	n	*
+dual noun suffixes	1	الزوجتين	زوجة	n	*
+dual noun suffixes	1	بالزوجتين	زوجة	n	*
+dual noun suffixes	1	كالزوجتين	زوجة	n	*
+dual noun suffixes	1	للزوجتين	زوجة	n	*
+dual noun suffixes	1	للهجتين	لهجة	n	*
+dual noun suffixes	1	زوجتي	زوجة	n	*
+dual noun suffixes	1	زوجتيه	زوجة	n	*
+dual noun suffixes	1	زوجتيك	زوجة	n	*
+dual noun suffixes	1	زوجتينا	زوجة	n	*
+dual noun suffixes	1	بزوجتيه	زوجة	n	*
+dual noun suffixes	1	كزوجتيه	زوجة	n	*
+dual noun suffixes	1	لزوجتيه	زوجة	n	*
+dual noun invalid suffixes	0	الولداه	ولد	n	*
+dual noun invalid suffixes	0	بالولداه	ولد	n	*
+dual noun invalid suffixes	0	كالولداه	ولد	n	*
+dual noun invalid suffixes	0	للولداه	ولد	n	*
+dual noun invalid suffixes	0	لليلاه	ليل	n	*
+dual noun invalid suffixes	0	ولديي	ولد	n	*
+dual noun invalid suffixes	0	الولديه	ولد	n	*
+dual noun invalid suffixes	0	الزوجتاه	زوجة	n	*
+dual noun invalid suffixes	0	بالزوجتاه	زوجة	n	*
+dual noun invalid suffixes	0	كالزوجتاه	زوجة	n	*
+dual noun invalid suffixes	0	للزوجتاه	زوجة	n	*
+dual noun invalid suffixes	0	للهجتاه	لهجة	n	*
+dual noun invalid suffixes	0	زوجتيي	زوجة	n	*
+dual noun invalid suffixes	0	الزوجتيه	زوجة	n	*
+dual noun invalid suffixes	0	بالزوجتيه	زوجة	n	*
+dual noun invalid suffixes	0	كالزوجتيه	زوجة	n	*
+dual noun invalid suffixes	0	للزوجتيه	زوجة	n	*
+dual noun invalid suffixes	0	للهجتيه	لهجة	n	*
+plural noun suffixes	1	مسلمات	مسلم	n	*
+plural noun suffixes	1	مطفآت	مطفأ	n	*
+plural noun suffixes	1	مسلمات	مسلمة	n	*
+plural noun suffixes	1	بمسلمات	مسلمة	n	*
+plural noun suffixes	1	كمسلمات	مسلمة	n	*
+plural noun suffixes	1	لمسلمات	مسلمة	n	*
+plural noun suffixes	1	المسلمات	مسلمة	n	*
+plural noun suffixes	1	بالمسلمات	مسلمة	n	*
+plural noun suffixes	1	كالمسلمات	مسلمة	n	*
+plural noun suffixes	1	للمسلمات	مسلمة	n	*
+plural noun suffixes	1	للغات	لغة	n	*
+plural noun suffixes	1	مسلماته	مسلم	n	*
+plural noun suffixes	1	مسلماته	مسلمة	n	*
+plural noun suffixes	1	مسلماتك	مسلمة	n	*
+plural noun suffixes	1	مسلماتي	مسلمة	n	*
+plural noun suffixes	1	بمسلماته	مسلمة	n	*
+plural noun suffixes	1	كمسلماته	مسلمة	n	*
+plural noun suffixes	1	لمسلماته	مسلمة	n	*
+plural noun suffixes	1	مسلمون	مسلم	n	*
+plural noun suffixes	1	المسلمون	مسلم	n	*
+plural noun suffixes	1	لمسلمون	مسلم	n	*
+plural noun suffixes	1	مسلمو	مسلم	n	*
+plural noun suffixes	1	مسلموه	مسلم	n	*
+plural noun suffixes	1	مسلموك	مسلم	n	*
+plural noun suffixes	1	مسلمونا	مسلم	n	*
+plural noun suffixes	1	لمسلموه	مسلم	n	*
+plural noun suffixes	1	مسلمين	مسلم	n	*
+plural noun suffixes	1	بمسلمين	مسلم	n	*
+plural noun suffixes	1	كمسلمين	مسلم	n	*
+plural noun suffixes	1	لمسلمين	مسلم	n	*
+plural noun suffixes	1	المسلمين	مسلم	n	*
+plural noun suffixes	1	بالمسلمين	مسلم	n	*
+plural noun suffixes	1	كالمسلمين	مسلم	n	*
+plural noun suffixes	1	للمسلمين	مسلم	n	*
+plural noun suffixes	1	للبنانيين	لبناني	n	*
+plural noun suffixes	1	مسلمي	مسلم	n	*
+plural noun suffixes	1	مسلميه	مسلم	n	*
+plural noun suffixes	1	مسلميك	مسلم	n	*
+plural noun suffixes	1	مسلمينا	مسلم	n	*
+plural noun suffixes	1	بمسلميه	مسلم	n	*
+plural noun suffixes	1	كمسلميه	مسلم	n	*
+plural noun suffixes	1	لمسلميه	مسلم	n	*
+plural noun invalid suffixes	0	المسلموه	مسلم	n	*
+plural noun invalid suffixes	0	بالمسلموه	مسلم	n	*
+plural noun invalid suffixes	0	كالمسلموه	مسلم	n	*
+plural noun invalid suffixes	0	للمسلموه	مسلم	n	*
+plural noun invalid suffixes	0	للبنانيوه	لبناني	n	*
+plural noun invalid suffixes	0	مسلميي	مسلم	n	*
+plural noun invalid suffixes	0	المسلميه	مسلم	n	*
+plural noun invalid suffixes	0	للبنانييه	لبناني	n	*
+perfect verb conjunction (and)	1	وذهب	ذهب	pv	*
+perfect verb conjunction (and)	1	فذهب	ذهب	pv	*
+perfect verb result clause particle (would have)	1	لفعل	فعل	pv	*
+regular perfect verb	1	كتبت	كتب	pv	*
+regular perfect verb	1	كتبتما	كتب	pv	*
+regular perfect verb	1	كتبا	كتب	pv	*
+regular perfect verb	1	كتبتا	كتب	pv	*
+regular perfect verb	1	كتبنا	كتب	pv	*
+regular perfect verb	1	كتبتم	كتب	pv	*
+regular perfect verb	1	كتبتن	كتب	pv	*
+regular perfect verb	1	كتبوا	كتب	pv	*
+regular perfect verb	1	كتبن	كتب	pv	*
+perfect verb with assimilated ت	1	كبتت	كبت	pv	*
+perfect verb with assimilated ت	1	كبتتا	كبت	pv	*
+perfect verb with assimilated ت	1	كبتما	كبت	pv	*
+perfect verb with assimilated ت	1	كبتم	كبت	pv	*
+perfect verb with assimilated ت	1	كبتن	كبت	pv	*
+perfect verb with assimilated ن	1	حسنا	حسن	pv	*
+perfect verb with assimilated أ + ا = آ	1	قرآ	قرأ	pv	*
+perfect verb attached direct object pronouns	1	علمني	علم	pv	*
+perfect verb attached direct object pronouns	1	علمنا	علم	pv	*
+perfect verb attached direct object pronouns	1	علمك	علم	pv	*
+perfect verb attached direct object pronouns	1	علمكما	علم	pv	*
+perfect verb attached direct object pronouns	1	علمكم	علم	pv	*
+perfect verb attached direct object pronouns	1	علمكن	علم	pv	*
+perfect verb attached direct object pronouns	1	علمه	علم	pv	*
+perfect verb attached direct object pronouns	1	علمها	علم	pv	*
+perfect verb attached direct object pronouns	1	علمهما	علم	pv	*
+perfect verb attached direct object pronouns	1	علمهم	علم	pv	*
+perfect verb attached direct object pronouns	1	علمهن	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتني	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتنا	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتك	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتكما	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتكم	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتكن	علم	pv	*
+perfect verb attached direct object pronouns	1	علمته	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتها	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتهما	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتهم	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتهن	علم	pv	*
+perfect verb attached direct object pronouns	1	علمتموه	علم	pv	*
+perfect verb attached direct object pronouns	1	علموه	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتموك	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتموكما	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتموكم	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتموكن	علم	pv	*
+perfect verb invalid chains	0	سمعتت	سمع	pv	*
+perfect verb invalid chains	0	سمعتتم	سمع	pv	*
+perfect verb invalid chains	0	سمعتمن	سمع	pv	*
+perfect verb invalid chains	0	سمعنتم	سمع	pv	*
+regular imperfect verb	1	أجلس	جلس	iv	*
+regular imperfect verb	1	تجلس	جلس	iv	*
+regular imperfect verb	1	تجلسين	جلس	iv	*
+regular imperfect verb	1	يجلس	جلس	iv	*
+regular imperfect verb	1	تجلس	جلس	iv	*
+regular imperfect verb	1	تجلسان	جلس	iv	*
+regular imperfect verb	1	يجلسان	جلس	iv	*
+regular imperfect verb	1	تجلسان	جلس	iv	*
+regular imperfect verb	1	نجلس	جلس	iv	*
+regular imperfect verb	1	تجلسون	جلس	iv	*
+regular imperfect verb	1	تجلسن	جلس	iv	*
+regular imperfect verb	1	يجلسون	جلس	iv	*
+regular imperfect verb	1	يجلسن	جلس	iv	*
+regular imperfect verb	1	تجلسي	جلس	iv	*
+regular imperfect verb	1	تجلسا	جلس	iv	*
+regular imperfect verb	1	يجلسا	جلس	iv	*
+regular imperfect verb	1	تجلسا	جلس	iv	*
+regular imperfect verb	1	تجلسوا	جلس	iv	*
+regular imperfect verb	1	يجلسوا	جلس	iv	*
+imperfect verb prefix chains	1	ويجلس	جلس	iv	*
+imperfect verb prefix chains	1	فيجلس	جلس	iv	*
+imperfect verb prefix chains	1	سيجلس	جلس	iv	*
+imperfect verb prefix chains	1	وسيجلس	جلس	iv	*
+imperfect verb prefix chains	1	فسيجلس	جلس	iv	*
+imperfect verb prefix chains	1	ليجلس	جلس	iv	*
+imperfect verb prefix chains	1	وليجلس	جلس	iv	*
+imperfect verb prefix chains	1	فليجلس	جلس	iv	*
+imperfect verb prefix chains	1	ليجلسا	جلس	iv	*
+imperfect verb attached direct object pronouns	1	يضربني	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربنا	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربك	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربكما	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربكم	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربكن	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربها	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربهما	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربهم	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربهن	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	أضربه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضربه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضربينه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضربه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضربانه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربانه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضربانه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	نضربه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضربونه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضربنه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربونه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربنه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضربيه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضرباه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضرباه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضرباه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	تضربوه	ضرب	iv	*
+imperfect verb attached direct object pronouns	1	يضربوه	ضرب	iv	*
+imperfect verb with assimilated أ + ا = آ	1	يقرآن	قرأ	iv	*
+imperfect verb with assimilated أ + ا = آ	1	يقرآ	قرأ	iv	*
+imperfect verb with assimilated أ + ا = آ	1	يقرآنه	قرأ	iv	*
+imperfect verb with assimilated أ + ا = آ	1	يقرآه	قرأ	iv	*
+imperfect verb with assimilated أ + ا = آ	1	ليقرآ	قرأ	iv	*
+imperfect verb invalid chains	0	سليجلس	جلس	iv	*
+regluar command verb	1	ادرس	درس	cv	*
+regluar command verb	1	ادرسي	درس	cv	*
+regluar command verb	1	ادرسا	درس	cv	*
+regluar command verb	1	ادرسوا	درس	cv	*
+regluar command verb	1	ادرسن	درس	cv	*
+regluar command verb	1	وادرس	درس	cv	*
+regluar command verb	1	فادرس	درس	cv	*
+regluar command verb	1	ادرسه	درس	cv	*
+regluar command verb	1	ادرسها	درس	cv	*
+regluar command verb	1	ادرسهما	درس	cv	*
+regluar command verb	1	ادرسهم	درس	cv	*
+regluar command verb	1	ادرسهن	درس	cv	*
+regluar command verb	1	ادرسني	درس	cv	*
+regluar command verb	1	ادرسنا	درس	cv	*
+regluar command verb	1	ادرسيه	درس	cv	*
+regluar command verb	1	ادرسوه	درس	cv	*
+regluar command verb	1	تعلمي	تعلم	cv	*
+regluar command verb	1	فتعلمي	تعلم	cv	*
