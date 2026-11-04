@@ -16,6 +16,8 @@ directory and never committed (README.md, Sources and licences).
         Tatoeba's words after a pronoun, clitic, article or auxiliary
     python3 languages/yi/sources/measure.py wiki <cache> <languages dir> <out dir> [articles] [seed]
         every word of random Yiddish Wikipedia articles (unpointed text), looked up
+    python3 languages/yi/sources/measure.py agree <cache> <languages dir> <out dir> [top]
+        Tatoeba's most frequent pointed words looked up pointed and unpointed (frequent forms, unpointed)
     python3 languages/yi/sources/measure.py tables <cache> <out dir>
         eval-language --dictionary for the own, Yomitan, union and final rules (the Measurements table)
 
@@ -133,6 +135,17 @@ def own_lemmas(word, heads):
     return spellings
 
 
+UNPOINTED_RULES = {}  # unpointed spelling -> pointed word, the pack's `unpointed` transform (hand decisions)
+
+
+def canonical(lemmas):
+    """Lemmas with each "Unpointed form of X" entry written as X."""
+    out = set()
+    for lemma in lemmas:
+        out |= UNPOINTED.get(lemma, set()) or {lemma}
+    return out
+
+
 def shares_word(phrase, lemma):
     """Whether a word of the lemma begins like a word of the phrase (טשעפּן זיך and דו טשעפּעסט do)."""
     return any(a[:3] == b[:3] for a in phrase.split(' ') for b in lemma.split(' '))
@@ -151,7 +164,9 @@ def deinflections(languages, words):
     cli = os.path.join(REPO, 'build', 'hoshidicts-cli')
     run = subprocess.run([cli, '--languages', languages, 'deinflect', 'yi', '--stdin'], input='\n'.join(words) + '\n',
                          capture_output=True, text=True, check=True)
-    return [{r['text'] for r in json.loads(line)['results']} for line in run.stdout.splitlines()]
+    finals = {'מ': 'ם', 'נ': 'ן', 'צ': 'ץ', 'פ': 'ף', 'כ': 'ך'}  # the pack's convertFinalLetters postprocessor
+    final = lambda t: t[:-1] + finals[t[-1]] if t and t[-1] in finals else t
+    return [{final(r['text']) for r in json.loads(line)['results']} for line in run.stdout.splitlines()]
 
 
 def judge(word, matched, result, heads, spellings=None):
@@ -164,13 +179,24 @@ def judge(word, matched, result, heads, spellings=None):
         return 'wrong-dictionary'
     suffix = ''
     if not lemmas and spellings:
-        for v in spellings.get(matched, []):
-            lemmas |= own_lemmas(v, heads)
+        target = UNPOINTED_RULES.get(matched)
+        if target is not None and target in heads:  # a hand decision: the pack's unpointed whole word
+            lemmas = own_lemmas(target, heads) | {target}
+        elif target is not None:  # a form the dictionary lacks (ייִנגלעך): the lemma its pointing names
+            lemmas = {l for v in spellings.get(target, [target]) for l in own_lemmas(v, heads)} | own_lemmas(
+                unpoint(target), heads)
+        else:
+            sets = [canonical(own_lemmas(v, heads)) for v in spellings.get(matched, []) if v != matched]
+            sets = [x for x in sets if x]
+            if any(not (a & b) for a in sets for b in sets):
+                return 'unjudged-pointing'  # the pointings are different words: only a hand decision can tell
+            for x in sets:
+                lemmas |= x
         suffix = '-variant'
     if not lemmas:
         return None
     expression = result['expression']
-    same = expression in lemmas or bool(UNPOINTED.get(expression, set()) & lemmas)
+    same = expression in lemmas or bool(UNPOINTED.get(expression, set()) & (lemmas | canonical(lemmas)))
     if same and suffix == '' and matched in AMBIGUOUS:
         return 'right-ambiguous'
     return ('right' if same else 'wrong') + suffix
@@ -212,7 +238,7 @@ def freq(cache, languages, out):
         first = first_defined(res, heads)
         verdict = judge(word, first['matched'] if first else word, first, heads)
         rows.append((verdict, n, word, first['expression'] if first else '', '|'.join(first['trace']) if first else ''))
-    wrong = [r for r in rows if r[0] != 'right']
+    wrong = [r for r in rows if not (r[0] or '').startswith('right')]
     os.makedirs(out, exist_ok=True)
     with open(os.path.join(out, 'freq.tsv'), 'w', encoding='utf-8') as f:
         for r in sorted(rows, key=lambda r: -r[1]):
@@ -258,7 +284,9 @@ def judge_all(cache, languages, items, out, name):
     PREFERRED.update(load_preferred())
     UNPOINTED.update(texts.unpointed_of(os.path.join(cache, 'wty-yi-en-json')))
     with open(os.path.join(languages, 'yi', 'transforms.json'), encoding='utf-8') as f:
-        RULE_IDS.update(t['id'] for t in json.load(f)['transforms'])
+        rules = json.load(f)['transforms']
+    RULE_IDS.update(t['id'] for t in rules)
+    UNPOINTED_RULES.update({r['inflected']: r['deinflected'] for t in rules if t['id'] == 'unpointed' for r in t['rules']})
     results = lookup(languages, cache, [t for _, t in items])
     matched = sorted({r[0]['matched'] for r in results if r} | {w for w, _ in items})
     spellings = variants(languages, matched)
@@ -387,9 +415,52 @@ def wiki(cache, languages, out, articles='300', seed='1'):
     judge_all(cache, languages, items, out, 'wiki')
 
 
+def unpoint(word):
+    """A word as unpointed text writes it: no points, ligatures as two letters."""
+    word = word.replace('\u05F2', 'יי').replace('\u05F0', 'וו').replace('\u05F1', 'וי')
+    return re.sub('[\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7]', '', word)
+
+
+def agree(cache, languages, out, top='2000'):
+    """Frequent forms in unpointed text: Tatoeba's `top` most frequent words that carry points (Tatoeba is
+    mostly pointed), looked up as written and without their points. Where the first results differ and are not
+    the same word (an "Unpointed form of" entry of the other, or a reference between them), the unpointed
+    lookup shows another word than the pointed text means."""
+    heads = texts.headwords(os.path.join(cache, 'wty-yi-en-json'))
+    UNPOINTED.update(texts.unpointed_of(os.path.join(cache, 'wty-yi-en-json')))
+    counts = collections.Counter()
+    for sentence in texts.tatoeba(os.path.join(cache, 'yid_sentences.tsv.bz2')):
+        counts.update(w for _, _, w in texts.words(sentence))
+    words = [w for w, _ in counts.most_common() if unpoint(w) != w][:int(top)]
+    pointed = [first_defined(r, heads) for r in lookup(languages, cache, words)]
+    bare = [first_defined(r, heads) for r in lookup(languages, cache, [unpoint(w) for w in words])]
+    refs = lambda w: {lemma for _, rs, _ in heads.get(w, []) for lemma in rs}
+    def same(a, b):
+        if a == b:
+            return True
+        targets = UNPOINTED.get(b, set()) | UNPOINTED.get(a, set())
+        return (a in targets or b in targets or b in refs(a) or a in refs(b)
+                or any(a in refs(x) or x in refs(a) for x in targets))
+    rows = []
+    for w, p, u in zip(words, pointed, bare):
+        a = p['expression'] if p else ''
+        b = u['expression'] if u else ''
+        if not same(a, b):
+            rows.append((counts[w], w, unpoint(w), a, b))
+    os.makedirs(out, exist_ok=True)
+    with open(os.path.join(out, 'agree.tsv'), 'w', encoding='utf-8') as f:
+        for r in sorted(rows, reverse=True):
+            f.write('\t'.join(map(str, r)) + '\n')
+    total = sum(counts[w] for w in words)
+    print(json.dumps({'words': len(words), 'tokens': total, 'differ': len(rows), 'differTokens': sum(r[0] for r in rows),
+                      'differTokenShare': round(sum(r[0] for r in rows) / total, 4)}, ensure_ascii=False))
+    for r in sorted(rows, reverse=True)[:25]:
+        print('  ' + '\t'.join(map(str, r)))
+
+
 def main():
     command, *args = sys.argv[1:] or ['']
-    commands = {'forms': forms, 'freq': freq, 'text': text, 'phrases': phrases, 'tables': tables, 'wiki': wiki}
+    commands = {'forms': forms, 'freq': freq, 'text': text, 'phrases': phrases, 'tables': tables, 'wiki': wiki, 'agree': agree}
     if command not in commands:
         sys.exit(__doc__)
     commands[command](*args)

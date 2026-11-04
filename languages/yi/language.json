@@ -59,7 +59,14 @@
         }, "limit": 512}]]
       }
     ],
-    "postprocessors": [],
+    "postprocessors": [
+      {
+        "id": "convertFinalLetters",
+        "name": "Convert to final letters",
+        "keepInput": false,
+        "variants": [[{"map": {"מ": "ם", "נ": "ן", "צ": "ץ", "פ": "ף", "כ": "ך"}, "at": "end"}]]
+      }
+    ],
     "readingNormalizer": null,
     "transforms": "transforms.json",
     "traceSelection": "shortest",

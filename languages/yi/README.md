@@ -60,7 +60,7 @@ below give each its own numbers.
   `sources/constructed.tsv` are forms of common lemmas for every ending
   Yomitan's rules read, each attested in wty-yi-en or kaikki, except the ten
   dialect second person plurals in -טס that only Yomitan's rule reads.
-  `sources/preferred-lemmas.tsv` is the hand decision, for 173 frequent
+  `sources/preferred-lemmas.tsv` is the hand decision, for 198 frequent
   words with several readings, of which readings a first result may show
   (Measurements).
 - Not committed, used for the measurements below (all in
@@ -89,7 +89,7 @@ below give each its own numbers.
 
 ## Rule provenance
 
-`transforms.json` has 21 transforms and 883 rules: 667 `own`, 216 `both`
+`transforms.json` has 21 transforms and 660 rules: 517 `own`, 143 `both`
 and no `yomitan` rule (`sources/build-final.mjs`). It is `sources/own.json`
 with the own rules that read the same ending as a Yomitan rule marked `both`.
 
@@ -111,31 +111,37 @@ with the own rules that read the same ending as a Yomitan rule marked `both`.
     they add;
   - the 7,832 single-word inflection references of wty-yi-en: 5 rows, of
     which 2 are malformed participles of the dictionary (`אַפּליקירטנדיק`,
-    `פֿאַרוויגטנדיק`) and 1 is `מענען` → מאַן; 133 false candidates;
+    `פֿאַרוויגטנדיק`) and 1 is `מענען` → מאַן; 132 false candidates;
   - `sources/constructed.tsv`: the 8 dialect second person plurals in -טס
     (`מאַכטס` → מאַכן); 11 false candidates;
-  - `tests/cases.tsv`: 12 negatives broken (`ביים` → בוים, `טייער` → טיי,
-    `מיינע` → מיינען), 4 false candidates.
+  - `tests/cases.tsv`: 14 negatives broken (`ביים` → בוים, `טייער` → טיי,
+    `מיינע` → מיינען), 5 false candidates.
 
-  On the real texts the union changes 296 first results. None becomes right
+  On the real texts the union changes 285 first results. None becomes right
   and 105 that were right stop being so: the diminutive -ל reads `ווייל`
   (because) as וויי (61 places), the plural -ער reads `פריער` (earlier) as
   פּרי (42) and `ווערטער` as ווערט (22), -ות reads `שאלות` as שאל (9), and -קע
   and -ן read the name `מאָטקע` as מאָט (39). The wrong first results the
-  script judges rise from 1,282 to 1,375. The -טס rule, the only one that
+  script judges rise from 1,246 to 1,339. The -טס rule, the only one that
   reads a form the own rules miss, reads `וועלטס` (the world's) as וועלן (to
   want; 153 places in Wikipedia and Wikisource) and `גייטס` (Gates) as גיין,
   against about 30 dialect forms in Hasidic texts on Wikisource (`שטעלטס ענק
   פאר`).
-- **Yomitan's processors left out: all four** (`sources/yomitan-differences.tsv`).
-  `removeYiddishDiacritics` replaces the text with its letters alone, so
+- **Yomitan's processors: `convertFinalLetters` is in the pack, the other three
+  are left out** (`sources/yomitan-differences.tsv`). `convertFinalLetters`,
+  a postprocessor exactly as Yomitan has it (the differential check pairs
+  them on 1,463 inputs), writes a stem's last letter final, so the rules need
+  no final-letter variants except for פֿ, and a word cut at a geresh or
+  apostrophe finds its base word (`אויפ׳ן` → אויף); added after the second
+  audit, it gave 84 Wikipedia and 10 pointed-text lookups that found nothing
+  a result and let 227 duplicate rules go. `removeYiddishDiacritics` replaces
+  the text with its letters alone, so
   pointed text never reaches wty-yi-en's pointed headwords: with Yomitan's
   processors the final rules reach 36.8% of the corpus sample, first rank
-  34.0%, instead of 97.6% and 91.0%. `combineYiddishLigatures` writes letter
+  33.9%, instead of 97.6% and 91.0%. `combineYiddishLigatures` writes letter
   pairs as one character (וו → װ), which wty-yi-en never does, and
-  `convertYiddishLigatures` undoes it; `convertFinalLetters` writes the
-  final letter Yomitan's rules leave medial, which the own rules write
-  themselves. The pack's processors do the reverse of Yomitan's:
+  `convertYiddishLigatures` undoes it. The pack's preprocessors do the reverse
+  of Yomitan's:
   - `normalizeUnicode` (NFKC, replacing the text): presentation forms (ﬠ,
     ײַ as one code point, ﭏ) as letters and points;
   - `splitLigatures`: װ, ױ, ײ (without patah) as two letters, ײַ kept and ייַ
@@ -146,7 +152,8 @@ with the own rules that read the same ending as a Yomitan rule marked `both`.
     take, at most 512 per text: א as א, אַ or אָ (not before ו or י, where it
     is silent, except before consonantal וו: `אוועק` → אַוועק), פ as פּ or פֿ,
     יי as ײַ or ייִ, ווו as וווּ, ב, כ, ת as בֿ, כּ, תּ, and ש as שׂ. A key for
-    each pointed form keeps pointed text from gaining a second point.
+    each pointed form keeps pointed text from gaining a second point;
+  - and the postprocessor `convertFinalLetters` above.
 - **Own rules** (`sources/own-rules.mjs`), one transform per form so a trace
   names it:
   - the present tense: the stem (first person singular, singular imperative,
@@ -178,11 +185,14 @@ with the own rules that read the same ending as a Yomitan rule marked `both`.
     (`אָפֿענע`, `איידעלע`), adjectives in -ע (`מאָדנער`) and in -י (`פֿריִע`);
     comparatives and superlatives with the vowel change and the irregular
     בעסער, ערגער, מער, נעענטער;
-  - `unpointed`: 13 frequent unpointed words whose pointings tie or would be
+  - `unpointed`: 25 frequent unpointed words whose pointings tie or would be
     read wrong, read as their usual pointed word with no processor step:
-    `זאל` → זאָל (should, not זאַל hall), `דאך` → דאָך, `וואך` → וואָך, `וואכן`,
-    `שלאף`, `קאסטן`, `פאן`, `פארן`, `אב`, `גלייך` → גלײַך, `פירער`, `מיי`,
-    `שייכות`.
+    `זאל` → זאָל (should, not זאַל hall), `האסט` → האָסט (you have, not
+    האַסט haste), `דו האסט`, `וואגן` → וואָגן (wagon), `לעפל` → לעפֿל
+    (spoon), `אפענע` → אָפֿענע, `לייט` → לײַט (people), `יינגל` → ייִנגל,
+    `פרי` → פֿרי (early), `פיין` → פֿײַן, `דאך`, `וואך`, `וואכן`, `שלאף`,
+    `קאסטן`, `פאן`, `פארן`, `אב`, `גלייך`, `פירער`, `מיי`, `שייכות`, `פילן`,
+    `מאכער`, `יינגלעך`.
 - **Stem constraints.** Every suffix rule reads one word (`stemCharacters:
   "[^ ]"`), so a short ending never fires on a word before a space (`די
   טישן` is not `די טיש`, `מיר זאָגט` is not `מיר זאָגן`). Where a constraint
@@ -191,9 +201,9 @@ with the own rules that read the same ending as a Yomitan rule marked `both`.
     not צין), a stem in -ע takes -ען not after י, מ or נ (`מיינע` and `נייע`,
     unpointed מײַנע and נײַע, are not מיינען and נייען), and -ענען needs a
     stem of three code points (`טרעט` is not טרענען, `זע` not זענען);
-  - noun and adjective endings need a stem that does not end in a medial
-    letter (`וואָכן` is not וואָכ) and a plural -ער one that does not end in a
-    vowel (`טייער` is not טיי);
+  - a plural -ער needs a stem that does not end in a vowel (`טייער` is not
+    טיי), and the noun case -ן one that does not end in ע or a medial letter
+    (`גאַנצן` is not גאַנצע);
   - a vowel change alone makes a plural only from ע for אַ or אָ; the other
     such plurals are written out (`ביים` is בײַם, not a plural of בוים;
     `גביר` is not one of גבור); a plural with a vowel change comes before the
@@ -206,13 +216,19 @@ with the own rules that read the same ending as a Yomitan rule marked `both`.
     texts), and a compound verb not before a pronoun (`האָט מיר` is not מיר
     האָבן);
   - -קע after a consonant needs a stem of five code points (`מאָטקע` is a name,
-    not a diminutive of מאָט).
+    not a diminutive of מאָט); the participle -ירט one of three (`פֿירט` is
+    "leads", not a participle); and the third person -ט does not follow געה
+    (`געהערט` is mostly "heard", which the participle gives, not "belongs":
+    27 of 28 places in the pointed texts, 9 of 22 in Wikipedia by the second
+    audit's reading; a pack choice, tested by a lookup row).
 
   `sources/mutations.py` deletes each constraint in a scratch copy, per
-  transform and per value: each of the 78 deletions makes a test fail. The
-  conditions of the separable, compound-verb and participle rules, every
-  `addPoints` key, `wordInternal` and `searchResolution` also have rows that
-  fail without them. `sources/mutation-gains.py` found the false candidates
+  transform and per value: each of the 71 deletions makes a test fail. The
+  conditions of the separable and participle rules, every `addPoints` key
+  and its alternatives, `wordInternal` (gershayim inside a word, the geresh
+  between words), `searchResolution`, `traceSelection` and the order of the
+  plural and adjective and of the third person and participle transforms
+  also have rows that fail without them. `sources/mutation-gains.py` found the false candidates
   each constraint prevents on 150,000 words and phrases of the real texts and
   Tatoeba. Five transforms (1pl, adjE, adjS, comparative, superlative) have no
   minimum stem: deleting it added no headword there.
@@ -235,37 +251,47 @@ with the own rules that read the same ending as a Yomitan rule marked `both`.
     keys for אוו and ש and the 512-variant limit; the `unpointed` transform;
     participles without גע- and their declension; -ענען with a three-letter
     stem; צו after זאָג- and גיי-; the plural vowel change first; tests for
-    every reading, prefix, key and setting the audit could delete unnoticed.
+    every reading, prefix, key and setting the audit could delete unnoticed;
+  - after the second audit (audit-hachi-lang-yi-b, one MAJOR and five MINOR
+    findings): 12 more unpointed whole words (`האסט`, `וואגן`, `לעפל`, ...),
+    tied pointings judged by hand or left unjudged, frequent unpointed forms
+    measured (`measure.py agree`), `convertFinalLetters` and the 227
+    duplicate final-letter rules it replaces, the געה and -ירט constraints,
+    constraints that stopped right readings removed (`געזעענעם`, `געליינט`,
+    `אָנגעזעענע`), and rows for the participle conditions, the transform order,
+    the alternatives of `אוו`, the geresh and the new prefixes.
 
 ## Measurements
 
 All with wty-yi-en 2026.10.22 as published, form-of rows included, imported
-by `hoshidicts-cli import`, at hoshidicts 7c854db (GCC 14.3, Release). The
+by `hoshidicts-cli import`, at hoshidicts 176819e (GCC 14.3, Release). The
 pack has no optional processor, transform or variant pass, so every number is
 the same with every option on and with the defaults.
 
 1. **`eval-language --dictionary`** (`sources/measure.py tables`), with the
-   pack's processors. "+ post" adds Yomitan's two postprocessors, without
-   which Yomitan's rules leave medial final letters. Recall / false candidates
-   per row / first rank; negatives passed for `cases.tsv`:
+   pack's processors (which include Yomitan's `convertFinalLetters`). "+
+   post" adds Yomitan's other postprocessor, `convertYiddishLigatures`.
+   Recall / false candidates per row / first rank; negatives passed for
+   `cases.tsv`:
 
-   | Rules | corpus + gaps (1,000) | cases.tsv (334) | wty forms (7,832) | constructed (152) | Yomitan's test (34) |
+   | Rules | corpus + gaps (1,000) | cases.tsv (365) | wty forms (7,832) | constructed (152) | Yomitan's test (34) |
    | --- | --- | --- | --- | --- | --- |
-   | Own (`sources/own.json`) | 97.6% / 0.098 / 91.0% | 100%, 100% neg / 0.291 / 80.3% | 95.3% / 0.086 / 94.9% | 92.8% / 0.230 / 81.6% | 20.6% |
-   | Yomitan (`sources/yomitan.json`) | 20.3% / 0.050 / 60.3% | 6.7%, 85.0% neg / 0.150 / 55.5% | 8.2% / 0.038 / 94.8% | 38.2% / 0.151 / 66.5% | 100% |
-   | Yomitan + post | 31.4% / 0.073 / 67.7% | 9.1%, 85.0% neg / 0.181 / 57.5% | 13.7% / 0.053 / 94.8% | 65.8% / 0.224 / 76.3% | 67.6% |
-   | Union (merge tool) | 97.6% / 0.118 / 90.6% | 100%, 85.0% neg / 0.299 / 79.9% | 95.3% / 0.097 / 94.9% | 92.8% / 0.283 / 79.6% | 100% |
-   | Union + post | 97.6% / 0.128 / 90.6% | 100%, 85.0% neg / 0.311 / 79.9% | 95.4% / 0.105 / 94.9% | 98.0% / 0.322 / 84.2% | 67.6% |
-   | **Final (`transforms.json`)** | **97.6% / 0.098 / 91.0%** | **100%, 100% neg / 0.291 / 80.3%** | **95.3% / 0.086 / 94.9%** | **92.8% / 0.230 / 81.6%** | 20.6% |
+   | Own (`sources/own.json`) | 97.6% / 0.098 / 91.0% | 100%, 100% neg / 0.399 / 80.1% | 95.4% / 0.083 / 94.9% | 92.8% / 0.230 / 80.3% | 20.6% |
+   | Yomitan (`sources/yomitan.json`) | 29.9% / 0.056 / 67.3% | 8.2%, 83.3% neg / 0.263 / 53.7% | 13.0% / 0.045 / 94.8% | 59.2% / 0.184 / 75.7% | 67.6% |
+   | Yomitan + post | 31.4% / 0.073 / 67.7% | 8.2%, 83.3% neg / 0.271 / 54.1% | 13.7% / 0.053 / 94.8% | 65.8% / 0.224 / 76.3% | 67.6% |
+   | Union (merge tool) | 97.6% / 0.121 / 90.5% | 100%, 83.3% neg / 0.420 / 79.7% | 95.4% / 0.096 / 94.9% | 98.0% / 0.303 / 82.9% | 67.6% |
+   | Union + post | 97.6% / 0.128 / 90.5% | 100%, 83.3% neg / 0.420 / 79.7% | 95.4% / 0.101 / 94.9% | 98.0% / 0.322 / 82.9% | 67.6% |
+   | **Final (`transforms.json`)** | **97.6% / 0.098 / 91.0%** | **100%, 100% neg / 0.399 / 80.1%** | **95.4% / 0.083 / 94.9%** | **92.8% / 0.230 / 80.3%** | 20.6% |
 
    - The final set is the own set with provenance marks, so its numbers are
      the own set's. "wty forms" are the 7,832 single-word inflection
      references of wty-yi-en (`measure.py forms`; spelling variants and
      alternative forms left out).
-   - Yomitan's test writes its terms as Yomitan's rules leave them, with a
-     medial final letter (`קויפֿנ`) and often without points (`מאנ`), and some
-     of its sources are no standard form (`בוךערס`, `קוכןסער`, `ליפענעס`), so
-     it is in `sources/`, not `tests/`.
+   - Yomitan's test writes its terms as Yomitan's rules leave them, often
+     without points (`מאנ`) and with Yomitan's ligatures, and some of its
+     sources are no standard form (`בוךערס`, `קוכןסער`, `ליפענעס`), so it is in
+     `sources/`, not `tests/`. With Yomitan's four processors Yomitan's rules
+     pass 44.1% of it and the own rules 14.7%.
    - First rank on the corpus is the share of rows whose whole-word lookup
      shows the lemma first. Most of the others show a wty-yi-en entry of the
      form itself, a noun or adjective spelled like the verb form (`אַקער`,
@@ -275,45 +301,56 @@ the same with every option on and with the defaults.
      prepositions, affixes, phrases, pronouns), and no part of speech the
      rules produce is untagged, so the pack keeps the default `"filter"`.
      With `"pass"` false candidates rise on every file (corpus 0.114, cases
-     0.347, wty forms 0.102, constructed 0.270, Yomitan's test 0.882), first
+     0.452, wty forms 0.099, constructed 0.270, Yomitan's test 0.882), first
      rank falls on the corpus (90.8%) and recall does not change.
 2. **How first results are judged** (`sources/measure.py`, `judge`). A first
    result is right when it is the lemma the matched text's inflection
    references name in wty-yi-en (a named lemma whose rows are only references
-   standing for the lemmas they name: `בעסטער` → בעסט → גוט), or, for the 173
-   frequent words of `sources/preferred-lemmas.tsv` with several readings
-   (`געווען`: "been" or "the past"), one of the readings decided there by
-   hand. A word without inflection references is right as itself or as the
-   lemma of its spelling references. An "Unpointed form of X" entry counts as
-   X. A word outside the table with both an entry and an inflection
-   reference counts either as right, separately ("right-ambiguous"). Where
-   the matched text has no row, the rows of its `addPoints` variants judge
-   ("right-variant", "wrong-variant"). wty-yi-en's rows for `מיר זענען`,
-   `איר זענט` and `זיי זענען` name only מסביר זײַן (a split table): such a
-   first result is "wrong-dictionary". Words the dictionary does not have
-   are "unjudged" and are sampled by hand.
+   standing for the lemmas they name: `בעסטער` → בעסט → גוט), or, for the 198
+   words of `sources/preferred-lemmas.tsv` (frequent homographs such as
+   `געווען`, "been" or "the past", and frequent unpointed words whose
+   pointings are different words, such as `פארט`), one of the readings
+   decided there by hand. A word without inflection references is right as
+   itself or as the lemma of its spelling references. An "Unpointed form of
+   X" entry counts as X. A word outside the table with both an entry and an
+   inflection reference counts either as right, separately
+   ("right-ambiguous"). Where the matched text has no row, its `addPoints`
+   variants' rows judge ("right-variant", "wrong-variant") when they agree;
+   when they are different words and neither the table nor an `unpointed`
+   whole word decides, the result is "unjudged-pointing". wty-yi-en's rows
+   for `מיר זענען`, `איר זענט` and `זיי זענען` name only מסביר זײַן (a split
+   table): such a first result is "wrong-dictionary". Words the dictionary
+   does not have are "unjudged" and are sampled by hand.
 3. **Frequent forms** (`measure.py freq`): of the 10,000 most frequent words
    of the 32 YIVO-spelled Wikisource pages (758,702 words), 1,455 (92,196
    occurrences) have an inflection reference that names a lemma a rule
-   reaches. Looked up alone, 65 of them (10,638 occurrences, 1.40% of the
-   list's words) show a wrong first result:
-   - 62 words (10,207 occurrences) show their own entry, which the exact
+   reaches. Looked up alone, 18 of them (10,098 occurrences, 1.33% of the
+   list's words) show a wrong first result or none:
+   - 16 words (9,928 occurrences) show their own entry, which the exact
      match ranks first (docs/languages.md 9.6): `געווען` (3,368) "the past",
      `האָב` (1,966) "property", `וועט` (1,860) "bet", `וועלן` (709) "to
      want" for the future auxiliary, `ווערט` (507) "value", `בעט` (350)
      "bed", `מאַכט` (322) "might", `גיי` (186) "come on!", `ווייס` (173)
-     "white", `לידער` (138) "leader";
-   - 2 show a rule's reading on a tie with the dictionary's: `געהערט` (261)
-     → געהערן (it belongs) before הערן (heard), `גייען` (146) → the adjective
-     גיי, whose form wty-yi-en lists, before גיין;
+     "white", `לידער` (138) "leader", `טראַכט` (107) "womb";
+   - `גייען` (146) shows the adjective גיי, whose declined form wty-yi-en's
+     row names, tied with the pack's גיין;
    - `אונזערע` (24) finds nothing: its row names `אונזער`, whose row names
      `אונדזער` (one hop reaches nothing; docs/languages.md 16).
-4. **Behind pronouns, clitics, articles and auxiliaries** (`measure.py
+4. **Frequent forms, unpointed** (`measure.py agree`): Tatoeba's 2,000 most
+   frequent pointed words (57,008 occurrences), looked up as written and
+   without their points. For 63 (5,977 occurrences) the unpointed lookup
+   shows another word than the pointed one. 5,406 of those occurrences are
+   the article `אַ`, which unpointed is the letter `א` (Known gaps). The
+   others are ties between pointings that context decides, such as `פארן`
+   (פֿאָרן travel or פֿאַרן before the, 63), `ארט` (אַרט kind or אָרט place,
+   39), `ווארט` (וואַרט wait or וואָרט word, 27), `איין` (25), `פארט` (16)
+   and `דאך` (10), and words wty-yi-en lacks (`פעסט`, `פעיק`).
+5. **Behind pronouns, clitics, articles and auxiliaries** (`measure.py
    phrases`): Tatoeba's 46,446 places where a word follows איך, דו, ער, זי,
    עס, מיר, איר, זיי, מען, ס׳, כ׳, מ׳, דער, די, דאָס, דעם, אַ, אַן, a form of
    האָבן, זײַן, וועלן or וואָלט, or זיך, looked up from that word to the end of
    the sentence:
-   - 43,132 right (236 of them through a variant); 655 not judged by script,
+   - 43,132 right (235 of them through a variant); 655 not judged by script,
      compound verbs (`האָב ליב` → ליב האָבן, `האָט מורא` → מורא האָבן), right;
      367 with no result;
    - 2,292 wrong: the auxiliaries' own entries (`האָב` 1,042 "property",
@@ -321,82 +358,89 @@ the same with every option on and with the defaults.
      `מיר זענען` 269, `איר זענט` 214, `זיי זענען` 129), and wty-yi-en's rows
      for `איך וועל`, `מיר וועלן` and `זיי וועלן`, which name וועלן (to want)
      beside the auxiliary וועל and tie (155).
-5. **Real text, pointed** (`measure.py text`): every word of the three
+6. **Real text, pointed** (`measure.py text`): every word of the three
    Wikisource texts, looked up from the word to the end of its sentence,
    66,644 lookups.
-   - Right by script: 55,962 (50,614 as written, 50 ambiguous, 5,298
+   - Right by script: 55,998 (50,663 as written, 50 ambiguous, 5,285
      through a variant).
-   - Wrong by script: 1,282 (1.9%). 1,081 are own entries ranked first by
+   - Wrong by script: 1,246 (1.9%). 1,103 are own entries ranked first by
      the exact match (`געווען` 308, `האָב` 269, `וועט` 197, `וועלן` 58, `גיי`
-     49, `מאַכט` 40, `ווערט` 37, `בעט` 36, `שיינע` 34 "a name", `ווייס` 28);
-     68 are wty-yi-en's references (`איך וועל` → וועלן 55, `פּלוצלונג` →
-     פּלוצעם 9, `גערן` → יערן 4); 41 are the split tables; 92 are rule
-     readings (`געהערט` → געהערן 28, `לייט` (unpointed לײַט, people) → לייטן
-     24, `גייען` → גיי 13, `ווערטלעך` → ווערט 7).
-   - By hand (`unjudged` by script: 2,572): random samples, seeds 11-12: of
-     100 judged right, 2 are wrong in context (`אייער` eggs shown as "your",
-     `וועלן` the auxiliary shown as "to want"); of 20 right-variant, none; of
-     50 unjudged, 5 (the name `מענדעלע` → מאַנדל twice, `אויסן` → אויס,
-     `קישעלעך` → קוש, `הערט ער אויף` → הערן for אויפֿהערן).
-   - So about 1,282 + 1,000 + 260 ≈ 2,550 wrong first results (3.8%); the
+     49, `מאַכט` 40, `ווערט` 37, `בעט` 36, `שיינע` 34 "a name", `ווייס` 28,
+     and `פאָרט` 22, nevertheless, which wty-yi-en lacks, shown as פּאָרט
+     port); 68 are wty-yi-en's references (`איך וועל` → וועלן 55,
+     `פּלוצלונג` → פּלוצעם 9, `גערן` → יערן 4); 41 are the split tables; 34
+     are rule readings (`גייען` → גיי 13, `ווערטלעך` → ווערט 7).
+   - By hand (`unjudged` by script: 2,581): random samples drawn at the head
+     of the first audit's fixes (seeds 11-12; 138 first results have changed
+     since): of 100 judged right, 2 are wrong in context (`אייער` eggs shown
+     as "your", `וועלן` the auxiliary shown as "to want", which the table now
+     counts wrong); of 20 right-variant, none; of 50 unjudged, 5 (the name
+     `מענדעלע` → מאַנדל twice, `אויסן` → אויס, `קישעלעך` → קוש, `הערט ער
+     אויף` → הערן for אויפֿהערן).
+   - So about 1,246 + 1,000 + 260 ≈ 2,500 wrong first results (3.8%); the
      share in the right bucket is the least certain (2 of 100).
-   - No result: 6,828, mostly names (`סענדערל`, `הערשלען`), Hebrew words
+   - No result: 6,819, mostly names (`סענדערל`, `הערשלען`), Hebrew words
      wty-yi-en lacks or spells otherwise, and pieces of abbreviations (`ר` of
      `ר׳`).
-6. **Real text, unpointed** (`measure.py wiki`): every word of 300 random
+7. **Real text, unpointed** (`measure.py wiki`): every word of 300 random
    Yiddish Wikipedia articles (seed 1), 140,997 lookups, 3.2% of the words
    pointed.
-   - Right by script: 101,113 (70,588 as written, 83 ambiguous, 30,442
+   - Right by script: 101,076 (70,918 as written, 83 ambiguous, 30,075
      through a variant).
-   - Wrong by script: 4,278 (3.0%). 4,126 are own entries ranked first: the
+   - Wrong by script: 4,299 (3.0%). 4,181 are own entries ranked first: the
      article `א` shown as the letter alef (2,607), `געווען` 866, `ווערט` 303,
-     `וועט` 170, `וועלן` 70, `לידער` 26; 66 the split tables; 69 rule
-     readings (`געהערט` 22, `גייען` 18, `לייט` 6); 17 references.
-   - By hand (seed 13): of 30 judged right, 2 are wrong (both the article
-     `א`, now judged by script); of 40 right-variant, none; of 40 unjudged
-     (4,957), 8 (`וואונדער` → וווּנד, `פלייטס` → פֿלייט, `שמעלצער` → שמאַלץ,
-     `אנקום` → אָנקומען, `געהאלט` → האַלטן, the letters `עף` → עפֿענען, the
-     abbreviation `אר` → אַרן, the name `ציגלער` → ציגל), so about 990.
-   - So about 4,278 + 990 ≈ 5,300 wrong first results (3.8%).
-   - No result: 30,649 (21.7%): pieces of abbreviations and dates (`ה`, `ס`,
+     `וועט` 170, `וועלן` 70, `לידער` 26, and two tie decisions of the table
+     (`פארט` 40 shown as פּאָרט, `באס` 8 shown as באַס bass); 66 the split
+     tables; 35 rule readings
+     (`גייען` 18, `מעשים` → מעש 4, `ווערטלעך` 4); 17 references.
+   - Unjudged pointings: 16 (`ארגאן`, `גראד`, `קארן`).
+   - By hand (seed 13, drawn at the head of the first audit's fixes; 206
+     first results have changed since): of 30 judged right, 2 are wrong
+     (both the article `א`, now judged by script); of 40 right-variant, none;
+     of 40 unjudged (5,044 now), 8 (`וואונדער` → וווּנד, `פלייטס` → פֿלייט,
+     `שמעלצער` → שמאַלץ, `אנקום` → אָנקומען, `געהאלט` → האַלטן, the letters
+     `עף` → עפֿענען, the abbreviation `אר` → אַרן, the name `ציגלער` → ציגל),
+     so about 1,000.
+   - So about 4,299 + 1,000 ≈ 5,300 wrong first results (3.8%).
+   - No result: 30,562 (21.7%): pieces of abbreviations and dates (`ה`, `ס`,
      `טן`), names, and spellings that are neither YIVO nor its unpointed
      form (`אסאך`, `עטליכע`, `פאראייניגטע`, `שטענדיג`, `ארבייטער`).
-7. **Performance** (docs/languages.md 13): the 107 hover texts of
+8. **Performance** (docs/languages.md 13): the 107 hover texts of
    `sources/benchmark-sentences.txt` (each word of ten sentences written for
    the pack, to the end of its sentence) and of its unpointed copy
    `sources/benchmark-sentences-unpointed.txt`.
    - Native `benchmark-lookup --languages languages --language yi` (wty-yi-en
-     mapped, 6 passes, the first dropped, three runs at machine load 47-53):
-     pointed p50 25.9-26.5 µs, p95 58-62 µs; unpointed p50 41.4-42.5 µs, p95
-     176-178 µs, max 0.88 ms. The 140,997 Wikipedia hovers: p50 48.0 µs,
-     p95 360 µs, p99 924 µs, max 7.5 ms (the 512-variant limit of `addPoints`
-     took the maximum from 50 ms). Budget 1 ms p50.
+     mapped, 6 passes, the first dropped, three runs at machine load 38-47):
+     pointed p50 26.6-27.5 µs, p95 67-69 µs; unpointed p50 46.0-46.8 µs,
+     p95 215-218 µs, max 0.87 ms. The 140,997 Wikipedia hovers: p50 53.9 µs,
+     p95 441 µs, p99 1.10 ms, max 9.1 ms (the 512-variant limit of
+     `addPoints` took the maximum from 50 ms). Budget 1 ms p50.
    - Hachidori feat/multi-language 803f7b6 prebuilt engines, Node 22,
      `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=yi`:
-     `hdw_lookup` pointed p50 79.9 µs, p95 165 µs single-thread, p50 90.5
-     µs, p95 187 µs threaded; unpointed p50 109.9 / 117.6 µs, p95 398 / 399
+     `hdw_lookup` pointed p50 78.4 µs, p95 170 µs single-thread, p50 83.0
+     µs, p95 184 µs threaded; unpointed p50 111.0 / 125.4 µs, p95 383 / 433
      µs.
    - `hdw_language_load` (`sources/wasm-load.mjs`, 10 fresh engines): median
-     7.97 ms (max 14.0) single-thread, 8.21 ms (15.9) threaded. Live heap
-     after the load: +1,271,936 bytes. Budgets 50 ms and 20 MB.
+     5.66 ms (max 12.0) single-thread, 6.00 ms (11.9) threaded. Live heap
+     after the load: +1,220,912 bytes. Budgets 50 ms and 20 MB.
    - The pack has 56 `pattern` rules (35 separable particles, 21 compound
-     verbs); a copy without them loads with about 133 KB less heap.
-8. **Hachidori in Chrome** (`test/chrome-language-pack.mjs` on
+     verbs); a copy without them loaded with about 133 KB less heap.
+9. **Hachidori in Chrome** (`test/chrome-language-pack.mjs` on
    feat/multi-language 803f7b6 with this branch in `third_party/hoshidicts`,
-   Chrome 152.0.7977.75, wty-yi-en.zip): 20 of 20 checks pass. Settings adds
-   Yiddish beside Japanese and imports the dictionary (0.5 s); hovered words
-   in right-to-left pages find their lemma first, pointed and unpointed
+   Chrome 152.0.7977.75, wty-yi-en.zip): 23 of 23 checks pass. Settings adds
+   Yiddish beside Japanese and imports the dictionary (0.5 s); 19 hovered
+   words in right-to-left pages find their lemma first, pointed and unpointed
    (`הייבט` → אָנהייבן over `הייבט אָן`, `האָסטו` → האָבן, `שענסטע` → שיין,
-   `פארשטייט` → פֿאַרשטיין, `זאל` → זאָל, `אוועק` → אַוועק, `ישראל` →
-   ישׂראל); the Anki note and the switch to
-   Japanese and back work.
-9. **Checks**: `language-conformance-test` (corpus.tsv 976/976, cases.tsv
-   334/334, text.tsv 58/58, lookup.tsv 40/40; gaps.tsv 0/24 reported);
-   `tools/check-classes.mjs yi`; `tools/check-yomitan.mjs` (2,696 rule inputs,
-   8,884 Yomitan results, no unexplained difference; the four unpaired
-   processors listed); `sources/mutations.py` (78 of 78 deletions fail a
-   test).
-10. **Commands.** Each number above comes from one of these, with the inputs
+   `פארשטייט` → פֿאַרשטיין, `זאל` → זאָל, `האסט` → האָבן, `לעפל` → לעפֿל,
+   `ישראל` → ישׂראל); the Anki note and the switch to Japanese and back work.
+10. **Checks**: `language-conformance-test` (corpus.tsv 976/976, cases.tsv
+    365/365, text.tsv 59/59, lookup.tsv 43/43; gaps.tsv 0/24 reported);
+    `tools/check-classes.mjs yi`; `tools/check-yomitan.mjs` (2,747 rule
+    inputs, 9,047 Yomitan results, no unexplained difference;
+    `convertFinalLetters` compared on 1,463 inputs, the three unpaired
+    processors listed); `sources/mutations.py` (71 of 71 deletions fail a
+    test).
+11. **Commands.** Each number above comes from one of these, with the inputs
     of Sources and licences in `<cache>`:
 
     ```sh
@@ -406,6 +450,7 @@ the same with every option on and with the defaults.
     python3 languages/yi/sources/measure.py tables <cache> <out>
     python3 languages/yi/sources/measure.py freq|text|phrases <cache> languages <out>
     python3 languages/yi/sources/measure.py wiki <cache> languages <out> 300 1
+    python3 languages/yi/sources/measure.py agree <cache> languages <out> 2000
     python3 languages/yi/sources/mutations.py; python3 languages/yi/sources/mutation-gains.py <cache> <mutations output>
     python3 languages/yi/sources/per-rule.py <rules.json> <eval-language --per-rule output>
     build/benchmark-lookup <hover texts> 6 --languages languages --language yi --term <cache>/wty-yi-en --json
@@ -424,12 +469,13 @@ the same with every option on and with the defaults.
   `געווען` "the past" for "been", `האָב` "property", `וועט` "bet", `וועלן`
   "to want" for the future auxiliary, `ווערט` "value" for "becomes", `מאַכט`
   "might", `בעט` "bed", `גיי` "come on!", `ווייס` "white", `שיינע` the name,
-  and in unpointed text the article `א` shown as the letter alef: 62 of the
-  frequent words (10,207 occurrences), 1,081 places in the pointed texts,
-  1,525 in Tatoeba and 4,126 in Wikipedia. The pack cannot reorder them:
-  a rule reading always has a trace step. A framework option that ranks the
+  and in unpointed text the article `א` shown as the letter alef: 16 of the
+  frequent words (9,928 occurrences), 1,081 places in the pointed texts,
+  1,525 in Tatoeba and 4,133 in Wikipedia. The pack cannot reorder them: a
+  rule reading always has a trace step. A framework option that ranks the
   matched text's own inflection references before its own entry would fix
-  them; it is reported to the lead with these counts.
+  them; it is reported to the lead with these counts
+  (reports/hachi-lang-questions.md, 2026-11-03).
 - **Dictionary rows and ties** (docs/languages.md 9.6 and 9.10, framework
   issues the lead accepted for a later framework pull request):
   - wty-yi-en's rows for `מיר זענען`, `איר זענט` and `זיי זענען` name only
@@ -442,25 +488,42 @@ the same with every option on and with the defaults.
     want) and the auxiliary וועל, and discovery order puts וועלן first: 155
     Tatoeba places, 55 in the pointed texts (`lookup.confirmedOrder` would
     order them by the row);
-  - a rule reading ties with the dictionary's: `געהערט` → געהערן (it
-    belongs) before הערן (heard), 28 places in the pointed texts and 22 in
-    Wikipedia; `גייען` → the adjective גיי before גיין, 13 and 18;
-    `ווערטלעך` (sayings) → ווערט before וואָרט, 7;
+  - `גייען` → the adjective גיי, whose declined form wty-yi-en's row names,
+    before the pack's גיין: 13 places in the pointed texts, 18 in Wikipedia;
   - rows that name a spelling whose own row is a reference, such as
     `אונזערע`, reach nothing (one hop, docs/languages.md 16).
-- **Unpointed text.** A word found as written, through a rule, comes before
-  its pointed lemma found through `addPoints`, which costs a processor step:
-  `לייט` (unpointed לײַט, people) → לייטן (to solder; 24 places in the
-  pointed texts), `יינגל` (ייִנגל, boy) → יונג. The 13 whole words of the
-  `unpointed` transform fix the most frequent such words of Wikipedia; others
-  remain. `addPoints` adds no hiriq to a single yod (`פריער` finds the
-  comparative of פֿרי, not the adverb פֿריִער) and keeps at most 512
-  combinations per text, so a long run of unpointed words can lose a
-  pointing (4 places in the Wikipedia sample, all still finding a shorter
-  phrase). Unpointed lookups cost more: p95 0.36 ms on Wikipedia, p99 0.92
-  ms, max 7.5 ms (Measurements 7). 21.7% of the Wikipedia lookups find
-  nothing, against 10.2% in the pointed texts, mostly spellings that are
-  neither YIVO nor its unpointed form.
+- **Ties the pack's order decides.** `ווערטלעך` (sayings) gives ווערט before
+  וואָרט, because the diminutive without a vowel change comes first: 7
+  places in the pointed texts. Putting the vowel change first turns them
+  right and moves 21 other first results, such as `שוועבעלעך` → שוואַב
+  instead of שוועבל (6; the second audit's measurement), so the order stays.
+  `געהערט` is read as הערן (heard), not געהערן (belongs), by the third
+  person's געה exception: right at 27 of 28 places in the pointed texts and
+  at about 9 of 22 in Wikipedia, where 12 mean "belongs".
+- **Unpointed text.**
+  - The 25 whole words of the `unpointed` transform decide the most frequent
+    ties of Wikipedia, unpointed Wikisource and Tatoeba. Ties that context
+    decides remain, with the first pointing in code-point order shown:
+    `פארן` (63 of Tatoeba's occurrences, written פֿאָרן travel there), `ארט`
+    (39), `ווארט` (27), `איין` (25), `פארט` (16 in Tatoeba, 40 in Wikipedia,
+    mostly the adverb "nevertheless", which wty-yi-en lacks, or "drives"),
+    the half-pointed `פאָרט` (22 in the pointed texts), `דאך` (10), `באס` (8 in
+    Wikipedia). 16 Wikipedia lookups show a pointing the judge cannot decide
+    (`ארגאן`, `גראד`, `קארן`).
+  - A word found as written, through a rule, can still come before its
+    pointed lemma found through `addPoints`, which costs a processor step.
+    `addPoints` adds no hiriq to a single yod, so `פריער` finds the
+    comparative of פֿרי, not the adverb פֿריִער.
+  - `addPoints` keeps at most 512 combinations per text. A long run of
+    unpointed words can lose a pointing (4 places in the Wikipedia sample,
+    all still finding a shorter phrase), and so can a long single word: of
+    wty-yi-en's single-word headwords written unpointed, 4 reach the limit
+    and 2 are then not found (`פּאַראַפּסיכאָלאָגיע`, `פֿאָטאָאַפּאַראַט`; the
+    second audit's measurement).
+  - Unpointed lookups cost more: p95 0.44 ms on Wikipedia, p99 1.10 ms, max
+    9.1 ms (Measurements 8). 21.7% of the Wikipedia lookups find nothing,
+    against 10.2% in the pointed texts, mostly spellings that are neither
+    YIVO nor its unpointed form.
 - **Readings the rules make that are wrong in context** (hand samples above):
   nouns read as plurals or diminutives of a shorter noun (`וואונדער` →
   וווּנד, `קישעלעך` → קוש, `שמעלצער` → שמאַלץ), adverbs and nouns read as
@@ -496,10 +559,7 @@ the same with every option on and with the defaults.
     נפֿלע.
 - **Dialect forms.** Second person plurals in -טס (`שטעלטס ענק פאר`) are not
   read (Rule provenance).
-- **Tests that cannot see an order.** No test can observe `traceSelection`
-  or the order of transforms where two paths reach the same lemma
-  (`lookup.tsv` checks a result's expression and matched text, `cases.tsv`
-  any path's trace), so they are set as the contract recommends and as the
-  generator writes them. The conditions of the compound-verb rules and the
-  plural's `ns` cannot change a result either: no other rule reads their
-  outputs.
+- **Conditions no test can see.** The compound-verb rules' conditions change
+  no first result in the measured texts when they are removed (0 of 66,644
+  lookups and of Tatoeba's 46,446), and no test fails without them: no other
+  rule reads their two-word outputs.
