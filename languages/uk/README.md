@@ -510,22 +510,23 @@ identical).
      --term <wty-uk-en> --languages <copy> --language uk --json`: the 80 texts
      of `sources/benchmark-words.txt` (each the rest of a sentence from an
      inflected word), 6 passes with the first dropped, three runs, machine
-     load about 26 (of 64 cores). Budget 1 ms p50.
+     load about 56 (of 64 cores; at load 26, before this round's rules, the
+     final set took 38-39 µs p50). Budget 1 ms p50.
 
      | Rule set | p50 | p95 |
      | --- | ---: | ---: |
-     | Final | 38-39 µs | 60-61 µs |
-     | Own | 28-29 µs | 41 µs |
-     | Union | 53-54 µs | 78-84 µs |
-     | Yomitan's rules | 40-41 µs | 56-58 µs |
+     | Final | 45-50 µs | 69-81 µs |
+     | Own | 32-33 µs | 50-52 µs |
+     | Union | 65-74 µs | 98-107 µs |
+     | Yomitan's rules | 49-54 µs | 72-78 µs |
    - WebAssembly (`node languages/uk/sources/wasm-measure.mjs <hachidori>
      <wty-uk-en.zip>`, Hachidori feat/multi-language d7e82b0c's prebuilt
      engines in Node 22, 10 fresh engines): `hdw_language_load` of this pack
-     takes 14.6 ms (median; 14.2-19.5) single-thread and 15.2 ms (14.8-20.4)
-     threaded, and adds 2,628,864 and 2,629,320 bytes of live heap
-     (`hdw_memory_stats`). With wty-uk-en imported into the engine and added
-     paged, `hdw_lookup` of the 80 texts takes 0.090 ms p50 and 0.170 ms p95
-     single-thread, 0.094 ms and 0.171 ms threaded. The engines are
+     takes 16.7 ms (median; 15.2-26.8) single-thread and 17.9 ms (16.7-25.7)
+     threaded, at the same load, and adds 2,633,232 and 2,633,504 bytes of
+     live heap (`hdw_memory_stats`). With wty-uk-en imported into the engine
+     and added paged, `hdw_lookup` of the 80 texts takes 0.115 ms p50 and
+     0.215 ms p95 single-thread, 0.121 ms and 0.217 ms threaded. The engines are
      Hachidori's, rebuilt from this branch with its `wasm/build.sh` (the
      vendored ones predate #83's `formOfNormalizer`). Budgets 50 ms and 20 MB.
      The pack has no `pattern` rule.
@@ -541,7 +542,7 @@ identical).
      988/988, cases.tsv 732/732, text.tsv 26/26, lookup.tsv 51/51, gaps.tsv
      0/14 (reported); classes.json agrees (11 classes, 1,085 fields, 2
      steps, 3,534 outputs); 1,220 of the 8,565 rules are exercised by a
-     passing row; `tests/` and `sources/` hold 999,190 bytes.
+     passing row; `tests/` and `sources/` hold 999,532 bytes.
    - Stem constraints (`sources/mutate.py`, docs/languages.md 14 step 7):
      206 deletions, one per own transform and constraint (`stemMinLength`
      lowered by one, the others removed from every rule of the transform
@@ -568,7 +569,7 @@ identical).
      (both lemmas are in the test dictionary).
      The other homograph rules have no row each; the frequent-word and text
      measurements show them.
-   - Hachidori (feat/multi-language d7e82b0c with this branch at 1d2181b in
+   - Hachidori (feat/multi-language d7e82b0c with this branch at 7647386 in
      `third_party/hoshidicts`, `node scripts/sync-languages.mjs`, its engines
      rebuilt from it with `wasm/build.sh`, `test/chrome-language-pack.mjs`,
      Chrome 152, wty-uk-en): 14 of 14 checks pass. Settings adds Ukrainian beside Japanese and imports the dictionary
