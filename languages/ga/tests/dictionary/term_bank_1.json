@@ -47,5 +47,13 @@
   ["clós", "", "n", "n", 0, ["yard, enclosure"], 46, ""],
   ["clóigh", "", "v", "v", 0, ["to print, to subdue"], 47, ""],
   ["baile", "", "n", "n", 0, ["home, town"], 48, ""],
-  ["bail", "", "n", "n", 0, ["prosperity, good condition"], 49, ""]
+  ["bail", "", "n", "n", 0, ["prosperity, good condition"], 49, ""],
+  ["caol", "", "adj", "adj", 0, ["narrow, thin"], 50, ""],
+  ["caolas", "", "n", "n", 0, ["strait, narrows"], 51, ""],
+  ["tur", "", "adj", "adj", 0, ["dry"], 52, ""],
+  ["turas", "", "n", "n", 0, ["journey, trip"], 53, ""],
+  ["páirtí", "", "n", "n", 0, ["party; participant"], 54, ""],
+  ["páirtigh", "", "v", "v", 0, ["to take part"], 55, ""],
+  ["at", "", "v", "v", 0, ["to swell"], 56, ""],
+  ["atá", "", "non-lemma", "", 0, [["at", ["present relative"]], ["bí", ["present relative"]]], 57, ""]
 ]

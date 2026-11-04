@@ -56,3 +56,12 @@ munster	1	chlós ar scoil	clós	chlós
 munster	0	chlós ar scoil	clóigh	chlós
 order	1	bhailte tuaithe	baile	bhailte
 order	0	bhailte tuaithe	bail	bhailte
+munster	1	chaolais an locha	caolas	chaolais
+munster	0	chaolais an locha	caol	chaolais
+munster	1	thurais fhada	turas	thurais
+munster	0	thurais fhada	tur	thurais
+order	1	páirtithe polaitiúla	páirtí	páirtithe
+order	0	páirtithe polaitiúla	páirtigh	páirtithe
+irregular	1	atá sé	bí	atá
+irregular	0	atá sé	at	atá
+untagged	0	aga	ag	aga

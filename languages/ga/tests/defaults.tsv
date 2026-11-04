@@ -1,5 +1,5 @@
 # options: default
-# Source: written for this pack (GPL-3.0-or-later), no third-party data. Run with the pack's defaults: the optional addMissingFada processor is off, so a word written without its síneadh fada is not read as one with it.
+# Source: written for this pack (GPL-3.0-or-later); the sources of the constraint-* rows are single words of the Irish Wikipedia (CC BY-SA 4.0) or UD Irish-IDT (CC BY-SA 3.0), listed as test inputs. Run with the pack's defaults: the optional addMissingFada processor is off, so a word written without its síneadh fada is not read as one with it.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 fada	0	ta	bí	*	*
 fada	0	se	sé	*	*
@@ -12,7 +12,8 @@ defaults	1	D’ól	ól	v	elision
 defaults	1	tá	bí	v	present
 defaults	1	sé	sé	*	
 # Constraint rows that the optional addMissingFada processor would pass with every option on (a variant with í reaches the same text through another rule).
-constraint-plural	0	céanna	cé	n	*
+# A pin: céanna is also the plural of cé "quay" in wty-ga-en, but the plural rule's constraint keeps the adjective "same" from being read as it (the dictionary still gives cé, second).
+pin-plural	0	céanna	cé	n	*
 constraint-present-autonomous	0	caitear	caigh	v	*
 constraint-habitual-2sg	0	abiteá	abigh	v	*
 constraint-habitual-autonomous	0	cleití	cleigh	v	*

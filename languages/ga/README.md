@@ -60,7 +60,7 @@ first, then one inflection rule applies.
     at 5f7e018 (4,910 sentences of news, fiction, web, legal and government
     text with gold lemmas; CC BY-SA 3.0; Lynn, Foster, McGuinness, Walsh,
     Phelan, Scannell). sha256 of train/dev/test: `4d3bc888…bcea8`,
-    `82909526…7e871`, `01aa8782…10a98`;
+    `82909526…a991617`, `01aa8782…10a98`;
   - the Irish Wikipedia dump `gawiki-20261101-pages-articles.xml.bz2`
     (sha1 `1413371d…6789`, as Wikimedia publishes it; CC BY-SA 4.0), for a
     frequency list of its 10,000 most frequent word forms (7,900,822 of its
@@ -70,8 +70,8 @@ first, then one inflection rule applies.
 
 ## Rule provenance
 
-`transforms.json` has 58 transforms and 1,254 rules, 3,343 with cross
-products expanded: 3,336 `own`, 7 `both` and no `yomitan` rule.
+`transforms.json` has 58 transforms and 1,274 rules, 3,363 with cross
+products expanded: 3,356 `own`, 7 `both` and no `yomitan` rule.
 `sources/build-final.mjs` writes it: the rules of `sources/own.json`, with
 `source: "both"` on each own rule that makes the same deinflection as a
 Yomitan rule.
@@ -113,7 +113,9 @@ Yomitan rule.
     forms, the verbal adjective and the verbal noun;
   - the eleven irregular verbs (*bí*, *abair*, *beir*, *clois*, *déan*,
     *faigh*, *feic*, *ith*, *tabhair*, *tar*, *téigh*) with their dependent
-    forms, *nigh*, and verbal nouns no ending reaches;
+    forms (*faca*, *deachaigh*, *dearna*, *raibh*, and the unlenited *táinig*,
+    *tug*, *cuala*, which eclipsis reaches in *nach dtáinig*, *go dtug*, *an
+    gcuala*), *nigh*, and verbal nouns no ending reaches;
   - prepositional pronouns of 15 prepositions (traced as *prepositional
     pronoun 1sg* … *3pl*), and copula forms.
 - **Conditions**: Yomitan's `v` (over `v_phr`), `n` (over `np`, `ns`), `adj`
@@ -136,8 +138,11 @@ Yomitan rule.
     nouns as verbs (*beartas* → *beart*, *cleachtais* → *cleacht*, 18 first
     results in UD Irish-IDT). Their rules keep the initial and give
     `lenited`, which only twin lenition and *d'* rules take, so the reading
-    takes two steps and a lenited noun of one step comes first (*chlós* →
-    *clós*, not *clóigh*);
+    takes two steps and a lenited noun of one step comes first: *chaolais* →
+    *caolas*, *thurais* → *turas*, not the adjectives *caol* and *tur*, which
+    `lookup.tsv` pins with its test dictionary. With wty-ga-en, whose own rows
+    name both *clós* and *clóigh* for *chlós*, the 9.6 tie puts *clóigh*
+    first, as for *chumas* (Known gaps);
   - -racha and -reacha plurals only after the letters wty-ga-en's 39 such
     plurals have (c, h, s, t; d, f, g, h, t), and not for the stem *seacht-*:
     *sheachtracha* (external, of the adjective seachtrach, which wty-ga-en
@@ -170,7 +175,9 @@ Yomitan rule.
   forms (*daltaí* → *dalta*, not *daltach*), the -aí plural of a noun without a
   final vowel after them (*níos tábhachtaí* → *tábhachtach*, not *tábhacht*),
   and -te → -e before -te (*bailte* → *baile*; 36 such plurals in wty-ga-en
-  against 19 like *coillte* → *coill*). `lookup.tsv` pins each order.
+  against 19 like *coillte* → *coill*); the verbal adjective after them all
+  (*páirtithe* → *páirtí*, not *páirtigh*: before them it changed 281 first
+  results of UD Irish-IDT). `lookup.tsv` pins each order.
 - **`lookup.untaggedTerms`** stays at its default, `filter`, and the key is
   left out so the pack also loads in engines built before #58 (Hachidori's
   vendored engines are). wty-ga-en leaves `rules` empty on 2,810 of its
@@ -179,8 +186,9 @@ Yomitan rule.
   and determiners; and on 6,514 form-of rows. It tags every noun, verb,
   adjective and adverb. With `pass`, false candidates rise (sample 0.274 →
   0.307) and no more lemmas rank first (0.878 either way), while wrong first
-  results by a rule rise in UD Irish-IDT from 708 to 1,083 and on the
-  frequency list from 23,147 to 62,137 tokens (Measurements 2 and 4).
+  results by a rule rise in UD Irish-IDT from 833 to 1,189 and on the
+  frequency list from 57,369 to 65,947 tokens (Measurements 2 and 4).
+  `lookup.tsv` pins `filter` (*aga* does not give the untagged *ag*).
 - **History**: the first commit of this pack, `ga: own rules`, has the own
   rules as written before Yomitan's file was read (56 transforms, 830 rules,
   1,528 expanded). Later commits changed them after measuring:
@@ -211,13 +219,22 @@ Yomitan rule.
     emphatics *leisean* and *thairisean* were spelt with one *s*; the
     prepositional pronoun transforms, named "with me", "with him", … before,
     were renamed; the *h* prefix lost its lower-cased output; and the
-    judge of `sources/measure.py` was made stricter (Measurements 4).
+    judge of `sources/measure.py` was made stricter (Measurements 4);
+  - after the second audit (audit-hachi-lang-ga-b, on 0d082a4): the
+    unlenited dependent pasts of *tar*, *tabhair* and *clois* were added;
+    rows now pin the `lenited` condition, the verbal adjective's place in the
+    order, `untaggedTerms` and each written-out form whose removal changes
+    its word's lookup; and the judge reads a card's senses without its
+    examples and synonyms, counts no letter card or English word as right,
+    and lists the references judged wrong by hand (Measurements 4).
 
 ## Measurements
 
-hoshidicts at 0a73e5e (GCC 14.3, Release; main ac4e4ee adds only language
-packs), wty-ga-en 2026.10.22 as published (form-of rows included), imported
-by `hoshidicts-cli import`. The pack has one optional processor,
+hoshidicts at 0a73e5e (GCC 14.3, Release; main 350d9e0 adds language packs
+and changes only metadata-only terms, which these lookups do not use: built
+at 350d9e0, `realtext` and `frequent` give identical rows), wty-ga-en
+2026.10.22 as published (form-of rows included), imported by `hoshidicts-cli
+import`. The pack has one optional processor,
 `addMissingFada` (the `missingFada` setting), so each number is given with
 every option on and with the defaults.
 
@@ -232,8 +249,8 @@ every option on and with the defaults.
    | --- | --- | --- | --- | --- | --- |
    | sample (1,000) | all | 0.981 / – / 0.274 / 0.878 | 0.042 / – / 0.076 / 0.692 | 0.981 / – / 0.274 / 0.879 | **0.981** / – / 0.274 / 0.878 |
    | sample | defaults | 0.979 / – / 0.231 / 0.878 | 0.042 / – / 0.065 / 0.692 | 0.979 / – / 0.231 / 0.879 | 0.979 / – / 0.231 / 0.878 |
-   | cases.tsv (306 + 425 negatives) | all | 1 / 1 / 4.74 / 0.703 | 0.029 / 0.988 / 0.26 / 0.627 | 1 / 0.986 / 4.74 / 0.703 | 1 / 1 / 4.74 / 0.703 |
-   | cases.tsv | defaults | 0.987 / 1 / 4.59 / 0.699 | 0.026 / 0.988 / 0.20 / 0.624 | 0.987 / 0.986 / 4.59 / 0.699 | 0.987 / 1 / 4.59 / 0.699 |
+   | cases.tsv (403 + 425 negatives) | all | 1 / 1 / 3.81 / 0.742 | 0.022 / 0.988 / 0.30 / 0.491 | 1 / 0.986 / 3.81 / 0.739 | 1 / 1 / 3.81 / 0.742 |
+   | cases.tsv | defaults | 0.990 / 1 / 3.67 / 0.739 | 0.020 / 0.988 / 0.25 / 0.489 | 0.990 / 0.986 / 3.67 / 0.737 | 0.990 / 1 / 3.67 / 0.739 |
    | defaults.tsv (5 + 15) | defaults | 1 / 1 / 1 / 0.600 | 0.200 / 1 / 0.40 / 0.600 | 1 / 1 / 1 / 0.600 | 1 / 1 / 1 / 0.600 |
    | defaults.tsv | all | 1 / 0.133 / 1 / 0.600 | 0.200 / 0.867 / 0.40 / 0.600 | 1 / 0.133 / 1 / 0.600 | 1 / 0.133 / 1 / 0.600 |
    | yomitan.tsv (3 + 1) | either | 1 / 1 / 0 / 0.667 | 1 / 1 / 0 / 0.667 | 1 / 1 / 0 / 0.667 | 1 / 1 / 0 / 0.667 |
@@ -243,8 +260,8 @@ every option on and with the defaults.
      the fada processor, *bhreoidís* → *breoigh* (via *bhreóidís*) and
      *deighlim* → *deighil* (via *deighlím*).
    - `cases.tsv`'s false candidates are mostly one row's: `sise` → *sí* has
-     1,247 of the 1,451, because wty-ga-en lists *sí* as a form of 1,370
-     verbs (Known gaps); the other 305 positive rows average 0.67.
+     1,247 of the 1,535, because wty-ga-en lists *sí* as a form of 1,370
+     verbs (Known gaps); the other 402 positive rows average 0.72.
    - `defaults.tsv` is meant to run with the defaults: with every option on,
      the fada processor reads its negatives (*ta*, *se*, *Eireann*, *uaim*
      as *uaím*) as the words with a fada, which is why those rows are there.
@@ -253,19 +270,20 @@ every option on and with the defaults.
      (*taispeánaim*, *scrúdú*, *bhfuil*) or an "eclipsed form of" entry
      (*gcathair*, *mbád*), which an exact match puts first.
    - With `untaggedTerms: "pass"` (a scratch copy): sample 0.981 / 0.307 /
-     0.878, `cases.tsv` 1 / 1 / 4.81 / 0.706; no more lemmas first, more false
+     0.878, `cases.tsv` 1 / 1 / 3.87 / 0.744; no more lemmas first, more false
      candidates.
    - `--per-rule` on the final rules, expanded (sample and `cases.tsv`): of
-     the 2,273 rules it lists, 382 recover a row no other rule reaches, none
-     breaks a negative, and 30 add 48 false candidates without recovering a
+     the 2,293 rules it lists, 468 recover a row no other rule reaches, none
+     breaks a negative, and 35 add 58 false candidates without recovering a
      row. On wty-ga-en's own 127,359 single-word form-of pairs
-     (`measure.py dictpairs`, recall 87.6% with the defaults) 27 of those 30
-     recover between 1 and 361 pairs that no other rule does. The other 3
-     are present subjunctive cells (*-ála* → *-áil*, and *-a* after a stem
-     that broadens), whose pairs a genitive or another ending also reaches;
-     they add one false candidate each and are kept so that *go sábhála
-     Dia* is traced as a subjunctive. No rule was removed only because no
-     sample row needs it.
+     (`measure.py dictpairs`, recall 87.6% with the defaults) 29 of those 35
+     recover between 1 and 361 pairs that no other rule does. The other 6
+     are cells of the -áil verbs' paradigm (past *-álamar*, *-álabhair*,
+     *-áladar*, subjunctive *-ála*) and the subjunctive *-a* after a stem that
+     broadens, whose pairs another rule also reaches; they add 1 to 3 false
+     candidates each and are kept with their paradigms (*go sábhála Dia* is
+     traced as a subjunctive). No rule was removed only because no sample
+     row needs it.
 2. **Frequent forms** (`measure.py frequent`): the 10,000 most frequent word
    forms of the Irish Wikipedia (7,900,822 tokens). For 4,147 of them
    (2,403,762 tokens) a rule reaches a lemma that the word's form-of rows name
@@ -278,51 +296,67 @@ every option on and with the defaults.
 
    | Rules | Reached | Lemma | Own entry that names it | Named by the dictionary | Mutation card | Nothing | Wrong (rule) | Wrong (lemma not in wty-ga-en) | Wrong (dictionary alone) | Wrong share of the list's tokens |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Final (= own = union) | 4,147 | 3,356 (1,716,582) | 112 (319,992) | 225 (113,611) | 132 (93,626) | 137 (36,125) | 57 (18,624) | 9 (4,523) | 119 (100,679) | 1.57% |
-   | Yomitan | 314 | 182 (73,107) | 0 | 4 (440) | 111 (87,637) | 11 (2,125) | 0 | 1 (495) | 5 (1,993) | 0.03% |
-   | Final with `pass` | 4,147 | 3,347 (1,716,565) | 112 (319,992) | 223 (82,503) | 132 (93,626) | 132 (35,290) | 74 (25,022) | 17 (37,115) | 110 (93,649) | 1.97% |
+   | Final (= own = union) | 4,147 | 3,326 (1,699,869) | 115 (310,255) | 204 (75,777) | 162 (110,339) | 137 (36,125) | 56 (18,162) | 26 (39,207) | 121 (114,028) | 2.17% |
+   | Yomitan | 314 | 162 (58,260) | 0 | 4 (440) | 131 (102,484) | 11 (2,125) | 0 | 1 (495) | 5 (1,993) | 0.03% |
+   | Final with `pass` | 4,147 | 3,317 (1,699,852) | 114 (309,796) | 203 (75,081) | 162 (110,339) | 132 (35,290) | 73 (24,560) | 33 (41,387) | 113 (107,457) | 2.19% |
 
    The categories are those of Measurements 4. Yomitan's rules reach 314
-   words, so its row counts other words. The largest wrong first results:
-   from the dictionary alone *dhá* (7,935 tokens; UD lemmatises it as *dó*
-   and the card says "two", which is right), *ab* (7,649; the copula's
-   relative form, shown as "abbot"), *cuireadh* (7,490; "invitation" before
-   *cuir*), *dó* (6,408; "two" before "to him"), *leith* (5,344), *cinn*
-   (4,140), *domhain* (4,080), *Níl* (4,000; the Nile); by a rule *fearainn*
-   → *fear* (3,158; a tie, Known gaps), *Mhaigh* → *má* (2,109; *Maigh Eo*,
-   whose *Maigh* wty-ga-en lacks) and *bhaineann* → *baineann* (1,834).
+   words, so its row counts other words. **By hand**, 64 of the final rules'
+   203 wrong words (36,012 tokens) are right, so **1.71%** of the list's
+   tokens get a wrong first result (`hand/hand-frequent-wrong.tsv` in the
+   evidence; the right ones are words the treebank lemmatises to their parts
+   or to another form while the card is the word a reader needs: *dhá*
+   "two", *gurbh*, *níorbh* and *arbh*, the copula, *Teachta* "deputy",
+   *Uachtarán*, *chois* "beside", *cheathrú* "quarter"). The largest wrong
+   ones: *The* → *te* "hot" (30,412 tokens: the English article, which is
+   also the lenited form of *te*), *air* → "plough" (13,676: "on him"), *ab* → "abbot"
+   (7,649: the copula), *cuireadh* → "invitation" (7,490: "was put"), *dó* →
+   "two" (6,408: "to him"), *leith* → "flatfish" (5,344), *cinn* → "to step"
+   (4,140), *domhain* → "deep" (4,080: "of the world"), *Níl* → the Nile
+   (4,000) and, by a rule, *fearainn* → *fear* (3,158: a tie, Known gaps).
 3. **Behind particles** (`measure.py particles`): every word of UD Irish-IDT
    that follows one of 25 particles, articles, possessives and prepositions
    that mutate it or elide before it (*an*, *na*, *a*, *mo*, *do*, *ár*,
    *bhur*, *i*, *sa*, *san*, *den*, *don*, *ón*, *faoin*, *ag*, *ar*, *le*,
    *go*, *ní*, *níor*, *nach*, *nár*, *má*, *dá*, *chomh*): 24,935 positions,
    looked up from the word to the end of its sentence. Final rules: lemma
-   17,707, own entry that names it 611, named by the dictionary 833,
-   mutation card 1,537 (887 name the lemma), phrase 1,262, nothing 2,052;
-   wrong 207 by a rule, 72 by a rule with the lemma missing, 654 from the
+   17,628, own entry that names it 614, named by the dictionary 730,
+   mutation card 1,626 (887 name the lemma), phrase 1,262, nothing 2,042;
+   wrong 204 by a rule, 104 by a rule with the lemma missing, 725 from the
    dictionary alone (*leith* "flatfish" 88, in *ar leith* and *i leith*;
-   *dá* "if" 44). The rule-made ones mostly follow *a* (60), *na* (52) and
-   *an* (50). Yomitan's rules: nothing at 3,848 positions, wrong 15 by a rule and 1,320
-   from the dictionary alone. Tatoeba's 2,336 such positions whose word has
-   a form-of row: lemma 1,682, own entry 33, named 61, mutation card 223 (74
-   name the lemma; *bhfuil* 106), phrase 269, nothing 3; wrong 10 by a rule
-   and 55 from the dictionary alone (*Tom* → *tom* "bush" 24, *leabhair*,
-   *dó* and *hé* 5 each). With Yomitan's rules: nothing at 117, wrong 1 by a
-   rule and 100 from the dictionary.
+   *fud* → *fad* "length" 63, in *ar fud*; *dá* "if" 44). The rule-made
+   ones mostly follow *na* (66), *a* (62) and *an* (50). Yomitan's rules:
+   nothing at 3,848 positions, wrong 15 by a rule and 1,392 from the
+   dictionary alone. Tatoeba's 2,336 such positions whose word has a form-of
+   row: lemma 1,637, own entry 33, named 59, mutation card 268 (99 name the
+   lemma; *bhfuil* 106), phrase 269, nothing 3; wrong 9 by a rule and 58
+   from the dictionary alone (*Tom* → *tom* "bush" 24, *leabhair*, *dó* and
+   *hé* 5 each). With Yomitan's rules: nothing at 117, wrong 1 by a rule and
+   103 from the dictionary.
 4. **Real text** (`measure.py realtext`): every word of UD Irish-IDT, 103,687
    lookups from the word to the end of its sentence, judged by script
    against the treebank's lemma. `Judge` in `sources/measure.py` compares
-   headwords as written (case counts), follows a reference one hop, and
-   gives these categories:
-   - *lemma*: the first result is the treebank's lemma;
-   - *own entry that names it*: the word's own entry (as written, with a
-     small first letter, or with only a mutation removed) whose glosses name
-     the lemma as a word (*faoin*, "contraction of faoi + an");
-   - *named by the dictionary*: wty-ga-en has no entry for the lemma, and the
-     first result is a reference of the word or of the lemma;
+   headwords as written (case counts), reads a card's senses (the items of
+   its glosses list, without examples, synonyms or related words), follows
+   a reference one hop, and gives these categories:
    - *mutation card*: an entry that only says it is a mutated form of X
      ("eclipsed form of fuil" for *bhfuil*), counted apart, with X the lemma
-     or not;
+     or not, also when its headword is the treebank's lemma (*dtí* in *go
+     dtí*);
+   - *lemma*: the first result is the treebank's lemma;
+   - *own entry that names it*: the word's own entry (as written, with a
+     small first letter, or with only a mutation removed) one of whose
+     senses names the lemma as a word (*faoin*, "contraction of faoi + an";
+     a sense that calls the word a copula form names *is*);
+   - *named by the dictionary*: wty-ga-en has no entry for the lemma, and the
+     first result is a reference of the word or of the lemma;
+   - neither of the last two for a word UD marks `Foreign=Yes` (*The*,
+     *of*), for a card that only describes a letter (*Ó*, "The capital form
+     of the letter ó"), or for the 22 references judged wrong by hand that
+     `HAND_WRONG` lists (*foráil* → *foláir*, *dom* "to my", *chuile* →
+     *cuile* "pantry", *ar fud* → *fad*, the verbal adjectives *aistrithe*,
+     *eagraithe*, *maraithe* shown as agent nouns, place and family names
+     shown as a common word);
    - *wrong*: any other first result, by a rule when a pack rule is in its
      trace (with the lemma in wty-ga-en or not), else from the dictionary
      alone; *phrase* when the first result is longer than the word, and
@@ -330,50 +364,61 @@ every option on and with the defaults.
 
    | Rules | Lemma | Own entry that names it | Named by the dictionary | Mutation card | Phrase | Nothing | Wrong (rule) | Wrong (lemma not in wty-ga-en) | Wrong (dictionary alone) |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Final | 73,566 | 7,779 | 2,057 | 1,716 | 6,469 | 6,935 | 473 | 235 | 4,457 |
-   | Union | 73,566 | 7,779 | 2,057 | 1,716 | 6,469 | 6,935 | 472 | 235 | 4,458 |
-   | Yomitan | 71,358 | 7,464 | 1,673 | 1,766 | 5,468 | 9,642 | 5 | 13 | 6,298 |
-   | Final with `pass` | 73,509 | 7,600 | 2,033 | 1,716 | 6,469 | 6,880 | 781 | 302 | 4,397 |
+   | Final | 73,488 | 7,537 | 1,808 | 1,805 | 6,469 | 6,924 | 472 | 361 | 4,823 |
+   | Union | 73,488 | 7,537 | 1,808 | 1,805 | 6,469 | 6,924 | 471 | 361 | 4,824 |
+   | Yomitan | 71,268 | 7,221 | 1,507 | 1,856 | 5,468 | 9,642 | 5 | 13 | 6,707 |
+   | Final with `pass` | 73,431 | 7,355 | 1,803 | 1,805 | 6,469 | 6,869 | 780 | 409 | 4,766 |
 
-   - **Wrong first results: 5,165 by the judge (4.98% of the lookups)**, 708
-     by a rule (0.68%) and 4,457 from the dictionary alone. The mutation
-     cards come first at 1,716 more (1.65%): X is the lemma at 949 (*gcuid*
-     → *cuid*) and another word at 767, mostly a form of the lemma (*bhfuil*
-     → *fuil* 338, which wty-ga-en also lists as a form of *bí* but whose
-     first entry is "blood"; *mbeidh* → *beidh* 80).
-   - **By hand**: 50 lookups drawn with seed 1 (Python's
-     `random.Random(1).sample` over the rows `realtext` writes) from the
-     83,402 the judge counts as right, and 50 from the 5,165 it counts as
-     wrong. Of the first 50, 49 are right; *chrot* in *ar chrot tithe*
-     ("in the shape of houses") shows *cruit* "harp, hump", the only target
-     wty-ga-en gives *crot*: 2% (95% interval 0.4-10.5%). Of the second 50,
-     37 are wrong (74%, 60-84%): 14 are *i* → the letter I, 14 the own entry
-     of a rarer homograph (*cathrach* 4; *leabhair*, *cinn* and *is* for
-     *agus* 2 each), 6 by a rule, 2 a capital (*Ní* at the start of a
-     sentence, *Sir* → *sir* "travel") and 1 *c(h)earta*, where the scan
-     stops at the bracket. The 13 right ones are words the treebank
-     lemmatises to their parts or to another form while the card is the
-     word a reader needs (*céard* → *cé*, *níl* → *bí*, *nár* and
-     *dar* → *is*, *cheithre* → *ceathair*, *Uasal* "Mister" → *uasal*), an
-     emphatic pronoun (*againne* → *againn* "at us"), an adjective the
-     treebank reads as a noun (*ardleibhéil* "high-level"), *rannta* →
-     *rann* "verse" in *rannta agus amhráin* (the treebank says *roinnt*)
-     and the first part of a hyphenated compound (*sean-bhunaithe* → *sean*
-     "old"). So about 3,800 of the 5,165 are wrong (3,100-4,350).
-   - The 4,457 from the dictionary alone (Known gaps has each group):
-     *i* → the letter I 1,201; a capital that matches another word's
-     capitalised entry 545 (350 at the start of a sentence); a word's own
-     entry for another word 2,287; a reference to another word 424.
-   - The 708 by a rule: the lemma is not in wty-ga-en at 235; at 205 the
-     word's own rows name both the first result and the lemma and the rule's
-     reading is found first (a 9.6 tie); at 174 the word's rows name only the
-     first result, the rule removing a mutation (*bhaineann* → *baineann*);
-     at 12 a capital's reading needs no processor step (*Fhéile* → *Féil*);
-     82 come from the rules alone (*nAirí* → *airí*, *mBailte* → *Bailt*,
-     *Naofa* → *Naomh*). By trace step: lenition 250, eclipsis 83, plural
-     72, genitive 51, adjective -e 45, verbal noun 44, emphatic 39,
-     adjective plural 36, *h* prefix 29, -a 26, verbal adjective 23, slender
-     20.
+   - **Wrong first results: 5,656 by the judge (5.45% of the lookups)**, 833
+     by a rule (0.80%) and 4,823 from the dictionary alone. Mutation cards
+     come first at 1,805 more (1.74%): X is the lemma at 949 (*gcuid* →
+     *cuid*), and at 709 of the other 856 a form of it (*bhfuil* → *fuil*
+     338, which wty-ga-en also lists as a form of *bí* but whose first entry
+     is "blood"; *mbeidh* → *beidh* 80).
+   - **By hand** (`hand/` in the evidence): four samples of 50, each drawn
+     with seed 1 (Python's `random.Random(1).sample` over the rows `realtext`
+     writes):
+     - of the 82,833 rows the judge counts as right, 50 are right (the
+       share wrong is 0-7.1%, 95% interval);
+     - of the 5,656 it counts as wrong, 39 are wrong (78%, 64.8-87.2%): 17
+       are *i* → the letter I, 22 others (*air* "plough", *ar fud* → *fad*,
+       *an cháis* → *cáis* "cheese", *Ó Concheanainn* → the letter,
+       *bhaineann* "female", 9.6 ties, the scan stopping at a hyphen in
+       *n-itheam* and *an-dána*). The 11 right ones are words the treebank
+       lemmatises to their parts or to another form while the card is the
+       word a reader needs (*cén*, *dhá* "two", *Táimse* "I am", *á*,
+       *Uachtarán* "President", *sna meáin* "the media", *tigh* "at the
+       house of"), the first part of *lán-aimseartha*, and *céasadh*
+       "torment" for the autonomous past. So about 4,410 of the 5,656 are
+       wrong (3,670-4,930), 4.3% of the lookups;
+     - of the 1,808 *named by the dictionary*, 46 are right (4 wrong, 8%,
+       3.2-18.8%: *Ghealaigh lá* → *gealach* "moon" for the verb "dawned",
+       *ag comaoineach* → *comaoin* "favour", *Dúin* → County Down for
+       *dún* "fort", *oibreoirí* "operators" → *oibrigh* "to work"); 2 of
+       the 46 are borderline, a verbal adjective shown as its verbal noun
+       (*dírithe* → *díriú* "direction", *bunaithe* → *bunú* "foundation");
+     - of the 6,469 *phrase* rows, 47 are right (3 wrong, 6%, 2.1-16.2%: *an
+       té a bhí ar an stail* → *bí ar* "must", *Sin é an uair a* → *sin é*
+       "that's it", *ar ais an rothlaithe* "axis of rotation" → *ar ais*
+       "back").
+   - The 4,823 from the dictionary alone (Known gaps has each group): *i* →
+     the letter I 1,201; another letter card 378 (*Ó* 118, *I* 39, *A* 28,
+     *d'* 34, *Uí* → *Ó* 22); a capital that matches another word's
+     capitalised entry 427 (278 at the start of a sentence); a word's own
+     entry for another word 2,399; a reference to another word 418.
+   - The 833 by a rule: the lemma is not in wty-ga-en at 361 (*forálacha* →
+     *foláir* 47, *The* → *te* 27, *chuile* → *cuile* 16, and 44 verbal nouns
+     and adjectives shown as their verb); at 202 the word's own rows name
+     both the first result and the lemma and the rule's reading is found
+     first (a 9.6 tie; 36 of them are emphatic forms shown as the plain one,
+     *domsa* → *dom*, which is right for a reader); at 176 the word's rows
+     name only the first result, the rule removing a mutation (*bhaineann* →
+     *baineann*); at 12 a capital's reading needs no processor step
+     (*Fhéile* → *Féil*); 82 come from the rules alone (*nAirí* → *airí*,
+     *mBailte* → *Bailt*, *Naofa* → *Naomh*). By trace step: lenition 319,
+     plural 131, eclipsis 91, genitive 57, adjective -e 45, verbal noun 44,
+     emphatic 39, adjective plural 36, -a 31, *h* prefix 28, slender 24,
+     verbal adjective 23.
    - Trace quality (`measure.py traces`): of the sample's 478 verb rows, the
      trace a lookup shows for the row's lemma names its tense, mood or form
      for 335 by a pack transform and for 120 by the dictionary's own
@@ -385,32 +430,33 @@ every option on and with the defaults.
    - Native `benchmark-lookup --languages languages --language ga`, the 78
      texts of `sources/benchmark-words.txt` (each the rest of a sentence from
      an inflected word, written for the pack), 6 passes with the first
-     dropped, three runs, machine load 41: final p50 43.8-47.5 µs and p95
-     63.2-68.8 µs; union 43.1-50.4 / 63.5-73.1 µs; Yomitan's rules 29.5-32.6
-     / 43.6-48.6 µs. The budget is 1 ms p50.
-   - A lookup that starts at *sí* takes 4.8-6.9 ms (medians of three runs of
+     dropped, three runs, machine load 45-51: final p50 42.6-49.7 µs and p95
+     61.5-73.5 µs; union 45.4-51.0 / 64.8-73.8 µs; Yomitan's rules 30.2-30.4
+     / 44.8-45.4 µs. The budget is 1 ms p50.
+   - A lookup that starts at *sí* takes 5.2-6.5 ms (medians of three runs of
      four such texts; Known gaps).
    - WebAssembly, Hachidori feat/multi-language 803f7b6's vendored engines
      (built from hoshidicts b145feb), Node 22.23.1, `sources/wasm-load.mjs`:
-     `hdw_language_load` median 12.8 ms single-thread (12.1-19.2) and 13.5 ms
-     threaded (12.5-19.8) over 10 fresh engines; live heap +1,217,896 and
-     +1,218,160 bytes. The budgets are 50 ms and 20 MB.
+     `hdw_language_load` median 12.3 ms single-thread (11.8-18.5) and 12.8 ms
+     threaded (12.4-18.8) over 10 fresh engines; live heap +1,224,752 and
+     +1,224,904 bytes. The budgets are 50 ms and 20 MB.
    - `hdw_lookup` (Hachidori's `benchmark/node-lookup.mjs` with
      `HACHIDORI_LOOKUP_LANGUAGE=ga`, wty-ga-en.zip imported in the engine, the
-     428 hovers of the benchmark sentences, 6 passes): p50 77 µs and p95 203
-     µs single-thread; p50 82 µs and p95 207 µs threaded.
+     428 hovers of the benchmark sentences, 6 passes): p50 76 µs and p95 200
+     µs single-thread; p50 82 µs and p95 206 µs threaded.
    - The pack has no `pattern` rule.
    - Hachidori: `test/chrome-language-pack.mjs` (feat/multi-language 803f7b6,
      `third_party/hoshidicts` at this branch, Chrome 152, wty-ga-en.zip,
-     17 cases from sentences written for the pack): 21 / 21 checks pass.
+     19 cases from sentences written for the pack): 23 / 23 checks pass.
      Settings adds Irish beside Japanese and imports the dictionary (265,960
-     terms in 0.8 s); the 17 hovered words find their lemma first
+     terms in 0.7 s); the 19 hovered words find their lemma first
      (*Cheannaigh* → *ceannaigh*, *D'ól* → *ól*, *fhuinneog* → *fuinneog*,
      *Rachaidh* → *téigh*, *bhfuil* → *bí*, *hÉireann* → *Éire*, *mná* →
      *bean*, *sléibhte* → *sliabh*, *d'Fhianna* → *Fianna Fáil*,
      *Chuireamair* → *cuir* traced *past 1pl (Munster)*, *Déanann* → *déan*
-     traced *present*, …); the Anki note and the switch to Japanese and back
-     work.
+     traced *present*, *dtug* → *tabhair* traced *eclipsis, past*, …); the
+     Anki note and the switch to Japanese and back work. *Tá ocras air* shows
+     "plough" for *air* (Known gaps).
 6. **Commands.** From the repository root, with the inputs of Sources and
    licences in `<cache>` (`wty-ga-en/` imported, `wty-ga-en-banks/` unzipped,
    the dump, `ud-irish-idt/*.conllu`, `gle_sentences.tsv.bz2`):
@@ -447,9 +493,17 @@ every option on and with the defaults.
      the Irish Wikipedia's 30,000 most frequent forms and the treebank's
      20,000 most frequent two-word sequences) a new deinflection that is a
      wty-ga-en headword with a definition, or one whose part of speech the
-     filter lets through.
-     228 have an effect and a test catches each; the other 1,253 change no
-     such deinflection.
+     filter lets through. 228 have an effect and a test catches each; the
+     other 1,253 change no such deinflection;
+   - the written-out forms (673 `wholeWord` rules), each removed on its own:
+     for 550 no other rule reaches the lemma, and for 105 of those the
+     removal changes the word's lookup with wty-ga-en (its first result, or
+     the lemma drops out: *atá* → *at* first, *tiocfadh* finds nothing).
+     Each of the 105 has a `cases.tsv` row. The other 445 change no lookup,
+     because the word's own form-of rows reach the lemma too;
+   - removing the `lenited` condition, putting the verbal adjective before
+     the nominal transforms, and `untaggedTerms: "pass"` each fail a
+     `lookup.tsv` row (*chaolais*, *thurais*; *páirtithe*; *aga*).
 
 ## Known gaps
 
@@ -468,7 +522,7 @@ every option on and with the defaults.
 - **wty-ga-en lists *sí* (she) as a form of 1,370 verbs**: its 1,370 `sí`
   rows (8,200 references) come from the pronoun of the analytic forms in
   Wiktionary's tables (*molfaidh sí*). A lookup that starts at *sí* (193
-  positions of UD Irish-IDT) follows all of them: it takes 4.8-6.9 ms
+  positions of UD Irish-IDT) follows all of them: it takes 5.2-6.5 ms
   natively, against 0.03-0.1 ms for other texts, and the 15 results after
   the pronoun's own entry, which comes first, are verbs. `sise` → *sí* has
   the same 1,247 false candidates in `cases.tsv`. Yomitan follows them too.
@@ -479,119 +533,137 @@ every option on and with the defaults.
   *i* in UD Irish-IDT; the other 498 match a longer phrase such as *i
   gcónaí*). wty-ga-en's row *i* is only a reference to *I* ("lowercase"),
   and the preposition's own entry has the page title *i/languages A to L* as
-  its headword, which no text matches. A rule from *i* to that headword
-  would rank after the reference, which the dictionary confirms (9.6), so
-  the pack cannot change it.
+  its headword, which no text matches. A whole-word rule *i* → *i/languages
+  A to L*, tried in a scratch copy, only puts the preposition second, after
+  the letter, which the row confirms (9.6). Dropping the page-split suffix
+  from headwords is a fix for wiktionary-to-yomitan (hachi-lang-sh reported
+  the same title for Serbo-Croatian *i*).
+- **Letter cards come first** at 378 more lookups of UD Irish-IDT: *Ó* in a
+  surname (*Ó Concheanainn*) or as "from" at the start of a sentence shows
+  "The capital form of the letter ó" (118), *I* and *A* the letters (39,
+  28), the elided *d'* the letter *d* (34), *Uí* (the genitive of the
+  surname particle) the letter *Ó* (22), *O'* (7). wty-ga-en has no entry
+  for the surname particle *Ó*.
 - **Capitals are matched as written first** (9.6: processor steps rank
   before trace length, and `decapitalize` is a step), so a capitalised entry
-  of another word comes first: 545 lookups of UD Irish-IDT by the judge,
-  350 of them at the start of a sentence: *Ní* → the surname prefix (185),
-  *Níl* → the Nile (59), *I* and *A* → the letters (39, 28), *Rinne* →
-  *Rinn*, the parish of Ring (20), *San* → Saint (9). Inside a sentence the
-  title-case words of names and programmes: *Clár* → County Clare (11, and
-  27 after a mutation: *Chlár*, *gClár*), *Dhún* → *Dún* (6; *nDún* in *i
-  nDún na nGall*, 499 tokens of the frequency list), *Féile* → *Féil*, the
-  river Feale (12 positions and 995 tokens; *Fhéile* 9 and 666), *Naofa* →
-  *Naomh* (733 tokens). Some of the 195 inside a sentence are right:
-  *Taoiseach*, *Uachtarán*, *Oireachtas* and *Dáil* are the capitalised
-  entries a reader wants, where the treebank writes the lemma in small
-  letters. A lower-cased output for capital lenition fixed *Fhéile* but put
-  *corcaí* before *Corcaigh* for *Chorcaí* (1,826 tokens), so it was not
-  kept. Only the host knows where a sentence starts: the lead put this among
-  Hachidori's follow-ups (answer to hachi-lang-de, 2026-11-03T09:45Z).
+  of another word comes first: 427 lookups of UD Irish-IDT, 278 of them at
+  the start of a sentence: *Ní* → the surname prefix (185), *Níl* → the
+  Nile (62), *Rinne* → *Rinn*, the parish of Ring (21), *San* → Saint (9),
+  *Mí* → Meath (6). Inside a sentence the title-case words of names and
+  programmes: *Clár* → County Clare (12, and 27 after a mutation: *Chlár*,
+  *gClár*), *Naomh* (12), *Féile* → *Féil*, the river Feale (12 positions
+  and 995 tokens of the frequency list; *Fhéile* 9 and 666), *Dún* (7;
+  *nDún* in *i nDún na nGall*, 499 tokens), *Naofa* → *Naomh* (733 tokens).
+  Some of those inside a sentence are right: *Taoiseach*, *Uachtarán*,
+  *Oireachtas* and *Dáil* are the capitalised entries a reader wants, where
+  the treebank writes the lemma in small letters. A lower-cased output for
+  capital lenition fixed *Fhéile* but put *corcaí* before *Corcaigh* for
+  *Chorcaí* (1,826 tokens), so it was not kept. Only the host knows where a
+  sentence starts: the lead put this among Hachidori's follow-ups (answer to
+  hachi-lang-de, 2026-11-03T09:45Z).
 - **A word's own entry for another word comes first** (9.6: the own entry
-  needs no step, a reference one), 2,287 lookups by the judge; at 1,217 of
-  them the word's own rows also name the treebank's lemma, which comes
-  later. hachi-lang-sh reported the same order as a framework issue
-  (2026-11-03). By hand, the 45 largest groups
-  (1,670 lookups) hold 1,010 wrong ones: *is* for *agus* (151, the copula),
-  *cinn* (114, "to step" before *ceann*), *leith* (105, "flatfish" before
-  *leath*), *cathrach* (91, "cluster of beehive huts" before *cathair*),
-  *dó* (69, "two" before "to him"), *cuireadh* (62, "invitation" before
-  *cuir*), *dá* (45, "if" where it is "two"), *chóir* (43, "nearly" in *ba
-  chóir*), *Cliath* (39, "hurdle"), *arna* (39), *san* (35), *leabhair* (35,
-  "long and slender" before *leabhar*), *AE* (30, "liver"), *léinn* (26, a
-  form of *léigh* before *léann*), *domhain* (20, "deep" before *domhan*),
-  *ama* (16, "yoke") and seven smaller groups. The other 660 are right: the
-  treebank lemmatises a contraction, a particle or a numeral form to its
-  parts, and the card is the word a reader needs (*á* 201, *dhá* 97, *más*
-  54, *níl* 38, *gurb* and *gurbh* 43, *cén* 20, *tríú* 20, *nár* 19, *céard*
-  19, …).
+  needs no step, a reference one): 2,399 lookups of UD Irish-IDT by the
+  judge, and at 1,375 of them the word's own rows name the treebank's
+  lemma, which comes later. The lead accepted the change that fixes this as
+  `lookup.ownEntry: "afterReferences"` (hachi-lang-engine-l, Addendum 4;
+  answer to hachi-lang-yi, 2026-11-03T21:50Z); the pack will set it when the
+  framework has it. The largest groups, judged by hand: *á* (201, right: the
+  progressive object pronoun), *is* for *agus* (151, the copula), *air*
+  (146, "plough" for "on him"; 13,676 tokens of the frequency list), *cinn*
+  (114, "to step" before *ceann*), *leith* (105, "flatfish" before *leath*),
+  *dhá* (103, right: "two"), *cathrach* (91, "cluster of beehive huts"
+  before *cathair*), *dó* (69, "two" before "to him"), *cuireadh* (62,
+  "invitation" before *cuir*), *más* (54, right), *dá* (46, "if" where it is
+  "two"), *chóir* (43, "nearly" in *ba chóir*), *Cliath* (39, "hurdle"),
+  *arna* (39), *níl* (38, right), *san* (35), *leabhair* (35, "long and
+  slender" before *leabhar*), *dom* (30, "to my" for "to me"), *AE* (30,
+  "liver"), *léinn* (26, a form of *léigh* before *léann*), *domhain* (20,
+  "deep" before *domhan*), *ama* (16, "yoke"), and *ab* (14, "abbot"; 7,649
+  tokens of the list).
 - **Mutation cards come first.** wty-ga-en has 1,235 entries that only say
   they are a mutated form of X (1,169 "eclipsed form of", 61
   "t-prothesized form of", 5 lenited), which an exact match puts first:
-  1,716 lookups of UD Irish-IDT (*bhfuil* 338, *bhfeidhm* 93, *mbeidh* 80,
-  *gcuid* 70, *gceist* 64) and 132 words (93,626 tokens) of the frequency
-  list. X is the treebank's lemma at 949 (*gcuid* → *cuid*), and at most of
-  the other 767 a form of it (*mbeidh* → *beidh*). For *bhfuil* X is
+  1,805 lookups of UD Irish-IDT (*bhfuil* 338, *bhfeidhm* 93, *dtí* 91,
+  *mbeidh* 80, *gcuid* 70) and 162 words (110,339 tokens) of the frequency
+  list. X is the treebank's lemma at 949 (*gcuid* → *cuid*), and at 709 of
+  the other 856 a form of it (*mbeidh* → *beidh*). For *bhfuil* X is
   *fuil*, whose first entry is the noun "blood"; *bí* is the third result.
 - **Ties the pack cannot break** (9.6). When a word's own form-of rows name
   two terms, both are confirmed and tie on every key, and the one a rule
-  reaches is found first: 205 of the rule-made wrong first results in UD
-  Irish-IDT and 9,675 tokens of the frequency list. Among them *Chlár* →
+  reaches is found first: 202 of the rule-made wrong first results in UD
+  Irish-IDT and 9,213 tokens of the frequency list. Among them *Chlár* →
   *Clár* (21), *coinníollacha* → *coinníollach*, the adjective (13),
   *chois* → *cois* (6), *Dhún* → *Dún* (6), and in the list *fearainn* →
-  *fear* (3,158 tokens: the past habitual of *fear*
-  before the genitive of *fearann*), *réaltaí* → *réal* (751),
-  *cumhachtaí* → *cumhachtach* (473), *huaire* → *uaire* (462) and *báid* →
-  *báigh* before *bád* (3 positions of UD Irish-IDT, 212 tokens). 36 of the
-  205 are emphatic forms whose first result is the plain one (*domsa* →
-  *dom*, *againne* → *againn*), which is right for a reader. This is the
-  tie the lead accepted as a framework issue (answer to
-  hachi-lang-la, 2026-11-03T14:13Z): the planned `lookup.confirmedOrder:
-  "references"` orders such ties by the word's own rows, which wty-ga-en
-  writes noun first for *cos*, *réalta*, *cumhacht*, *uair*, *bád*,
-  *carraig* and *coinníoll*, but verb first for *fearainn*. A bare
-  *fearainn* cannot be the past habitual, which lenites (*d'fhearainn*);
-  telling them apart would need the `lenited` condition on every past,
-  habitual and conditional rule, which this pack has only for the Munster
-  past.
+  *fear* (3,158 tokens: the past habitual of *fear* before the genitive of
+  *fearann*), *réaltaí* → *réal* (751), *cumhachtaí* → *cumhachtach* (473),
+  *imeartha* → *imir* (357) and *báid* → *báigh* before *bád* (3 positions
+  of UD Irish-IDT, 212 tokens). 36 of the 202 are emphatic forms
+  whose first result is the plain one (*domsa* → *dom*, *againne* →
+  *againn*), which is right for a reader. This is the tie the lead accepted
+  as a framework issue (answer to hachi-lang-la, 2026-11-03T14:13Z): the
+  planned `lookup.confirmedOrder: "references"` orders such ties by the
+  word's own rows, which wty-ga-en writes noun first for *cos*, *réalta*,
+  *cumhacht*, *uair*, *bád*, *carraig* and *coinníoll*, but verb first for
+  *fearainn*. A bare *fearainn* cannot be the past habitual, which lenites
+  (*d'fhearainn*); telling them apart would need the `lenited` condition on
+  every past, habitual and conditional rule, which this pack has only for
+  the Munster past. *chlós* → *clóigh* before *clós* and *chumas* → *cum*
+  before *cumas* (17 positions) are the same tie between the word's own
+  references, with no rule involved.
 - **The word's rows name only the wrong word**, and a rule removes a
-  mutation to reach it (174 positions of UD Irish-IDT, 6,496 tokens of the
+  mutation to reach it (176 positions of UD Irish-IDT, 6,496 tokens of the
   list): *bhaineann* and *mbaineann* → the adjective *baineann* "female" (41
   positions, 2,145 tokens), where *bain* is one reference further;
   *acmhainní* → *acmhainneach* (17), *substaintí* → *substainteach* and
   *freagraí* → *freagrach*, whose rows name only the adjective; *cheithre*
   → *ceithre* "four" (8; the treebank's lemma is *ceathair*).
+- **References to another word**: wty-ga-en files *foráil* "provision"
+  only as an alternative of *foláir* (*ní foláir*), so *forálacha*,
+  *fhorálacha*, *bhforálacha*, *foráil* and *fhoráil* show *foláir* (56
+  positions); *ar fud* "throughout" shows *fad* "length" (63, through the
+  row *fud*, "dative singular of fad"); *chuile* "every" shows *cuile*
+  "pantry" (16); *de dheasca* "because of" shows *deasc* "desk" (5); *dul i
+  léig* "to decline" shows *lig* "to let" (4); the verbal adjectives
+  *aistrithe*, *eagraithe*, *maraithe* and *saothraithe* show the agent
+  nouns *aistrí*, *eagraí*, *maraí*, *saothraí* (1,013 tokens of the list);
+  place and family names show a common word (*Port Láirge* → *láirig*
+  "thigh", *Loch Garman* → *garma* "beam", *Ó Cadhain* → *cadhan* "brent
+  goose").
 - **Rule-made wrong first results of the rules alone**: 82 in UD Irish-IDT
   (*nAirí* → *airí*, *mBailte* → *Bailt*, *hUachtarán* → *Uachtarán*) and
   1,787 tokens of the list (*gCeithre* → *ceithre*, *smaointí* →
   *smaoinigh*), besides the capitals above.
-- **Words the frequency measurement does not judge.** It judges only words
-  whose lemma a form-of row or UD Irish-IDT names, so these rule-made first
-  results are outside its counts: *úrscéalaí* "novelist" → *úrscéal*
-  "novel" (as an -aí plural; 508 tokens), *Corca* in *Corca Dhuibhne* →
-  *corc* (184), English words and names read as Irish (*This* → *theas*
-  700, *Alan* → *ala* 619, *Anna* → *ann* 520, *are* → *ar* 400), and agent
-  nouns in -eoir that wty-ga-en lacks, read as the Munster future second
-  person singular (*tairgeoir* → *tairg*,
-  *oibreoir* → *oibrigh*, *athbhreithneoir* → *athbhreithnigh*).
+- **English words read as Irish.** *The* (UD `Foreign=Yes`) is read as
+  *the*, the lenited form of *te* "hot", which wty-ga-en lists too: 27
+  lookups of UD Irish-IDT and 30,412 tokens of the frequency list, its
+  largest wrong first result. Blocking it would also block the Irish *the*
+  (*uisce the*). The frequency measurement judges only words whose lemma a
+  form-of row or UD Irish-IDT names, so these are outside its counts: *This*
+  → *theas* (700 tokens), *Alan* → *ala* (619), *Anna* → *ann* (520), *are*
+  → *ar* (400), and Tatoeba's *Tom* → *tom* "bush" (24 positions).
+- **Other words the frequency measurement does not judge**: *úrscéalaí*
+  "novelist" → *úrscéal* "novel" (as an -aí plural; 508 tokens), *Corca* in
+  *Corca Dhuibhne* → *corc* (184), and agent nouns in -eoir that wty-ga-en
+  lacks, read as the Munster future second person singular (*tairgeoir* →
+  *tairg*, *oibreoir* → *oibrigh*, *athbhreithneoir* → *athbhreithnigh*).
   *Seachtrach*, *Éideann* (*Dún Éideann*), *Obar* (*Obar Dheathain*) and
-  *Star* now find nothing: wty-ga-en has no entry for them.
-- **Dictionary references and entries that come first**:
-  - wty-ga-en's row *foráil* says only that it is an alternative of
-    *foláir*, so *forálacha* and its mutated forms show *foláir* (34
-    positions);
-  - its row *chumas* names the Munster past of *cum* and is confirmed, so it
-    comes before the noun *cumas* (17 positions);
-  - abbreviations and elided particles the dictionary reads as other words:
-    *Teo.* → *teo*, *Co.* → *chomh* (69 positions with a full stop), *d'* →
-    *d*, *a'* → *a* (94 with an apostrophe);
-  - the first part of a hyphenated word (the scan stops at the hyphen):
-    the intensifier *an-* (*an-mhór*) shows the article *an* (59 of 224
-    such positions).
+  *Star* find nothing: wty-ga-en has no entry for them.
+- **Abbreviations, elided particles and hyphenated words**: *Teo.* →
+  *teo*, *Co.* → *chomh* (25 positions with a full stop), *a'* → *a* (17);
+  the scan stops at a hyphen, so the intensifier *an-* (*an-mhór*) shows the
+  article *an* (59 of 184 such positions) and *n-itheam* the letter *n*.
 - **Verbal nouns and adjectives without their own entry.** UD Irish-IDT
   lemmatises a verbal noun or adjective to itself (*áireamhacht*,
-  *cailliúint*); where wty-ga-en has no entry for it, the first
-  result is the verb, with the trace `verbal-noun` or `verbal-adjective` (44
+  *cailliúint*); where wty-ga-en has no entry for it, the first result is
+  the verb, with the trace `verbal-noun` or `verbal-adjective` (44
   positions, counted as wrong-missing). For a learner the verb is usually
   the useful card.
 - **Names**: wty-ga-en tags no name, so a rule with a part of speech never
   reaches one. Mutations reach them (*Phádraig* → *Pádraig*), and so do the
   dictionary's form-of rows (*Sheáin*); other inflected names are not
   reached, and some names are read as common words (*Anna* → *ann*, *Alan*
-  → *ala*, Tatoeba's *Tom* → *tom* "bush"): 99 wrong first results by a
-  rule and 335 from the dictionary alone at proper nouns of UD Irish-IDT.
+  → *ala*): 115 wrong first results by a rule and 347 from the dictionary
+  alone at proper nouns of UD Irish-IDT.
 - *sábháilte* shows its own entry "safe" first and then *sábháil* traced as
   *plural*, not *verbal adjective*: the plural -te and the verbal adjective
   reach the same entry in one step, and the first trace found is kept.
@@ -605,6 +677,7 @@ every option on and with the defaults.
 - Ulster and Connacht verb forms and spellings outside the standard and the
   Munster synthetic forms (*tchí*, *gheibh*) are reached only through
   wty-ga-en's rows.
-- The conformance test reports 480 of the 3,343 expanded rules exercised by
+- The conformance test reports 567 of the 3,363 expanded rules exercised by
   a passing row; the others are endings of the same tables (every tense for
-  every stem class) that the sample happens not to contain.
+  every stem class) that the sample happens not to contain, and written-out
+  forms whose word wty-ga-en's own rows also reach (Measurements 6).

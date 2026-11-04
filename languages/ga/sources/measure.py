@@ -49,12 +49,14 @@ tense, mood or form.
 """
 
 import argparse
+import atexit
 import bz2
 import collections
 import glob
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 
@@ -66,16 +68,58 @@ LETTER_RUN = re.compile(f'[{LETTERS}]')
 MUTATION_GLOSS = re.compile(r'^(?:eclipsed|lenited|h-prothesized|t-prothesized|prothesized|mutated) form of (\S+)')
 
 
+# Parts of a card that are not its glosses: the preamble (grammar, etymology),
+# example sentences, synonym, antonym and related-word lists, and the backlink.
+NOT_GLOSS = {'preamble', 'details-entry-Etymology', 'details-entry-Grammar', 'backlink', 'examples', 'details-entry-examples',
+             'extra-info', 'synonyms', 'antonyms', 'related-words'}
+BLOCK = {'div', 'li', 'ol', 'ul', 'details', 'summary', 'table', 'tr', 'td', 'th', 'p', 'br'}
+
+
 def gloss_text(node):
+    """The text of a structured-content node without the parts NOT_GLOSS names;
+    block elements are separated by a space ("that... is" and "2 examples" do
+    not run together)."""
     if isinstance(node, str):
         return node
     if isinstance(node, list):
         return ''.join(gloss_text(n) for n in node)
     if isinstance(node, dict):
-        if node.get('data', {}).get('content') in ('preamble', 'details-entry-Etymology', 'details-entry-Grammar', 'backlink', 'examples'):
+        if node.get('data', {}).get('content') in NOT_GLOSS:
             return ''
-        return gloss_text(node.get('content', ''))
+        text = gloss_text(node.get('content', ''))
+        return f' {text} ' if node.get('tag') in BLOCK else text
     return ''
+
+
+def senses(definition):
+    """The senses of one definition of a term-bank row: each item of its glosses
+    list, or the whole text when it has none."""
+    content = definition.get('content') if isinstance(definition, dict) else definition
+    found = []
+
+    def walk(node):
+        if isinstance(node, list):
+            for n in node:
+                walk(n)
+        elif isinstance(node, dict):
+            if node.get('data', {}).get('content') == 'glosses':
+                items = node.get('content')
+                found.extend(gloss_text(i) for i in (items if isinstance(items, list) else [items]))
+            elif node.get('data', {}).get('content') not in NOT_GLOSS:
+                walk(node.get('content'))
+    walk(content)
+    out = [' '.join(s.split()) for s in (found or [gloss_text(content)])]
+    return [s for s in out if s]
+
+
+# A sense that describes a letter ("The capital form of the letter ó.", "The
+# letter a with an acute accent", "the letter C in the Ogham alphabet") names no
+# lemma: Ó the letter is not ó "from".
+LETTER_SENSE = re.compile(r"\bletter\b.*\balphabet\b|\balphabet\b.*\bletter\b|\bform of the letter\b|\bthe letter \S{1,2}\b|"
+                          r"\bscript letter\b|\bOgham letter\b", re.I)
+# The copula's lemma is is; Wiktionary's glosses of its forms call it the copula
+# (ní "not (present copular form)", gurb "that... is").
+COPULA_SENSE = re.compile(r'\bcopula|\bcopular', re.I)
 
 
 class Banks:
@@ -94,6 +138,7 @@ class Banks:
         self.glosses = collections.defaultdict(list)
         self.cards = collections.defaultdict(set)
         card_glosses = collections.Counter()
+        letter_senses = collections.Counter()
         all_glosses = collections.Counter()
         self.headwords = set()
         for bank in sorted(glob.glob(os.path.join(path, 'term_bank_*.json'))):
@@ -104,24 +149,34 @@ class Banks:
                         if len(d) == 2 and isinstance(d[0], str) and d[0]:
                             self.form_of[head].add(d[0])
                         continue
-                    text = gloss_text(d.get('content') if isinstance(d, dict) else d).strip()
-                    self.glosses[head].append(text)
                     self.headwords.add(head)
                     self.headwords.add(page(head))
-                    all_glosses[head] += 1
-                    m = MUTATION_GLOSS.match(text)
-                    if m:
-                        self.cards[head].add(m.group(1).rstrip('.,;'))
-                        card_glosses[head] += 1
+                    for text in senses(d):
+                        self.glosses[head].append(text)
+                        all_glosses[head] += 1
+                        m = MUTATION_GLOSS.match(text)
+                        if m:
+                            self.cards[head].add(m.group(1).rstrip('.,;'))
+                            card_glosses[head] += 1
+                        if LETTER_SENSE.search(text):
+                            letter_senses[head] += 1
         self.card_only = {h for h, n in card_glosses.items() if n == all_glosses[h]}
+        self.letter_only = {h for h, n in letter_senses.items() if n == all_glosses[h]}
 
     def names(self, head, lemma):
-        """Whether head's card names lemma: a gloss of one of head's rows with
-        definitions has lemma as a word. A lookup shows these glosses; head's
-        form-of references are not on the card (formOf follow drops them from it
-        and shows their targets as results of their own)."""
+        """Whether head's card names lemma: a sense of one of head's rows with
+        definitions has lemma as a word (not counting senses that describe a
+        letter), or lemma is the copula is and a sense calls it the copula. A
+        lookup shows these senses; head's form-of references are not on the card
+        (formOf follow drops them from it and shows their targets as results of
+        their own)."""
         word = re.compile(r'(?<![\w-])' + re.escape(page(lemma)) + r'(?![\w-])')
-        return any(word.search(g) for g in self.glosses.get(head, ()))
+        for g in self.glosses.get(head, ()):
+            if LETTER_SENSE.search(g):
+                continue
+            if word.search(g) or (lemma == 'is' and COPULA_SENSE.search(g)):
+                return True
+        return False
 
 
 def read_banks(path):
@@ -131,7 +186,7 @@ def read_banks(path):
 
 
 def read_conllu(paths):
-    """Sentences of UD Irish-IDT: text and tokens (form, lemma, upos, start)."""
+    """Sentences of UD Irish-IDT: text and tokens (form, lemma, upos, start, feats)."""
     sentences = []
     for path in paths:
         text, tokens = None, []
@@ -147,18 +202,18 @@ def read_conllu(paths):
                 cols = line.split('\t')
                 if '-' in cols[0] or '.' in cols[0]:
                     continue
-                tokens.append((cols[1], cols[2], cols[3]))
+                tokens.append((cols[1], cols[2], cols[3], cols[5]))
     return sentences
 
 
 def place(text, tokens):
     """Finds each token in the sentence text, left to right."""
     out, at = [], 0
-    for form, lemma, upos in tokens:
+    for form, lemma, upos, feats in tokens:
         i = text.find(form, at)
         if i < 0:
             continue
-        out.append((form, lemma, upos, i))
+        out.append((form, lemma, upos, i, feats))
         at = i + len(form)
     return out
 
@@ -263,18 +318,24 @@ def frequency_list(path, top):
 
 class Gold(dict):
     """The lemma UD Irish-IDT gives each form most often: as written (baile → baile,
-    Baile → Baile in Baile Átha Cliath), else in lower case."""
+    Baile → Baile in Baile Átha Cliath), else in lower case; and the forms most
+    of whose tokens UD marks Foreign=Yes (The, of, Irish)."""
 
     def __init__(self, sentences):
         super().__init__()
         exact = collections.defaultdict(collections.Counter)
         lower = collections.defaultdict(collections.Counter)
+        foreign = collections.Counter()
+        total = collections.Counter()
         for _text, tokens in sentences:
-            for form, lemma, _upos, _start in tokens:
+            for form, lemma, _upos, _start, feats in tokens:
                 exact[form][lemma] += 1
                 lower[form.lower()][lemma] += 1
+                total[form] += 1
+                foreign[form] += 'Foreign=Yes' in feats.split('|')
         self.exact = {f: c.most_common(1)[0][0] for f, c in exact.items()}
         self.update({f: c.most_common(1)[0][0] for f, c in lower.items()})
+        self.foreign = {f for f, n in foreign.items() if 2 * n > total[f]}
 
     def of(self, word):
         return self.exact.get(word) or self.get(word.lower())
@@ -303,6 +364,38 @@ def lower_first(s):
     return s[:1].lower() + s[1:]
 
 
+# First results the categories right-entry and right-named would accept but
+# which are wrong, judged by hand (README, Measurements 4): every right-entry and
+# right-named group of UD Irish-IDT with 5 or more lookups and every such word of
+# the frequency list was read. Keys are (expected lemma or the word as written,
+# first result). Names whose element a card gives literally (Ó Cléirigh "clerk",
+# Gleann "glen") count as right; these read a word as an unrelated one.
+HAND_WRONG = {
+    ('foráil', 'foláir'): 'wty-ga-en files foráil (provision) only as an alternative of foláir (ní foláir)',
+    ('do', 'dom'): 'the card is do + mo "to my"; the word is "to me"',
+    ('gach_uile', 'cuile'): 'chuile "every" shown as cuile "pantry"',
+    ('deasca', 'deasc'): 'de dheasca "because of" shown as deasc "desk"',
+    ('fud', 'fad'): 'ar fud "throughout" shown as fad "length"',
+    ('léig', 'lig'): 'dul i léig "decline" shown as lig "to let"',
+    ('aistrithe', 'aistrí'): 'the verbal adjective "translated" shown as aistrí "transferee"',
+    ('eagraithe', 'eagraí'): 'the verbal adjective "organised" shown as eagraí "organiser"',
+    ('maraithe', 'maraí'): 'the verbal adjective "killed" shown as maraí "mariner"',
+    ('saothraithe', 'saothraí'): 'the verbal adjective "cultivated" shown as saothraí "labourer"',
+    ('buailte', 'buaile'): 'the verbal adjective "struck" shown as buaile "milking place"',
+    ('sealbhaigh', 'sealbhach'): 'the verb "acquired" shown as the adjective sealbhach',
+    ('beartas', 'beart'): 'beartas "policy" shown as beart "bundle"',
+    ('Láirge', 'láirig'): 'Port Láirge (Waterford) shown as láirig "thigh"',
+    ('Garman', 'garma'): 'Loch Garman (Wexford) shown as garma "beam"',
+    ('Caoin', 'caoin'): 'Dún Chaoin shown as caoin "smooth; to keen"',
+    ('Cadhain', 'cadhan'): 'the surname Ó Cadhain shown as cadhan "brent goose"',
+    ('Liatháin', 'liathán'): 'the surname Ó Liatháin shown as liathán "spleen"',
+    ('Conaire', 'conair'): 'the name Conaire shown as conair "path"',
+    ('cais', 'cas'): 'Dál gCais shown as cas "twisted"',
+    ('Theo', 'teo'): 'the name Theo shown as teo "warmth"',
+    ('Chris', 'crios'): 'the name Chris shown as crios "belt"',
+}
+
+
 class Judge:
     """Classifies a lookup's first result with a definition (README, Measurements).
     Headwords are compared as written; references are followed one hop, as written.
@@ -317,11 +410,15 @@ class Judge:
     right-named      the expected lemma has no entry in wty-ga-en, and the first result is what
                      the word's or the lemma's own form-of rows name (curtha → cuir, where the
                      treebank's lemma is the verbal adjective curtha);
+                     neither right-entry nor right-named applies to a word UD marks
+                     Foreign=Yes (The, of), to a card that only describes a letter (Ó,
+                     "The capital form of the letter ó"), or to a pair in HAND_WRONG;
     form-entry       a mutation-form card ("eclipsed form of X"): the dictionary's own entry
-                     for the mutated word, which names X but defines nothing. It is neither
-                     right nor wrong; row['card'] says whether X is the expected lemma
-                     (gcathair → cathair) or another word (bhfuil → fuil, where the word
-                     is bí; mbeidh → beidh, itself a form of bí);
+                     for the mutated word, which names X but defines nothing, also when its
+                     headword is the expected lemma (dtí). It is neither right nor wrong;
+                     row['card'] says whether X is the expected lemma (gcathair → cathair)
+                     or another word (bhfuil → fuil, where the word is bí; mbeidh → beidh,
+                     itself a form of bí; dtí → tí);
     wrong            another headword, with a trace step of a pack rule;
     wrong-missing    the same where wty-ga-en has no entry for the expected lemma;
     wrong-reference  another headword reached by the dictionary alone: the exact match of
@@ -353,21 +450,25 @@ class Judge:
         rule = any(s in self.ids for s in steps)
         expression = first['expression']
         form = row['form']
-        if any(same(expression, e) for e in expected):
-            return 'right-lemma'
         banks = self.banks
+        # A mutation card is counted apart even when its headword is the expected
+        # lemma (go dtí: UD's lemma dtí, the card "eclipsed form of tí").
         if expression in banks.card_only:
             row['card'] = 'names the lemma' if any(same(t, e) for t in banks.cards[expression] for e in expected) else 'names another word'
             return 'form-entry'
-        own = expression in (form, lower_first(form)) or (steps and not any(flags) and set(steps) <= MUTATIONS)
-        if own and any(banks.names(expression, e) for e in expected):
-            return 'right-entry'
+        if any(same(expression, e) for e in expected):
+            return 'right-lemma'
         missing = self.missing(expected)
-        if missing:
-            named = set(banks.form_of.get(form, ())) | set(banks.form_of.get(lower_first(form), ()))
-            named |= {t for e in expected for t in banks.form_of.get(e, ())}
-            if any(same(expression, n) for n in named):
-                return 'right-named'
+        hand = (form, expression) in HAND_WRONG or any((e, expression) in HAND_WRONG for e in expected)
+        if not (row.get('foreign') or expression in banks.letter_only or hand):
+            own = expression in (form, lower_first(form)) or (steps and not any(flags) and set(steps) <= MUTATIONS)
+            if own and any(banks.names(expression, e) for e in expected):
+                return 'right-entry'
+            if missing:
+                named = set(banks.form_of.get(form, ())) | set(banks.form_of.get(lower_first(form), ()))
+                named |= {t for e in expected for t in banks.form_of.get(e, ())}
+                if any(same(expression, n) for n in named):
+                    return 'right-named'
         if not rule:
             return 'wrong-reference'
         return 'wrong-missing' if missing else 'wrong'
@@ -413,6 +514,7 @@ def cmd_eval(args):
     root = args.root
     pack = os.path.join(args.languages, 'ga')
     tmp = tempfile.mkdtemp(prefix='ga-eval-')
+    atexit.register(shutil.rmtree, tmp, True)  # the scratch directory goes when the command ends
     union = os.path.join(tmp, 'union.json')
     subprocess.run([args.node, os.path.join(root, 'tools', 'merge-transforms.mjs'), 'ga', '--languages', args.languages, '--out', union],
                    check=True, capture_output=True, text=True)
@@ -453,6 +555,7 @@ def cmd_dictpairs(args):
     (sources/build-own.mjs --expanded, with build-final's provenance)."""
     import tempfile
     tmp = tempfile.mkdtemp(prefix='ga-pairs-')
+    atexit.register(shutil.rmtree, tmp, True)  # the scratch directory goes when the command ends
     pairs = {}
     lemma_rows = set()
     banks = sorted(glob.glob(os.path.join(args.cache, 'wty-ga-en-banks', 'term_bank_*.json')))
@@ -604,7 +707,8 @@ def cmd_frequent(args):
         reached = {t for v in variants[word] for t in reached_by[v] if t != v}
         if not any(same(l, r) for l in lemmas for r in reached):
             continue
-        rows.append({'form': word, 'count': n, 'lemmas': sorted(lemmas), 'expected': expected_lemmas(judge_row, gold, word)})
+        rows.append({'form': word, 'count': n, 'lemmas': sorted(lemmas), 'expected': expected_lemmas(judge_row, gold, word),
+                     'foreign': word in gold.foreign})
     judge_answers(rows, run_batch(args, [r['form'] for r in rows]), judge_row, lambda r: set(r['expected']))
     wrong = write_wrong(args.out, 'frequent-wrong.tsv', [dict(r, verdict='wrong' if r['verdict'] in WRONG else r['verdict']) for r in rows],
                         lambda r: (r['form'], ','.join(r['expected']), r['first'], r['trace']))
@@ -624,12 +728,13 @@ def cmd_frequent(args):
 def hovers(sentences, keep=lambda prev, form: True):
     out = []
     for text, tokens in sentences:
-        for i, (form, lemma, upos, start) in enumerate(tokens):
+        for i, (form, lemma, upos, start, feats) in enumerate(tokens):
             if not LETTER_RUN.search(form):
                 continue
             prev = tokens[i - 1][0].lower() if i > 0 else ''
             if keep(prev, form):
-                out.append({'form': form, 'lemma': lemma, 'upos': upos, 'prev': prev, 'text': text[start:]})
+                out.append({'form': form, 'lemma': lemma, 'upos': upos, 'prev': prev, 'text': text[start:],
+                            'foreign': 'Foreign=Yes' in feats.split('|')})
     return out
 
 
@@ -670,7 +775,8 @@ def cmd_particles(args):
                 prev, word = words[i - 1].group(0).lower(), words[i].group(0)
                 lemmas = judge_row.form_of.get(word) or judge_row.form_of.get(word.lower())
                 if prev in PARTICLES and lemmas:
-                    tatoeba.append({'form': word, 'prev': prev, 'text': text[words[i].start():], 'lemmas': expected_lemmas(judge_row, gold, word)})
+                    tatoeba.append({'form': word, 'prev': prev, 'text': text[words[i].start():], 'lemmas': expected_lemmas(judge_row, gold, word),
+                                    'foreign': word in gold.foreign})
     judge_answers(tatoeba, run_batch(args, [r['text'] for r in tatoeba]), judge_row, lambda r: set(r['lemmas']))
     by_particle = {}
     for p in PARTICLES:
