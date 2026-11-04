@@ -1,0 +1,5 @@
+# options: default
+# Hand-written for the test.
+# category	valid	source	term	rule	reasons
+names	1	Rome	Romis	*	name
+negatives	0	Roma	Romis	*	*

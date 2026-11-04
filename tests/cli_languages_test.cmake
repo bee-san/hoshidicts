@@ -10,10 +10,54 @@
 # eval-language's recall, --transforms (the pack checked with its own rules,
 # which another file replaces, also for a pack whose lookup.transforms is
 # null; nothing on standard error unless a note is due), eval-language on a
-# corpus whose first line is `# options: default` (section 12.2), and that a
-# failed lookup prints no runtime line.
+# corpus whose first line is `# options: default` (section 12.2), that a
+# failed lookup prints no runtime line, and that deinflect reports a search
+# that reached a bound (section 7.4).
 
 set(LANGUAGES ${FIXTURES}/languages)
+
+# The conformance test's loop fixture (docs/languages.md 7.4): deinflect ends,
+# prints the results within the bounds, and says on standard error which bound
+# cut the search, with the chain; an input the rules do not loop on says
+# nothing.
+set(bounds ${SCRATCH}/cli-search-bounds)
+file(REMOVE_RECURSE ${bounds})
+file(COPY ${FIXTURES}/conformance/lp DESTINATION ${bounds})
+foreach(text Rome Roma)
+  execute_process(COMMAND ${CLI} --languages ${bounds} deinflect lp ${text}
+                  OUTPUT_VARIABLE out ERROR_VARIABLE err RESULT_VARIABLE rc)
+  string(REGEX MATCHALL "\"text\":" texts "${out}")
+  list(LENGTH texts count)
+  if(text STREQUAL "Rome")
+    set(wanted_count 65)
+    set(message "hoshidicts-cli: deinflect lp Rome: the search reached a bound (docs/languages.md 7.4): an output more than 32 code points longer than the text the search started from, after 65 steps: Rome -name[0]-> Romis")
+    string(FIND "${err}" "${message}" at)
+  else()
+    set(wanted_count 1)
+    set(message "nothing")
+    if(err STREQUAL "")
+      set(at 0)
+    else()
+      set(at -1)
+    endif()
+  endif()
+  if(NOT rc EQUAL 0 OR NOT count EQUAL wanted_count OR at EQUAL -1)
+    message(SEND_ERROR "search bounds, ${text}: exit ${rc}, ${count} results (expected ${wanted_count})\n  stderr: ${err}\n  wanted in stderr: ${message}")
+  else()
+    message(STATUS "ok: search bounds, ${text}")
+  endif()
+endforeach()
+# eval-language names the corpus row whose search reached a bound.
+execute_process(COMMAND ${CLI} --languages ${bounds} eval-language lp ${bounds}/lp/tests/corpus.tsv
+                OUTPUT_VARIABLE out ERROR_VARIABLE err RESULT_VARIABLE rc)
+set(message "hoshidicts-cli: ${bounds}/lp/tests/corpus.tsv:4: Rome: the search reached a bound (docs/languages.md 7.4): an output more than 32 code points longer")
+string(FIND "${err}" "${message}" at)
+string(FIND "${out}" "\"recall\":1" recall)
+if(NOT rc EQUAL 0 OR at EQUAL -1 OR recall EQUAL -1)
+  message(SEND_ERROR "search bounds, eval-language: exit ${rc}\n  stdout: ${out}\n  stderr: ${err}\n  wanted in stderr: ${message}")
+else()
+  message(STATUS "ok: search bounds, eval-language")
+endif()
 
 # expect(<name> <exit status> <stdout> <arguments>...): exact output.
 function(expect name expected_rc expected_out)

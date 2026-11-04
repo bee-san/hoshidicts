@@ -738,24 +738,75 @@ Deinflection is the depth-first search hoshidicts uses today:
    trie of prefixes, longest first; then `phrasal` rules through a trie of
    first-word endings, longest first; then `interposedObject` and `replace`
    rules in file order. Rules that match at one node apply in file order.
-3. Recurse into every output with the rule's `conditionsOut`.
+3. Expand every output the same way, with the rule's `conditionsOut`, before
+   the next rule applies to its input (depth first), within the bounds below.
 
 For Japanese, which has only suffix and whole-word rules, this is today's
-order exactly (section 11). There is no depth limit, as today and as in
-Yomitan. An output equal to one already produced by the same rule from the
-same text earlier in the same trace is skipped, as Yomitan's `isCycle` skips
-it, but the engine checks only outputs that are not shorter than their input
-(section 7.5), where Yomitan checks every one. A cycle that passes through a
-shortening rule is therefore cut one step later than in Yomitan: with `b` → ""
-and `a` → `ab`, the text `ab` gives `ab`, `a`, `ab` and `a` again, with a
-longer trace, where Yomitan stops after the second `ab`. The repeated result
-has the text and conditions of an earlier one, so the sets the differential
-check compares and the results of a lookup are the same. No Yomitan language
-at d3c54c1, Japanese included, reaches a cycle on its test sources, their
-prefixes or inputs built from its affixes. An output that is the empty text
-is neither recorded nor expanded, as today (れば → "" from "れば"); an empty
-text is never a headword. Yomitan records such outputs, so the differential
-check drops them on Yomitan's side.
+order exactly (section 11). An output equal to one already produced by the
+same rule from the same text earlier in the same trace is skipped, as
+Yomitan's `isCycle` skips it, but the engine checks only outputs that are
+not shorter than their input (section 7.5), where Yomitan checks every one.
+A cycle that passes through a shortening rule is therefore cut one step
+later than in Yomitan: with `b` → "" and `a` → `ab`, the text `ab` gives
+`ab`, `a`, `ab` and `a` again, with a longer trace, where Yomitan stops after
+the second `ab`. The repeated result has the text and conditions of an
+earlier one, so the sets the differential check compares and the results of
+a lookup are the same. No Yomitan language at d3c54c1, Japanese included,
+reaches a cycle on its test sources, their prefixes or inputs built from its
+affixes. An output that is the empty text is neither recorded nor expanded,
+as today (れば → "" from "れば"); an empty text is never a headword. Yomitan
+records such outputs, so the differential check drops them on Yomitan's
+side.
+
+**Bounds.** The cycle check does not stop rules that keep making new texts.
+With `e` → `is` and `is` → `ae`, neither with conditions, *Rome* gives
+*Romis*, *Romae*, *Romais*, *Romaae*, … for ever, growing a code point every
+second step. The search before these bounds recursed until the stack
+overflowed; Yomitan's `LanguageTransformer.transform` (d3c54c1), a loop over
+a growing list, never returns. So that every search ends, whatever a pack's
+rules say, three bounds apply to each search, the text a search starts from
+(a processed variant of the scanned text, or a variant pass's reading) being
+its input:
+
+| Bound | Value | What happens |
+| --- | ---: | --- |
+| growth | 32 code points | an output more than 32 code points longer than the input is neither recorded nor expanded |
+| depth | 128 rules | an output that would be the 129th rule of its chain is neither recorded nor expanded |
+| results | 65,536 | the search stops once it holds 65,536 deinflections, the input included |
+
+Growth and depth end every chain; the results bound also ends a search whose
+rules fan out, which 2 rules can make exponential (each replacing the first
+`a` with `b` or with `c` gives 2^17 − 1 texts from 16 `a`s, all of one
+length). Only an output a bound drops is lost; everything recorded before it
+stays, in the same order. The bounds apply to each search: a lookup makes one
+for each scanned prefix and each of its processed variants (at most 4,096,
+section 6.1) and each variant pass reading, so they bound a lookup's work by
+that many searches. The values come from a census of the unbounded
+search on main 5ca9a6f, for the 15 packs on main and the 11 in open pull
+requests: each pack's corpus strings and their prefixes, `host.sample` texts
+and their windows of 1 to 16 code points, inputs built from its affixes,
+20,000 generated strings (rule endings chained onto stems), and for Japanese
+the 206,148 inputs of `ja-deinflect-parity`, each with every option on and
+with the defaults:
+
+| | Deepest chain | Longest output | Largest search |
+| --- | ---: | ---: | ---: |
+| Japanese, the parity inputs | 44 rules (食べ + させ × 40 + られなかった) | +1 | 212 |
+| any pack, corpus, prefixes, samples, affix inputs | 10 rules (Tagalog) | +17 (Serbo-Croatian *i* → *i/languages M to Z*) | 2,694 (Ancient Greek) |
+| any pack, generated strings | 15 rules (Tagalog) | +13 (English placeholders) | 6,058 (Ancient Greek) |
+
+The depth bound is about 3 times the parity test's deepest chain and 8 times
+the deepest from other inputs; the margin is about twice the longest output;
+the results bound about 10 times the largest search. None is reached by any
+input of the census, so every result above is the same with the bounds, and
+`ja-deinflect-parity` checks that none is reached on its inputs, their
+processed variants and their cat-speech readings. A pack that reaches one
+fails the conformance test (section 12.1 step 7), and `hoshidicts-cli
+deinflect` and `eval-language` say so on standard error (section 10.3).
+
+The search keeps its own stack of the texts it is expanding, so a chain of
+128 rules takes no more native or WebAssembly stack than a chain of one; the
+recursion it replaced took about 2 KiB of native stack per rule.
 
 The trace of a result lists the transforms applied, in application order, as
 `{id, name, description}`. Yomitan lists them newest first; converters and
@@ -763,11 +814,14 @@ tests reverse it.
 
 ### 7.5 Speed
 
-The engine keeps the matches of one trie walk in a fixed array (64 entries,
-the affix limit), allocates nothing per rule application except the output
-string, and runs the cycle check only for rules whose output is not shorter
-than their input. Repeated outputs are not deduplicated during the search,
-and each one is looked up (section 9.5).
+The engine keeps the matches of one trie walk (at most 64 per trie, the
+affix limit) on the search's own stack, which each thread reuses from one
+search to the next, allocates nothing per rule application except the
+output string, and runs the cycle check only for rules whose output is not
+shorter than their input. The growth bound counts code points only for an
+output longer than a quarter of its input's bytes plus the margin, which no
+Japanese output of a 16-code-point scan is. Repeated outputs are not
+deduplicated during the search, and each one is looked up (section 9.5).
 
 ### 7.6 The `pattern` dialect
 
@@ -1648,6 +1702,14 @@ the output: its line is
 (`"variants"` for `preprocess`), the message also goes to standard error,
 and the command exits with status 1 after answering every line.
 
+When a search reaches a bound (section 7.4), `deinflect` still prints the
+results recorded before it and exits with status 0, and writes one line to
+standard error after that input's line, with the bound and the chain in the
+form of the conformance test's message (section 12.1 step 7):
+`hoshidicts-cli: deinflect lp Rome: the search reached a bound (docs/languages.md 7.4): an output more than 32 code points longer than ...`.
+`eval-language` writes the same for each corpus row whose search reaches
+one, naming the file and line.
+
 `--transforms <file>` measures another rule file with the pack:
 `sources/own.json` or `sources/yomitan.json` with `eval-language`
 (section 14 step 5), or Yomitan's rules in the differential check
@@ -1793,7 +1855,11 @@ Japanese transform id equal to its name:
   `cases.tsv` (today's whole-word, historical kana and cat-speech cases), every
   prefix of every source, deep chains such as 食べ + させ × 40 + る, and
   100,000 strings built from a fixed seed by chaining rule endings onto kana,
-  kanji and Latin stems.
+  kanji and Latin stems. It also requires that no search of these inputs, of
+  their processed variants or of their cat-speech readings reaches a search
+  bound (section 7.4), and prints how far the searches went: the longest
+  chain has 44 rules, the longest output adds 1 code point, the largest
+  search holds 212 deinflections.
 - `ja-process-parity`: processor variants and steps for the same inputs.
 - `ja-lookup-parity`: `lookup()` and `lookup_dictionary()` results (matched,
   deinflected, trace, term, frequencies, pitches, preprocessor steps) on a
@@ -1915,6 +1981,42 @@ For every pack it checks:
 5. Coverage: every `own` and `both` transform has at least one passing
    `valid = 1` row, and the rules no row exercises are printed.
 6. `README.md` exists and has the sections of the template.
+7. The search bounds (section 7.4): every corpus string (the sources of every
+   deinflection TSV, `text.tsv` inputs, `lookup.tsv` texts and the
+   `host.sample` strings) and every input built from the rules' affixes
+   (each rule's inflected form alone, on stems of the pack's eight most used
+   letters and on its first three short words, `circumfix` and `phrasal`
+   frames, `stemChange` contexts and pattern anchors, as the differential
+   check builds them, section 8.2) is searched as a corpus row searches it,
+   with every option on and, when the pack has options, with its defaults; no
+   search may reach a bound. A pack that reaches one fails once, with the
+   number of inputs that reach a bound, the first of them and its chain, the
+   rule of each step named by its transform id and its index in that
+   transform, the first and last five steps of a longer chain. For the loop
+   of section 7.4 the line is (one line, wrapped here):
+
+   ```text
+   FAIL lp: the deinflection search reached a bound (docs/languages.md 7.4) on 13 of 15 inputs;
+     the first, Rome: an output more than 32 code points longer than the text the search started
+     from, after 65 steps: Rome -name[0]-> Romis -name[1]-> Romae -name[0]-> Romais -name[1]->
+     Romaae -name[0]-> Romaais ... (55 more) ... -name[0]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaais
+     -name[1]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae -name[0]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaais
+     -name[1]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae -name[0]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaais (dropped)
+   ```
+
+   The next four inputs that reach a bound follow, each on a line starting
+   "also". A conforming pack's line says how far its searches went, so its
+   author sees how close they come:
+
+   ```text
+   ja: search bounds: 7268 inputs (1474 corpus strings and host.sample texts, 5794 built from the
+     rules' affixes) stay within them: the longest chain has 6 of 128 rules, the longest output
+     adds 1 of 32 code points, the largest search holds 41 of 65536 deinflections
+   ```
+
+   Such a loop usually comes from rules whose outputs have no conditions
+   (7.2), which every rule may then apply to again; giving the outputs
+   conditions ends it (`tests/fixtures/conformance/lp`).
 
 ### 12.2 Corpus format
 

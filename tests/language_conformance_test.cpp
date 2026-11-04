@@ -22,6 +22,9 @@
 // 5. Every `own` and `both` transform has a passing `valid = 1` row; the
 //    rules no row exercises are printed.
 // 6. README.md has the sections of languages/_template/README.md.
+// 7. No corpus string, host.sample text or input built from the rules'
+//    affixes makes the deinflection search reach a bound (section 7.4),
+//    with every option on or with the pack's defaults.
 #include <glaze/glaze.hpp>
 #include <utf8proc.h>
 
@@ -419,6 +422,64 @@ void check_lookup_tsv(const fs::path& tests, const std::shared_ptr<const hoshidi
   fs::remove_all(dir);
 }
 
+// 7. The search bounds (section 7.4): no corpus string, host.sample text or
+// input built from the rules' affixes reaches one, with every option on or
+// with the pack's defaults. One failure names how many inputs reach a bound
+// and shows the first with its chain; the next few are printed.
+void check_search_bounds(const fs::path& tests, const lang::PackData& pack) {
+  if (!pack.transforms) return;
+  const auto strings = corpus_strings(tests, pack);
+  const auto affixes = lang::affix_inputs(pack, strings);
+  // With no optional processor, transform or variant pass (every pass is
+  // optional), the pack's defaults are every option on.
+  const bool options =
+      pack.has_optional_processors || pack.transforms->has_optional_transforms || !pack.variant_passes.empty();
+  std::vector<lang::TestOptions> modes = {lang::TestOptions::All};
+  if (options) modes.push_back(lang::TestOptions::Default);
+  lang::SourceSearch reach;
+  size_t inputs = 0;
+  size_t reached = 0;
+  std::string first;
+  std::vector<std::string> more;
+  // The texts searched in each mode: inputs that process to one already
+  // searched add nothing.
+  std::vector<std::set<std::string>> searched(modes.size());
+  for (const auto* list : {&strings, &affixes}) {
+    for (const auto& input : *list) {
+      ++inputs;
+      for (size_t m = 0; m < modes.size(); ++m) {
+        const auto mode = modes[m];
+        const lang::SourceSearch search = lang::search_source(pack, input, mode, &searched[m]);
+        reach.depth = std::max(reach.depth, search.depth);
+        reach.growth = std::max(reach.growth, search.growth);
+        reach.results = std::max(reach.results, search.results);
+        if (search.bound == lang::BoundHit::Bound::None) continue;
+        const std::string where = input + (mode == lang::TestOptions::Default ? " (with the pack's defaults)" : "") +
+                                  ": " + lang::describe(search);
+        if (reached++ == 0) {
+          first = where;
+        } else if (more.size() < 4) {
+          more.push_back(where);
+        }
+        break;
+      }
+    }
+  }
+  if (reached > 0) {
+    fail("the deinflection search reached a bound (docs/languages.md 7.4) on " + std::to_string(reached) + " of " +
+         std::to_string(inputs) + " inputs; the first, " + first);
+    for (const auto& m : more) note("also " + m);
+    return;
+  }
+  note("search bounds: " + std::to_string(inputs) + " inputs (" + std::to_string(strings.size()) +
+       " corpus strings and host.sample texts, " + std::to_string(affixes.size()) +
+       " built from the rules' affixes) stay within them: the longest chain has " + std::to_string(reach.depth) +
+       " of " + std::to_string(lang::SearchBounds::max_depth) + " rules, the longest output adds " +
+       std::to_string(reach.growth) + " of " + std::to_string(lang::SearchBounds::max_growth) +
+       " code points, the largest search holds " + std::to_string(reach.results) + " of " +
+       std::to_string(lang::SearchBounds::max_results) + " deinflections");
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -609,6 +670,9 @@ int main(int argc, char** argv) {
       }
     }
   }
+
+  // 7. The search bounds.
+  check_search_bounds(tests, data);
 
   return finish();
 }

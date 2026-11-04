@@ -124,6 +124,31 @@ struct Deinflection {
 };
 using Deinflections = std::vector<Deinflection>;
 
+// The bounds of one deinflection search (section 7.4), so that every search
+// ends whatever a pack's rules say. An output with more than `max_growth`
+// code points beyond the text the search starts from, or one that would be
+// rule `max_depth + 1` of its chain, is neither recorded nor expanded, and a
+// search stops when it holds `max_results` deinflections, its text included.
+struct SearchBounds {
+  static constexpr size_t max_growth = 32;
+  static constexpr uint32_t max_depth = 128;
+  static constexpr size_t max_results = 65536;
+};
+
+// The first time a bound cut a search short: which bound, and the output it
+// dropped, which rule `rule` gave from deinflection `parent` (an index into
+// the search's list). The conformance test fails a pack whose inputs reach
+// a bound (section 12.1).
+struct BoundHit {
+  enum class Bound : unsigned char { None, Growth, Depth, Results };
+  Bound bound = Bound::None;
+  uint32_t parent = Deinflection::npos;
+  uint32_t rule = 0;
+  std::string text;
+
+  explicit operator bool() const { return bound != Bound::None; }
+};
+
 class TransformSet {
  public:
   // Built by the pack parser (pack.cpp).
@@ -138,14 +163,17 @@ class TransformSet {
   // Builds the tries; call once the rules are in place.
   void index();
 
-  // Every deinflection of `text`, depth first (section 7.4), appended to
-  // `out` after a result for `text` itself. `enabled` lists, by transform
-  // index, the optional transforms a request turned on (null: none).
-  void deinflect(const std::string& text, Deinflections& out, const std::vector<bool>* enabled = nullptr) const;
+  // Every deinflection of `text`, depth first within SearchBounds (section
+  // 7.4), appended to `out` after a result for `text` itself. `enabled`
+  // lists, by transform index, the optional transforms a request turned on
+  // (null: none). `hit`, when given and still empty, receives the first
+  // bound that cut the search short.
+  void deinflect(const std::string& text, Deinflections& out, const std::vector<bool>* enabled = nullptr,
+                 BoundHit* hit = nullptr) const;
   // The same for a text a variant pass produced: its first trace step is
   // `step` (a trace step index), with no rule.
   void deinflect_from_step(std::string text, uint32_t step, Deinflections& out,
-                           const std::vector<bool>* enabled = nullptr) const;
+                           const std::vector<bool>* enabled = nullptr, BoundHit* hit = nullptr) const;
 
   // The trace step (transform index, or a pass step) of a deinflection's `via`.
   uint32_t step_of(uint32_t via) const {
@@ -222,7 +250,13 @@ class TransformSet {
   void finish(Trie& trie, TrieBuilder& builder);
 
   struct Run;
-  void visit(Run& run, uint32_t index) const;
+  struct Frame;
+  struct Match;
+  struct Stack;
+  void search(Run& run, uint32_t root) const;
+  void push_frame(Stack& stack, const std::string& text, uint32_t index) const;
+  bool next_output(const Run& run, Stack& stack, Frame& frame, std::string& output, uint32_t& rule,
+                   uint32_t& conditions_out) const;
   bool apply(const Rule& rule, const std::string& text, size_t matched, std::string& out) const;
   bool stem_ok(const Rule& rule, std::string_view stem) const;
   bool change_stem(const Rule& rule, std::string_view stem, std::string& out) const;

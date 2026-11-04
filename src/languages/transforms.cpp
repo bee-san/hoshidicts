@@ -51,6 +51,37 @@ bool all_words(std::string_view s, const CharClass* words) {
 struct TransformSet::Run {
   Deinflections& out;
   const std::vector<bool>* enabled;
+  BoundHit* hit;
+};
+
+// The search keeps its own stack (section 7.4), so a long chain needs no more
+// native or WebAssembly stack than a short one. A frame is a deinflection
+// being expanded: the rules of its matches, then the rules no trie indexes.
+struct TransformSet::Frame {
+  uint32_t index;  // the deinflection
+  uint32_t first;  // its matches are Stack::matches[first, end)
+  uint32_t next;   // the match being applied, or end once only unindexed rules remain
+  uint32_t end;
+  uint32_t rule;   // the next rule: of matches[next] (into its trie's node_rules), or of unindexed_
+  uint32_t space;  // the text's first space, for phrasal matches
+};
+
+// A trie node whose rules apply to a frame's text, and where the matched
+// affix starts (suffixes, suffix anchors, phrasal endings) or ends (prefixes,
+// prefix anchors).
+struct TransformSet::Match {
+  uint32_t node;
+  uint32_t matched;
+  uint32_t trie;  // 0: suffixes_, 1: prefixes_, 2: phrasal_
+};
+
+// Each thread reuses one Stack, so a search allocates nothing but its outputs
+// (section 7.5). No rule application searches, but a search that started
+// while the thread's Stack is in use would take a Stack of its own.
+struct TransformSet::Stack {
+  std::vector<Frame> frames;
+  std::vector<Match> matches;
+  bool busy = false;
 };
 
 void TransformSet::insert(TrieBuilder& builder, std::u32string_view key, uint32_t rule) {
@@ -362,203 +393,260 @@ bool TransformSet::apply(const Rule& rule, const std::string& text, size_t match
       return false;
     }
     case RuleType::Phrasal:
-      return false;  // applied in visit()
+      return false;  // applied in next_output()
   }
   return false;
 }
 
-void TransformSet::visit(Run& run, uint32_t index) const {
-  Deinflections& out = run.out;
-  std::array<std::pair<uint32_t, uint32_t>, max_matches> suffix_matches;
-  size_t suffix_count = 0;
-  std::array<std::pair<uint32_t, uint32_t>, max_matches> prefix_matches;
-  size_t prefix_count = 0;
-  std::array<std::pair<uint32_t, uint32_t>, max_matches> phrasal_matches;
-  size_t phrasal_count = 0;
-  size_t space = std::string::npos;
-  std::string_view second_word;
+// Pushes the frame of deinflection `index`, whose text is `text`, with its
+// matches in the order they apply: suffix-indexed rules, longest matched
+// suffix first, then those of the empty suffix; prefix-indexed rules the
+// same way; then phrasal rules, longest first-word ending first.
+void TransformSet::push_frame(Stack& stack, const std::string& text, uint32_t index) const {
+  std::vector<Match>& matches = stack.matches;
+  const auto first = static_cast<uint32_t>(matches.size());
   {
-    const std::string& text = out[index].text;
     uint32_t node = 0;
+    size_t count = 0;
     auto it = text.end();
-    while (it != text.begin() && suffix_count < max_matches) {
+    while (it != text.begin() && count < max_matches) {
       const char32_t c = utf8::prior(it, text.begin());
       const uint32_t child = suffixes_.child(node, c);
-      if (child == UINT32_MAX) {
-        break;
-      }
+      if (child == UINT32_MAX) break;
       node = child;
       if (suffixes_.nodes[node].rules_begin != suffixes_.nodes[node].rules_end) {
-        suffix_matches[suffix_count++] = {node, static_cast<uint32_t>(it - text.begin())};
+        matches.push_back({node, static_cast<uint32_t>(it - text.begin()), 0});
+        ++count;
       }
     }
-    if (!prefixes_.empty()) {
-      node = 0;
-      auto p = text.begin();
-      while (p != text.end() && prefix_count < max_matches) {
-        const char32_t c = utf8::next(p, text.end());
-        const uint32_t child = prefixes_.child(node, c);
-        if (child == UINT32_MAX) break;
-        node = child;
-        if (prefixes_.nodes[node].rules_begin != prefixes_.nodes[node].rules_end) {
-          prefix_matches[prefix_count++] = {node, static_cast<uint32_t>(p - text.begin())};
-        }
+    std::reverse(matches.begin() + static_cast<std::ptrdiff_t>(first), matches.end());
+    if (suffixes_.nodes[0].rules_begin != suffixes_.nodes[0].rules_end) {
+      matches.push_back({0, static_cast<uint32_t>(text.size()), 0});
+    }
+  }
+  if (!prefixes_.empty()) {
+    const size_t start = matches.size();
+    uint32_t node = 0;
+    size_t count = 0;
+    auto p = text.begin();
+    while (p != text.end() && count < max_matches) {
+      const char32_t c = utf8::next(p, text.end());
+      const uint32_t child = prefixes_.child(node, c);
+      if (child == UINT32_MAX) break;
+      node = child;
+      if (prefixes_.nodes[node].rules_begin != prefixes_.nodes[node].rules_end) {
+        matches.push_back({node, static_cast<uint32_t>(p - text.begin()), 1});
+        ++count;
       }
     }
-    if (!phrasal_.empty()) {
-      space = text.find(' ');
-      if (space != std::string::npos && space > 0) {
-        const size_t next = text.find(' ', space + 1);
-        second_word = std::string_view(text).substr(space + 1, (next == std::string::npos ? text.size() : next) - space - 1);
-        if (all_words(std::string_view(text.data(), space), word_characters) && all_words(second_word, word_characters)) {
-          node = 0;
-          auto q = text.begin() + static_cast<std::ptrdiff_t>(space);
-          if (phrasal_.nodes[0].rules_begin != phrasal_.nodes[0].rules_end) {
-            // An empty ending matches every first word; it is the shortest.
+    std::reverse(matches.begin() + static_cast<std::ptrdiff_t>(start), matches.end());
+    if (prefixes_.nodes[0].rules_begin != prefixes_.nodes[0].rules_end) matches.push_back({0, 0, 1});
+  }
+  uint32_t first_space = 0;
+  if (!phrasal_.empty()) {
+    const size_t space = text.find(' ');
+    if (space != std::string::npos && space > 0) {
+      const size_t next = text.find(' ', space + 1);
+      const std::string_view second_word =
+          std::string_view(text).substr(space + 1, (next == std::string::npos ? text.size() : next) - space - 1);
+      if (all_words(std::string_view(text.data(), space), word_characters) && all_words(second_word, word_characters)) {
+        const size_t start = matches.size();
+        uint32_t node = 0;
+        size_t count = 0;
+        auto q = text.begin() + static_cast<std::ptrdiff_t>(space);
+        while (q != text.begin() && count < max_matches) {
+          const char32_t c = utf8::prior(q, text.begin());
+          const uint32_t child = phrasal_.child(node, c);
+          if (child == UINT32_MAX) break;
+          node = child;
+          if (phrasal_.nodes[node].rules_begin != phrasal_.nodes[node].rules_end) {
+            matches.push_back({node, static_cast<uint32_t>(q - text.begin()), 2});
+            ++count;
           }
-          while (q != text.begin() && phrasal_count < max_matches) {
-            const char32_t c = utf8::prior(q, text.begin());
-            const uint32_t child = phrasal_.child(node, c);
-            if (child == UINT32_MAX) break;
-            node = child;
-            if (phrasal_.nodes[node].rules_begin != phrasal_.nodes[node].rules_end) {
-              phrasal_matches[phrasal_count++] = {node, static_cast<uint32_t>(q - text.begin())};
-            }
-          }
-        } else {
-          space = std::string::npos;
         }
-      } else {
-        space = std::string::npos;
+        std::reverse(matches.begin() + static_cast<std::ptrdiff_t>(start), matches.end());
+        // An empty ending matches every first word; it is the shortest.
+        if (phrasal_.nodes[0].rules_begin != phrasal_.nodes[0].rules_end) {
+          matches.push_back({0, static_cast<uint32_t>(space), 2});
+        }
+        first_space = static_cast<uint32_t>(space);
       }
     }
   }
+  const auto end = static_cast<uint32_t>(matches.size());
+  uint32_t rule = 0;
+  if (first < end) {
+    const Match& m = matches[first];
+    rule = (m.trie == 0 ? suffixes_ : m.trie == 1 ? prefixes_ : phrasal_).nodes[m.node].rules_begin;
+  }
+  stack.frames.push_back(Frame{index, first, first, end, rule, first_space});
+}
 
-  const uint32_t conditions = out[index].conditions;
-  const uint32_t depth = out[index].depth + 1;
-  const auto allowed = [&](const NodeRule& nr) {
-    if (conditions != 0 && !(conditions & nr.conditions_in)) return false;
-    if (has_optional_transforms && transforms[nr.transform].optional &&
-        (run.enabled == nullptr || nr.transform >= run.enabled->size() || !(*run.enabled)[nr.transform])) {
+// The frame's next rule application that gives an output, in the order of
+// section 7.4: its matches' rules, each node's in file order, then the
+// interposedObject and replace rules in file order. False when none is left.
+bool TransformSet::next_output(const Run& run, Stack& stack, Frame& frame, std::string& output, uint32_t& rule_index,
+                               uint32_t& conditions_out) const {
+  const Deinflections& out = run.out;
+  const uint32_t conditions = out[frame.index].conditions;
+  const auto allowed = [&](uint32_t conditions_in, uint16_t transform) {
+    if (conditions != 0 && !(conditions & conditions_in)) return false;
+    if (has_optional_transforms && transforms[transform].optional &&
+        (run.enabled == nullptr || transform >= run.enabled->size() || !(*run.enabled)[transform])) {
       return false;
     }
     return true;
   };
-  const auto is_cycle = [&](uint32_t rule) {
+  while (frame.next < frame.end) {
+    const Match& m = stack.matches[frame.next];
+    const Trie& trie = m.trie == 0 ? suffixes_ : m.trie == 1 ? prefixes_ : phrasal_;
+    const uint32_t rules_end = trie.nodes[m.node].rules_end;
+    while (frame.rule < rules_end) {
+      const NodeRule& nr = trie.node_rules[frame.rule++];
+      if (!allowed(nr.conditions_in, nr.transform)) continue;
+      const std::string& text = out[frame.index].text;
+      output.clear();
+      if (m.trie == 2) {
+        const Rule& rule = rules[nr.rule];
+        const size_t space = frame.space;
+        const size_t next = text.find(' ', space + 1);
+        const std::string_view second =
+            std::string_view(text).substr(space + 1, (next == std::string::npos ? text.size() : next) - space - 1);
+        if (!rule.extra->followed_by->contains(second)) continue;
+        output.reserve(text.size() + rule.b.size());
+        output.append(text, 0, m.matched);
+        output += rule.b;
+        output.append(text, space);
+        if (!finish_then(rule, output)) continue;
+      } else {
+        switch (nr.kind) {
+          case 0:
+            output.reserve(m.matched + nr.to.size());
+            output.append(text, 0, m.matched);
+            output.append(nr.to);
+            break;
+          case 1:
+            if (m.matched != 0) continue;
+            output.assign(nr.to);
+            break;
+          default:
+            if (!apply(rules[nr.rule], text, m.matched, output)) continue;
+            break;
+        }
+      }
+      rule_index = nr.rule;
+      conditions_out = nr.conditions_out;
+      return true;
+    }
+    if (++frame.next < frame.end) {
+      const Match& n = stack.matches[frame.next];
+      frame.rule = (n.trie == 0 ? suffixes_ : n.trie == 1 ? prefixes_ : phrasal_).nodes[n.node].rules_begin;
+    } else {
+      frame.rule = 0;
+    }
+  }
+  while (frame.rule < unindexed_.size()) {
+    const uint32_t r = unindexed_[frame.rule++];
+    const Rule& rule = rules[r];
+    if (!allowed(rule.conditions_in, rule.transform)) continue;
+    output.clear();
+    if (!apply(rule, out[frame.index].text, 0, output)) continue;
+    rule_index = r;
+    conditions_out = rule.conditions_out;
+    return true;
+  }
+  return false;
+}
+
+// The depth-first search of section 7.4 from deinflection `root`: each output
+// is recorded and expanded before the next rule applies to its parent, as a
+// recursion would, within SearchBounds.
+void TransformSet::search(Run& run, uint32_t root) const {
+  Deinflections& out = run.out;
+  thread_local Stack shared;
+  Stack own;
+  Stack& stack = shared.busy ? own : shared;
+  struct Release {
+    Stack& stack;
+    ~Release() { stack.busy = false; }
+  } release{stack};
+  stack.busy = true;
+  stack.frames.clear();
+  stack.matches.clear();
+  // The longest output allowed, in code points: the root's length plus the
+  // margin. A code point takes at most 4 bytes, so until an output is longer
+  // than root bytes / 4 + margin bytes, the root needs no counting.
+  size_t max_length = out[root].text.size() / 4 + SearchBounds::max_growth;
+  bool counted = false;
+  const auto is_cycle = [&](uint32_t index, uint32_t rule) {
     const std::string& text = out[index].text;
     for (uint32_t n = index; out[n].parent != Deinflection::npos; n = out[n].parent) {
       if (out[n].via == rule && out[out[n].parent].text == text) return true;
     }
     return false;
   };
-  const auto record = [&](std::string&& output, const NodeRule& nr) {
-    if (output.empty()) return;
-    if (output.size() >= out[index].text.size() && is_cycle(nr.rule)) return;
-    out.push_back(Deinflection{std::move(output), nr.conditions_out, index, nr.rule, depth});
-    visit(run, static_cast<uint32_t>(out.size() - 1));
-  };
-  const auto apply_node = [&](const Trie& trie, uint32_t node, size_t matched) {
-    const TrieNode& n = trie.nodes[node];
-    for (uint32_t r = n.rules_begin; r < n.rules_end; ++r) {
-      const NodeRule& nr = trie.node_rules[r];
-      if (!allowed(nr)) continue;
-      std::string output;
-      const std::string& text = out[index].text;
-      switch (nr.kind) {
-        case 0:
-          output.reserve(matched + nr.to.size());
-          output.append(text, 0, matched);
-          output.append(nr.to);
-          break;
-        case 1:
-          if (matched != 0) continue;
-          output.assign(nr.to);
-          break;
-        default:
-          if (!apply(rules[nr.rule], text, matched, output)) continue;
-          break;
-      }
-      record(std::move(output), nr);
+  push_frame(stack, out[root].text, root);
+  std::string output;
+  while (!stack.frames.empty()) {
+    Frame& frame = stack.frames.back();
+    uint32_t rule = 0;
+    uint32_t conditions_out = 0;
+    if (!next_output(run, stack, frame, output, rule, conditions_out)) {
+      stack.matches.resize(frame.first);
+      stack.frames.pop_back();
+      continue;
     }
-  };
-
-  while (suffix_count > 0) {
-    const auto [node, matched] = suffix_matches[--suffix_count];
-    apply_node(suffixes_, node, matched);
-  }
-  if (suffixes_.nodes[0].rules_begin != suffixes_.nodes[0].rules_end) {
-    apply_node(suffixes_, 0, out[index].text.size());
-  }
-  while (prefix_count > 0) {
-    const auto [node, matched] = prefix_matches[--prefix_count];
-    apply_node(prefixes_, node, matched);
-  }
-  if (!prefixes_.empty() && prefixes_.nodes[0].rules_begin != prefixes_.nodes[0].rules_end) {
-    apply_node(prefixes_, 0, 0);
-  }
-  if (space != std::string::npos) {
-    const auto apply_phrasal = [&](uint32_t node, size_t matched) {
-      const TrieNode& n = phrasal_.nodes[node];
-      for (uint32_t r = n.rules_begin; r < n.rules_end; ++r) {
-        const NodeRule& nr = phrasal_.node_rules[r];
-        if (!allowed(nr)) continue;
-        const Rule& rule = rules[nr.rule];
-        const std::string& text = out[index].text;
-        const size_t next = text.find(' ', space + 1);
-        const std::string_view second =
-            std::string_view(text).substr(space + 1, (next == std::string::npos ? text.size() : next) - space - 1);
-        if (!rule.extra->followed_by->contains(second)) continue;
-        std::string output;
-        output.reserve(text.size() + rule.b.size());
-        output.append(text, 0, matched);
-        output += rule.b;
-        output.append(text, space);
-        if (!finish_then(rule, output)) continue;
-        record(std::move(output), nr);
-      }
-    };
-    while (phrasal_count > 0) {
-      const auto [node, matched] = phrasal_matches[--phrasal_count];
-      apply_phrasal(node, matched);
+    const uint32_t index = frame.index;
+    // An empty text is never a headword; a repeat of a rule on a text it
+    // already applied to in this chain is a cycle (section 7.4).
+    if (output.empty()) continue;
+    if (output.size() >= out[index].text.size() && is_cycle(index, rule)) continue;
+    BoundHit::Bound bound = BoundHit::Bound::None;
+    if (output.size() > max_length && !counted) {
+      max_length = code_points(out[root].text) + SearchBounds::max_growth;
+      counted = true;
     }
-    if (phrasal_.nodes[0].rules_begin != phrasal_.nodes[0].rules_end) {
-      apply_phrasal(0, space);
+    if (output.size() > max_length && code_points(output) > max_length) {
+      bound = BoundHit::Bound::Growth;
+    } else if (stack.frames.size() > SearchBounds::max_depth) {
+      // The output would be rule frames.size() of its chain.
+      bound = BoundHit::Bound::Depth;
+    } else if (out.size() - root >= SearchBounds::max_results) {
+      bound = BoundHit::Bound::Results;
     }
+    if (bound != BoundHit::Bound::None) {
+      if (run.hit != nullptr && !*run.hit) *run.hit = BoundHit{bound, index, rule, output};
+      if (bound == BoundHit::Bound::Results) break;
+      continue;
+    }
+    const uint32_t depth = out[index].depth + 1;
+    out.push_back(Deinflection{std::move(output), conditions_out, index, rule, depth});
+    push_frame(stack, out.back().text, static_cast<uint32_t>(out.size() - 1));
   }
-  for (const uint32_t r : unindexed_) {
-    const Rule& rule = rules[r];
-    const NodeRule nr{.rule = r,
-                      .conditions_in = rule.conditions_in,
-                      .conditions_out = rule.conditions_out,
-                      .transform = rule.transform,
-                      .kind = 2,
-                      .to = rule.b};
-    if (!allowed(nr)) continue;
-    std::string output;
-    if (!apply(rule, out[index].text, 0, output)) continue;
-    record(std::move(output), nr);
-  }
+  // A search that went far keeps no large stack for the thread's next one.
+  if (stack.matches.capacity() > 4096) std::vector<Match>().swap(stack.matches);
 }
 
-void TransformSet::deinflect(const std::string& text, Deinflections& out, const std::vector<bool>* enabled) const {
+void TransformSet::deinflect(const std::string& text, Deinflections& out, const std::vector<bool>* enabled,
+                             BoundHit* hit) const {
   const auto index = static_cast<uint32_t>(out.size());
   out.push_back(Deinflection{text, 0, Deinflection::npos, Deinflection::none, 0});
   if (text.empty()) {
     return;
   }
-  Run run{out, enabled};
-  visit(run, index);
+  Run run{out, enabled, hit};
+  search(run, index);
 }
 
 void TransformSet::deinflect_from_step(std::string text, uint32_t step, Deinflections& out,
-                                       const std::vector<bool>* enabled) const {
+                                       const std::vector<bool>* enabled, BoundHit* hit) const {
   if (text.empty()) {
     return;
   }
   const auto index = static_cast<uint32_t>(out.size());
   out.push_back(Deinflection{std::move(text), 0, Deinflection::npos, Deinflection::step_base + step, 1});
-  Run run{out, enabled};
-  visit(run, index);
+  Run run{out, enabled, hit};
+  search(run, index);
 }
 
 uint32_t TransformSet::conditions_for_parts_of_speech(std::span<const std::string> tags) const {

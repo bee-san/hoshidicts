@@ -29,6 +29,7 @@
 #include "hoshidicts/languages.hpp"
 #include "hoshidicts/lookup.hpp"
 #include "hoshidicts/query.hpp"
+#include "languages/corpus.hpp"
 #include "languages/pack.hpp"
 #include "languages/steps.hpp"
 #include "reference/deinflector.hpp"
@@ -221,7 +222,8 @@ int run_deinflect(const fs::path& repo) {
   const Deinflector now;
   const legacy::Deinflector old;
   size_t results = 0;
-  for (const auto& input : all_inputs(repo)) {
+  const auto inputs = all_inputs(repo);
+  for (const auto& input : inputs) {
     const auto a = now.deinflect(input);
     const auto b = old.deinflect(input);
     compare_deinflections(input, a, b, false);
@@ -232,6 +234,58 @@ int run_deinflect(const fs::path& repo) {
     results += nb.size();
   }
   std::printf("ja-deinflect-parity: %zu comparisons, %zu deinflections, %zu failures\n", compared, results, failures);
+  // The search bounds (section 7.4) never cut a Japanese search short: every
+  // input and each of its processed variants, as deinflect() and lookups
+  // search them, and their cat-speech readings.
+  const auto pack = hoshidicts::builtin_language_pack("ja");
+  const auto& data = pack->data();
+  const hoshidicts::lang::VariantPass* neko = data.find_pass("nekoSpeech");
+  hoshidicts::lang::SourceSearch reach;
+  size_t searches = 0;
+  const size_t before = failures;
+  const auto search = [&](const std::string& text, const hoshidicts::lang::VariantPass* pass) {
+    hoshidicts::lang::Deinflections list;
+    hoshidicts::lang::BoundHit hit;
+    std::vector<std::string> readings;
+    if (pass == nullptr) {
+      data.transforms->deinflect(text, list, nullptr, &hit);
+    } else {
+      pass->builtin->variants(text, readings);
+    }
+    hoshidicts::lang::SourceSearch one;
+    if (pass == nullptr) hoshidicts::lang::add_search(data, list, 0, hit, text, one);
+    for (auto& reading : readings) {
+      const size_t begin = list.size();
+      data.transforms->deinflect_from_step(std::move(reading), pass->step, list, nullptr, &hit);
+      hoshidicts::lang::add_search(data, list, begin, hit, text, one);
+      ++searches;
+    }
+    if (pass == nullptr) ++searches;
+    if (one.bound != hoshidicts::lang::BoundHit::Bound::None) {
+      fail("a search bound cut the search of " + text + " short: " + hoshidicts::lang::describe(one));
+    }
+    reach.depth = std::max(reach.depth, one.depth);
+    reach.growth = std::max(reach.growth, one.growth);
+    reach.results = std::max(reach.results, one.results);
+  };
+  if (neko == nullptr) fail("the Japanese pack has no nekoSpeech pass");
+  for (const auto& input : inputs) {
+    std::vector<std::string> texts = {input};
+    for (auto& variant : hoshidicts::lang::process_text(data.preprocessors, input, {})) {
+      if (variant.text != input) texts.push_back(std::move(variant.text));
+    }
+    for (const auto& text : texts) {
+      if (text.empty()) continue;
+      search(text, nullptr);
+      if (neko != nullptr) search(text, neko);
+    }
+  }
+  std::printf(
+      "ja-deinflect-parity: the search bounds never cut a search short (%zu searches, %zu failures): "
+      "the longest chain has %zu of %u rules, the longest output adds %zu of %zu code points, "
+      "the largest search holds %zu of %zu deinflections\n",
+      searches, failures - before, reach.depth, hoshidicts::lang::SearchBounds::max_depth, reach.growth,
+      hoshidicts::lang::SearchBounds::max_growth, reach.results, hoshidicts::lang::SearchBounds::max_results);
   return failures == 0 && compared > 100000 ? 0 : 1;
 }
 

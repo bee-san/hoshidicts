@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // The language pack model (docs/languages.md, sections 4-7 and 9): character
 // classes, the pattern dialect, text steps and processors, every rule type,
-// conditions, cycles, schema checks, rules that replace a pack's own (10.3),
-// the registry, and word resolution in a lookup.
+// conditions, cycles, the search bounds, schema checks, rules that replace a
+// pack's own (10.3), the registry, and word resolution in a lookup.
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
@@ -10,14 +10,23 @@
 #include <filesystem>
 #include <fstream>
 #include <random>
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
 
+#if defined(__unix__) || defined(__APPLE__)
+#include <limits.h>
+#include <pthread.h>
+#endif
+
+#include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
 #include "hoshidicts/languages.hpp"
 #include "hoshidicts/lookup.hpp"
+#include "hoshidicts/query.hpp"
 #include "languages/classes.hpp"
+#include "languages/corpus.hpp"
 #include "languages/json.hpp"
 #include "languages/pack.hpp"
 #include "languages/regex.hpp"
@@ -901,6 +910,251 @@ void test_rules() {
   }
 }
 
+// Every deinflection of `text` with the pack's rules, and the first bound
+// the search reached (section 7.4).
+lang::Deinflections search(const hoshidicts::LanguagePack& pack, const std::string& text, lang::BoundHit* hit) {
+  lang::Deinflections list;
+  pack.data().transforms->deinflect(text, list, nullptr, hit);
+  return list;
+}
+
+size_t code_points(const std::string& s) {
+  size_t n = 0;
+  for (unsigned char c : s) n += (c & 0xC0) != 0x80;
+  return n;
+}
+
+size_t longest_chain(const lang::Deinflections& list) {
+  size_t depth = 0;
+  for (const auto& d : list) depth = std::max<size_t>(depth, d.depth);
+  return depth;
+}
+
+// The binary counter: suffix rules a -> b, ab -> ba, abb -> baa, ... count
+// "aaaaaaaa" up to "bbbbbbbb", 255 rules in one chain of texts that never
+// repeat and never grow, so only the depth bound ends it.
+std::string counter_rules() {
+  std::string rules;
+  for (int k = 0; k < 8; ++k) {
+    rules += std::string(rules.empty() ? "" : ",") + R"({"type":"suffix","inflected":"a)" + std::string(k, 'b') +
+             R"(","deinflected":"b)" + std::string(k, 'a') + R"(","conditionsIn":[],"conditionsOut":[]})";
+  }
+  return rules;
+}
+
+void test_search_bounds() {
+  using Bound = lang::BoundHit::Bound;
+  constexpr size_t max_growth = lang::SearchBounds::max_growth;
+  constexpr size_t max_depth = lang::SearchBounds::max_depth;
+  constexpr size_t max_results = lang::SearchBounds::max_results;
+  std::string error;
+  {
+    // hachi-lang-la's reproduction (reports/hachi-lang-questions.md): e -> is
+    // and is -> ae without conditions apply to each other's outputs forever,
+    // Rome -> Romis -> Romae -> Romais -> ..., which overflowed the stack
+    // before the bound. Each rule adds a code point every second step, so the
+    // growth margin ends the chain.
+    const auto pack = load(
+        R"({"schema": 1, "conditions": {"n": {"name": "Noun", "isDictionaryForm": true}}, "transforms": [{"id": "a", "name": "a", "description": "x", "source": "own", "rules": [{"type": "suffix", "inflected": "e", "deinflected": "is", "conditionsIn": [], "conditionsOut": []}, {"type": "suffix", "inflected": "is", "deinflected": "ae", "conditionsIn": [], "conditionsOut": []}]}]})",
+        &error);
+    check(pack != nullptr, "loop pack loads: " + error);
+    if (pack) {
+      lang::BoundHit hit;
+      const auto list = search(*pack, "Rome", &hit);
+      check(hit.bound == Bound::Growth, "Rome: the growth bound ends the loop");
+      check(list.size() == 2 * max_growth + 1, "Rome: every output within the margin: " + std::to_string(list.size()));
+      size_t longest = 0;
+      for (const auto& d : list) longest = std::max(longest, code_points(d.text));
+      check(longest == 4 + max_growth, "Rome: the longest output adds the margin: " + std::to_string(longest));
+      check(code_points(hit.text) == 4 + max_growth + 1 && hit.parent == list.size() - 1,
+            "Rome: the dropped output is one code point over, from the last result: " + hit.text);
+      check(list[1].text == "Romis" && list[2].text == "Romae" && list[3].text == "Romais", "Rome: the chain");
+      // Without the hit report, the same results.
+      check(search(*pack, "Rome", nullptr).size() == list.size(), "Rome: the same results without a report");
+      // Inputs the rules do not loop on are not cut.
+      lang::BoundHit none;
+      check(search(*pack, "Romam", &none).size() == 1 && !none, "Romam: no rule, no bound");
+      // What the conformance test reports for it (deinflect_source).
+      lang::SourceSearch source;
+      bool limit = false;
+      lang::deinflect_source(pack->data(), "Rome", &limit, lang::TestOptions::All, &source);
+      check(source.bound == Bound::Growth && source.results == list.size() && source.depth == list.size() - 1 &&
+                source.growth == max_growth && source.steps.size() == list.size() && source.texts.front() == "Rome" &&
+                source.texts.back() == hit.text,
+            "Rome: the search reported: " + std::to_string(source.results) + " results, depth " +
+                std::to_string(source.depth) + ", growth " + std::to_string(source.growth));
+      // Through the public Deinflector too: it terminates.
+      check(Deinflector(pack).deinflect("Rome").size() == list.size(), "Rome: Deinflector terminates");
+      // A lookup with the pack terminates.
+      DictionaryQuery query;
+      hoshidicts::LanguageRegistry registry;
+      registry.add(pack);
+      const Lookup lookup(query, registry);
+      LookupOptions options;
+      options.language = "xx";
+      check(lookup.lookup("Rome Rome", 16, 16, options).empty(), "Rome: a lookup with no dictionary terminates");
+    }
+  }
+  {
+    // The depth bound: a chain of 255 rules that neither repeats nor grows.
+    const auto pack = load(transforms_json(transform("count", counter_rules())), &error);
+    check(pack != nullptr, "counter pack loads: " + error);
+    if (pack) {
+      lang::BoundHit hit;
+      const auto list = search(*pack, "aaaaaaaa", &hit);
+      check(hit.bound == Bound::Depth, "counter: the depth bound ends the chain");
+      check(list.size() == max_depth + 1 && longest_chain(list) == max_depth,
+            "counter: chains of max_depth rules are kept: " + std::to_string(list.size()));
+      // The last text is 128 in binary (b = 1, the last letter the lowest
+      // bit); rule max_depth + 1 would have given 129.
+      check(list.back().text == "baaaaaaa" && hit.text == "baaaaaab", "counter: 128, then 129 dropped: " + hit.text);
+      lang::BoundHit short_hit;
+      check(search(*pack, "baaaaaaa", &short_hit).size() == 128 && !short_hit, "counter: 127 steps are no bound");
+    }
+  }
+  {
+    // The results bound: each step replaces the first a by b or by c, so
+    // sixteen a give 2^17 - 1 texts within depth 16 and no growth.
+    const auto pack = load(
+        transforms_json(transform(
+            "fan",
+            R"({"type":"replace","inflected":"a","deinflected":"b","occurrence":"first","conditionsIn":[],"conditionsOut":[]},
+                                         {"type":"replace","inflected":"a","deinflected":"c","occurrence":"first","conditionsIn":[],"conditionsOut":[]})")),
+        &error);
+    check(pack != nullptr, "fan-out pack loads: " + error);
+    if (pack) {
+      lang::BoundHit hit;
+      const auto list = search(*pack, std::string(16, 'a'), &hit);
+      check(hit.bound == Bound::Results && list.size() == max_results,
+            "fan-out: the results bound stops the search: " + std::to_string(list.size()));
+      lang::BoundHit small_hit;
+      check(search(*pack, std::string(12, 'a'), &small_hit).size() == (1u << 13) - 1 && !small_hit,
+            "fan-out: 2^13 - 1 results are no bound");
+      // Deinflections a search appends to a list that already holds some.
+      lang::Deinflections list2(3, lang::Deinflection{"x", 0, lang::Deinflection::npos, lang::Deinflection::none, 0});
+      lang::BoundHit appended;
+      pack->data().transforms->deinflect(std::string(16, 'a'), list2, nullptr, &appended);
+      check(appended.bound == Bound::Results && list2.size() == 3 + max_results,
+            "fan-out: the bound counts one search");
+    }
+  }
+  {
+    // Lengthening rules that fan out (a -> ab, a -> ac, b -> ba, c -> ca, ...):
+    // 25^16 texts within the margin; the results bound ends the search.
+    std::string rules;
+    for (char c = 'b'; c <= 'z'; ++c) {
+      rules += std::string(rules.empty() ? "" : ",") + R"({"type":"suffix","inflected":"a","deinflected":"a)" + c +
+               R"(","conditionsIn":[],"conditionsOut":[]},{"type":"suffix","inflected":")" + c +
+               R"(","deinflected":")" + c + R"(a","conditionsIn":[],"conditionsOut":[]})";
+    }
+    const auto pack = load(transforms_json(transform("grow", rules)), &error);
+    check(pack != nullptr, "growing fan-out pack loads: " + error);
+    if (pack) {
+      lang::BoundHit hit;
+      const auto list = search(*pack, "a", &hit);
+      check(hit.bound == Bound::Growth && list.size() == max_results,
+            "growing fan-out: bounded: " + std::to_string(list.size()));
+      size_t longest = 0;
+      for (const auto& d : list) longest = std::max(longest, code_points(d.text));
+      check(longest <= 1 + max_growth && longest_chain(list) <= max_growth, "growing fan-out: within the margin");
+    }
+  }
+  {
+    // A loop that only a variant pass's reading starts: the report's chain
+    // begins with the pass step, from the text the pass read, as corpus rows
+    // and the conformance test see it (deinflect_source, search_source).
+    const auto pack =
+        load(transforms_json(transform(
+                 "loop", R"({"type":"suffix","inflected":"な","deinflected":"なe","conditionsIn":[],"conditionsOut":[]},
+                                             {"type":"suffix","inflected":"e","deinflected":"is","conditionsIn":[],"conditionsOut":[]},
+                                             {"type":"suffix","inflected":"is","deinflected":"ae","conditionsIn":[],"conditionsOut":[]})")),
+             &error, R"(,"variantPasses":[{"id":"neko","builtin":"ja.nekoSpeech","optional":true}])");
+    check(pack != nullptr, "pass loop pack loads: " + error);
+    if (pack) {
+      const auto& data = pack->data();
+      lang::SourceSearch search;
+      bool limit = false;
+      lang::deinflect_source(data, "にゃ", &limit, lang::TestOptions::All, &search);
+      const std::string described = lang::describe(search);
+      check(search.bound == Bound::Growth && search.steps.size() >= 3 && search.steps[0] == "neko" &&
+                search.texts[0] == "にゃ" && search.texts[1] == "な" && search.steps[1] == "loop[0]" &&
+                search.texts[2] == "なe" && search.texts.size() == search.steps.size() + 1,
+            "a bound in a variant pass's search: " + described);
+      check(described.find("after " + std::to_string(search.steps.size()) +
+                           " steps: にゃ -neko-> な -loop[0]-> なe -loop[1]-> なis") != std::string::npos &&
+                described.ends_with(" (dropped)"),
+            "the pass chain described: " + described);
+      check(search.growth == max_growth, "the pass search grows by the margin");
+      const auto again = lang::search_source(data, "にゃ", lang::TestOptions::All);
+      check(again.bound == search.bound && again.steps == search.steps && again.texts == search.texts,
+            "search_source reports the same chain");
+      lang::SourceSearch defaults;
+      lang::deinflect_source(data, "にゃ", &limit, lang::TestOptions::Default, &defaults);
+      check(defaults.bound == Bound::None &&
+                lang::search_source(data, "にゃ", lang::TestOptions::Default).bound == Bound::None,
+            "with the pack's defaults the pass is off: no bound");
+      std::set<std::string> searched;
+      lang::search_source(data, "にゃ", lang::TestOptions::All, &searched);
+      check(searched.contains("にゃ") && searched.contains("な") &&
+                lang::search_source(data, "にゃ", lang::TestOptions::All, &searched).bound == Bound::None,
+            "a text searched before is not searched again");
+    }
+  }
+#if defined(__unix__) || defined(__APPLE__)
+  {
+    // The search keeps its own stack: a 128-rule chain runs on a thread with
+    // a 256 KiB native stack. The recursion it replaced took about 2 KiB of
+    // stack per rule (1,952 bytes for one call with GCC 14 at -O3), so the
+    // counter's 255 rules overflowed such a thread.
+    const auto pack = load(transforms_json(transform("count", counter_rules())), &error);
+    struct Job {
+      const hoshidicts::LanguagePack* pack;
+      size_t results = 0;
+    } job{pack.get()};
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+    pthread_attr_setstacksize(&attr, std::max<size_t>(PTHREAD_STACK_MIN, 256 * 1024));
+    pthread_t thread;
+    const int started = pthread_create(
+        &thread, &attr,
+        [](void* p) -> void* {
+          auto* j = static_cast<Job*>(p);
+          lang::Deinflections list;
+          j->pack->data().transforms->deinflect("aaaaaaaa", list);
+          j->results = list.size();
+          return nullptr;
+        },
+        &job);
+    pthread_attr_destroy(&attr);
+    check(started == 0, "a thread with a small stack starts");
+    if (started == 0) pthread_join(thread, nullptr);
+    check(job.results == max_depth + 1, "counter on a small stack: " + std::to_string(job.results));
+  }
+#endif
+  {
+    // Japanese: deep chains are far within the bounds. 食べ + させ × n + る
+    // reaches 食べる through n causative steps, here 100 (the parity test's
+    // deepest is 44 rules); at 200 the depth bound cuts the search, which
+    // still ends.
+    const auto ja = hoshidicts::builtin_language_pack("ja");
+    const auto chain = [](int n) {
+      std::string s = "食べ";
+      for (int i = 0; i < n; ++i) s += "させ";
+      return s + "る";
+    };
+    lang::BoundHit hit;
+    const auto list = search(*ja, chain(100), &hit);
+    const bool found =
+        std::ranges::any_of(list, [](const lang::Deinflection& d) { return d.text == "食べる" && d.depth == 100; });
+    check(found && !hit, "食べ + させ × 100 + る: 食べる after 100 steps, no bound");
+    lang::BoundHit deep;
+    const auto cut = search(*ja, chain(200), &deep);
+    check(deep.bound == Bound::Depth && longest_chain(cut) == max_depth &&
+              std::ranges::none_of(cut, [](const lang::Deinflection& d) { return d.text == "食べる"; }),
+          "食べ + させ × 200 + る: the depth bound");
+  }
+}
+
 void test_schema() {
   const std::string good = transforms_json(transform("t", R"({"type":"suffix","inflected":"s","deinflected":"","conditionsIn":[],"conditionsOut":["n"]})"));
   std::string error;
@@ -1531,6 +1785,7 @@ int main(int argc, char** argv) {
   test_patterns();
   test_steps();
   test_rules();
+  test_search_bounds();
   test_schema();
   test_replaced_rules();
   test_registry();
