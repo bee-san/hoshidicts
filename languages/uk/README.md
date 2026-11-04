@@ -493,22 +493,24 @@ identical).
      --term <wty-uk-en> --languages <copy> --language uk --json`: the 80 texts
      of `sources/benchmark-words.txt` (each the rest of a sentence from an
      inflected word), 6 passes with the first dropped, three runs, machine
-     load about 20 (of 64 cores). Budget 1 ms p50.
+     load about 26 (of 64 cores). Budget 1 ms p50.
 
      | Rule set | p50 | p95 |
      | --- | ---: | ---: |
-     | Final | 38-39 µs | 59-61 µs |
-     | Own | 28-29 µs | 40-41 µs |
-     | Union | 53-54 µs | 75-77 µs |
-     | Yomitan's rules | 39-40 µs | 55-56 µs |
+     | Final | 38-39 µs | 60-61 µs |
+     | Own | 28-29 µs | 41 µs |
+     | Union | 53-54 µs | 78-84 µs |
+     | Yomitan's rules | 40-41 µs | 56-58 µs |
    - WebAssembly (`node languages/uk/sources/wasm-measure.mjs <hachidori>
      <wty-uk-en.zip>`, Hachidori feat/multi-language d7e82b0c's prebuilt
      engines in Node 22, 10 fresh engines): `hdw_language_load` of this pack
-     takes 14.3 ms (median; 14.0-19.8) single-thread and 14.9 ms (14.7-19.8)
-     threaded, and adds 2,629,128 and 2,629,256 bytes of live heap
+     takes 14.6 ms (median; 14.2-19.5) single-thread and 15.2 ms (14.8-20.4)
+     threaded, and adds 2,628,864 and 2,629,320 bytes of live heap
      (`hdw_memory_stats`). With wty-uk-en imported into the engine and added
-     paged, `hdw_lookup` of the 80 texts takes 0.092 ms p50 and 0.174 ms p95
-     single-thread, 0.094 ms and 0.173 ms threaded. Budgets 50 ms and 20 MB.
+     paged, `hdw_lookup` of the 80 texts takes 0.090 ms p50 and 0.170 ms p95
+     single-thread, 0.094 ms and 0.171 ms threaded. The engines are
+     Hachidori's, rebuilt from this branch with its `wasm/build.sh` (the
+     vendored ones predate #83's `formOfNormalizer`). Budgets 50 ms and 20 MB.
      The pack has no `pattern` rule.
 6. **Other checks.**
    - Differential check (`tools/check-yomitan.mjs <yomitan d3c54c1> uk --cli
@@ -547,10 +549,10 @@ identical).
      `formOfNormalizer` or its aspect step (татусь → тато, взяття → взяти).
      The other homograph rules have no row each; the frequent-word and text
      measurements show them.
-   - Hachidori (feat/multi-language d7e82b0c with this branch at d5f1d4f in
-     `third_party/hoshidicts`, `node scripts/sync-languages.mjs`,
-     `test/chrome-language-pack.mjs`, Chrome 152, wty-uk-en): 14 of 14 checks
-     pass. Settings adds Ukrainian beside Japanese and imports the dictionary
+   - Hachidori (feat/multi-language d7e82b0c with this branch at 1d2181b in
+     `third_party/hoshidicts`, `node scripts/sync-languages.mjs`, its engines
+     rebuilt from it with `wasm/build.sh`, `test/chrome-language-pack.mjs`,
+     Chrome 152, wty-uk-en): 14 of 14 checks pass. Settings adds Ukrainian beside Japanese and imports the dictionary
      (450,682 terms, 1 s); ten hovered words in sentences find their lemma
      first with their traces (гуляли → гуляти `past (вони)`, столі → стіл,
      сміялася → сміятися, сіллю → сіль, м’якій → м'який, пішов → піти,
