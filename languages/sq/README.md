@@ -528,21 +528,22 @@ file is measured with every option on and with the defaults.
      ms and p95 0.161 ms threaded.
 8. **Hachidori in Chrome** (feat/multi-language d7e82b0 with this branch in
    `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
-   wty-sq-en): 71 / 71 checks pass. Settings adds Albanian beside Japanese
-   and imports the dictionary (220,164 terms, 0.8 s); 67 hovered words in
+   wty-sq-en): 81 / 81 checks pass. Settings adds Albanian beside Japanese
+   and imports the dictionary (220,164 terms, 0.8 s); 77 hovered words in
    sentences find their lemma first with their traces: eleven written for
    the check (`lexonin` → `lexoj`, `S’kam` → `kam`, `vjetra` → `vjetër`,
-   `duket` → `dukem`, `largua` → `largoj`) and 56 from the five audits'
+   `duket` → `dukem`, `largua` → `largoj`) and 66 from the six audits'
    case files (`arrin` → `arrij`, `ditën` → `ditë`, `Hija` → `hije`,
    `jeta` → `jetë`, `tokën` → `tokë`, `Lidhja` → `lidhje`, `vinte` → `vij`,
    `veta` → `vetë`, `më vonë` → `vonë`, `burra` → `burrë` as a plural,
    `Maja` → `majë`, `ftoi` → `ftoj`, `ruan` → `ruaj` as a present, `të re`
    → `ri`, `Ç'farë` → `çfarë`, `urdhërat` → `urdhër`, `Lëreni` → `lë`,
    `Riu` → `ri`, `Ligjet` → `ligj`, `Ndjeva` → `ndiej`, `katërt` →
-   `katër`, `të varfërve` → `varfër`); the Anki note and the switch to
-   Japanese and back work. The audits' cases for `eshte`, `Kisha`, `Pija`,
-   `Drita`, `Lumi`, `idenë` and `thirri` fail as Known gaps says, so the
-   file leaves them out.
+   `katër`, `të varfërve` → `varfër`, `Hidhu` → `hedh`, `preke` → `prek`,
+   `Mijëra` → `mijë`); the Anki note and the switch to Japanese and back
+   work. The audits' cases for `eshte`, `Kisha`, `Pija`, `Drita`, `Lumi`,
+   `idenë`, `thirri`, `jetë`, `vjet`, `Koha` and `ujore` fail as Known gaps
+   says, so the file leaves them out.
 9. **Differential check** (`tools/check-yomitan.mjs` with
    `build/hoshidicts-cli`): 2,952 inputs, 9,240 Yomitan results, 0
    differences; `decapitalize` and `capitalizeFirstLetter` agree with
