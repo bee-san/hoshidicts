@@ -369,6 +369,25 @@ negatives	0	matja	mat	n	*
 negatives	0	krim	krej	v	*
 imperative clitic	1	lëre	lë	v	cl-e
 imperative clitic	1	jepe	jap	v	cl-e
+imperative clitic	1	vëre	vë	v	cl-e
+imperative clitic	1	zëre	zë	v	cl-e
+imperative clitic	1	thuaje	them	v	cl-e
+imperative clitic	1	sille	sjell	v	cl-e
+imperative clitic	1	hidhe	hedh	v	cl-e
+imperative clitic	1	hiqe	heq	v	cl-e
+imperative clitic	1	bjere	bie	v	cl-e
+imperative clitic	1	shihe	shoh	v	cl-e
+imperative clitic	1	prite	pres	v	cl-e
+imperative clitic	1	vrite	vras	v	cl-e
+imperative clitic	1	lëreni	lë	v	cl-e
+imperative clitic	1	jepi	jap	v	cl-i
+imperative clitic	1	thuaji	them	v	cl-i
+imperative clitic	1	thuaja	them	v	cl-i
+imperative clitic	1	lëri	lë	v	cl-i
+imperative clitic	1	vëri	vë	v	cl-i
+imperative clitic	1	silli	sjell	v	cl-i
+imperative clitic	1	hiqi	heq	v	cl-i
+imperative clitic	1	thuamë	them	v	imp-2sg|cl-me
 verbal noun	1	bashkim	bashkoj	v	vn
 verbal noun	1	mashtrimi	mashtroj	v	vn|n-def-sg-m
 verbal noun	1	kthim	kthej	v	vn

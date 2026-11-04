@@ -280,6 +280,11 @@
       [33, 55295],
       [57344, 1114111]
     ],
+    "transforms[2].rules[31].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[3].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
@@ -1125,7 +1130,6 @@
     "transforms[8].rules[5].stemEndsWith": [
       [97, 97],
       [101, 101],
-      [105, 105],
       [111, 111],
       [117, 117],
       [121, 121],
@@ -1305,12 +1309,7 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[8].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[12].rules[8].stemEndsWith": [
+    "transforms[12].rules[7].stemEndsWith": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -1320,10 +1319,25 @@
       [122, 122],
       [231, 231]
     ],
+    "transforms[12].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[12].rules[9].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
+    ],
+    "transforms[12].rules[9].stemEndsWith": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 118],
+      [120, 120],
+      [122, 122],
+      [231, 231]
     ],
     "transforms[12].rules[10].stemCharacters": [
       [0, 31],
@@ -1350,7 +1364,12 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[14].stemEndsWith": [
+    "transforms[12].rules[15].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[12].rules[15].stemEndsWith": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -1359,11 +1378,6 @@
       [120, 120],
       [122, 122],
       [231, 231]
-    ],
-    "transforms[12].rules[15].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
     ],
     "transforms[12].rules[16].stemCharacters": [
       [0, 31],
@@ -1375,15 +1389,15 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[17].stemEndsWith": [
-      [105, 105],
-      [111, 111],
-      [117, 117]
-    ],
     "transforms[12].rules[18].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
+    ],
+    "transforms[12].rules[18].stemEndsWith": [
+      [105, 105],
+      [111, 111],
+      [117, 117]
     ],
     "transforms[12].rules[19].stemCharacters": [
       [0, 31],
@@ -1420,22 +1434,22 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[25].stemEndsWith": [
-      [101, 101]
-    ],
     "transforms[12].rules[26].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
     "transforms[12].rules[26].stemEndsWith": [
-      [105, 105],
-      [121, 121]
+      [101, 101]
     ],
     "transforms[12].rules[27].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
+    ],
+    "transforms[12].rules[27].stemEndsWith": [
+      [105, 105],
+      [121, 121]
     ],
     "transforms[12].rules[28].stemCharacters": [
       [0, 31],
@@ -1452,7 +1466,7 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[33].stemCharacters": [
+    "transforms[12].rules[31].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -1472,12 +1486,12 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[38].stemCharacters": [
+    "transforms[12].rules[37].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[40].stemCharacters": [
+    "transforms[12].rules[39].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -1487,7 +1501,7 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[43].stemCharacters": [
+    "transforms[12].rules[42].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -1497,12 +1511,12 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[46].stemCharacters": [
+    "transforms[12].rules[45].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[47].stemCharacters": [
+    "transforms[12].rules[46].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -1513,6 +1527,16 @@
       [57344, 1114111]
     ],
     "transforms[12].rules[49].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[12].rules[50].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[12].rules[51].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -6728,6 +6752,23 @@
         ["krim", "krim"],
         ["lëre", "lëre"],
         ["jepe", "jepe"],
+        ["vëre", "vëre"],
+        ["zëre", "zëre"],
+        ["thuaje", "thuaje"],
+        ["sille", "sille"],
+        ["hidhe", "hidhe"],
+        ["hiqe", "hiqe"],
+        ["bjere", "bjere"],
+        ["shihe", "shihe"],
+        ["prite", "prite"],
+        ["vrite", "vrite"],
+        ["lëreni", "lëreni"],
+        ["thuaja", "thuaja"],
+        ["lëri", "lëri"],
+        ["vëri", "vëri"],
+        ["silli", "silli"],
+        ["hiqi", "hiqi"],
+        ["thuamë", "thuamë"],
         ["bashkim", "bashkim"],
         ["mashtrimi", "mashtrimi"],
         ["kthim", "kthim"],
@@ -7141,6 +7182,21 @@
         ["vinit shpesh", "vinit shpesh"],
         ["majtën e partisë", "majtën e partisë"],
         ["gatuan bukë", "gatuan bukë"],
+        ["Ç'farë kombësie", "ç'farë kombësie"],
+        ["ç’farë bën", "ç’farë bën"],
+        ["Ç'do dru", "ç'do dru"],
+        ["Ç'ka që s'shkon", "ç'ka që s'shkon"],
+        ["vrite tani", "vrite tani"],
+        ["lëreni të qetë", "lëreni të qetë"],
+        ["urdhërat e tij", "urdhërat e tij"],
+        ["urdhëra të reja", "urdhëra të reja"],
+        ["thuaja atij", "thuaja atij"],
+        ["vjetë më parë", "vjetë më parë"],
+        ["riu i tyre", "riu i tyre"],
+        ["majmuni i vogël", "majmuni i vogël"],
+        ["vritesh në luftë", "vritesh në luftë"],
+        ["leja e qëndrimit", "leja e qëndrimit"],
+        ["shesë shtëpinë", "shesë shtëpinë"],
         ["Fëmijët lexonin libra në bibliotekën e qytetit.", "fëmijët lexonin libra në bibliotekën e qytetit."],
         ["lexoj", "lexoj"]
       ]
@@ -8586,6 +8642,23 @@
         ["krim", "Krim"],
         ["lëre", "Lëre"],
         ["jepe", "Jepe"],
+        ["vëre", "Vëre"],
+        ["zëre", "Zëre"],
+        ["thuaje", "Thuaje"],
+        ["sille", "Sille"],
+        ["hidhe", "Hidhe"],
+        ["hiqe", "Hiqe"],
+        ["bjere", "Bjere"],
+        ["shihe", "Shihe"],
+        ["prite", "Prite"],
+        ["vrite", "Vrite"],
+        ["lëreni", "Lëreni"],
+        ["thuaja", "Thuaja"],
+        ["lëri", "Lëri"],
+        ["vëri", "Vëri"],
+        ["silli", "Silli"],
+        ["hiqi", "Hiqi"],
+        ["thuamë", "Thuamë"],
         ["bashkim", "Bashkim"],
         ["mashtrimi", "Mashtrimi"],
         ["kthim", "Kthim"],
@@ -8999,6 +9072,21 @@
         ["vinit shpesh", "Vinit shpesh"],
         ["majtën e partisë", "Majtën e partisë"],
         ["gatuan bukë", "Gatuan bukë"],
+        ["Ç'farë kombësie", "Ç'farë kombësie"],
+        ["ç’farë bën", "Ç’farë bën"],
+        ["Ç'do dru", "Ç'do dru"],
+        ["Ç'ka që s'shkon", "Ç'ka që s'shkon"],
+        ["vrite tani", "Vrite tani"],
+        ["lëreni të qetë", "Lëreni të qetë"],
+        ["urdhërat e tij", "Urdhërat e tij"],
+        ["urdhëra të reja", "Urdhëra të reja"],
+        ["thuaja atij", "Thuaja atij"],
+        ["vjetë më parë", "Vjetë më parë"],
+        ["riu i tyre", "Riu i tyre"],
+        ["majmuni i vogël", "Majmuni i vogël"],
+        ["vritesh në luftë", "Vritesh në luftë"],
+        ["leja e qëndrimit", "Leja e qëndrimit"],
+        ["shesë shtëpinë", "Shesë shtëpinë"],
         ["Fëmijët lexonin libra në bibliotekën e qytetit.", "Fëmijët lexonin libra në bibliotekën e qytetit."],
         ["lexoj", "Lexoj"]
       ]

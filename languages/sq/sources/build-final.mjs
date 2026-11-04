@@ -49,13 +49,31 @@ function counterparts(id) {
     throw new Error(`no counterpart for Yomitan transform ${id}`);
 }
 
-/** The same deinflection: equal type and the same replacement, possibly with a common part in front. */
+const classes = JSON.parse(readFileSync(join(pack, 'language.json'), 'utf8')).classes;
+/** The letters of a one-letter class such as `[ei]` or `{consonant}`. */
+function letters(cls) {
+    const body = cls.startsWith('{') ? classes[cls.slice(1, -1)] : cls;
+    if (!body.startsWith('[') || body.startsWith('[^')) { throw new Error(`unexpected stem class ${cls}`); }
+    return new Set([...body.slice(1, -1)]);
+}
+/** A stem whose last letter is `last` meets the rule's final-letter constraints. */
+function fits(rule, last) {
+    if (rule.stemEndsWith && !letters(rule.stemEndsWith).has(last)) { return false; }
+    if (rule.stemNotEndsWith && letters(rule.stemNotEndsWith).has(last)) { return false; }
+    return true;
+}
+
+/** The same deinflection: equal type and the same replacement, possibly with
+ * a common part in front, which the shorter rule then reads as the end of its
+ * stem: its final-letter class must allow it (own `` → `j` after e or i is not
+ * Yomitan's `o` → `oj`). */
 function same(a, b) {
     if (a.type !== b.type || a.type !== 'suffix') { return false; }
     const [long, short] = a.inflected.length >= b.inflected.length ? [a, b] : [b, a];
     if (!long.inflected.endsWith(short.inflected) || !long.deinflected.endsWith(short.deinflected)) { return false; }
     const front = long.inflected.slice(0, long.inflected.length - short.inflected.length);
-    return long.deinflected === front + short.deinflected;
+    if (long.deinflected !== front + short.deinflected) { return false; }
+    return front === '' || fits(short, [...front].at(-1));
 }
 
 // Own rules written after Yomitan's file was read (their transform, ending
@@ -69,6 +87,8 @@ const LATER = new Set([
     'n-def-sg-m\u0000oi\u0000ua', 'np-aor-3sg\u0000ye\u0000ej',
     // After audit-hachi-lang-sq-b: noun and present rules at the longer endings.
     'n-def-nom-f\u0000ta\u0000të', 'n-def-nom-f\u0000ka\u0000kë', 'n-def-acc-f\u0000ën\u0000ë', 'pres-2sg\u0000uan\u0000uaj', 'n-def-nom-f\u0000ja\u0000jë', 'n-def-nom-f\u0000jta\u0000jtë', 'n-def-acc-f\u0000jtën\u0000jtë',
+    // After audit-hachi-lang-sq-d.
+    'n-def-sg-m\u0000uni\u0000un',
     ...['np-pres-2sg:hesh', 'np-pres-3sg:het', 'np-pres-1pl:hemi', 'np-pres-2pl:heni', 'np-pres-3pl:hen',
         'np-impf-1sg:hesha', 'np-impf-2sg:heshe', 'np-impf-3sg:hej', 'np-impf-1pl:heshim', 'np-impf-2pl:heshit', 'np-impf-3pl:heshin',
         'np-imp-2sg:hu', 'np-imp-2pl:huni'].map((x) => { const [id, end] = x.split(':'); return `${id}\u0000${end}\u0000hem`; }),

@@ -29,7 +29,12 @@ repository root with a built hoshidicts-cli:
       the rules; a homograph when the rows name it and another lemma, so the
       script cannot tell (<out dir>/homographs.tsv, grouped by word and first
       result, judged by hand); the rest are written to <out dir>/unjudged.tsv,
-      from which a random sample is judged by hand.
+      from which a random sample is judged by hand. Apart from those counts,
+      <out dir>/capitalized.tsv lists the capitalized words whose first result
+      is a capitalized headword (a name: no processor step reaches it before
+      the text as written) while the same text with a lower-case first letter
+      shows another lemma first (Drita, light or the name), grouped for
+      judging by hand.
 
   python3 languages/sq/sources/measure.py phrases <wty-sq-en.zip> <imported dir> <unimorph sqi> <sqi_sentences.tsv.bz2>
       Every place in Tatoeba's Albanian sentences where an article, particle,
@@ -37,7 +42,9 @@ repository root with a built hoshidicts-cli:
       (as a hover there does), the first result is a phrase reading when it
       matches more than the word itself; the phrase reading is right when
       the following word's own rows name its lemma, or the phrase's own rows
-      name it, and the rest are listed for judging by hand.
+      name it, or (except after ç', which also stands inside words: ç'farë)
+      it is the following word itself; the rest are listed for judging by
+      hand.
 
   python3 languages/sq/sources/measure.py traces <sample.tsv>
       For the rows of corpus.tsv and gaps.tsv that the rules reach, the trace
@@ -341,7 +348,20 @@ def cmd_real(dictionary, imported, unimorph, out_dir, *texts):
         f.write('# lookups\tmatched\tfirst result\tother lemmas the rows name\ttext\n')
         for key, n in homographs.most_common():
             f.write(f'{n}\t' + '\t'.join(key) + f'\t{homograph_text[key]}\n')
+    capital = [(word, text, res['results'][0]) for (word, text), res in zip(hovers, results)
+               if res['results'] and res['results'][0]['matched'][:1].isupper() and res['results'][0]['expression'][:1].isupper()]
+    lowered = lookup_batch([text[:1].lower() + text[1:] for _, text, _ in capital], imported)
+    groups = collections.Counter()
+    for (word, text, first), low in zip(capital, lowered):
+        other = low['results'][0]['expression'] if low['results'] else None
+        if other and other.lower() != first['expression'].lower():
+            groups[(first['matched'], first['expression'], other)] += 1
+    with open(os.path.join(out_dir, 'capitalized.tsv'), 'w', encoding='utf-8') as f:
+        f.write('# lookups\tmatched\tfirst result as written\tfirst result in lower case\n')
+        for key, n in groups.most_common():
+            f.write(f'{n}\t' + '\t'.join(key) + '\n')
     total = len(hovers)
+    print(f'capitalized words shown as written while the lower-case word reads as another lemma: {sum(groups.values())} lookups ({len(groups)} groups)')
     print(f'{total} lookups: {counts["right"]} right by script, {counts["wrong"]} wrong by script, {counts["homograph"]} homographs '
           f'({len(homographs)} groups) and {counts["unjudged"]} others to judge, {counts["nothing"]} with no result')
     for trace, n in wrong_rules.most_common(15):
@@ -350,7 +370,7 @@ def cmd_real(dictionary, imported, unimorph, out_dir, *texts):
 
 FRONT = ['i', 'e', 'të', 'së', 'më', 'do', 'u', 'duke', 'pa', 'për', 'kam', 'ke', 'ka', 'kemi', 'keni', 'kanë',
          'kisha', 'kishte', 'kishin', 'jam', 'je', 'është', 'jemi', 'jeni', 'janë', 'ishte', 'ishin', 'ta', 'ma', 'ia',
-         'na', 'ju', 'nuk', 'mos', "s'"]
+         'na', 'ju', 'nuk', 'mos', "s'", "ç'"]
 
 
 def cmd_phrases(dictionary, imported, unimorph, sentences):
@@ -385,7 +405,9 @@ def cmd_phrases(dictionary, imported, unimorph, sentences):
         c['phrase'] += 1
         e = first['expression']
         named = {l for l, _ in forms.get(nxt.lower(), [])} | um.get(nxt.lower(), set()) | {l for l, _ in forms.get(first['matched'].lower(), [])}
-        if e in named or e.lower() == nxt.lower():
+        # The following word itself is right after s' (s'kam → kam) but not
+        # after ç', which also stands inside words (ç'farë is çfarë, not farë).
+        if e in named or (e.lower() == nxt.lower() and front != "ç'"):
             c['right'] += 1
         else:
             unjudged.append((front, first['matched'], e, ' '.join(first['trace'])))

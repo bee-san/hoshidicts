@@ -161,6 +161,12 @@ transform('neg', "s' (not)", "The negation s' (nuk) written before a verb: s'kam
 prefix('neg', "s'", '', [], [], {stemMinLength: 1});
 transform('what', "ç' (what)", "The interrogative ç' (çfarë) written before a verb: ç'bën → bën → bëj.");
 prefix('what', "ç'", '', [], [], {stemMinLength: 1});
+// The apostrophe also stands inside three words, often so in informal
+// writing (Tatoeba has ç'farë 42 times, çfarë 36): ç'farë (what), ç'do (every),
+// ç'ka (what). Removing ç' there would leave farë (seed), do (wants), ka (has).
+for (const [form, word] of [["ç'farë", 'çfarë'], ["ç'do", 'çdo'], ["ç'ka", 'çka']]) {
+    whole('what', form, word, [], []);
+}
 
 // ================================================================================
 // Nouns
@@ -196,6 +202,7 @@ suffix('n-def-sg-m', 'ri', '', [], N, {stemMinLength: 3, stemEndsWith: '[i]'});
 suffix('n-def-sg-m', 'oi', 'ua', [], N, {stemMinLength: 1});
 suffix('n-def-sg-m', 'mi', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: '[zs]'});
 suffix('n-def-sg-m', 'ni', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'});
+suffix('n-def-sg-m', 'uni', 'un', [], N, {stemMinLength: 2});
 
 transform('n-def-acc-m', 'definite accusative (masculine)',
     'Masculine singular definite accusative (mal → malin, mik → mikun, djalë → djalin, libër → librin, vëlla → vëllanë).');
@@ -272,7 +279,7 @@ suffix('n-def-nom-f', 'ja', 'jë', [], N, {stemMinLength: 1, stemEndsWith: '[aeu
 // text: vija (the line, lines; vij, vë: I was coming, putting), bija (the
 // daughter; bie: I was falling), goditja (the blow; godas) and zgjidhja (the
 // solution; zgjedh: I was choosing).
-for (const [form, noun] of [['vija', 'vijë'], ['bija', 'bijë'], ['goditja', 'goditje'], ['zgjidhja', 'zgjidhje']]) {
+for (const [form, noun] of [['vija', 'vijë'], ['bija', 'bijë'], ['goditja', 'goditje'], ['zgjidhja', 'zgjidhje'], ['leja', 'leje']]) {
     whole('n-def-nom-f', form, noun, [], N);
 }
 
@@ -303,7 +310,7 @@ suffix('n-indef-obl-f', 're', 'ër', [], N, {stemMinLength: 1, stemEndsWith: CON
 suffix('n-indef-obl-f', 'rre', 'ërr', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-indef-obl-f', 'le', 'ël', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-indef-obl-f', 'e', '', [], N, {stemMinLength: 2, stemEndsWith: '[i]'});
-suffix('n-indef-obl-f', 'je', '', [], N, {stemMinLength: 2, stemEndsWith: VOWEL});
+suffix('n-indef-obl-f', 'je', '', [], N, {stemMinLength: 2, stemEndsWith: '[aeouyë]'});
 suffix('n-indef-obl-f', 'ke', 'kë', [], N, {stemMinLength: 1});
 
 // Plural case endings leave the indefinite plural (n_pl): -t after a vowel, r
@@ -344,6 +351,7 @@ for (const [inflected, deinflected, extra] of [
     ['ra', 'ër', {stemMinLength: 1, stemEndsWith: CONSONANT}],
     ['rra', 'ërr', {stemMinLength: 1, stemEndsWith: CONSONANT}],
     ['la', 'ël', {stemMinLength: 1, stemEndsWith: CONSONANT}],
+    ['ëra', 'ër', {stemMinLength: 2, stemEndsWith: CONSONANT}],
     ['ra', '', {stemMinLength: 3}],
     ['ër', '', {stemMinLength: 2, stemEndsWith: CONSONANT}],
     ['q', 'k', {stemMinLength: 1}],
@@ -379,7 +387,7 @@ whole('n-pl', 'male', 'mal', NPL, N);
 // Plurals that change the stem.
 for (const [plural, singular] of [
     ['djem', 'djalë'], ['kuaj', 'kalë'], ['duar', 'dorë'], ['dyer', 'derë'], ['net', 'natë'], ['netë', 'natë'],
-    ['gra', 'grua'], ['njerëz', 'njeri'], ['desh', 'dash'], ['qe', 'ka'], ['vjet', 'vit'], ['etër', 'atë'],
+    ['gra', 'grua'], ['njerëz', 'njeri'], ['desh', 'dash'], ['qe', 'ka'], ['vjet', 'vit'], ['vjetë', 'vit'], ['etër', 'atë'],
     ['bij', 'bir'], ['thonj', 'thua'], ['dhen', 'dele'], ['rrathë', 'rreth'],
     // The plural of a masculine noun in -ë, so its trace is plural, not the
     // feminine definite -a, which reaches burrë first otherwise.
@@ -476,6 +484,7 @@ for (const [end, after] of [['i', ['adj_m']], ['in', ['adj_m', 'adj_pl']], ['it'
 for (const end of ['u', 'un', 'ut']) {
     suffix('adj-def-m', end, '', ['adj_m', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: '[ikgh]'});
 }
+whole('adj-def-m', 'riu', 'ri', ['adj_m'], A);
 
 transform('adj-def-f', 'definite (feminine)', 'Feminine definite adjective (e mira, të mirën, të mirës → mirë; e madhja, të madhen → madh; e reja → ri).');
 suffix('adj-def-f', 'a', 'ë', ['adj_f', 'adj_pl'], A, {stemMinLength: 2, stemEndsWith: CONSONANT});
@@ -812,10 +821,11 @@ suffix('cl-i', 'i', '', [], IMP_OUT, {stemMinLength: 2, stemEndsWith: CONSONANT}
 suffix('cl-i', 'ji', '', [], IMP_OUT, {stemMinLength: 2, stemEndsWith: '[aeoiuyë]'});
 suffix('cl-i', 'ini', 'ni', [], IMP_OUT, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('cl-i', 'jini', 'ni', [], IMP_OUT, {stemMinLength: 2, stemEndsWith: '[aeoiuyë]'});
-for (const [form, lemma] of [['jepe', 'jap'], ['lëre', 'lë'], ['vëre', 'vë'], ['zëre', 'zë'], ['thuaje', 'them'], ['sille', 'sjell'], ['hidhe', 'hedh'], ['hiqe', 'heq'], ['bjere', 'bie'], ['shihe', 'shoh'], ['prite', 'pres']]) {
+for (const [form, lemma] of [['jepe', 'jap'], ['lëre', 'lë'], ['vëre', 'vë'], ['zëre', 'zë'], ['thuaje', 'them'], ['sille', 'sjell'], ['hidhe', 'hedh'], ['hiqe', 'heq'], ['bjere', 'bie'], ['shihe', 'shoh'], ['prite', 'pres'],
+    ['vrite', 'vras'], ['lëreni', 'lë']]) {
     whole('cl-e', form, lemma, [], V);
 }
-for (const [form, lemma] of [['jepi', 'jap'], ['thuaji', 'them'], ['lëri', 'lë'], ['vëri', 'vë'], ['silli', 'sjell'], ['hiqi', 'heq']]) {
+for (const [form, lemma] of [['jepi', 'jap'], ['thuaji', 'them'], ['thuaja', 'them'], ['lëri', 'lë'], ['vëri', 'vë'], ['silli', 'sjell'], ['hiqi', 'heq']]) {
     whole('cl-i', form, lemma, [], V);
 }
 transform('cl-me', '+më (me)', 'The pronoun më attached to an imperative (jepmë → jep, tregomë → trego, thuamë → thuaj).');
@@ -1044,14 +1054,14 @@ verb('vras', {
     'impf-1sg': 'vrisja vritja', 'impf-2sg': 'vrisje vritje', 'impf-3sg': 'vriste', 'impf-1pl': 'vrisnim vritnim', 'impf-2pl': 'vrisnit vritnit', 'impf-3pl': 'vrisnin vritnin',
     'aor-1sg': 'vrava', 'aor-2sg': 'vrave', 'aor-3sg': 'vrau', 'aor-1pl': 'vramë', 'aor-2pl': 'vratë', 'aor-3pl': 'vranë',
     'ptcp': 'vrarë', 'imp-2sg': 'vrit',
-    'np-pres-3sg': 'vritet', 'np-pres-3pl': 'vriten', 'np-impf-3sg': 'vritej',
+    'np-pres-1sg': 'vritem', 'np-pres-2sg': 'vritesh', 'np-pres-3sg': 'vritet', 'np-pres-3pl': 'vriten', 'np-impf-3sg': 'vritej',
     'np-aor-3sg': 'vra',
 });
 verb('shes', {
     'pres-2sg': 'shet', 'pres-2pl': 'shitni',
     'impf-1sg': 'shisja', 'impf-2sg': 'shisje', 'impf-3sg': 'shiste', 'impf-1pl': 'shisnim', 'impf-2pl': 'shisnit', 'impf-3pl': 'shisnin',
     'aor-1sg': 'shita', 'aor-2sg': 'shite', 'aor-3sg': 'shiti', 'aor-1pl': 'shitëm', 'aor-2pl': 'shitët', 'aor-3pl': 'shitën',
-    'ptcp': 'shitur', 'imp-2sg': 'shit',
+    'sbjv-3sg': 'shesë', 'ptcp': 'shitur', 'imp-2sg': 'shit',
     'np-pres-3sg': 'shitet', 'np-pres-3pl': 'shiten', 'np-impf-3sg': 'shitej',
     'np-aor-3sg': 'shit',
 });

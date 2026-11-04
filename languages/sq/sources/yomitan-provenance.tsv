@@ -19,7 +19,7 @@ plural	1	t		n-def-pl[0] t → ; n-def-pl[1] t →
 present indicative second-person singular	0	on	oj	pres-2sg[0] n → j
 present indicative second-person singular	1	uan	uaj	pres-2sg[0] n → j
 present indicative second-person singular	2	n	j	pres-2sg[0] n → j
-present indicative second-person singular	3	hesh	hem	np-pres-2sg[4] esh → em; np-pres-2sg[44] ngrihesh → ngrihem
+present indicative second-person singular	3	hesh	hem	np-pres-2sg[4] esh → em; np-pres-2sg[45] ngrihesh → ngrihem
 present indicative third-person singular	0	on	oj	pres-2sg[0] n → j
 present indicative third-person singular	1	uan	uaj	pres-2sg[0] n → j
 present indicative third-person singular	2	n	j	pres-2sg[0] n → j
@@ -74,7 +74,7 @@ aorist third-person plural indicative	0	uan	oj	aor-3pl[0] uan → oj
 aorist third-person plural indicative	1	uan	uaj	aor-3pl[1] uan → uaj
 aorist third-person plural indicative	2	në	j	aor-3pl[6] enë → ej; aor-3pl[7] inë → ij; aor-3pl[8] ynë → yj; aor-3pl[9] anë → aj; aor-3pl[31] bënë → bëj
 aorist third-person plural indicative	3	ën		aor-3pl[10] ën → 
-imperative second-person singular present	0	o	oj	imp-2sg[0]  → j; imp-2sg[1]  → j
+imperative second-person singular present	0	o	oj	imp-2sg[0]  → j
 imperative second-person singular present	1	hu	hem	np-imp-2sg[3] u → em; np-imp-2sg[12] ngrihu → ngrihem
 imperative second-person plural present	0	ni	j	pres-2pl[0] ni → j
 imperative second-person plural present	1	ni		pres-2pl[1] ni → 
