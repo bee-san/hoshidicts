@@ -89,8 +89,6 @@ function suffixes(pairs, {min = 2, out = [], into = [], extra = {}} = {}) {
     return cross([['', '']], pairs, {min, out, into, extra});
 }
 
-// The hollow-verb stem change: the last و or ي before the final consonant
-// becomes ا (يقول -> قال, يستطيع -> استطاع).
 // The hollow-verb change: the و or ي right before the last consonant becomes
 // ا (يقول -> قال, يستطيع -> استطاع), written out per consonant so that only
 // that letter changes (بيوت is not read as ب + يوت -> اتى).
@@ -473,17 +471,21 @@ const PRESENT = {
 // The endings of each person, and the dictionary-form ending each gives for
 // the kinds of root (sound, ا, ى, ي, hamza, جاء).
 // The present stems of the frequent verbs like وجد (يجد, تضع, أصل, نقف).
+const ASSIMILATED_WITH_ENDING = new Set(['تجدي', 'يضعون', 'يجدوا', 'تثقي', 'تضعي', 'تثقين', 'تضعين', 'يسعون', 'تجدين', 'تصلي', 'يصلوا',
+    'يجدون', 'يصلون', 'يقفون', 'تقفين', 'يثقون', 'تصلين', 'يضعوا', 'تقفي', 'تجدوا', 'تسعين', 'تسعون', 'يقعون', 'تضعوا', 'تقعي', 'تقعين',
+    'تصلوا', 'تقفوا', 'تقفون', 'يثقوا', 'تثقوا', 'تجدون']);
 const ASSIMILATED_PRESENT = ['جد', 'ضع', 'صل', 'قف', 'قع', 'دع', 'جب', 'ثق', 'لد', 'رث', 'زن', 'سع', 'صف', 'هب', 'فد', 'قظ'];
 function hollowEndings(ending) { return hollow(ending); }
 function presentRules(prefixes, ending, {defective = [], hamza = [], hollow = true, short = false} = {}) {
     const rules = [cross(prefixes, [[ending, '']])];
-    // The common verbs like وجد, written as whole words with no ending, so
-    // that they are read before the hollow jussive (يجد is وجد, not لم يجد of
-    // جاد). A rule for every such stem would also read يكن, يعد and يرد (لم
-    // يكن, لم يعد, لم يرد) as وكن, وعد and ورد.
-    if (ending === '') {
-        const p = prefixes[0][0];
-        for (const stem of ASSIMILATED_PRESENT) { rules.push(whole(p + stem, 'و' + stem, {into: V_IN, out: V_OUT})); }
+    // The common verbs like وجد, as whole words, so that they are read before
+    // the hollow jussive (يجد is وجد, not لم يجد of جاد); a rule for every
+    // such stem would also read يكن and يعد as وكن and وعد. With an ending,
+    // the forms in the subtitle list's 50,000 words (يجدون, تقفين).
+    for (const [p] of prefixes.filter(([, d]) => d === '')) {
+        for (const stem of ASSIMILATED_PRESENT) {
+            if (ending === '' || ASSIMILATED_WITH_ENDING.has(p + stem + ending)) { rules.push(whole(p + stem + ending, 'و' + stem, {into: V_IN, out: V_OUT})); }
+        }
     }
     const plain = prefixes.filter(([, d]) => d === '' || d === 'أ' || d === 'ا');
     rules.push(cross(plain, [[ending, '']], {extra: {stemChange: SEAT_TO_ALIF}}));
@@ -549,8 +551,6 @@ for (const [id, name, p, gloss, example, see] of PRESENT_PERSONS) {
     transform(id, name, `The present tense "${gloss}", which is also its subjunctive and jussive: ${example} (كتب); يقول (قال), يدعو (دعا), يرمي (رمى), ينسى (نسي), يكرم (أكرم), يستخدم (استخدم), يصل (وصل), يرى (رأى). With an object pronoun in the same step: يمكنك, يعرفه.`, [
         ...presentRules(PRESENT[p], '', {defective: [['و', 'ا'], ['ي', 'ى'], ['ى', 'ي'], ['ى', 'ا']], hamza: [['أ', 'ئ']]}),
         ...seeRules(PRESENT[p], see),
-        // Not after ي, و, ى or ا, where the verb is defective (يعطيه -> أعطى,
-        // يرميه -> رمى): its own rules read it with the pronoun rules.
         // Only stems without و, ي, ى or ا: a hollow or defective verb is read by
         // its own rules and the pronoun rule (يزوره -> زار, يعطيه -> أعطى). A
         // first person takes no first-person object (أعطني is the imperative

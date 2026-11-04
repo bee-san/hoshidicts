@@ -2,39 +2,23 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """The measurements of README.md (Measurements) that look words up as a host does.
 
-    python3 languages/ar/sources/measure.py frequent <wty-ar-en.zip> <imported dir> <ar_50k.txt> [--languages dir]
-    python3 languages/ar/sources/measure.py text <wty-ar-en.zip> <imported dir> <text file> [--languages dir] [--sample N]
+    python3 languages/ar/sources/measure.py frequent <wty-ar-en.zip> <imported dir> <ar_50k.txt> [--languages dir] [--homographs tsv] [--split]
+    python3 languages/ar/sources/measure.py text <wty-ar-en.zip> <imported dir> <text file> [--languages dir] [--homographs tsv] [--split]
+        [--sample-out tsv --seed N --sample N]
     python3 languages/ar/sources/measure.py sets <imported dir> [--languages dir]
-
-sets: eval-language --dictionary on corpus.tsv + gaps.tsv, cases.tsv,
-defaults.tsv and yomitan.tsv for the own, Yomitan, union and final rules,
-each file with every option on and with the defaults.
+    python3 languages/ar/sources/measure.py untagged <wty-ar-en.zip> <imported dir> [--languages dir]
 
 Run from the repository root after building build/hoshidicts-cli and
 build/lookup-batch-ar (sources/lookup-batch.cpp). Lookups use the pack's
-defaults (no language options), 16 results and scan length 16.
-
-A word's own lemmas are the targets of its form-of rows in wty-ar-en, vowel
-marks removed, and the word itself when it has a row with definitions. A
-target that has no row with definitions is replaced by its own targets: the
-verbal noun عثور has only rows that name its verb عثر, so العثور's lemma is
-عثر, as a lookup shows it. A first result is right when its expression is one
-of them.
-
-frequent: the 10,000 most frequent entries of a FrequencyWords list, the
-Arabic words among them, and of those the words whose lemma a rule reaches
-(one of the word's form-of targets is among the deinflections of the word).
-Each is looked up alone; the script counts the words, and their share of the
-list's tokens, whose first result is not one of the word's own lemmas.
-
-text: every word of a text, looked up as a host does: the text from the word
-to the end of its sentence. Positions whose first result matches the whole
-word are judged by script: a word wty-ar-en lists by its own lemmas, a word it
-does not list by those of its spellings after the default preprocessors (الى
--> إلى) or, failing that (وكتابه), by the lemmas of every way of writing it as proclitics
-(و ف ب ك ل س ال لل and their chains) + a listed word + a pronoun, any of which
-counts as right. A random sample (seed 1) of the other positions with a
-result is printed for judging by hand.
+defaults, 16 results and scan length 16. `judge` says which lemmas count as
+right (README.md, Measurements 2): the hand decisions of --homographs, else
+the word's own form-of targets, else those of its clitic splits that fit the
+lemma's part of speech. frequent looks up the Arabic words among the 10,000
+most frequent entries whose lemma a rule reaches; text looks up every word of
+a text with the rest of its sentence and judges the positions whose first
+result matches the whole word. sets runs eval-language on each test file for
+the own, Yomitan, union and final rules; untagged compares
+lookup.untaggedTerms filter and pass and counts wty-ar-en's untagged rows.
 """
 import collections
 import json
@@ -319,12 +303,8 @@ CLITIC_IDS = {'wa', 'fa', 'bi', 'ka', 'li', 'la', 'al', 'sa', 'p1s', 'p1sObj', '
 
 
 def causes(items, imported, languages):
-    """For (hover, right lemmas, kind, first result) of wrong first results:
-    'rules' where the pack's rules make it, 'dictionary' where the
-    dictionary's rows do. A word wty-ar-en lists is the rules' when, looked
-    up with no rules, its first result is right; one it does not list (only
-    the rules reach it) when every step of the first result's trace is a
-    transform of the pack, not a form-of row."""
+    """'rules' or 'dictionary' for each (hover, right lemmas, kind, first
+    result) of a wrong first result (README.md, Measurements 2)."""
     if not items:
         return []
     ids = {t['id'] for t in json.load(open(languages + '/ar/transforms.json', encoding='utf-8'))['transforms']}

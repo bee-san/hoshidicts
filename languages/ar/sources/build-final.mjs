@@ -135,9 +135,17 @@ for (const t of final.transforms) {
     }
 }
 writeFileSync(join(pack, 'transforms.json'), formatTransforms(final));
+// Consecutive rules of a transform with the same result share a row, their
+// indices written as a range (0-5).
+const ranged = [];
+for (const [t, i, own, reach] of provenance) {
+    const last = ranged.at(-1);
+    if (last && last[0] === t && last[2] === own && last[3] === reach && last[1][1] === i - 1) { last[1][1] = i; } else { ranged.push([t, [i, i], own, reach]); }
+}
 writeFileSync(join(here, 'yomitan-provenance.tsv'),
-    '# Each rule of sources/yomitan.json (transform id, index in its rules) and the own transforms that make one of its deinflections on probe words (sources/build-final.mjs), or - when none does.\n' +
-    '# transform\trule\town transforms (one step)\toutputs the own rules reach (any steps)/outputs\n' + provenance.map((row) => row.join('\t')).join('\n') + '\n');
+    '# Each rule of sources/yomitan.json (transform id, index in its rules, or a range of consecutive indices with the same result) and the own transforms that make one of its deinflections on probe words (sources/build-final.mjs), or - when none does.\n' +
+    '# transform\trules\town transforms (one step)\toutputs the own rules reach (any steps)/outputs\n' +
+    ranged.map(([t, [a, b], own, reach]) => [t, a === b ? a : `${a}-${b}`, own, reach].join('\t')).join('\n') + '\n');
 
 // tests/yomitan.tsv: every row takes reasons `*`, since Yomitan's transform
 // ids are not the final rules' (a negative that names them cannot fail).
