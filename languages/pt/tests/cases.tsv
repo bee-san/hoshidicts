@@ -523,6 +523,7 @@ feminine	1	farta	farto	adj	feminine
 feminine	1	ladra	ladrão	n	feminine
 feminine	1	vasta	vasto	adj	feminine
 feminine	1	surda	surdo	adj	feminine
+feminine	1	tua	teu	*	feminine
 diminutive	1	gatinho	gato	n	diminutive
 diminutive	1	casinha	casa	n	diminutive
 diminutive	1	cafezinho	café	n	diminutive
@@ -558,6 +559,7 @@ superlative	1	fidelíssimo	fiel	adj	superlative
 superlative	1	antiquíssimo	antigo	adj	superlative
 superlative	1	simplicíssimo	simples	adj	superlative
 superlative	1	nobilíssimo	nobre	adj	superlative
+superlative	1	amicíssimo	amigo	adj	superlative
 -mente adverbs	1	rapidamente	rápido	adj	adverb
 -mente adverbs	1	facilmente	fácil	adj	adverb
 -mente adverbs	1	provavelmente	provável	adj	adverb
@@ -568,6 +570,7 @@ superlative	1	nobilíssimo	nobre	adj	superlative
 -mente adverbs	1	cristãmente	cristão	adj	adverb
 -mente adverbs	1	rapidissimamente	rápido	adj	superlative|adverb
 -mente adverbs	1	comumente	comum	adj	adverb
+-mente adverbs	1	comummente	comum	adj	adverb
 negatives	0	esta	estar	*	*
 negatives	0	estas	estar	*	*
 negatives	0	este	estar	*	*

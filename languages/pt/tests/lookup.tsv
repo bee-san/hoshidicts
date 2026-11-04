@@ -58,6 +58,48 @@ ranking	1	crises econômicas	crise	crises
 ranking	0	crises econômicas	cris	crises
 ranking	1	secretarias municipais	secretaria	secretarias
 ranking	0	secretarias municipais	secretar	secretarias
+ranking	1	Falas inglês?	falar	Falas
+ranking	0	Falas inglês?	fala	Falas
+ranking	1	criam um mundo	criar	criam
+ranking	0	criam um mundo	crer	criam
+ranking	1	desvia o olhar	desviar	desvia
+ranking	0	desvia o olhar	desver	desvia
+ranking	1	agrada-me muito	agradar	agrada-me
+ranking	0	agrada-me muito	agrar	agrada-me
+ranking	1	valida o bilhete	validar	valida
+ranking	0	valida o bilhete	valido	valida
+ranking	1	delira de febre	delirar	delira
+ranking	0	delira de febre	delir	delira
+ranking	1	renda-se agora	render	renda-se
+ranking	0	renda-se agora	rendar	renda-se
+ranking	1	assente-se aqui	assentar	assente-se
+ranking	0	assente-se aqui	assentir	assente-se
+ranking	1	atendam o telefone	atender	atendam
+ranking	0	atendam o telefone	atendar	atendam
+ranking	1	criada em 1990	criar	criada
+ranking	0	criada em 1990	criado	criada
+ranking	1	chamados de heróis	chamar	chamados
+ranking	0	chamados de heróis	chamado	chamados
+ranking	1	quebradas pelo vento	quebrado	quebradas
+ranking	0	quebradas pelo vento	quebrada	quebradas
+ranking	1	revolta popular	revoltar	revolta
+ranking	0	revolta popular	revolver	revolta
+ranking	1	bebidas geladas	bebida	bebidas
+ranking	0	bebidas geladas	beber	bebidas
+ranking	1	mentiras demais	mentira	mentiras
+ranking	0	mentiras demais	mentir	mentiras
+ranking	1	águas claras	água	águas
+ranking	0	águas claras	aguar	águas
+ranking	1	alces selvagens	alce	alces
+ranking	0	alces selvagens	alçar	alces
+ranking	1	perfeitos demais	perfeito	perfeitos
+ranking	0	perfeitos demais	perfazer	perfeitos
+ranking	1	conhecida por todos	conhecido	conhecida
+ranking	0	conhecida por todos	conhecer	conhecida
+ranking	1	distraída demais	distraído	distraída
+ranking	0	distraída demais	distrair	distraída
+ranking	1	podes ir	poder	podes
+ranking	0	podes ir	podar	podes
 pronouns	1	chama-se João	chamar	chama-se
 pronouns	0	chama-se João	chama	chama
 pronouns	1	deixa-me ir	deixar	deixa-me
