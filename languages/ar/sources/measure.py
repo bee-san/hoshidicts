@@ -174,7 +174,7 @@ def frequent(args):
         print('wrong: %d words (%.2f%% of tokens) made by the rules, %d (%.2f%%) by the dictionary' % (
             len(r), 100 * sum(c for _, c, _, _ in r) / all_tokens, len(wrong) - len(r),
             100 * (wrong_tokens - sum(c for _, c, _, _ in r)) / all_tokens))
-    for w, c, first, right in sorted(wrong, key=lambda x: -x[1])[:80]:
+    for w, c, first, right in sorted(wrong, key=lambda x: -x[1])[:int(option(args, "--show", "80"))]:
         got = '-' if first is None else '%s {%s}' % (first['expression'], '>'.join(reversed(first['trace'])))
         tag = ' [%s]' % made[w] if made else ''
         print('  %s (%d): %s; right %s%s' % (w, c, got, ' '.join(sorted(right)), tag))

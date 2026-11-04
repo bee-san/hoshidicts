@@ -180,7 +180,24 @@
         {"type": "wholeWord", "inflected": "سبعين", "deinflected": "سبعون", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "ثمانين", "deinflected": "ثمانون", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "تسعين", "deinflected": "تسعون", "conditionsIn": [], "conditionsOut": []},
-        {"type": "wholeWord", "inflected": "الصور", "deinflected": "صورة", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "الصور", "deinflected": "صورة", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "السنين", "deinflected": "سنة", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "سنين", "deinflected": "سنة", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "الملفات", "deinflected": "ملف", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "ملفات", "deinflected": "ملف", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "النيران", "deinflected": "نار", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "الجدران", "deinflected": "جدار", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "الرفاق", "deinflected": "رفيق", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "الأخر", "deinflected": "آخر", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "الخضراء", "deinflected": "أخضر", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "الفرسان", "deinflected": "فارس", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "هذين", "deinflected": "هذا", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "كلتا", "deinflected": "كلا", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "قرون", "deinflected": "قرن", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "موتي", "deinflected": "موت", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "فتي", "deinflected": "فتى", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "كيسي", "deinflected": "كيس", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "سيئا", "deinflected": "سيئ", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -630,7 +647,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ءت", "اء"], ["أت", "اأ"], ["إت", "اإ"], ["آت", "اآ"], ["ؤت", "اؤ"], ["ئت", "ائ"], ["بت", "اب"], ["تت", "ات"], ["ثت", "اث"], ["جت", "اج"], ["حت", "اح"], ["خت", "اخ"], ["دت", "اد"], ["ذت", "اذ"], ["رت", "ار"], ["زت", "از"], ["ست", "اس"], ["شت", "اش"], ["صت", "اص"], ["ضت", "اض"], ["طت", "اط"], ["ظت", "اظ"], ["عت", "اع"], ["غت", "اغ"], ["فت", "اف"], ["قت", "اق"], ["كت", "اك"], ["لت", "ال"], ["مت", "ام"], ["نت", "ان"], ["هت", "اه"], ["وت", "او"], ["يت", "اي"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ءءت", "ء"], ["أأت", "أ"], ["إإت", "إ"], ["آآت", "آ"], ["ؤؤت", "ؤ"], ["ئئت", "ئ"], ["ببت", "ب"], ["تتت", "ت"], ["ثثت", "ث"], ["ججت", "ج"], ["ححت", "ح"], ["خخت", "خ"], ["ددت", "د"], ["ذذت", "ذ"], ["ررت", "ر"], ["ززت", "ز"], ["سست", "س"], ["ششت", "ش"], ["صصت", "ص"], ["ضضت", "ض"], ["ططت", "ط"], ["ظظت", "ظ"], ["ععت", "ع"], ["غغت", "غ"], ["ففت", "ف"], ["ققت", "ق"], ["ككت", "ك"], ["للت", "ل"], ["ممت", "م"], ["ننت", "ن"], ["ههت", "ه"], ["ووت", "و"], ["ييت", "ي"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ت", "deinflected": "ات", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
-        {"type": "wholeWord", "inflected": "لست", "deinflected": "ليس", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "لست", "deinflected": "ليس", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "غيرت", "deinflected": "غير", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "عمت", "deinflected": "عم", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -872,7 +891,17 @@
         {"type": "wholeWord", "inflected": "يهم", "deinflected": "هم", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "يعنى", "deinflected": "عنى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "يسمى", "deinflected": "سمى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "يسكن", "deinflected": "سكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "يسكن", "deinflected": "سكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "يبيع", "deinflected": "باع", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "يغير", "deinflected": "غير", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "يسبب", "deinflected": "سبب", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "يغلق", "deinflected": "أغلق", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "يفلح", "deinflected": "أفلح", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "يؤثر", "deinflected": "أثر", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "يخفي", "deinflected": "أخفى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "يبقي", "deinflected": "أبقى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "يحق", "deinflected": "حق", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "يصاب", "deinflected": "أصاب", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -969,7 +998,14 @@
         {"type": "wholeWord", "inflected": "تمكن", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "تهم", "deinflected": "هم", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "تعنى", "deinflected": "عنى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "تسمى", "deinflected": "سمى", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "تسمى", "deinflected": "سمى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "تبيع", "deinflected": "باع", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "تغلق", "deinflected": "أغلق", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "تؤثر", "deinflected": "أثر", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "تنهي", "deinflected": "أنهى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "تضيع", "deinflected": "ضاع", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "تتم", "deinflected": "تم", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "تنسي", "deinflected": "نسي", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1016,7 +1052,9 @@
         {"type": "wholeWord", "inflected": "أيمكنها", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "أيمكنهما", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "أيمكنهم", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "أيمكنهن", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "أيمكنهن", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أبيع", "deinflected": "باع", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أكرر", "deinflected": "كرر", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1109,7 +1147,9 @@
         {"type": "wholeWord", "inflected": "نصبحها", "deinflected": "أصبح", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "نصبحهما", "deinflected": "أصبح", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "نصبحهم", "deinflected": "أصبح", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "نصبحهن", "deinflected": "أصبح", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "نصبحهن", "deinflected": "أصبح", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "نبقي", "deinflected": "أبقى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "نبيع", "deinflected": "باع", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1210,7 +1250,8 @@
         {"type": "circumfix", "prefixes": [["ي", ""], ["ي", "أ"], ["ي", "ا"], ["ي", "و"], ["يؤ", "آ"], ["يؤ", "أ"], ["يؤا", "آ"], ["يأ", "ائ"]], "suffixes": [["ؤون", "أ"], ["ءون", "أ"], ["يئون", "اء"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["ي", ""], ["ي", "أ"], ["ي", "ا"], ["يؤ", "أ"]], "suffixes": [["وءون", "اء"], ["وأون", "اأ"], ["وإون", "اإ"], ["وآون", "اآ"], ["وؤون", "اؤ"], ["وئون", "ائ"], ["وبون", "اب"], ["وتون", "ات"], ["وثون", "اث"], ["وجون", "اج"], ["وحون", "اح"], ["وخون", "اخ"], ["ودون", "اد"], ["وذون", "اذ"], ["ورون", "ار"], ["وزون", "از"], ["وسون", "اس"], ["وشون", "اش"], ["وصون", "اص"], ["وضون", "اض"], ["وطون", "اط"], ["وظون", "اظ"], ["وعون", "اع"], ["وغون", "اغ"], ["وفون", "اف"], ["وقون", "اق"], ["وكون", "اك"], ["ولون", "ال"], ["ومون", "ام"], ["ونون", "ان"], ["وهون", "اه"], ["ووون", "او"], ["ويون", "اي"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["ي", "أ"], ["يؤ", "أ"], ["ي", ""], ["ي", "ا"]], "suffixes": [["يءون", "اء"], ["يأون", "اأ"], ["يإون", "اإ"], ["يآون", "اآ"], ["يؤون", "اؤ"], ["يئون", "ائ"], ["يبون", "اب"], ["يتون", "ات"], ["يثون", "اث"], ["يجون", "اج"], ["يحون", "اح"], ["يخون", "اخ"], ["يدون", "اد"], ["يذون", "اذ"], ["يرون", "ار"], ["يزون", "از"], ["يسون", "اس"], ["يشون", "اش"], ["يصون", "اص"], ["يضون", "اض"], ["يطون", "اط"], ["يظون", "اظ"], ["يعون", "اع"], ["يغون", "اغ"], ["يفون", "اف"], ["يقون", "اق"], ["يكون", "اك"], ["يلون", "ال"], ["يمون", "ام"], ["ينون", "ان"], ["يهون", "اه"], ["يوون", "او"], ["ييون", "اي"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["ي", ""]], "suffixes": [["رون", "رأى"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["ي", ""]], "suffixes": [["رون", "رأى"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "يرتدون", "deinflected": "ارتدى", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1275,7 +1316,10 @@
         {"type": "circumfix", "prefixes": [["ت", ""], ["ت", "أ"], ["ت", "ا"], ["تؤ", "أ"]], "suffixes": [["وءين", "اء"], ["وأين", "اأ"], ["وإين", "اإ"], ["وآين", "اآ"], ["وؤين", "اؤ"], ["وئين", "ائ"], ["وبين", "اب"], ["وتين", "ات"], ["وثين", "اث"], ["وجين", "اج"], ["وحين", "اح"], ["وخين", "اخ"], ["ودين", "اد"], ["وذين", "اذ"], ["ورين", "ار"], ["وزين", "از"], ["وسين", "اس"], ["وشين", "اش"], ["وصين", "اص"], ["وضين", "اض"], ["وطين", "اط"], ["وظين", "اظ"], ["وعين", "اع"], ["وغين", "اغ"], ["وفين", "اف"], ["وقين", "اق"], ["وكين", "اك"], ["ولين", "ال"], ["ومين", "ام"], ["ونين", "ان"], ["وهين", "اه"], ["ووين", "او"], ["ويين", "اي"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["ت", "أ"], ["تؤ", "أ"], ["ت", ""], ["ت", "ا"]], "suffixes": [["يءين", "اء"], ["يأين", "اأ"], ["يإين", "اإ"], ["يآين", "اآ"], ["يؤين", "اؤ"], ["يئين", "ائ"], ["يبين", "اب"], ["يتين", "ات"], ["يثين", "اث"], ["يجين", "اج"], ["يحين", "اح"], ["يخين", "اخ"], ["يدين", "اد"], ["يذين", "اذ"], ["يرين", "ار"], ["يزين", "از"], ["يسين", "اس"], ["يشين", "اش"], ["يصين", "اص"], ["يضين", "اض"], ["يطين", "اط"], ["يظين", "اظ"], ["يعين", "اع"], ["يغين", "اغ"], ["يفين", "اف"], ["يقين", "اق"], ["يكين", "اك"], ["يلين", "ال"], ["يمين", "ام"], ["ينين", "ان"], ["يهين", "اه"], ["يوين", "او"], ["ييين", "اي"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["ت", ""]], "suffixes": [["رين", "رأى"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
-        {"type": "wholeWord", "inflected": "تحبين", "deinflected": "أحب", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "تحبين", "deinflected": "أحب", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "تأتين", "deinflected": "أتى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "تدركين", "deinflected": "أدرك", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "تودين", "deinflected": "ود", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1323,7 +1367,8 @@
         {"type": "circumfix", "prefixes": [["ي", ""], ["ي", "أ"], ["ي", "ا"], ["ي", "و"], ["يؤ", "آ"], ["يؤ", "أ"], ["يؤا", "آ"], ["يأ", "ائ"]], "suffixes": [["ؤوا", "أ"], ["ءوا", "أ"], ["يئوا", "اء"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["ي", ""], ["ي", "أ"], ["ي", "ا"], ["يؤ", "أ"]], "suffixes": [["وءوا", "اء"], ["وأوا", "اأ"], ["وإوا", "اإ"], ["وآوا", "اآ"], ["وؤوا", "اؤ"], ["وئوا", "ائ"], ["وبوا", "اب"], ["وتوا", "ات"], ["وثوا", "اث"], ["وجوا", "اج"], ["وحوا", "اح"], ["وخوا", "اخ"], ["ودوا", "اد"], ["وذوا", "اذ"], ["وروا", "ار"], ["وزوا", "از"], ["وسوا", "اس"], ["وشوا", "اش"], ["وصوا", "اص"], ["وضوا", "اض"], ["وطوا", "اط"], ["وظوا", "اظ"], ["وعوا", "اع"], ["وغوا", "اغ"], ["وفوا", "اف"], ["وقوا", "اق"], ["وكوا", "اك"], ["ولوا", "ال"], ["وموا", "ام"], ["ونوا", "ان"], ["وهوا", "اه"], ["وووا", "او"], ["ويوا", "اي"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["ي", "أ"], ["يؤ", "أ"], ["ي", ""], ["ي", "ا"]], "suffixes": [["يءوا", "اء"], ["يأوا", "اأ"], ["يإوا", "اإ"], ["يآوا", "اآ"], ["يؤوا", "اؤ"], ["يئوا", "ائ"], ["يبوا", "اب"], ["يتوا", "ات"], ["يثوا", "اث"], ["يجوا", "اج"], ["يحوا", "اح"], ["يخوا", "اخ"], ["يدوا", "اد"], ["يذوا", "اذ"], ["يروا", "ار"], ["يزوا", "از"], ["يسوا", "اس"], ["يشوا", "اش"], ["يصوا", "اص"], ["يضوا", "اض"], ["يطوا", "اط"], ["يظوا", "اظ"], ["يعوا", "اع"], ["يغوا", "اغ"], ["يفوا", "اف"], ["يقوا", "اق"], ["يكوا", "اك"], ["يلوا", "ال"], ["يموا", "ام"], ["ينوا", "ان"], ["يهوا", "اه"], ["يووا", "او"], ["ييوا", "اي"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["ي", ""]], "suffixes": [["روا", "رأى"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["ي", ""]], "suffixes": [["روا", "رأى"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "يجدوا", "deinflected": "وجد", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1405,7 +1450,8 @@
         {"type": "wholeWord", "inflected": "أعطه", "deinflected": "أعطى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "أعطها", "deinflected": "أعطى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "أعطنا", "deinflected": "أعطى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "أعطهم", "deinflected": "أعطى", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "أعطهم", "deinflected": "أعطى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "انهض", "deinflected": "نهض", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {

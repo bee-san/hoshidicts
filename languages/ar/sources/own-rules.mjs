@@ -764,6 +764,30 @@ const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['�
     transform('verbalNoun', 'verbal noun', 'The verbal noun of a derived verb read as the verb: تكليم (كلم), مساعدة (ساعد), إكرام (أكرم), إقامة (أقام), اجتماع (اجتمع), استخدام (استخدم), استقالة (استقال), انتهاء (انتهى). Off unless the derivedForms setting is on.', rules, {optional: true});
 }
 
+// Frequent words whose ordinary reading the rules would put after a rarer
+// one the dictionary also names, found with the stricter hand decisions of
+// sources/homographs.tsv (round 4; README.md, Rule provenance): each is a
+// whole word of the transform that reads it.
+const LISTED = {
+    presentHe: [['يبيع', 'باع'], ['يغير', 'غير'], ['يسبب', 'سبب'], ['يغلق', 'أغلق'], ['يفلح', 'أفلح'], ['يؤثر', 'أثر'], ['يخفي', 'أخفى'],
+        ['يبقي', 'أبقى'], ['يحق', 'حق'], ['يصاب', 'أصاب']],
+    presentSheYou: [['تبيع', 'باع'], ['تغلق', 'أغلق'], ['تؤثر', 'أثر'], ['تنهي', 'أنهى'], ['تضيع', 'ضاع'], ['تتم', 'تم'], ['تنسي', 'نسي']],
+    presentI: [['أبيع', 'باع'], ['أكرر', 'كرر']],
+    presentWe: [['نبقي', 'أبقى'], ['نبيع', 'باع']],
+    presentYouF: [['تأتين', 'أتى'], ['تدركين', 'أدرك'], ['تودين', 'ود']],
+    presentThey: [['يرتدون', 'ارتدى']],
+    subjunctiveThey: [['يجدوا', 'وجد']],
+    pastI: [['غيرت', 'غير'], ['عمت', 'عم']],
+    imperativeYou: [['انهض', 'نهض']],
+};
+const LISTED_NOUNS = [['السنين', 'سنة'], ['سنين', 'سنة'], ['الملفات', 'ملف'], ['ملفات', 'ملف'], ['النيران', 'نار'], ['الجدران', 'جدار'],
+    ['الرفاق', 'رفيق'], ['الأخر', 'آخر'], ['الخضراء', 'أخضر'], ['الفرسان', 'فارس'], ['هذين', 'هذا'], ['كلتا', 'كلا'], ['قرون', 'قرن'],
+    ['موتي', 'موت'], ['فتي', 'فتى'], ['كيسي', 'كيس'], ['سيئا', 'سيئ']];
+for (const [id, words] of Object.entries(LISTED)) {
+    transforms.find((t) => t.id === id).rules.push(...words.map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})));
+}
+transforms.find((t) => t.id === 'listedNoun').rules.push(...LISTED_NOUNS.map(([i, d]) => whole(i, d)));
+
 // ـي (my) after the verb transforms: lookups break a tie between two lemmas
 // the dictionary names by the order the rules found them (docs/languages.md
 // 9.6), and a verb never takes this pronoun, so تعني, تجري and ترتدي are read
