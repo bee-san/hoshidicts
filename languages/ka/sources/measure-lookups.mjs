@@ -2,35 +2,29 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Lookup measurements of README.md (Measurements 2-4). Not run by any test.
 //
-//   node languages/ka/sources/measure-lookups.mjs <wty-ka-en term banks dir> <lookup-batch output> <words.txt> [--labels <file>]... [--counts <freq.tsv>] [--deinflections <file>] [--top N] [--suspects <freq.tsv>] [--sample N] [--seed S]
+//   node languages/ka/sources/measure-lookups.mjs <wty-ka-en term banks dir> <lookup-batch output> <words.txt> [--labels <file>]... [--counts <freq.tsv>] [--deinflections <file>] [--top N] [--suspects <freq.tsv>] [--hyphen <hyphen.tsv>] [--sample N] [--seed S]
 //
-// <wty-ka-en term banks dir> is the unzipped dictionary; <lookup-batch output>
-// has one JSON line per hover (sources/lookup-batch.cpp), and <words.txt> the
-// hovered word on the same line (sources/make-hovers.py) or, for a word list,
-// the word. A hover whose word the dictionary knows is judged: the first
-// result with a definition is right when it is a term the word's own form-of
-// rows name (or, when that term has no definition, one its rows name), or the
-// word itself when it is a lemma. Where that leaves a choice (the rows name
-// several lemmas, or the first result is the word's own entry while its rows
-// name another lemma: the class "ownEntry"), the label of the pair (word, first
-// result) decides: W wrong, A ambiguous (counted apart), R right; a pair
-// without one is reported. A label decides wherever it exists (the name Tom,
-// ტომი in Tatoeba, is not ტომი "tribe"); later --labels files override earlier
-// ones; a first result written = is the word itself; X marks a text that is
-// not a word (not judged). Labelled words the dictionary does not know are
-// counted apart ("labelledUnknown"), and --top N lists the N most frequent
-// such words with a result. --sample N prints N hovers of unknown words
-// (seeded) for judging by hand. --counts weighs each word by its count in a
-// frequency list (word<TAB>count). --deinflections (hoshidicts-cli deinflect
-// ka --stdin output) judges only the words whose own lemma a rule reaches,
-// and the words with form-of rows whose pair has a label.
-//
-// --suspects <freq.tsv> lists first results the script would count right
-// that may be wrong: a lemma only the word's own form-of rows reach (no step
-// of its trace is a transform of the pack), where the next result is a rule
-// reading of a lemma at least three times as frequent in the list (ერთ → ერი
-// "nation", the row's "archaic plural", before the rules' ერთი "one"). The
-// pairs are counted by label, and the 60 largest without one are listed.
+// Inputs: the unzipped wty-ka-en, one lookup-batch.cpp JSON line per hover and
+// words.txt (make-hovers.py) with the hovered word on each line. A hover of a
+// word the dictionary knows is right when its first result with a definition
+// is a lemma the word's form-of rows name (one hop further when that lemma has
+// no definition) or the word itself as a lemma. Where that leaves a choice
+// (several lemmas; the word's own entry while its rows name another, the
+// "ownEntry" class), the (word, first result) label decides: W wrong, A
+// ambiguous, R right, X not a word (not judged); a missing label is reported.
+// A label decides wherever it exists, later --labels files win, and = is the
+// word itself. --top N lists the N most frequent unknown words with a result,
+// --sample N a seeded sample of unknown words. --counts weighs words by a
+// frequency list; --deinflections (hoshidicts-cli deinflect ka --stdin) judges
+// only words whose lemma a rule reaches or whose pair has a label.
+// --suspects <freq.tsv>: first results only the word's own rows reach (no pack
+// transform in the trace) whose next result is a rule reading of a lemma at
+// least three times as frequent (ერთ → ერი before ერთი).
+// Case endings after a hyphen (Apple-ის, 1990-ში) and the ordinal მე- (მე-19)
+// are counted apart: in a text set, a word of ENDINGS whose previous hover
+// shows a hyphen after a non-space (not drawn-out speech: the same word, a
+// single letter or a single vowel after a Georgian word), or მე before "-"
+// and a digit; for a word list, --hyphen gives the tokens (wiki-text.py hyphen).
 import {readFileSync, readdirSync} from 'node:fs';
 import {join} from 'node:path';
 
@@ -43,6 +37,19 @@ const deinflectionsFile = opt('--deinflections');
 const labelsFiles = rest.flatMap((a, i) => (a === '--labels' ? [rest[i + 1]] : []));
 const topN = +opt('--top', 0);
 const suspectsFile = opt('--suspects');
+const hyphenFile = opt('--hyphen');
+const ENDINGS = new Set(['ის', 'ს', 'მა', 'მ', 'ე', 'სა', 'ში', 'ზე', 'თან', 'ით', 'დან', 'იან', 'იანი', 'იანმა', 'იანის', 'მდე', 'ად', 'თვის', 'ისთვის',
+    'ზედ', 'ა', 'ი', 'ელი', 'ლი', 'გან', 'ისგან', 'კენ', 'ებში', 'ებს', 'ები', 'ების', 'ზეც', 'შიც', 'საც', 'მაც', 'იც', 'ც', 'ელმა', 'ისა', 'ზედა']);
+const hyphenTokens = new Map();
+if (hyphenFile) {
+    for (const line of readFileSync(hyphenFile, 'utf8').split('\n')) {
+        const [word, , after, before] = line.split('\t');
+        if (word && (ENDINGS.has(word) || word === 'მე')) { hyphenTokens.set(word, word === 'მე' ? +before : +after); }
+    }
+}
+const hyphen = {positions: 0, tokens: 0, suffix: 0, nothing: 0, related: 0, letter: 0, other: 0, letterHidden: 0, otherHidden: 0};
+const wrongAt = new Set();
+const hyphenAt = [];
 const labels = new Map();
 for (const labelsFile of labelsFiles) {
     for (const line of readFileSync(labelsFile, 'utf8').split('\n')) {
@@ -108,6 +115,16 @@ for (let i = 0; i < results.length; i++) {
     for (const t of [...right]) { if (!lemma.has(t)) { for (const u of targets.get(t) ?? []) { right.add(u); } } }
     if (lemma.has(word)) { right.add(word); }
     const pairLabel = first ? labels.get(`${word}\t${first.expression}`) : undefined;
+    let inHyphen = 0;
+    if (hyphenFile) { inHyphen = hyphenTokens.get(word) ?? 0; } else if (word === 'მე' && /^მე-\s?\d/.test(results[i].text)) { inHyphen = 1; } else if (ENDINGS.has(word) && i > 0) {
+        const prev = results[i - 1].text, text = results[i].text, pw = words[i - 1].toLowerCase();
+        if (prev.length > text.length && prev.endsWith(text)) {
+            const sep = prev.slice(pw.length, prev.length - text.length);
+            const before = sep.length > 1 ? sep.at(-2) : pw.at(-1);
+            if (sep.endsWith('-') && before && !/\s/.test(before) && !(sep === '-' && (pw === word || [...pw].length === 1 || /^[აეიოუ]$/.test(word)))) { inHyphen = 1; }
+        }
+    }
+    if (inHyphen) { hyphenAt.push([i, inHyphen, first]); }
     if (lemmaCounts && first && first.trace.length && !first.trace.some((id) => packIds.has(id)) && targets.get(word)?.has(first.expression)) {
         const c = Math.max(1, lemmaCounts.get(first.expression) ?? 0);
         const rule = res.filter((r) => !r.formOf)[1];
@@ -154,6 +171,7 @@ for (let i = 0; i < results.length; i++) {
     // A longer match (a phrase the dictionary has) is not a wrong lemma of the word.
     if ([...first.matched].length > [...words[i]].length) { continue; }
     wrong++;
+    wrongAt.add(i);
     wrongTokens += weight;
     if (ownEntry) { ownEntryWrong++; ownEntryWrongTokens += weight; }
     const key = first.trace.join('>') || '(as written)';
@@ -186,6 +204,16 @@ if (suspectsFile) {
     for (const g of all.filter((x) => x.label === '?').sort((a, b) => b.weight - a.weight).slice(0, 60)) {
         console.log(`  ${g.weight}\t${g.word} → ${g.first} [${g.trace}] (${g.c})\trule reading ${g.rule} [${g.ruleTrace}] (${g.rc})`);
     }
+}
+for (const [i, n, first] of hyphenAt) {
+    const word = words[i].toLowerCase();
+    const kind = !first ? 'nothing' : first.expression.startsWith('-') ? 'suffix' : (first.expression === word && (word === 'ზე' || word === 'თან')) ? 'related' : [...first.expression].length === 1 ? 'letter' : 'other';
+    hyphen.positions++; hyphen.tokens += n; hyphen[kind] += n;
+    if ((kind === 'letter' || kind === 'other') && !wrongAt.has(i)) { hyphen[kind + 'Hidden'] += n; }
+}
+if (hyphen.positions) {
+    const all = hyphenFile ? allTokens : judged, base = hyphenFile ? wrongTokens : wrong, pct = (x) => `${(100 * x / all).toFixed(2)}%`;
+    console.log(`case endings after a hyphen and the ordinal მე-: ${hyphen.tokens} ${hyphenFile ? `tokens of ${hyphen.positions} words` : 'positions'}; first result a suffix entry ${hyphen.suffix}, nothing ${hyphen.nothing}, a related adverb (ზე, თან) ${hyphen.related}, a letter ${hyphen.letter}, another word ${hyphen.other}; wrong ${base} (${pct(base)}), with the other words ${base + hyphen.otherHidden} (${pct(base + hyphen.otherHidden)}), with the letters too ${base + hyphen.otherHidden + hyphen.letterHidden} (${pct(base + hyphen.otherHidden + hyphen.letterHidden)})`);
 }
 console.log('wrong first results by trace:', [...byRule].sort((a, b) => b[1] - a[1]).slice(0, 15).map(([k, v]) => `${k}: ${v}`).join('; '));
 const freq = new Map();

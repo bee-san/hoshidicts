@@ -354,10 +354,11 @@ transform('word', 'word form', 'A frequent form whose lemma no regular rule reac
     // Frequent words that are not headwords and that the rules read as
     // another word: the attributives სამხრეთ "south" and ჩრდილო "north"
     // (სამხრეთ ოსეთი, not სამხრე "badge"; ჩრდილო კავკასია, not ჩრდილი
-    // "shadow"), and the suffix and postposition after a numeral and a
-    // hyphen (80-იანი, 800-მდე), which a hover reads from the suffix.
+    // "shadow"), and the suffix and postpositions after a numeral and a
+    // hyphen (80-იანი, 1990-იან, 800-მდე, 2010-ში, 50-ით, 1990-დან), which a
+    // hover reads from the suffix.
     ...[['სამხრეთ', 'სამხრეთი'], ['ჩრდილო', 'ჩრდილოეთი']].map(([w, l]) => wholeWord(w, l, [], NOM)),
-    ...[['იანი', '-იანი'], ['მდე', '-მდე']].map(([w, l]) => wholeWord(w, l, [], [])),
+    ...[['იანი', '-იანი'], ['იან', '-იანი'], ['მდე', '-მდე'], ['ში', '-ში'], ['ით', '-ით'], ['დან', '-დან']].map(([w, l]) => wholeWord(w, l, [], [])),
     // Words whose only form-of row names a wrong lemma, which a whole-word
     // rule outranks (docs/languages.md 9.6): ერთ, სამ, the forms of ერთი "one"
     // and სამი "three" before a noun (ერთ დღეს, not ერი "nation"; სამ საათში,
@@ -369,6 +370,9 @@ transform('word', 'word form', 'A frequent form whose lemma no regular rule reac
     ...[['ერთ', 'ერთი'], ['სამ', 'სამი'], ['რიგით', 'რიგი'], ['რაოდენობით', 'რაოდენობა'], ['ვანის', 'ვანი'], ['ბატონებთან', 'ბატონი']]
         .map(([w, l]) => wholeWord(w, l, [], NOM)),
     ...[['ელი', 'ელის'], ['დაწვა', 'წევს']].map(([w, l]) => wholeWord(w, l, [], ['v'])),
+    // The perfect of მუშაობს "to work" (უმუშავია "has worked"), which the
+    // perf rule reads as ამუშავებს "to make work" with one step fewer.
+    ...['უმუშავია', 'უმუშავიათ', 'მიმუშავია', 'გიმუშავია', 'გვიმუშავია'].map((w) => wholeWord(w, 'მუშაობს', [], ['v'])),
     // Archaic or emphatic forms that are not headwords: არას "nothing"
     // (dative; not არის), შინა "at home" (not შენს "your").
     ...[['არას', 'არა'], ['შინა', 'შინ']].map(([w, l]) => wholeWord(w, l, [], [])),
