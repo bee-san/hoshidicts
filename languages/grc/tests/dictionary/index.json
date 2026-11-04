@@ -4,7 +4,7 @@
   "revision": "1",
   "sequenced": false,
   "author": "hoshidicts",
-  "description": "A tiny Ancient Greek dictionary for languages/grc/tests/lookup.tsv, written for the pack (GPL-3.0-or-later). Its nouns, adjectives and verbs carry the part-of-speech tags n, adj and v, as in wty-grc-en; the article, pronouns, numerals, particles and adverbs have none, as there, so τούτοισι reaches the untagged τοῦτος only with lookup.untaggedTerms pass. δύνω is a form-of row for δύω, as in wty-grc-en. Each pair of words is one that a rule could put in the wrong order.",
+  "description": "A tiny Ancient Greek dictionary for languages/grc/tests/lookup.tsv, written for the pack (GPL-3.0-or-later). Its nouns, adjectives and verbs carry the part-of-speech tags n, adj and v, as in wty-grc-en; the article, pronouns, numerals, particles and adverbs have none, as there, so τούτοισι reaches the untagged τοῦτος only with lookup.untaggedTerms pass. Its form-of rows are written as wiktionary-to-yomitan writes them, keyed without diacritics with the form as reading (ἀνέμων of ἄνεμος, ἀνεμῶν of ἀνέμη; δύνω for δύω), and some lemmas have wty-grc-en's readings with length marks (εἰμῐ́, ᾰ̓́νεμος), which lose the engine's tie-break to a reading equal to the headword. Each pair of words is one that a rule could put in the wrong order.",
   "sourceLanguage": "grc",
   "targetLanguage": "en"
 }

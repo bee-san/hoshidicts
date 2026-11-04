@@ -130,7 +130,10 @@ for cat, n in QUOTA.items():
     pool = pools.get(cat, [])
     random.shuffle(pool)
     out += pool[:n]
+# Short category names in the files (um: UniMorph, tb: the treebank), which keeps tests/ small.
+SHORT = {'um-noun': 'um-n', 'um-adj': 'um-adj', 'agdt-verb': 'tb-v', 'agdt-participle': 'tb-ptc', 'agdt-noun': 'tb-n',
+         'agdt-adj': 'tb-adj', 'agdt-pronoun': 'tb-pron', 'agdt-adverb': 'tb-adv', 'agdt-numeral': 'tb-num', 'agdt-article': 'tb-art'}
 print('# category\tvalid\tsource\tterm\trule\treasons')
 for cat, form, lemma, rule, feats in out:
-    print(f'{cat}\t1\t{form}\t{lemma}\t{rule}\t*')
+    print(f'{SHORT[cat]}\t1\t{form}\t{lemma}\t{rule}\t*')
 print(f'{len(out)} rows: ' + ', '.join(f'{c} {min(n, len(pools.get(c, [])))}' for c, n in QUOTA.items()), file=sys.stderr)

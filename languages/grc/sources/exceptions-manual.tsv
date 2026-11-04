@@ -1,0 +1,82 @@
+# Exceptions chosen by hand (README.md, "Rule provenance"), written for this pack (GPL-3.0-or-later): forms that other rules
+# read first as a rarer word and that measure.py exceptions does not choose (the treebank's lemma is another headword, the
+# form is under its threshold, or it has an iota adscript). Chosen from reports/audit-hachi-lang-grc-c.md and measure.py
+# rules --forms and --changed on the whole treebank, so in-sample for README.md Measurements 4; at least 2 treebank tokens.
+# form	term	part of speech
+# the other form of the ἔλεγε collision, which the list leaves out
+ἔλεγον	λέγω	v
+# the treebank lemmatizes it as ἐρῶ, so the judge counts λέγω wrong too
+εἴρηται	λέγω	v
+# the treebank lemmatizes it as πλέω or πλέως
+πλεῖον	πλείων	adj
+# under the list's threshold
+πείσας	πείθω	v
+χίλια	χίλιοι	
+κοτε	ποτέ	
+σώσας	σῴζω	v
+# the dictionary alone shows the participle παρών; other rules read πείρω
+παρόντων	πάρειμι	v
+παρούσης	πάρειμι	v
+παρούσῃ	πάρειμι	v
+παρουσῶν	πάρειμι	v
+παρούσας	πάρειμι	v
+# the dictionary alone shows κήλη
+καλῇ	καλός	adj
+# the treebank writes the lemma ὄις
+οἰῶν	οἶς	n
+# the dictionary alone shows the Ionic μήν
+μῆνα	μείς	n
+μῆνας	μείς	n
+μηνῶν	μείς	n
+# iota adscript
+Ἅιδου	ᾍδης	
+Ἅιδης	ᾍδης	
+Ἅιδην	ᾍδης	
+Ἅιδα	ᾍδης	
+Ἅιδαν	ᾍδης	
+Ἅιδας	ᾍδης	
+ἐπύθετο	πυνθάνομαι	v
+ἐπύθοντο	πυνθάνομαι	v
+πύθωμαι	πυνθάνομαι	v
+πύθῃ	πυνθάνομαι	v
+πύθηται	πυνθάνομαι	v
+πύθησθε	πυνθάνομαι	v
+πυθοίμην	πυνθάνομαι	v
+πύθοιτο	πυνθάνομαι	v
+πυθέσθαι	πυνθάνομαι	v
+πυθόμενος	πυνθάνομαι	v
+πυθόμενον	πυνθάνομαι	v
+πυθόμενοι	πυνθάνομαι	v
+πυθομένη	πυνθάνομαι	v
+# the largest wrong first results of measure.py rules --forms that are not ambiguous: other rules read a rarer word or put it first (ἰχθυάω, βαρεῖα "grave accent", τύκος, νέμος, ἕλκος, τίω, πάθος, κτάομαι, ὄρνυμι, φανή, τυραννέω, δικαιόω, ἀξιόω, ὁρμέω, δήω, ἔτης, ἄω, λύζω, δύη, Λυκίων, ἶρις, ἴστε, ἵκω, τροπαῖος)
+ἰχθύων	ἰχθύς	n
+βαρεῖαν	βαρύς	adj
+βαρείας	βαρύς	adj
+βαρείῃ	βαρύς	adj
+τύχοι	τυγχάνω	v
+νέμων	νέμω	v
+ἕλκων	ἕλκω	v
+τίσασθαι	τίνω	v
+ἐτίσατο	τίνω	v
+πάθοι	πάσχω	v
+πάθω	πάσχω	v
+ὄρουσαν	ὀρούω	v
+φανῇ	φαίνω	v
+τυράννων	τύραννος	n
+δικαίῳ	δίκαιος	adj
+ἀξίους	ἄξιος	
+ὥρμησεν	ὁρμάω	v
+ὥρμησε	ὁρμάω	v
+ὁρμῆσαι	ὁρμάω	v
+ὁρμήσας	ὁρμάω	v
+δήσας	δέω	v
+ἐτέων	ἔτος	n
+ἔασε	ἐάω	v
+λελύσθαι	λύω	v
+δυῶν	δύο	
+Λυκίους	Λύκιος	n
+Ἶριν	Ἶρις	
+ἴσθ’	ἴσθ'	v
+ἵκεθ’	ἵκεθ'	v
+ἱκόμεθ’	ἱκόμεθ'	v
+τροπαῖον	τρόπαιον	n

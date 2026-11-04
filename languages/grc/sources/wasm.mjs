@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // The WebAssembly numbers of README.md (Measurements 5). Not run by any test.
 //
-//   node languages/grc/sources/wasm.mjs <hachidori checkout> <imported wty-grc-en> [runs]
+//   node languages/grc/sources/wasm.mjs <hachidori checkout> <imported wty-grc-en> <words> [runs]
 //
 // For Hachidori's prebuilt single-thread and threaded engines (extension/vendor/), in `runs` fresh engines
 // (default 10): hdw_language_load of this pack's language.json and transforms.json, and the live heap it adds
-// (hdw_memory_stats). In the last engine the imported dictionary is added, paged, and every text of
-// sources/benchmark-words.txt is looked up with hdw_lookup (16 results, scan length 16, default options) in
+// (hdw_memory_stats). In the last engine the imported dictionary is added, paged, and every text of <words>
+// (what measure.py benchmark writes) is looked up with hdw_lookup (16 results, scan length 16, default options) in
 // 6 passes, the first dropped.
 
 import {readFileSync, readdirSync} from 'node:fs';
@@ -14,10 +14,10 @@ import {dirname, join, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const [hachidori, dictionary, runsArg] = process.argv.slice(2);
+const [hachidori, dictionary, wordsFile, runsArg] = process.argv.slice(2);
 const language = readFileSync(join(here, '..', 'language.json'), 'utf8');
 const transforms = readFileSync(join(here, '..', 'transforms.json'), 'utf8');
-const words = readFileSync(join(here, 'benchmark-words.txt'), 'utf8').split('\n').filter(Boolean);
+const words = readFileSync(wordsFile, 'utf8').split('\n').filter(Boolean);
 const runs = Number(runsArg ?? 10);
 const q = (a, f) => [...a].sort((x, y) => x - y)[Math.min(a.length - 1, Math.floor(f * a.length))];
 

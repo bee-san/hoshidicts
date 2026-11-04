@@ -86,6 +86,8 @@ const THEN_STRIP_ACCENTS = [{normalize: 'NFD'}, {strip: '[\\u0300\\u0301\\u0342]
 // Capital Greek letters, plain or with diacritics: proper names start with one.
 const UPPER = charClass([...LETTERS.plainVowels, ...LETTERS.accentedVowels, ...LETTERS.consonants].filter((c) => /[\p{Lu}\p{Lt}]/u.test(c)));
 const NOT_SPACE = '[^ ]';
+// The pack's class of letters without an accent (language.json): a stem the accent transform may accent.
+const NO_ACCENT = '{unaccented}';
 
 /**
  * A rule as written, and its twin for the same text without any diacritic
@@ -167,7 +169,6 @@ function buildAccentTransform() {
   // (λυω → λύω, λειπω → λείπω, ἀγω → ἄγω, σῳζω → σῴζω, βουλομαι → βούλομαι; the last vowel of a diphthong
   // carries it: παιδεύω, ἀκούω). The rule puts a mark for the ending, an acute on the text's last vowel, then the
   // ending back: one rule for every stem. Only a stem without an accent takes one.
-  const NO_ACCENT = '{unaccented}';
   const ACUTE = Object.fromEntries([...PLAIN_TARGETS, ...DIAERESIS_TARGETS, ...BREATHING_TARGETS, ...SUBSCRIPT_TARGETS].map((v) => [v, acute(v)]));
   const LONG = [...'αηιυω', ...'ἀἁἠἡἰἱὐὑὠὡ', ...SUBSCRIPT_TARGETS];
   const CIRCUMFLEX = Object.fromEntries(LONG.map((v) => [v, NFC(v + '\u0342')]));
@@ -276,6 +277,8 @@ function nominal(id, ending, lemma, conditionsOut, opts = {}) {
   const ue = ultimaLength(e, opts.ultima);
   const ul = ultimaLength(l, opts.lemmaUltima);
   const syllablesChange = nuclei(e).length !== nuclei(l).length;
+  // A stem without an accent (NO_ACCENT) has no accent to turn.
+  if (so.stem.stemCharacters === NO_ACCENT) return;
   if ((ue !== 'short' || syllablesChange) && ul !== 'long') suffix(id, e, l, cin, conditionsOut, {...so, then: THEN_ACUTE_TO_CIRC, writtenOnly: true});
   if ((ue !== 'long' || syllablesChange) && ul !== 'short') suffix(id, e, l, cin, conditionsOut, {...so, then: THEN_CIRC_TO_ACUTE, writtenOnly: true});
   // The accent on the ending (θεοῦ, νυκτός, χωρῶν): the removeAccents variant reaches the rule above, and the
@@ -284,7 +287,18 @@ function nominal(id, ending, lemma, conditionsOut, opts = {}) {
 
 /** A literal rule with accented endings (θεοῦ → θεός), and its diacritic-free twin. */
 function literal(id, ending, lemma, conditionsOut, opts = {}) {
-  suffix(id, ending, lemma, [], conditionsOut, {stem: {stemMinLength: 2, ...(opts.stem ?? {})}});
+  suffix(id, ending, lemma, [], conditionsOut, {stem: {stemMinLength: 2, ...(opts.stem ?? {})}, writtenOnly: opts.writtenOnly});
+}
+
+/**
+ * The first declension's genitive plural. A noun's is always -ῶν (γνωμῶν, πολιτῶν), so -ων after an accented stem
+ * is not a noun's: it is the feminine of an adjective, accented as the masculine (ἀξίων, φίλων), or another word's
+ * (ἀνέμων of ἄνεμος, Αἰγυπτίων of Αἰγύπτιος). A noun's -ων is read only after a stem without an accent: the text
+ * the removeAccents variant leaves of -ῶν, or a text written without accents.
+ */
+function firstGenitivePlural(lemma, adjective) {
+  nominal('gen-pl', 'ων', lemma, ['n', ...(adjective ? [] : ['adj'])], {stem: {stemCharacters: NO_ACCENT}});
+  if (adjective) nominal('gen-pl', 'ων', lemma, ['adj', 'fem']);
 }
 
 const NA = ['n', 'adj'];
@@ -317,9 +331,13 @@ function buildNominal() {
   for (const [e, c] of second) nominalBoth(c, e, 'ος');
   const secondNeut = [['ου', 'gen-sg'], ['οιο', 'gen-sg'], ['ῳ', 'dat-sg'], ['α', 'na-pl'], ['ων', 'gen-pl'], ['οις', 'dat-pl'],
     ['οισι', 'dat-pl'], ['οισιν', 'dat-pl'], ['ω', 'nav-du'], ['οιν', 'gd-du']];
-  for (const [e, c] of secondNeut) nominalBoth(c, e, 'ον', {ultima: e === 'α' ? 'short' : undefined, out: c === 'na-pl' ? ['n', 'adj', 'neu'] : NA});
+  // οὖσα is the participle of εἰμί, not the plural of the rare οὖσον "ship's tackle".
+  for (const [e, c] of secondNeut) {
+    nominalBoth(c, e, 'ον', {ultima: e === 'α' ? 'short' : undefined, out: c === 'na-pl' ? ['n', 'adj', 'neu'] : NA, ...(c === 'na-pl' ? {stem: {stemNotStartsWithText: 'οὖσ'}} : {})});
+  }
   for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['όν', 'acc-sg'], ['έ', 'voc-sg'], ['οί', 'nom-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['οῖσι', 'dat-pl'], ['οῖσιν', 'dat-pl'], ['ούς', 'acc-pl'], ['ώ', 'nav-du'], ['οῖν', 'gd-du'], ['οῖο', 'gen-sg']]) literal(c, e, 'ός', NA);
-  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['ά', 'na-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['ώ', 'nav-du'], ['οῖν', 'gd-du']]) literal(c, e, 'όν', NA);
+  // The plural -ά as written only: its twin without accents is the rule above, which keeps οὖσα from οὖσον.
+  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['ά', 'na-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['ώ', 'nav-du'], ['οῖν', 'gd-du']]) literal(c, e, 'όν', NA, {writtenOnly: c === 'na-pl'});
   // Attic second declension (νεώς, λεώς, λαγώς) and contracted -οῦς, -οῦν (νοῦς, πλοῦς, ὀστοῦν).
   for (const [e, c] of [['ω', 'gen-sg'], ['ῳ', 'dat-sg'], ['ων', 'acc-sg'], ['ῳ', 'nom-pl'], ['ων', 'gen-pl'], ['ῳς', 'dat-pl'], ['ως', 'acc-pl']]) nominalBoth(c, e, 'ως');
   for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['οῦν', 'acc-sg'], ['οῖ', 'nom-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['οῦς', 'acc-pl']]) literal(c, e, 'οῦς', NA);
@@ -333,13 +351,19 @@ function buildNominal() {
     ['εων', 'gen-pl'], ['αων', 'gen-pl'], ['ηφι', 'epic-phi'], ['ηφιν', 'epic-phi'],
   ];
   const NAF = ['n', 'adj', 'fem'];
-  for (const [e, c] of firstFem) nominalBoth(c, e, 'η', {ultima: e === 'α' ? 'long' : undefined, out: NAF});
+  for (const [e, c] of firstFem) {
+    if (e === 'ων') firstGenitivePlural('η', true);
+    else nominalBoth(c, e, 'η', {ultima: e === 'α' ? 'long' : undefined, out: NAF});
+  }
   const firstA = [
     ['ας', 'gen-sg'], ['ης', 'gen-sg'], ['ᾳ', 'dat-sg'], ['ῃ', 'dat-sg'], ['αν', 'acc-sg'], ['ην', 'acc-sg'],
     ['αι', 'nom-pl'], ['ων', 'gen-pl'], ['αις', 'dat-pl'], ['ας', 'acc-pl'], ['αιν', 'gd-du'],
     ['ῃσι', 'dat-pl'], ['ῃσιν', 'dat-pl'], ['αισι', 'dat-pl'], ['αισιν', 'dat-pl'], ['εων', 'gen-pl'], ['αων', 'gen-pl'],
   ];
-  for (const [e, c] of firstA) nominalBoth(c, e, 'α', {out: NAF});
+  for (const [e, c] of firstA) {
+    if (e === 'ων') firstGenitivePlural('α', true);
+    else nominalBoth(c, e, 'α', {out: NAF});
+  }
   for (const e of ['ηφι', 'ηφιν']) nominalBoth('epic-phi', e, 'α');
   // Ionic η for Attic ᾱ: χώρη → χώρα. Doric and Aeolic ᾱ for Attic η: δίκα, ἄταν → δίκη, ἄτη.
   transform('ionic-eta', 'Ionic η', 'Ionic η where Attic has ᾱ (χώρη, ἡμέρη → χώρα, ἡμέρα).');
@@ -352,14 +376,21 @@ function buildNominal() {
     ['α', 'voc-sg'], ['η', 'voc-sg'], ['αι', 'nom-pl'], ['ων', 'gen-pl'], ['αις', 'dat-pl'], ['ας', 'acc-pl'],
     ['ῃσι', 'dat-pl'], ['ῃσιν', 'dat-pl'], ['εων', 'gen-pl'], ['αων', 'gen-pl'], ['αιν', 'gd-du'], ['α', 'nav-du'],
   ];
-  for (const [e, c] of firstMasc) nominalBoth(c, e, 'ης', {ultima: e === 'α' ? 'short' : undefined});
+  for (const [e, c] of firstMasc) {
+    if (e === 'ων') firstGenitivePlural('ης', false);
+    else nominalBoth(c, e, 'ης', {ultima: e === 'α' ? 'short' : undefined});
+  }
   const firstMascA = [['ου', 'gen-sg'], ['α', 'gen-sg'], ['ᾳ', 'dat-sg'], ['αν', 'acc-sg'], ['α', 'voc-sg'],
     ['αι', 'nom-pl'], ['ων', 'gen-pl'], ['αις', 'dat-pl'], ['ας', 'acc-pl'], ['εω', 'gen-sg'], ['αο', 'gen-sg'], ['αιν', 'gd-du']];
-  for (const [e, c] of firstMascA) nominalBoth(c, e, 'ας');
+  for (const [e, c] of firstMascA) {
+    if (e === 'ων') firstGenitivePlural('ας', false);
+    else nominalBoth(c, e, 'ας');
+  }
   // Oxytones keep the accent on the ending: τιμῆς → τιμή, κριτοῦ → κριτής, στρατιᾶς → στρατιά.
-  for (const [e, c] of [['ῆς', 'gen-sg'], ['ῇ', 'dat-sg'], ['ήν', 'acc-sg'], ['αί', 'nom-pl'], ['ῶν', 'gen-pl'], ['αῖς', 'dat-pl'], ['άς', 'acc-pl'], ['ά', 'nav-du'], ['αῖν', 'gd-du']]) literal(c, e, 'ή', NAF);
-  for (const [e, c] of [['ᾶς', 'gen-sg'], ['ᾷ', 'dat-sg'], ['άν', 'acc-sg'], ['αί', 'nom-pl'], ['ῶν', 'gen-pl'], ['αῖς', 'dat-pl'], ['άς', 'acc-pl']]) literal(c, e, 'ά', NAF);
-  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῇ', 'dat-sg'], ['ήν', 'acc-sg'], ['ά', 'voc-sg'], ['αί', 'nom-pl'], ['ῶν', 'gen-pl'], ['αῖς', 'dat-pl'], ['άς', 'acc-pl']]) literal(c, e, 'ής', NA);
+  // The genitive plural -ῶν as written only: its twin without accents is firstGenitivePlural's.
+  for (const [e, c] of [['ῆς', 'gen-sg'], ['ῇ', 'dat-sg'], ['ήν', 'acc-sg'], ['αί', 'nom-pl'], ['ῶν', 'gen-pl'], ['αῖς', 'dat-pl'], ['άς', 'acc-pl'], ['ά', 'nav-du'], ['αῖν', 'gd-du']]) literal(c, e, 'ή', NAF, {writtenOnly: c === 'gen-pl'});
+  for (const [e, c] of [['ᾶς', 'gen-sg'], ['ᾷ', 'dat-sg'], ['άν', 'acc-sg'], ['αί', 'nom-pl'], ['ῶν', 'gen-pl'], ['αῖς', 'dat-pl'], ['άς', 'acc-pl']]) literal(c, e, 'ά', NAF, {writtenOnly: c === 'gen-pl'});
+  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῇ', 'dat-sg'], ['ήν', 'acc-sg'], ['ά', 'voc-sg'], ['αί', 'nom-pl'], ['ῶν', 'gen-pl'], ['αῖς', 'dat-pl'], ['άς', 'acc-pl']]) literal(c, e, 'ής', NA, {writtenOnly: c === 'gen-pl'});
 
   // Third declension: [stem end, nominative ending, dative plural]. Neuters have -α in the plural.
   const third = [
@@ -787,7 +818,8 @@ function contractEndings() {
   for (const [lemma, set] of Object.entries(sets)) {
     const mid = stripAccents(lemma).replace(/ω$/u, 'ομαι');
     const lemmasAct = [lemma];
-    const lemmasMid = [lemma, NFC(lemma.replace(/ω$/u, 'ομαι'))];
+    // -ομαι before -ω, as for thematic verbs (μηχανῶνται → μηχανάομαι before μηχανάω).
+    const lemmasMid = [NFC(lemma.replace(/ω$/u, 'ομαι')), lemma];
     const emit = (prefixId, label, list, out, lemmas) => {
       for (const [e, person] of list) {
         const id = `${prefixId}-${person}`;
@@ -1304,11 +1336,13 @@ function buildAthematic() {
   athematic('κεῖμαι', [['ath-impf', 'ἐκείμην', 'ἔκεισο', 'ἔκειτο', 'ἐκείμεθα', 'ἔκεισθε', 'ἔκειντο'], ['ath-mid', 'κεῖσαι', 'κεῖται', 'κείμεθα', 'κεῖσθε', 'κεῖνται', 'κέαται', 'κείαται', 'κεῖτο', 'κέατο', 'κείατο', 'κεῖσο', 'κείσθω', 'κεῖσθαι', ...menosParticiple('κειμεν'), 'κέηται', 'κέωνται', 'κέοιτο', 'κείαται', 'κείατο']]);
   athematic('κάθημαι', [['ath-mid', 'κάθησαι', 'κάθηται', 'καθήμεθα', 'κάθησθε', 'κάθηνται', 'ἐκαθήμην', 'ἐκάθητο', 'καθῆστο', 'ἐκάθηντο', 'καθῆσθαι', ...menosParticiple('καθημεν'), 'κάθησο', 'καθήσθω', 'καθῆται', 'καθῆσθε', 'καθῶμαι', 'καθῆσθαι']]);
   athematic('ἧμαι', [['ath-mid', 'ἧσαι', 'ἧσται', 'ἥμεθα', 'ἧσθε', 'ἧνται', 'ἥαται', 'εἵαται', 'ἥμην', 'ἧστο', 'ἥατο', 'εἵατο', 'ἧσθαι', ...menosParticiple('ἡμεν')]]);
-  for (const [lemma, stem] of [['δύναμαι', 'δυν'], ['ἐπίσταμαι', 'ἐπιστ']]) {
-    const forms = ['ασαι', 'ᾳ', 'αται', 'άμεθα', 'ασθε', 'ανται', 'άμην', 'ασο', 'ω', 'ατο', 'άμεθα', 'αντο', 'ῶμαι', 'ῇ', 'ῆται', 'ώμεθα', 'ῶνται', 'αίμην', 'αιτο', 'αιντο', 'ασθαι', 'άμενος', 'αμένου', 'αμένῳ', 'άμενον', 'άμενοι', 'αμένων', 'αμένοις', 'αμένους', 'αμένη', 'αμένης', 'αμένην',
+  for (const [lemma, stem, accentedStem] of [['δύναμαι', 'δυν', 'δύν'], ['ἐπίσταμαι', 'ἐπιστ', 'ἐπίστ']]) {
+    // The subjunctive and optative are recessive, as the indicative (δύνηται, δύνωνται, δύναιτο; ἐπίστηται).
+    const forms = ['ασαι', 'ᾳ', 'αται', 'άμεθα', 'ασθε', 'ανται', 'άμην', 'ασο', 'ω', 'ατο', 'άμεθα', 'αντο', 'ωμαι', 'ῃ', 'ηται', 'ώμεθα', 'ησθε', 'ωνται', 'αίμην', 'αιο', 'αιτο', 'αίμεθα', 'αισθε', 'αιντο', 'ασθαι', 'άμενος', 'αμένου', 'αμένῳ', 'άμενον', 'άμενοι', 'αμένων', 'αμένοις', 'αμένους', 'αμένη', 'αμένης', 'αμένην',
       'ήσομαι', 'ήσῃ', 'ήσεται', 'ησόμεθα', 'ήσεσθε', 'ήσονται', 'ήσεσθαι', 'ησόμενος', 'ήθην', 'ήθης', 'ήθη', 'ήθημεν', 'ήθησαν', 'ηθῆναι', 'ηθείς', 'ηθέντες', 'ηθῶ', 'ηθείην', 'ήθητε'];
     const out = [];
-    for (const f of forms) out.push(NFC(stem + f));
+    // An ending without an accent takes the recessive one on the stem's last vowel (δύναται, δύνωμαι, δύνῃ).
+    for (const f of forms) out.push(NFC((hasAccent(f) ? stem : accentedStem) + f));
     // ἐδυνάμην, ἠδυνάμην; ἠπιστάμην
     // An ending without an accent takes the recessive one on the stem (ἐδύνατο, ἠπίστατο).
     const aug = lemma === 'δύναμαι' ? [['ἐδυν', 'ἐδύν'], ['ἠδυν', 'ἠδύν']] : [['ἠπιστ', 'ἠπίστ']];
@@ -1682,26 +1716,36 @@ function buildClitics() {
 // Exceptions
 // ---------------------------------------------------------------------------
 
-// Forms that other rules read first as a rarer word: ἔλεγε as ἔλεγος "lament" for λέγω, ἐμοῦ as ἐμός for ἐγώ. Among
-// equal readings the engine puts the term found first first, and it reads a text without diacritics before the
-// text as written, where the dictionary's form-of rows name both terms in their own order; so each form is a whole
-// word in the first transform, as written, without accents and without any diacritic. sources/exceptions.tsv is
-// written by `measure.py exceptions` (README.md, "Rule provenance"); MANUAL adds a form that list does not have.
-const MANUAL_EXCEPTIONS = [
-  // The other form of the ἔλεγε collision, the example of both audits (17 lookups of the real text, which the
-  // list leaves out).
-  ['ἔλεγον', 'λέγω', 'v'],
-];
+// Forms that other rules read first as a rarer word: ἔλεγε as ἔλεγος "song of mourning" for λέγω, ἐμοῦ as ἐμός
+// for ἐγώ. Among equal readings the engine puts the term found first first; it reads the text without diacritics
+// and without accents before the text as written, and in each it finds a rule's term before the terms the
+// dictionary's form-of rows name. So each form is a whole word as written and without accents, read as the term
+// the dictionary alone puts first. The transform's position does not matter.
+// sources/exceptions.tsv is written by `measure.py exceptions` (README.md, "Rule provenance");
+// sources/exceptions-manual.tsv is written by hand.
+// Forms of the list left out: chosen on 26 treebank files that are mostly Homer, they fit Homer only.
+const EXCEPTIONS_LEFT_OUT = {
+  'ἄκουσα': 'Homer\'s unaugmented aorist of ἀκούω; in Attic the feminine of ἄκων "unwilling", which the rules read',
+  'ἄκουσαν': 'Homer\'s unaugmented aorist of ἀκούω; in Attic the feminine of ἄκων "unwilling", which the rules read',
+};
+
+const readTsv = (name) => readFileSync(join(here, name), 'utf8').split('\n').filter((l) => l && !l.startsWith('#')).map((l) => l.split('\t'));
+
+/** The exceptions: [{form, term, tag}], from sources/exceptions.tsv and sources/exceptions-manual.tsv. */
+export function exceptionList() {
+  const rows = readTsv('exceptions.tsv').filter(([form]) => !(NFC(form) in EXCEPTIONS_LEFT_OUT));
+  return [...rows, ...readTsv('exceptions-manual.tsv')].map(([form, term, tags]) => ({
+    form: NFC(form), term: NFC(term), tag: tags.split(' ').find((t) => t in conditions && conditions[t].isDictionaryForm),
+  }));
+}
 
 function buildExceptions() {
-  transform('exceptions', 'common form', 'A common form that other rules read first as a rarer word, read first as the term the dictionary alone puts first (ἔλεγον, ἔλεγε → λέγω, not ἔλεγος; ἐμοῦ → ἐγώ, not ἐμός; ἔτη → ἔτος, not ἔτης).');
-  const rows = readFileSync(join(here, 'exceptions.tsv'), 'utf8').split('\n').filter((l) => l && !l.startsWith('#')).map((l) => l.split('\t').slice(0, 3));
-  for (const [form, term, tags] of [...rows, ...MANUAL_EXCEPTIONS]) {
-    const tag = tags.split(' ').find((t) => t in conditions && conditions[t].isDictionaryForm);
+  transform('exceptions', 'common form', 'A common form that other rules read first as a rarer word, read as the term the dictionary alone puts first (ἔλεγε → λέγω, not ἔλεγος; ἐμοῦ → ἐγώ, not ἐμός; ἔτη → ἔτος, not ἔτης).');
+  for (const {form, term, tag} of exceptionList()) {
     // graveToAcute has turned a grave into an acute before any rule reads the text (δεινὰ → δεινά).
     const written = NFC(NFD(form).replace(/\u0300/gu, '\u0301'));
-    for (const spelling of new Set([written, stripAccents(written), stripAll(written)])) {
-      add('exceptions', {type: 'wholeWord', inflected: spelling, deinflected: NFC(term), conditionsIn: [], conditionsOut: tag ? [tag] : []});
+    for (const spelling of new Set([written, stripAccents(written)])) {
+      add('exceptions', {type: 'wholeWord', inflected: spelling, deinflected: term, conditionsIn: [], conditionsOut: tag ? [tag] : []});
     }
   }
 }

@@ -5,10 +5,13 @@
     python3 measure.py text <hover.tsv> [--sample 60]   real text: first results judged against the treebank
     python3 measure.py behind <hover.tsv>               the same at words after an article, pronoun, particle or εἰμί
     python3 measure.py frequent <agdt dir>              the 10,000 most frequent forms of the whole treebank
-    python3 measure.py rules <hover.tsv | agdt dir> [--forms 40]
+    python3 measure.py rules <hover.tsv | agdt dir> [--forms 40] [--changed 40]
                                                         the first results the rules change: the pack against the same
                                                         pack without rules (the dictionary's form-of rows alone); --forms
-                                                        lists the forms they make wrong, largest first
+                                                        lists the forms they make wrong, largest first; --changed the
+                                                        forms whose first result they change while the judge calls
+                                                        both wrong (the treebank's lemma is neither: εἰμί for οὖσα,
+                                                        where the dictionary alone shows ὤν), for judging by hand
     python3 measure.py exceptions <agdt dir> --exclude <files> [--min 10] > sources/exceptions.tsv
                                                         the forms of the frequency list whose first result the rules
                                                         (all but the transform `exceptions`) turn from right to wrong
@@ -18,7 +21,7 @@
     python3 measure.py compare <hover.tsv> --other <languages dir> [--trace <transform id>]
                                                         the first results that change between --languages and --other,
                                                         and the lookups of --other with a result through the transform
-    python3 measure.py benchmark <hover.tsv>            sources/benchmark-words.txt: 60 texts from inflected words
+    python3 measure.py benchmark <hover.tsv> > words    the benchmark's 60 texts from inflected words
     python3 measure.py traces <hover.tsv>               right first results whose trace starts with a case: does the
                                                         case and number agree with the treebank's tag?
 
@@ -29,12 +32,11 @@ results, scan length 16, default options (lookup-batch). Every token is judged a
 digits removed):
 
 - right: the first result is the lemma;
-- variant: the same word written otherwise: other accents, vowel-length marks or capitals (not another breathing,
-  which makes another word: οἷος, οἶος), when the lemma as the treebank spells it is not among the results, or when
-  the first result's definitions name it (πέρι "initial-stressed form of περί"); or the dictionary's own entry for
-  the word as written whose definitions name the lemma or say it is the word elided or contracted (δ' "apocopic form
-  of δέ"). The definitions are those the dictionary lists, not its grammar or etymology notes (lookup-batch's
-  gloss), and a word naming itself does not count. So ἐτός "in vain" for ἔτος "year", with ἔτος listed, is wrong;
+- variant: the same word written otherwise (accents, vowel-length marks, an iota subscript, capitals; not another
+  breathing: οἷος, οἶος), when the treebank's spelling of the lemma is not among the results or the first result's
+  definitions name it (πέρι "initial-stressed form of περί"); or the word's own entry whose definitions name the
+  lemma or say it is the word elided or contracted (δ' "apocopic form of δέ"). Definitions are the glosses only
+  (lookup-batch's gloss), and a word naming itself does not count;
 - wrong: another lemma, or the word's own entry for another word (τῷ "then", for the article); `listed` when the
   lemma is among the 16 results;
 - none: no result.
@@ -58,6 +60,7 @@ ap.add_argument('--n', type=int, default=10000)
 ap.add_argument('--other')
 ap.add_argument('--trace')
 ap.add_argument('--forms', type=int, default=0)
+ap.add_argument('--changed', type=int, default=0)
 ap.add_argument('--exclude', default='')
 ap.add_argument('--min', type=int, default=10)
 a = ap.parse_args()
@@ -67,8 +70,8 @@ ACCENTS = re.compile('[\u0300\u0301\u0342\u0304\u0306]')
 
 
 def same_word(x, y):
-    """The same letters and breathings: accents, vowel length and capitals aside."""
-    f = lambda s: NFC(ACCENTS.sub('', unicodedata.normalize('NFD', s))).lower().replace('ς', 'σ')
+    """The same letters and breathings: accents, vowel length, the iota subscript and capitals aside."""
+    f = lambda s: NFC(ACCENTS.sub('', unicodedata.normalize('NFD', s).replace('\u0345', ''))).lower().replace('ς', 'σ')
     return f(x) == f(y)
 
 
@@ -171,7 +174,8 @@ def frequent_forms(agdt):
 
 def no_rules_pack(drop=None):
     """A copy of the pack whose transforms are only those its settings name (off by default): its lookups show
-    what the processors and the dictionary's form-of rows give alone. With drop, the pack without that transform."""
+    what the processors and the dictionary's form-of rows give alone. With drop, the pack without the transforms
+    whose id starts with it."""
     tmp = Path(tempfile.mkdtemp(prefix='grc-norules-'))
     src = Path(a.languages) / 'grc'
     (tmp / 'grc').mkdir()
@@ -179,7 +183,7 @@ def no_rules_pack(drop=None):
     lang = json.loads((src / 'language.json').read_text(encoding='utf-8'))
     keep = {t for s in lang.get('settings', []) for t in s.get('effect', {}).get('transforms', [])}
     rules = json.loads((src / 'transforms.json').read_text(encoding='utf-8'))
-    rules['transforms'] = [t for t in rules['transforms'] if (t['id'] != drop if drop else t['id'] in keep)]
+    rules['transforms'] = [t for t in rules['transforms'] if (not t['id'].startswith(drop) if drop else t['id'] in keep)]
     (tmp / 'grc' / 'transforms.json').write_text(json.dumps(rules, ensure_ascii=False), encoding='utf-8')
     return tmp
 
@@ -249,9 +253,15 @@ elif a.command == 'rules':
     ex = collections.defaultdict(collections.Counter)
     forms = collections.Counter()
     form_ex = {}
+    changed = collections.Counter()
+    changed_ex, changed_gold = {}, collections.defaultdict(collections.Counter)
     for word, gold, n, x, y in triples:
         ok_pack = judge(x, gold, word) in ('right', 'variant')
         ok_bare = judge(y, gold, word) in ('right', 'variant')
+        if not ok_pack and not ok_bare and x and y and x[0]['expression'] != y[0]['expression']:
+            changed[word] += n
+            changed_gold[word][gold] += n
+            changed_ex[word] = f'{x[0]["expression"]} [{trace(x[0])}], without rules {y[0]["expression"]} [{trace(y[0])}]'
         if ok_pack and not ok_bare:
             made['n'] += n
         elif ok_bare and not ok_pack:
@@ -271,6 +281,12 @@ elif a.command == 'rules':
         print(f'the {a.forms} forms the rules make wrong most often ({len(forms)} forms in all):')
         for w, n in forms.most_common(a.forms):
             print(f'  {n:6d} {w} → {form_ex[w]}')
+    if a.changed:
+        print(f'the {a.changed} forms whose first result the rules change while both are judged wrong '
+              f'({sum(changed.values())} tokens in {len(changed)} forms):')
+        for w, n in changed.most_common(a.changed):
+            golds = '/'.join(g for g, _ in changed_gold[w].most_common())
+            print(f'  {n:6d} {w} → {changed_ex[w]}; treebank {golds}')
 elif a.command == 'exceptions':
     top, count, golds = frequent_forms(a.input)
     bare, without = no_rules_pack(), no_rules_pack('exceptions')
@@ -292,10 +308,10 @@ elif a.command == 'exceptions':
           f'{a.exclude or "nothing"}, those whose first result')
     print(f'# the rules (all but this transform) turn from right to wrong for at least {a.min} tokens net, and the other forms with a net loss of the same')
     print('# collision (the same first result with the rules and without them). Each is read as the term the dictionary alone puts first.')
-    print('# form\tterm\ttags\tnet tokens\tfirst with the rules [trace]')
+    print('# form\tterm\ttags\tnet tokens')
     for w, x, y, net in rows:
         if net >= a.min or (net >= 1 and (x[0]['expression'], y[0]['expression']) in chosen):
-            print(f'{w}\t{y[0]["expression"]}\t{y[0].get("rules", "")}\t{net}\t{x[0]["expression"]} [{trace(x[0])}]')
+            print(f'{w}\t{y[0]["expression"]}\t{y[0].get("rules", "")}\t{net}')
 elif a.command in ('text', 'behind'):
     items = read_hovers(a.input)
     results = lookup([it['text'] for it in items])

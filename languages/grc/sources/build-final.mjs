@@ -1,37 +1,17 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Writes languages/grc/transforms.json, the final rule set (docs/languages.md,
-// section 14 step 5), and sources/yomitan-provenance.tsv:
+// Writes transforms.json, the final rule set (docs/languages.md 14 step 5), sources/yomitan-provenance.tsv and
+// tests/yomitan.tsv:   node languages/grc/sources/build-final.mjs
 //
-//   node languages/grc/sources/build-final.mjs
+// The final set is the union of sources/own.json and sources/yomitan.json less every Yomitan rule an own rule
+// repeats (the same ending replaced by the same text, on a text without conditions, with a part of speech in
+// common, in the own transform of the same form, CATEGORY; the own rule is marked `source: "both"`) and the
+// Yomitan rules of LEFT_OUT. A repeated rule in KEEP stays: it reaches texts the own rule's stem minimum leaves
+// out. Yomitan's other rules stay, `source: "yomitan"`, after the own transforms.
 //
-// The final set is the union of sources/own.json and sources/yomitan.json
-// (tools/merge-transforms.mjs) less:
-//
-// - every Yomitan rule an own rule repeats: the own rule, which makes the
-//   same deinflection, is marked `source: "both"`, and the trace names the
-//   form more exactly (ind-act-2sg, gen-sg). Two rules make the same
-//   deinflection when they replace the same ending with the same text, both
-//   on a text without conditions, with a part of speech in common, in
-//   transforms of the same form (CATEGORY);
-// - the Yomitan rules of LEFT_OUT, for the measurements of README.md.
-//
-// A repeated Yomitan rule in KEEP stays as well: it reaches texts the own rule's stem minimum leaves out.
-//
-// Yomitan's other rules stay, `source: "yomitan"`, in their transforms after
-// the own ones. They read the text without diacritics (λυεις, ανθρωπω), which
-// the own rules leave to the dictionary's form-of rows.
-//
-// sources/yomitan-provenance.tsv lists every Yomitan rule with the own
-// transforms that make its deinflection, `kept` or `left out`.
-//
-// It also rewrites tests/yomitan.tsv (Yomitan's test, as
-// tools/port-yomitan-tests.mjs writes it, or as this script last wrote it):
-// the reasons column becomes `*` (the final rules reach most lemmas through
-// own transforms, whose ids are not Yomitan's), and a row is a negative when
-// every Yomitan rule that makes its deinflection is left out with
-// `rows: 'negative'`. A left-out rule whose rows another rule of the final set
-// still reads (`rows: 'positive'`) leaves them as they are.
+// tests/yomitan.tsv (as tools/port-yomitan-tests.mjs or this script wrote it) gets the reasons `*` (the own
+// transforms' ids are not Yomitan's); a row is a negative when every Yomitan rule that makes it is left out with
+// `rows: 'negative'`.
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
