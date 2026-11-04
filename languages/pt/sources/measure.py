@@ -27,9 +27,17 @@ host's hover. A result is visible unless all its glossaries are form-of rows
   the lookup also lists, and the first lemma's citation form is at least ten
   times rarer in the frequency lists (--freq) than that other lemma's: `sua`
   shown as suar (to sweat) before seu. The frequent mode uses its own list.
-  An adjective that the dictionary also gives as the other lemma's past
-  participle is not counted against it (falada shown as falado, then falar):
-  the participle's feminine and plural are adjectives or passives.
+  An adjective (a headword with an `adj` entry) that the dictionary also
+  gives as the other lemma's past participle is not counted against it
+  (falada shown as falado, then falar): the participle's feminine and plural
+  are adjectives or passives.
+- Two kinds of right result need the context to judge, so they are counted
+  apart and sampled for a hand check: "nounOrParticiple", a word in
+  -ado/-ada/-ido/-ida (or their plurals) shown as a noun-only headword through
+  the plural or the feminine while the lookup also lists the participle's
+  verb (criada as criado, a servant, before criar); and "nounOrTu", a word in
+  -as/-es shown as a noun's plural while the lookup also lists a tu form
+  (falas as fala, a speech, before falar).
 
 frequent: the list's first <top> words; a word counts as reached when a
 deinflection of it (hoshidicts-cli deinflect, next to lookup-batch) is in its
@@ -108,6 +116,21 @@ def load_participles(zip_path):
     return out
 
 
+def load_tags(zip_path):
+    """term -> the part-of-speech tags of its own entries (not of its form-of rows)."""
+    z = zipfile.ZipFile(zip_path)
+    out = defaultdict(set)
+    for name in sorted(n for n in z.namelist() if n.startswith('term_bank')):
+        for row in json.loads(z.read(name)):
+            tags = row[2].split()
+            if 'non-lemma' not in tags:
+                out[row[0]] |= set(tags)
+    return out
+
+
+PARTICIPLE_ENDING = re.compile(r'(ad|id|íd)(o|a|os|as)$')
+
+
 def norm(text):
     return unicodedata.normalize('NFKC', text).lower()
 
@@ -123,11 +146,12 @@ def read_freq(paths):
 
 
 class Judge:
-    def __init__(self, refs, lemmas, transform_ids=(), freq=None, participles=()):
+    def __init__(self, refs, lemmas, transform_ids=(), freq=None, participles=(), tags=None):
         self.refs, self.lemmas = refs, lemmas
         self.transform_ids = set(transform_ids)
         self.freq = freq or {}
         self.participles = set(participles)
+        self.tags = tags or {}
 
     def l1(self, text):
         out = set()
@@ -166,16 +190,34 @@ class Judge:
         if result['expression'] in names or norm(result['expression']) in {norm(n) for n in names}:
             if answer is not None and self.rare_first(result, answer):
                 return 'rare'
+            if answer is not None:
+                kind = self.needs_context(result, answer)
+                if kind:
+                    return kind
             return 'right'
         return 'wrong' if self.l1(matched) else 'unjudged'
+
+    def needs_context(self, result, answer):
+        """nounOrParticiple / nounOrTu (see the header) or None."""
+        step = result['trace'][0] if result['trace'] else ''
+        if 'adj' in self.tags.get(result['expression'], ()) or step not in ('plural', 'feminine'):
+            return None
+        later = [r['trace'][0] for r in answer['results'] if not r['formOf'] and r['trace'] and r is not result]
+        word = norm(result['matched'])
+        if PARTICIPLE_ENDING.search(word) and 'participle' in later:
+            return 'nounOrParticiple'
+        if step == 'plural' and re.search(r'(as|es)$', word) and ('present-tu' in later or 'subjunctive-tu' in later):
+            return 'nounOrTu'
+        return None
 
     def rare_first(self, result, answer):
         """A rule-made first lemma at least ten times rarer than another lemma the matched text's rows name."""
         if not self.freq or not any(t in self.transform_ids for t in result['trace']):
             return False
         named = self.l1(result['matched'])
+        adjective = 'adj' in self.tags.get(result['expression'], ())
         others = {r['expression'] for r in answer['results'] if not r['formOf'] and r['expression'] != result['expression'] and r['expression'] in named
-                  and (result['expression'], r['expression']) not in self.participles}
+                  and not (adjective and (result['expression'], r['expression']) in self.participles)}
         if not others:
             return False
         first = self.freq.get(norm(result['expression']), 0)
@@ -255,7 +297,8 @@ def frequent(args, judge):
     report = {
         'list': Path(args.inputs[0]).name, 'top': len(words), 'tokens': total_tokens,
         'reached': stats['reached'], 'reachedTokenShare': round(tokens['reached'] / total_tokens, 4),
-        'firstVisible': {k: stats[k] for k in ('own', 'right', 'rare', 'wrong', 'unjudged', 'nothing')},
+        'firstVisible': {k: stats[k] for k in ('own', 'right', 'nounOrParticiple', 'nounOrTu', 'rare', 'wrong', 'unjudged', 'nothing')},
+        'needsContextTokenShare': {k: round(tokens[k] / total_tokens, 5) for k in ('nounOrParticiple', 'nounOrTu')},
         'wrongFirst': stats['wrong'] + stats['rare'], 'wrongFirstTokenShare': round((tokens['wrong'] + tokens['rare']) / total_tokens, 5),
         'wrongAboveRight': stats['above'], 'wrongAboveRightTokenShare': round(tokens['above'] / total_tokens, 5),
         'wrongExamples': sorted(wrong, reverse=True)[:60], 'aboveExamples': sorted(above, reverse=True)[:60],
@@ -291,6 +334,7 @@ def judge_hovers(args, judge, items, label):
     wrong_rules = Counter()
     wrong_examples = defaultdict(list)
     unjudged = []
+    context = defaultdict(list)
     for (word, hover), answer in zip(items, answers):
         first = first_visible(answer)
         verdict = judge.verdict(first, answer) if first else 'nothing'
@@ -302,6 +346,9 @@ def judge_hovers(args, judge, items, label):
                 wrong_examples[key].append(f"{first['matched']} → {first['expression']}")
         elif verdict == 'unjudged':
             unjudged.append({'hover': hover[:60], 'matched': first['matched'], 'expression': first['expression'], 'trace': first['trace']})
+        elif verdict in ('nounOrParticiple', 'nounOrTu'):
+            context[verdict].append({'hover': hover[:60], 'matched': first['matched'], 'expression': first['expression'],
+                                     'next': next((r['expression'] for r in answer['results'][1:] if not r['formOf']), None)})
     rng = random.Random(1)
     sample = rng.sample(unjudged, min(args.sample, len(unjudged)))
     return {
@@ -309,6 +356,7 @@ def judge_hovers(args, judge, items, label):
         'wrongRate': round((stats['wrong'] + stats['rare']) / max(1, len(items)), 5),
         'wrongByTrace': [(k, n, wrong_examples[k]) for k, n in wrong_rules.most_common(30)],
         'unjudgedSample': sample,
+        'needsContext': {k: v for k, v in context.items()},
     }
 
 
@@ -405,7 +453,7 @@ def main():
     args = parser.parse_args()
     transform_ids = [t['id'] for t in json.loads((Path(args.languages) / 'pt' / 'transforms.json').read_text(encoding='utf-8'))['transforms']]
     freq_files = [args.inputs[0]] if args.command == 'frequent' else args.freq
-    judge = Judge(*load_dictionary(args.wty), transform_ids, read_freq(freq_files), load_participles(args.wty))
+    judge = Judge(*load_dictionary(args.wty), transform_ids, read_freq(freq_files), load_participles(args.wty), load_tags(args.wty))
     report = {'frequent': frequent, 'text': text, 'phrases': phrases, 'homographs': homographs}[args.command](args, judge)
     out = json.dumps(report, ensure_ascii=False, indent=1)
     if args.out:
