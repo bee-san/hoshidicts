@@ -276,7 +276,7 @@ its union of the two files has 222 transforms and 3,207 rules (3,199 `own`,
     rare readings left to the dictionary and the transform order above, and
     a stricter judge. fe0749a and 63e0254, after the second: exclusions of
     the exact stem, the split rules, the -ligō order and the judge's esse
-    fix. bc2a6ad, after the third: the eight exclusions of whole stem
+    fix. c73659d, after the third: the eight exclusions of whole stem
     families (*loca* to *coelīs*) and rows for *mēnsae*, *amātās fuisse* and
     `untaggedTerms` (*sinis*). With the final judge, the head the first
     audit saw (29cb6f1; the audited heads are PR heads from before the
@@ -288,8 +288,10 @@ its union of the two files has 222 transforms and 3,207 rules (3,199 `own`,
 
 ## Measurements
 
-The rules at bc2a6ad (this branch on 5ac86a3; the engine is the same since
-0a73e5e), GCC 14.3, Release; wty-la-en
+The rules at c73659d (bc2a6ad before the rebase onto 350d9e0; measured on
+5ac86a3, and on 350d9e0, whose engine change (a95758b, for terms only
+frequency and pitch rows have) leaves every lookup and `eval-language`
+output byte for byte the same), GCC 14.3, Release; wty-la-en
 imported by `hoshidicts-cli import`, as published. The sample is the 700 rows
 of `corpus.tsv` and `gaps.tsv` together. Section 6 gives the commands.
 
@@ -454,7 +456,8 @@ judged by hand too.
      - Live heap after the load: +1,350,544 bytes single-thread, +1,350,976
        threaded (`hdw_memory_stats`).
    - Hachidori (`test/chrome-language-pack.mjs`, feat/multi-language 803f7b6e
-     with this branch at bc2a6ad in `third_party/hoshidicts`, Chrome
+     with this branch at bc2a6ad (c73659d after the rebase) in
+     `third_party/hoshidicts`, Chrome
      152.0.7977.75): 36 of 36 checks pass. Settings adds Latin beside Japanese
      and imports wty-la-en (1,977,517 terms, 2.3 s); 32 hovered words find
      their lemma first with their trace (*virumque* → vir, *dūxit* → duco,
