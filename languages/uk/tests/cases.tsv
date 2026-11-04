@@ -723,6 +723,7 @@ soft consonants	1	місяцями	місяць	n	*
 soft consonants	1	мудрецям	мудрець	n	*
 plural-only nouns	1	штанях	штани	n	*
 plural-only nouns	1	санях	сани	n	*
+plural-only nouns	1	штанах	штани	n	noun.loc.pl
 stem	0	шоу	шоа	*	noun.acc.sg
 stem	0	шоу	шо	*	noun.gen.sg+dat.sg+loc.sg+voc.sg
 stem	0	шоу	шоо	*	noun.dat.sg+loc.sg+voc.sg

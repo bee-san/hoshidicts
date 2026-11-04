@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Batch lookups for the measurements of README.md (Measurements). Not built by
-// CMake and not run by any test. Build it against a configured build:
+// Batch lookups for README.md's Measurements (not built by CMake). Build it
+// against a configured build:
 //
 //   g++ -O2 -std=c++23 -Iinclude languages/uk/sources/lookup-batch.cpp -o build/lookup-batch \
 //     build/libhoshidicts.a build/external/zstd/build/cmake/lib/libzstd.a \
@@ -9,13 +9,10 @@
 //
 //   build/lookup-batch <languages dir> <code> <imported dictionary> [max_results] [scan_length] < texts
 //
-// Each input line is looked up with Lookup::lookup (default 16 results, scan
-// length 16, no language options: what a host's hover does) and answered with
-// one JSON line: {"text", "results": [{"expression", "matched", "trace": [ids],
-// "formOf"}]}. formOf is true when every glossary of the result has the
-// definition tag non-lemma (a form-of row of kaikki- or wiktionary-to-yomitan).
-// "dict" lists, for each trace step, whether a form-of reference named it
-// (TransformGroup::from_dictionary).
+// One Lookup::lookup per line (default 16 results, scan length 16, no
+// language options), one JSON line out: text, and per result expression,
+// matched, trace ids, formOf (every glossary is a form-of row) and dict (for
+// each trace step, whether a form-of reference named it).
 
 #include <fstream>
 #include <iostream>

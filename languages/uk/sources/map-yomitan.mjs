@@ -1,40 +1,19 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Maps the 64 todo rules of a fresh port of Yomitan's Ukrainian rules
-// (docs/languages.md, section 8.3) and writes sources/yomitan.json:
+// (docs/languages.md 8.3) and writes sources/yomitan.json:
 //
 //   node tools/port-yomitan-transforms.mjs <yomitan> uk --force
 //   node languages/uk/sources/map-yomitan.mjs <yomitan>
 //
-// Each todo rule is paired with the Yomitan rule it came from (same
-// transform, same isInflected source, in order), and the replacement Yomitan
-// makes is read by calling that rule's own deinflect on a probe text:
-//
-// - `[ое]([C]+)E$` → `і$1D` (the о/е → і alternation, 29 rules): a `suffix`
-//   E → D with `stemChange` о/е → і at the last о or е that only consonants
-//   follow.
-// - `([C])([C])E$` → `$1V$2D` (the fleeting vowel, 26 rules): the vowel goes
-//   back between the last two consonants. As a `suffix`, that is one rule per
-//   last consonant X, XE → VXD, with `stemEndsWith` a consonant, written as
-//   one cross-product circumfix with an empty prefix.
-// - `.[ое]Xі$` → `іY` (palatalised velars with the alternation, 6 rules):
-//   literal suffixes оXі → іY and еXі → іY with `stemMinLength` 1.
-// - `[V].*[C]$` → text + D (a zero ending after a closed syllable, 3 rules):
-//   a `suffix` with an empty ending, `stemContains` a vowel and
-//   `stemEndsWith` a consonant.
-//
-// Then, in every transform, the suffix rules and whole words that differ
-// only in their two affixes are written as one cross-product circumfix with
-// an empty prefix (section 7.3; a whole word's stem is empty, stemCharacters
-// []): the same rules in fewer bytes, which keeps sources/ and tests/ under
-// 1 MB (section 3). The differential check probes a cross product's pairs
-// with stems of one and three letters, on both sides of Yomitan's minimum
-// stem of two.
-//
-// C is Yomitan's consonant list бвгґджзклмнпрстфхцчшщ (the pack's
-// {consonant}) and V its vowel list (the pack's {vowel}). None of these rules
-// gets a constraint Yomitan does not have, so the differential check
-// (tools/check-yomitan.mjs) compares them as Yomitan wrote them.
+// Each todo rule is read by calling its Yomitan rule's own deinflect on probe
+// texts, and becomes literal rules: the о/е → і alternation a `suffix` with
+// `stemChange`, the fleeting vowel one rule per last consonant (`stemEndsWith`
+// a consonant), the palatalised velars literal suffixes, the zero ending a
+// `suffix` with `stemContains` a vowel. Suffix rules and whole words that
+// differ only in their affixes are then written as one cross product
+// (section 7.3). No rule gets a constraint Yomitan's lacks, so
+// tools/check-yomitan.mjs compares them as Yomitan wrote them.
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';

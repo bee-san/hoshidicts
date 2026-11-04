@@ -1,42 +1,19 @@
-#!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-# Real-text measurements of README.md (Measurements 2-4). Needs a built
-# hoshidicts and build/lookup-batch-uk (see sources/lookup-batch.cpp):
+# Real-text measurements of README.md (Measurements 2-4; the judge is
+# described in its Measure notes). Needs build/lookup-batch-uk
+# (sources/lookup-batch.cpp):
 #
-#   python3 languages/uk/sources/measure.py words <wty-uk-en json dir> <imported wty-uk-en> <uk_50k.txt> [--languages <dir>]
-#   python3 languages/uk/sources/measure.py text  <wty-uk-en json dir> <imported wty-uk-en> <text file>... [--languages <dir>]
-#   python3 languages/uk/sources/measure.py phrases <wty-uk-en json dir> <imported wty-uk-en> <ukr_sentences.tsv> [--languages <dir>]
+#   python3 languages/uk/sources/measure.py words|text|phrases <wty-uk-en json dir> <imported wty-uk-en> <file>...
+#       [--frequencies <list>]... [--languages <dir>] [--verdicts <file>]
 #
-# words: the 10,000 most frequent words of the list, each looked up alone;
-#   reported for all of them and for the words a rule reaches (a
-#   deinflection of the word is a lemma the word's rows name).
-# text: every word of the texts, each looked up with the rest of its
-#   sentence, as a host does (scanStart word).
-# phrases: every word of the sentences that follows a preposition, a
-#   particle, a conjunction, a pronoun or a form of бути, looked up from
-#   that word with the rest of the sentence; reported together and by kind.
-# A lookup's first result is right only when it is a lemma the hovered word
-# means (README, Measure notes): its label in sources/homographs.tsv; else,
-# when its rows name two or more lemmas, the one most frequent in the
-# frequency list (--frequencies; in words mode the list itself), a verb's
-# doublets in -Xнути and -Xти counting as one; else the word itself (a
-# headword with definitions) or a lemma its rows name, with the lemmas that
-# lemma's rows name as another spelling or aspect (вмію → вміти → уміти).
-# Wrong when the word has rows and the result is none of these; unknown when
-# it has none; a result that matches more than the hovered word
-# (сила-силенна, з-під) is 'phrase', not judged. A comparative in -ше is
-# also the adverb's (міцніше: міцно). The summary counts judged lookups by
-# what judged them (byLabel, byProxy, byRows).
-# --verdicts <file> writes one line per lookup (of the whole list, text or
-# sentence set, not again for its subsets): word, verdict, first result, the
-# rules behind it, its weight and what judged it. rightByRules and
-# wrongByRules count the judged first results whose trace has a step of the
-# pack's rules (the others come from the word's own form-of rows alone). The
-# personal pronouns' rows in wty-uk-en name every personal pronoun (мене →
-# я, ми, він, ...), so for them the lemma is taken from PRONOUNS below.
-# --languages runs another copy of the pack (a rule set to compare).
-# --frequencies <file> gives the frequency list for the proxy in text and
-# phrases mode.
+# words: the 10,000 most frequent words of a frequency list, each looked up
+#   alone. text: every word of the texts with the rest of its sentence.
+#   phrases: every word of Tatoeba's sentences after a preposition, a
+#   particle, a conjunction, a pronoun or a form of бути.
+# --frequencies: lists for the frequency proxy, the first that knows a
+#   lemma deciding (in words mode the word list comes first). --verdicts:
+#   one line per lookup (word, verdict, first result, its rules, weight,
+#   what judged it). --languages: another copy of the pack.
 
 import collections, glob, json, os, re, subprocess, sys, unicodedata
 
@@ -73,16 +50,18 @@ for line in open(os.path.join(HERE, 'homographs.tsv'), encoding='utf-8'):
     if line.strip() and not line.startswith('#'):
         word, label = line.rstrip('\n').split('\t')
         LABELS[word] = set(label.split(','))
-FREQUENCIES = {}
+FREQUENCIES = []  # frequency lists, the first that knows a lemma decides
 KNOWN = set()  # the spellings that have rows (filled by main)
 CHARS = set()  # the letters' own entries, tagged char (А: the first letter)
 
 
 def load_frequencies(path):
+    counts = {}
     for line in open(path, encoding='utf-8'):
         parts = line.split()
         if len(parts) == 2:
-            FREQUENCIES.setdefault(parts[0], int(parts[1]))
+            counts.setdefault(parts[0], int(parts[1]))
+    FREQUENCIES.append(counts)
 
 
 def norm(text):
@@ -122,7 +101,7 @@ def load_rows(json_dir):
             others = [g for g in row[5] if not isinstance(g, list)]
             if others:
                 lemmas.add(term)
-                if 'char' in (row[2] or '').split():
+                if 'char' in (row[2] or '').split() and term != term.lower():
                     CHARS.add(term)
             for ref in refs:
                 # wiktionary-to-yomitan writes some targets with their aspect
@@ -173,11 +152,14 @@ def meant(word, lemmas, targets, initial=False):
         groups = list(merged.values())
         distinct = {frozenset(g & lemmas) or frozenset(g) for g in groups}
         if len(distinct) > 1 and FREQUENCIES:
-            score = lambda g: max(FREQUENCIES.get(x, 0) for x in g)
-            best = max(score(g) for g in groups)
-            if best > 0:
-                groups = [g for g in groups if score(g) == best]
-                how = 'proxy'
+            how = 'tie'
+            for counts in FREQUENCIES:
+                score = lambda g: max(counts.get(x, 0) for x in g)
+                best = max(score(g) for g in groups)
+                if best > 0:
+                    groups = [g for g in groups if score(g) == best]
+                    how = 'proxy'
+                    break
         for g in groups:
             right |= g
     return right, how
@@ -199,6 +181,10 @@ def judge(word, answer, lemmas, targets, initial=False):
         return 'wrong', first, 'rows'
     same = expression.lower() == norm(word).lower()
     right, how = meant(word, lemmas, targets, initial and not same)
+    # A tie no frequency list decides is counted apart, unless the result is
+    # the word itself.
+    if how == 'tie' and expression in right and not same:
+        return 'tie', first, how
     if not right:
         return 'unknown', first, None
     expression = norm(first['expression'])
@@ -270,8 +256,8 @@ def report(name, items, lemmas, targets, weights=None, show=25, record=True, ini
             phrases[key] += weight
             if len(examples[key]) < 6:
                 examples[key].append(f"{first['matched']}→{first['expression']}")
-    total = sum(verdicts[k] for k in ('right', 'wrong', 'unknown', 'phrase', 'none'))
-    out = {'set': name, 'lookups': total, **{k: verdicts[k] for k in ('right', 'wrong', 'unknown', 'phrase', 'none', 'rightByRules', 'wrongByRules',
+    total = sum(verdicts[k] for k in ('right', 'wrong', 'tie', 'unknown', 'phrase', 'none'))
+    out = {'set': name, 'lookups': total, **{k: verdicts[k] for k in ('right', 'wrong', 'tie', 'unknown', 'phrase', 'none', 'rightByRules', 'wrongByRules',
                                                               'byLabel', 'wrongByLabel', 'byProxy', 'wrongByProxy', 'byRows', 'wrongByRows')}}
     if weights:
         tokens = sum(weights)
@@ -315,16 +301,20 @@ def main():
         i = args.index('--verdicts')
         VERDICTS = open(args[i + 1], 'w', encoding='utf-8')
         del args[i:i + 2]
-    if '--frequencies' in args:
+    extra = []
+    while '--frequencies' in args:
         i = args.index('--frequencies')
-        load_frequencies(args[i + 1])
+        extra.append(args[i + 1])
         del args[i:i + 2]
     mode, json_dir, dictionary, *files = args
+    if mode == 'words':
+        load_frequencies(files[0])
+    for path in extra:
+        load_frequencies(path)
     lemmas, targets = load_rows(json_dir)
     KNOWN.update(lemmas)
     KNOWN.update(targets)
     if mode == 'words':
-        load_frequencies(files[0])
         words, counts = [], []
         for line in open(files[0], encoding='utf-8'):
             parts = line.split()

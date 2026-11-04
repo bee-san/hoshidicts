@@ -1,35 +1,16 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Writes languages/uk/transforms.json, the final rule set (docs/languages.md,
-// section 14 step 5):
+// Writes languages/uk/transforms.json, the final rule set (docs/languages.md
+// 14 step 5; README, Rule provenance):
 //
 //   node languages/uk/sources/build-final.mjs [--removals <file>] [--out <file>]
 //
-// It is the union tools/merge-transforms.mjs makes of sources/own.json and
-// sources/yomitan.json, with two changes:
-//
-// - The own transforms come first, then Yomitan's, so that where an own rule
-//   and a Yomitan rule reach different terms that every ranking key ties
-//   (їм: вони, the pronoun, and їсти, to eat), the lookup shows the own
-//   transform's term first (section 9.6, discovery order).
-// - Yomitan's rules have no stem constraint, so they also apply to a text
-//   of several words (на столі → на стіл, ім'я і → ім'я): a lookup tries
-//   the scanned text's longer prefixes first (section 9.2) and such a
-//   reading claims more of the text than the word. Every Yomitan rule whose
-//   stem is otherwise free takes stemCharacters {stem}, as the own rules
-//   do, so it reads one word.
-// - The Yomitan rules listed in sources/yomitan-removed.tsv are left out.
-//   Each row names a rule by its transform id and its two affixes and gives
-//   the numbers that justify it: the rows only it recovers, the false
-//   candidates only it adds and the negatives it breaks, from
-//   `eval-language --per-rule` on every form of the kaikki tables, the cases
-//   and Yomitan's own test (README, Rule provenance).
-//
-// An own rule is marked `both` when Yomitan has a rule of the same kind that
-// makes the same replacement (the same inflected and deinflected affixes and
-// stem change) for an overlapping part of speech: the two were written
-// independently and agree, though the own rule usually has stem constraints
-// Yomitan's lacks. A cross product is `both` when all of its pairs are.
+// The union tools/merge-transforms.mjs makes of own.json and yomitan.json,
+// with the own transforms first (ties go to the own reading, 9.6), every
+// Yomitan rule limited to one word (stemCharacters {stem}), and the Yomitan
+// rules yomitan-removed.tsv lists left out. An own rule is `both` when
+// Yomitan makes the same replacement for an overlapping part of speech; a
+// cross product is `both` when all of its pairs are.
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join, resolve} from 'node:path';

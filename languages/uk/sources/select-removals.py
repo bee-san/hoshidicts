@@ -5,18 +5,12 @@
 #
 #   python3 languages/uk/sources/select-removals.py <measure.tsv> <wty-uk-en imported> [--rounds 3]
 #
-# <measure.tsv> is the measurement set: every form of the kaikki tables
-# (`build-corpus.mjs <kaikki> --all <file>`), then tests/cases.tsv and
-# Yomitan's test with any trace. The union of own.json and yomitan.json is
-# written with one entry per Yomitan rule (cross products split), and
-# `hoshidicts-cli eval-language --per-rule` counts for each rule the rows
-# only it recovers, the false candidates only it adds and the negatives it
-# breaks. A Yomitan rule is left out when it breaks a negative, when it adds
-# false candidates and recovers nothing, or when it adds at least 5 false
-# candidates and more than three for each row it recovers. The Yomitan rules are measured as build-final.mjs writes them,
-# each limited to one word (stemCharacters {stem}). Removing rules changes the counts of the others (a candidate two
-# rules make counts for neither), so the selection runs again on the rules
-# left until no rule is removed, at most --rounds times.
+# `eval-language --per-rule` on the measurement set counts, for each Yomitan
+# rule as build-final.mjs writes it, the rows only it recovers, the false
+# candidates only it adds and the negatives it breaks. A rule is left out when
+# it breaks a negative, adds false candidates and recovers nothing, or adds at
+# least 5 and more than three per row it recovers; the selection then runs
+# again on the rules left, until no rule is removed (at most --rounds).
 
 import json, os, subprocess, sys, tempfile
 

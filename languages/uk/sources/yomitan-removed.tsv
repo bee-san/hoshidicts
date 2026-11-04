@@ -35,7 +35,7 @@ genitive	на	он	min 1; ends {consonant}; in  out n	0	2	0	fc only
 genitive	ну	он	min 1; ends {consonant}; in  out n	0	2	0	fc only
 genitive	ов	ва	min 1; in  out n	5	0	1	breaks
 genitive	ого	ий	min 1; in  out adj	0	0	2	breaks
-genitive	ою	ій	min 1; in  out n	5	16	1	breaks
+genitive	ою	ій	min 1; in  out n	4	16	1	breaks
 genitive	чу	еч	min 1; ends {consonant}; in  out n	0	1	0	fc only
 genitive	ю		min 2; in  out n	10	539	1	breaks
 genitive	ю	ій	min 2; in  out n	0	11	0	fc only

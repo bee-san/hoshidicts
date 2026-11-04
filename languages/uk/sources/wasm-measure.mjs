@@ -4,13 +4,9 @@
 //
 //   node languages/uk/sources/wasm-measure.mjs <hachidori checkout> <dictionary.zip> [instances]
 //
-// For each build: hdw_language_load of this pack (language.json and
-// transforms.json) in `instances` fresh engines, its median time and the
-// live heap it adds (hdw_memory_stats); then, in one engine, the dictionary
-// imported into the engine's in-memory file system (hdw_import), added
-// paged as Hachidori adds it (hdw_add_dict), and the texts of
-// sources/benchmark-words.txt looked up with hdw_lookup (16 results, scan
-// length 16, {"language": "uk"}) in 6 passes, the first dropped.
+// For each build: hdw_language_load of this pack in fresh engines (median
+// time, live heap added), then hdw_lookup of sources/benchmark-words.txt with
+// the dictionary imported and added paged (6 passes, the first dropped).
 
 import {readFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
