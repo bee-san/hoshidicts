@@ -82,19 +82,11 @@ const NOT_SPACE = '[^ ]';
 // The pack's class of letters without an accent (language.json): a stem the accent transform may accent.
 const NO_ACCENT = '{unaccented}';
 
-/**
- * A rule as written, and its twin for the same text without any diacritic
- * (the pack's removeDiacritics variant, which is how wiktionary-to-yomitan
- * writes its form-of rows). `opts.then` applies to the written rule only: the
- * twin has no accent to change. `opts.stem` holds extra stem constraints for
- * both.
- */
+/** A rule as written and its twin without accents. `opts.then` applies to the written rule only; `opts.stem` to both. */
 function emit(type, id, inflected, deinflected, conditionsIn, conditionsOut, opts = {}) {
   const extra = opts.stem ? {...opts.stem} : {};
   const forms = [[NFC(inflected), NFC(deinflected), opts.then]];
-  // The twin without accents reads the text the removeAccents processor leaves (breathings and iota subscripts
-  // kept), which the rules after it in a chain need (ἀγγελοῦσι → ἀγγελουσι → ἀγγελεω → ἀγγέλλω). A text
-  // without any diacritic is left to Yomitan's rules and the dictionary's form-of rows (README.md, "Rule design").
+  // The twin reads the removeAccents variant, which chains need (ἀγγελοῦσι → ἀγγελουσι → ἀγγελεω → ἀγγέλλω).
   const twin = TWINS ? stripAll : stripAccents;
   const plainAlready = twin(inflected) === NFC(inflected) && twin(deinflected) === NFC(deinflected);
   if (!opts.writtenOnly && !plainAlready) forms.push([twin(inflected), twin(deinflected), undefined]);
@@ -126,12 +118,7 @@ function accentVariants(ending) {
   return out;
 }
 
-// ---------------------------------------------------------------------------
-// The accent transform: puts the dictionary form's accent on a text that has
-// none (a rule removed the syllable that carried it, or the text was written
-// without diacritics). Verbs take the recessive accent; nouns and adjectives
-// get every place the accent may have.
-// ---------------------------------------------------------------------------
+// The accent transform: accents a text that has none (recessive for verbs, every possible place for nouns).
 
 const V = PLAIN_VOWEL_CLASS;
 const C = CONSONANT_CLASS;
@@ -158,10 +145,8 @@ function buildAccentTransform() {
   // No stem constraint keeps out a text with an accent elsewhere: such a text takes a second accent and finds
   // nothing, which costs less than a class test on every text.
   const gate = {};
-  // Verbs: an acute on the last vowel of the stem, before -ω (the penult) and -ομαι (the antepenult)
-  // (λυω → λύω, λειπω → λείπω, ἀγω → ἄγω, σῳζω → σῴζω, βουλομαι → βούλομαι; the last vowel of a diphthong
-  // carries it: παιδεύω, ἀκούω). The rule puts a mark for the ending, an acute on the text's last vowel, then the
-  // ending back: one rule for every stem. Only a stem without an accent takes one.
+  // Verbs: an acute on the stem's last vowel before -ω and -ομαι (λυω → λύω, βουλομαι → βούλομαι, παιδεύω): the rule
+  // marks the ending, accents the text's last vowel and writes the ending back. Only an unaccented stem takes one.
   const ACUTE = Object.fromEntries([...PLAIN_TARGETS, ...DIAERESIS_TARGETS, ...BREATHING_TARGETS, ...SUBSCRIPT_TARGETS].map((v) => [v, acute(v)]));
   const LONG = [...'αηιυω', ...'ἀἁἠἡἰἱὐὑὠὡ', ...SUBSCRIPT_TARGETS];
   const CIRCUMFLEX = Object.fromEntries(LONG.map((v) => [v, NFC(v + '\u0342')]));
@@ -197,14 +182,10 @@ function buildAccentTransform() {
   const carrier = '(?:[αεηοΑΕΗΟ](?![ιυ])|[υΥ](?!ι)|[ιωἀἁἐἑἠἡἰἱὀὁὐὑὠὡᾳῃῳϊϋΙΩἈἉἘἙἨἩἸἹὈὉὙὨὩ])';
   const longCarrier = '(?:[αη](?![ιυ])|υ(?!ι)|[ιωἀἁἠἡἰἱὐὑὠὡᾳῃῳϊϋ])';
   const pat = (anchor, rest, mark) => add('accent', {type: 'pattern', pattern: `(${carrier === mark ? carrier : mark})(${rest})$`, replacement: '$1\u0301$2'.replace('\u0301', mark === longCarrier ? '\u0342' : '\u0301'), anchorSuffix: anchor, conditionsIn: ['n', 'adj'], conditionsOut: ['n', 'adj'], then: [{normalize: 'NFC'}]});
-  // Only the antepenult of -ος, -ον and -μα: the pattern dialect's regular expressions are slow, and these endings
-  // take most proparoxytones (ἄνθρωπος, πόλεμος, ἀργύριον, ὄνομα, whose long-vowel forms put the accent on the penult).
-  // An anchor of one syllable leaves a syllable between it and the carrier; one of two (-εια, -υρα) none.
+  // The antepenult only before these endings (ἄνθρωπος, ὄνομα, ἀλήθεια): patterns are slow.
   for (const anchor of ['ος', 'ον', 'μα', 'σσα', 'ττα', 'σις', 'ξις', 'ψις']) pat(anchor, `${CC}*${NUC}${CC}*${anchor}`, carrier);
   for (const anchor of ['εια', 'οια', 'υρα', 'αινα']) pat(anchor, `${CC}*${anchor}`, carrier);
-  // The penult, for the first declension and the commonest third-declension endings (χωρῶν → χώρα, διαίτης,
-  // ῥητόρων → ῥήτωρ, δαιμόνων → δαίμων): an acute on the last vowel of the stem; a circumflex too where a long
-  // vowel may stand before a short last syllable.
+  // The penult (χωρῶν → χώρα, ῥητόρων → ῥήτωρ): an acute, or a circumflex where a long vowel may stand.
   for (const ending of ['α', 'η', 'ης', 'ας', 'ων', 'ωρ', 'υς', 'ις', 'ος', 'ον']) {
     onLastVowel(ending, ACUTE, ['n', 'adj'], {stemMinLength: 1});
   }
@@ -251,12 +232,8 @@ function ultimaLength(ending, override) {
 }
 
 /**
- * Rules from one inflected ending to one dictionary-form ending, for nouns and
- * adjectives. The stem keeps its accent (λόγου → λόγος); variants turn an acute
- * into a circumflex and back where the length of the last syllable changes
- * (δώρου → δῶρον, πολῖται → πολίτης), drop the accent where it may move
- * (ἀνθρώπου → ἀνθρωπος, for the accent transform), and accept the accent on
- * the ending itself (θεοῦ → θεος → θεός).
+ * A noun or adjective ending to the dictionary form's: the stem keeps its accent (λόγου → λόγος), or turns acute and
+ * circumflex where the last syllable's length changes (δώρου → δῶρον); the accent transform does the rest (θεοῦ).
  */
 function nominal(id, ending, lemma, conditionsOut, opts = {}) {
   const e = stripAccents(ending);
@@ -284,10 +261,8 @@ function literal(id, ending, lemma, conditionsOut, opts = {}) {
 }
 
 /**
- * The first declension's genitive plural. A noun's is always -ῶν (γνωμῶν, πολιτῶν), so -ων after an accented stem
- * is not a noun's: it is the feminine of an adjective, accented as the masculine (ἀξίων, φίλων), or another word's
- * (ἀνέμων of ἄνεμος, Αἰγυπτίων of Αἰγύπτιος). A noun's -ων is read only after a stem without an accent: the text
- * the removeAccents variant leaves of -ῶν, or a text written without accents.
+ * The first declension's genitive plural: a noun's is -ῶν, so -ων after an accented stem is an adjective's feminine
+ * (ἀξίων) or another word's (ἀνέμων); a noun's -ων needs an unaccented stem (-ῶν without accents).
  */
 function firstGenitivePlural(lemma, adjective) {
   nominal('gen-pl', 'ων', lemma, ['n', ...(adjective ? [] : ['adj'])], {stem: {stemCharacters: NO_ACCENT}});
@@ -297,12 +272,7 @@ function firstGenitivePlural(lemma, adjective) {
 const NA = ['n', 'adj'];
 const ADJ = ['adj'];
 
-/**
- * Nouns and adjectives. Proper names, which wiktionary-to-yomitan lists
- * without a part of speech, are not given rules of their own: a rule whose
- * output has no condition is tried again by every rule (docs/languages.md
- * 7.2), and capitalised noun endings chained without end.
- */
+/** Nouns and adjectives. Names have no part of speech and no rules: output without a condition is re-read (7.2). */
 function nominalBoth(id, ending, lemma, opts = {}) {
   nominal(id, ending, lemma, opts.out ?? NA, opts);
 }
@@ -313,9 +283,7 @@ function buildNominal() {
   // forms (μάθω, ἔλαβε): optional, the setting duals.
   byId.get('nav-du').optional = true;
 
-  // Second declension first: where a -ων, -ου or -ην form reads as both -ος and -η, the -ος word is the commoner
-  // (φίλων: φίλος before φίλη), and a rule's reading found first comes first among equals (README.md).
-  // Second declension: -ος (λόγος, ἄνθρωπος, θεός), neuter -ον (δῶρον, ἔργον).
+  // Second declension (λόγος, δῶρον) first: the reading found first comes first among equals (φίλων: φίλος, φίλη).
   const second = [
     ['ου', 'gen-sg'], ['οιο', 'gen-sg'], ['οο', 'gen-sg'], ['ῳ', 'dat-sg'], ['ον', 'acc-sg'], ['ε', 'voc-sg'],
     ['οι', 'nom-pl'], ['ων', 'gen-pl'], ['οις', 'dat-pl'], ['οισι', 'dat-pl'], ['οισιν', 'dat-pl'], ['ους', 'acc-pl'],
@@ -510,12 +478,9 @@ function verbTransform(id, name, description) {
 }
 
 /**
- * Rules from a verb ending to the dictionary form's ending. The word takes the
- * recessive accent, so the stem keeps it only where the ending's length puts it
- * there; otherwise the rule drops the accent and the accent transform puts it
- * back on the dictionary form. `ultima` is the length of the ending's last
- * syllable when its letters do not decide it (-αι and -οι are long only in the
- * optative).
+ * A verb ending to the dictionary form's. The accent is recessive: the stem keeps it where the ending's length puts
+ * it there, else the accent transform restores it. `ultima` is the last syllable's length where the letters leave
+ * it open (-αι, -οι are long only in the optative).
  */
 function verbEnding(id, ending, lemma, conditionsOut, opts = {}) {
   const written = NFC(ending);
@@ -865,7 +830,7 @@ function stemRules() {
   verbTransform('perfect', 'perfect', 'Perfect active: -κα, -ηκα, -φα, -χα and strong perfects → the present.');
   const sigma = [
     ['σω', ['ω']], ['ψω', ['πω', 'βω', 'φω', 'πτω']], ['ξω', ['κω', 'γω', 'χω', 'ττω', 'σσω', 'ζω']],
-    ['σω', ['ζω', 'δω', 'θω', 'τω', 'ττω', 'σσω']], ['ησω', ['εω', 'αω']], ['ασω', ['αω']], ['ωσω', ['οω']], ['εσω', ['εω']], ['υσω', ['υω']],
+    ['σω', ['ζω', 'δω', 'θω', 'τω', 'ττω', 'σσω']], ['ησω', ['αω', 'εω']], ['ασω', ['αω']], ['ωσω', ['οω']], ['εσω', ['εω']], ['υσω', ['υω']],
     ['ισω', ['ιζω']], ['ασω', ['αζω']], ['ευσω', ['εω']], ['αυσω', ['αιω']],
     // Epic doubles the σ after a short vowel (ἐτέλεσσε, κάλεσσε, ὀπάσσας, ἀκοντίσσαντος).
     ['σσω', ['ω', 'εω', 'αω', 'ζω', 'δω', 'θω', 'ννυμι']],
@@ -901,7 +866,7 @@ function stemRules() {
   }
   // Aorist passive.
   const passive = [
-    ['θω', ['ω', 'ομαι']], ['ηθω', ['εω', 'αω', 'ομαι', 'εομαι', 'αομαι', 'αμαι', 'ω']], ['ωθω', ['οω', 'ομαι', 'οομαι']], ['εθω', ['εω', 'εομαι']], ['αθω', ['αω']],
+    ['θω', ['ω', 'ομαι']], ['ηθω', ['αω', 'εω', 'ομαι', 'εομαι', 'αομαι', 'αμαι', 'ω']], ['ωθω', ['οω', 'ομαι', 'οομαι']], ['εθω', ['εω', 'εομαι']], ['αθω', ['αω']],
     ['σθω', ['ζω', 'δω', 'θω', 'ω', 'ομαι', 'ζομαι', 'αω', 'εω', 'ννυμι']], ['φθω', ['πω', 'βω', 'φω', 'πτω', 'πομαι']], ['χθω', ['κω', 'γω', 'χω', 'ττω', 'σσω', 'γομαι', 'χομαι', 'κομαι']],
     ['λθω', ['λλω']], ['ιθω', ['ινω']], ['υθω', ['υνω', 'υω']], ['ερθω', ['ειρω']], ['ανθω', ['αινω']], ['υνθω', ['υνω']], ['ινθω', ['ινω']], ['ηνθω', ['αινω']], ['ηθω', ['ημι']], ['εθω', ['ημι']], ['οθω', ['ωμι']], ['αθω', ['ημι']],
   ];
@@ -925,7 +890,7 @@ function stemRules() {
   }
   // Perfect active stems.
   const perfect = [
-    ['κω', ['ω']], ['ηκω', ['εω', 'αω', 'ω']], ['ωκω', ['οω', 'ωμι']], ['εκω', ['εω']], ['ακω', ['αω']], ['κω', ['ζω', 'δω', 'θω', 'τω']], ['ηκω', ['ημι']], ['ακω', ['ημι']],
+    ['κω', ['ω']], ['ηκω', ['αω', 'εω', 'ω']], ['ωκω', ['οω', 'ωμι']], ['εκω', ['εω']], ['ακω', ['αω']], ['κω', ['ζω', 'δω', 'θω', 'τω']], ['ηκω', ['ημι']], ['ακω', ['ημι']],
     ['φω', ['πω', 'βω', 'φω', 'πτω', 'μπω']], ['χω', ['κω', 'γω', 'χω', 'ττω', 'σσω', 'γγω']], ['γω', ['γω']], ['οιπω', ['ειπω']], ['οιθω', ['ειθω']], ['ομφω', ['εμπω']],
     ['οφω', ['εφω', 'επω', 'οπτω']], ['ορω', ['ειρω']], ['αρκω', ['ειρω']], ['αλκω', ['ελλω']], ['ελκω', ['ελλω']], ['ηκω', ['ηγνυμι']], ['ωω', ['ωμι']],
   ];
@@ -941,7 +906,7 @@ function stemRules() {
   suffix('perfect-lemma', 'ω', 'α', ['pf'], ['v'], {stem: {stemMinLength: 3}});
   // Perfect middle of vowel stems (λέλυμαι, πεποίημαι, δεδήλωμαι, τετίμημαι).
   verbTransform('perfect-middle', 'perfect middle/passive', 'Perfect middle and passive of vowel stems: λέλυμαι, πεποίημαι, τετίμημαι, δεδήλωμαι, ἠκούσμην → the present.');
-  for (const [i, outs] of [['ω', ['ω']], ['ηω', ['εω', 'αω', 'ω']], ['ωω', ['οω']], ['εω', ['εω']], ['ομαι', ['ομαι']], ['ηομαι', ['εομαι', 'αομαι', 'ομαι']], ['ηω', ['ομαι']], ['ιω', ['ινω']], ['υω', ['υνω']], ['αω', ['εινω']]]) {
+  for (const [i, outs] of [['ω', ['ω']], ['ηω', ['αω', 'εω', 'ω']], ['ωω', ['οω']], ['εω', ['εω']], ['ομαι', ['ομαι']], ['ηομαι', ['εομαι', 'αομαι', 'ομαι']], ['ηω', ['ομαι']], ['ιω', ['ινω']], ['υω', ['υνω']], ['αω', ['εινω']]]) {
     for (const o of outs) {
       const stem = i === 'ω' || i === 'ομαι' ? {stemEndsWith: PLAIN_VOWEL_CLASS} : undefined;
       suffix('perfect-middle', i, o, ['pmp'], ['red'], {then: THEN_STRIP_ACCENTS, stem});
@@ -1018,10 +983,7 @@ function augmentRules() {
 }
 
 
-// ---------------------------------------------------------------------------
-// Irregular verbs: principal parts that the regular stem rules cannot reach.
-// Each stem is written as the text the ending rules leave (the stem and -ω).
-// ---------------------------------------------------------------------------
+// Irregular verbs: principal parts the stem rules cannot reach, written as the ending rules leave them (stem + -ω).
 
 /** Stem rules from an irregular tense stem to the dictionary form, with the stem's accent variants. */
 function irregularStem(tid, stem, lemma, pairs) {
@@ -1212,20 +1174,12 @@ function buildIrregular() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Athematic verbs: εἰμί, εἶμι, φημί, οἶδα, κεῖμαι, κάθημαι, δύναμαι,
-// ἐπίσταμαι and δίδωμι, τίθημι, ἵστημι, ἵημι, δείκνυμι with their compounds.
-// Every form is listed; a compound puts a preverb before the same forms.
-// ---------------------------------------------------------------------------
+// Athematic verbs (εἰμί, εἶμι, φημί, οἶδα, κεῖμαι, κάθημαι, δύναμαι, ἐπίσταμαι, δίδωμι, τίθημι, ἵστημι, ἵημι, δείκνυμι).
 
 /**
- * Forms of an athematic verb: [transform id, forms...]. Suffix rules, so a
- * compound whose preverb keeps its vowel is read too (ἀποδίδωσι, παραδοῦναι).
- * In a compound the form loses its breathing and the accent is recessive:
- * a twin without either gives the compound (πάρ-εστι, ἀφ-ῆκα, ἀπ-ιών), and an
- * augmented form gives back a placeholder ε for the preverb rules (ἀπ-έδωκα →
- * ἀπεδίδωμι → ἀποδίδωμι). `opts.compoundLemma` replaces the lemma in the twin
- * (ἵστημι: ιστημι, which the compound rules below aspirate).
+ * An athematic verb's forms, [transform id, forms...], as suffix rules, which also read compounds (ἀποδίδωσι). A
+ * twin without breathing and accent reads a compound's form (πάρ-εστι); an augmented one gives the preverb rules a
+ * placeholder ε (ἀπ-έδωκα → ἀπεδίδωμι). `opts.compoundLemma` is the twin's lemma (ἵστημι: ιστημι).
  */
 function athematic(lemma, table, opts = {}) {
   const AUGMENTED = new Set(['ath-impf', 'ath-aor', 'ath-plpf', 'ath-pass']);
@@ -1462,11 +1416,8 @@ function buildAthematic() {
 }
 
 /**
- * Compounds of ἵστημι and ἵημι. Their forms after a preverb lose the
- * breathing, and the preverb takes the form it has before a rough breathing
- * (καθ-ίστημι, ἀφ-ίστημι, ἀφ-ίημι) in the present and the dictionary form, but
- * not before στ- (κατα-στήσας, ἀπο-στάς) or the augment (ἀπ-έστη). The forms
- * give ιστημι and ιημι after the preverb; these rules write the dictionary form.
+ * Compounds of ἵστημι and ἵημι: after a preverb the forms give ιστημι and ιημι, and the preverb takes its form
+ * before a rough breathing (καθ-ίστημι, ἀφ-ίημι), not before στ- or the augment (κατα-στήσας, ἀπ-έστη).
  */
 function buildAthematicCompounds() {
   transform('compound', 'compound', 'The dictionary form of a compound of ἵστημι or ἵημι: the preverb before a rough breathing (καταστήσας → καθίστημι, ἀπέστη → ἀφίστημι, ἀφεῖναι → ἀφίημι).');
@@ -1484,10 +1435,7 @@ function buildAthematicCompounds() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// The article, pronouns, numerals and other words with their own paradigms.
-// wiktionary-to-yomitan gives them no part of speech, so the rules give none.
-// ---------------------------------------------------------------------------
+// The article, pronouns, numerals and other own paradigms; the dictionary gives them no part of speech, nor do these.
 
 const PENDING_CLOSED = [];
 
@@ -1523,10 +1471,8 @@ function closed(tid, name, description, lemma, forms, opts = {}) {
 }
 
 /**
- * Writes the closed-class forms. As written only: the text without diacritics is the dictionary's own
- * form-of row. A form of four letters or more is a suffix rule, which the file stores compactly; but the
- * output of these rules has no condition and is tried by every rule again, so a form that ends any of
- * these dictionary forms (κεῖνος in ἐκεῖνος) would lengthen the text without end, and stays a whole word.
+ * Writes the closed-class forms, as written only. A form of four letters or more is a suffix rule, unless it ends
+ * one of these dictionary forms (κεῖνος in ἐκεῖνος): rules re-read their output, which would then grow without end.
  */
 function flushClosed() {
   const lemmas = [...new Set(PENDING_CLOSED.map(([, , l]) => l))];
@@ -1709,10 +1655,8 @@ function buildClitics() {
 // Exceptions
 // ---------------------------------------------------------------------------
 
-// Common forms that other rules read first as a rarer word (ἔλεγε as ἔλεγος for λέγω), as whole words as written
-// and without accents: sources/exceptions.tsv (measure.py exceptions) and exceptions-manual.tsv. README.md, "Own
-// rules", says why.
-// Forms of the list left out: chosen on 26 treebank files that are mostly Homer, they fit Homer only.
+// Common forms other rules read first as a rarer word (ἔλεγε as ἔλεγος), as whole words: exceptions.tsv and
+// exceptions-manual.tsv (README.md, "Own rules"). Left out of the list: forms that fit Homer only.
 const EXCEPTIONS_LEFT_OUT = {
   'ἄκουσα': 'Homer\'s unaugmented aorist of ἀκούω; in Attic the feminine of ἄκων "unwilling", which the rules read',
   'ἄκουσαν': 'Homer\'s unaugmented aorist of ἀκούω; in Attic the feminine of ἄκων "unwilling", which the rules read',
@@ -1728,13 +1672,17 @@ export function exceptionList() {
   }));
 }
 
+// The exceptions that keep their spelling without accents (sources/exceptions-accentless.txt); the others show their
+// term first without it. GRC_ALL_ACCENTLESS=1 writes it for every exception, for measure.py accentless.
+export const ACCENTLESS = process.env.GRC_ALL_ACCENTLESS === '1' ? null : new Set(readTsv('exceptions-accentless.txt').map(([f]) => NFC(f)));
+
 function buildExceptions() {
-  transform('exceptions', 'common form', 'A common form that other rules read first as a rarer word, read as the term the dictionary alone puts first (ἔλεγε → λέγω, not ἔλεγος; ἐμοῦ → ἐγώ, not ἐμός; ἔτη → ἔτος, not ἔτης).');
+  transform('exc', 'common form', 'A common form that other rules read first as a rarer word, read as the term the dictionary alone puts first (ἔλεγε → λέγω, not ἔλεγος; ἐμοῦ → ἐγώ, not ἐμός; ἔτη → ἔτος, not ἔτης).');
   for (const {form, term, tag} of exceptionList()) {
     // graveToAcute has turned a grave into an acute before any rule reads the text (δεινὰ → δεινά).
     const written = NFC(NFD(form).replace(/\u0300/gu, '\u0301'));
-    for (const spelling of new Set([written, stripAccents(written)])) {
-      add('exceptions', {type: 'wholeWord', inflected: spelling, deinflected: term, conditionsIn: [], conditionsOut: tag ? [tag] : []});
+    for (const spelling of new Set(ACCENTLESS === null || ACCENTLESS.has(form) ? [written, stripAccents(written)] : [written])) {
+      add('exc', {type: 'wholeWord', inflected: spelling, deinflected: term, conditionsIn: [], conditionsOut: tag ? [tag] : []});
     }
   }
 }

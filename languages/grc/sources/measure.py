@@ -1,29 +1,12 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""The lookup measurements of README.md (Measurements 2-4). Not run by any test.
+"""The lookup measurements of README.md (Measurements 2-4; section 6 has the commands). Not run by any test.
 
-    python3 measure.py text <hover.tsv> [--sample 60]   real text: first results judged against the treebank
-    python3 measure.py behind <hover.tsv>               the same at words after an article, pronoun, particle or εἰμί
-    python3 measure.py frequent <agdt dir>              the 10,000 most frequent forms of the whole treebank
-    python3 measure.py rules <hover.tsv | agdt dir> [--forms 40] [--changed 40]
-                                                        the first results the rules change: the pack against the same
-                                                        pack without rules (the dictionary's form-of rows alone); --forms
-                                                        lists the forms they make wrong, largest first; --changed the
-                                                        forms they turn from no result into a wrong one, and those
-                                                        whose first result they change while the judge calls both
-                                                        wrong (εἰμί for οὖσα, where the dictionary alone shows ὤν)
-    python3 measure.py exceptions <agdt dir> --exclude <files> [--min 10] > sources/exceptions.tsv
-                                                        the forms of the frequency list whose first result the rules
-                                                        (all but the transform `exceptions`) turn from right to wrong
-                                                        for at least --min tokens (net), and the other forms of the
-                                                        same collisions, with the lemma the dictionary alone puts
-                                                        first: the rules of the transform `exceptions`
-    python3 measure.py compare <hover.tsv> --other <languages dir> [--trace <transform id>]
-                                                        the first results that change between --languages and --other,
-                                                        and the lookups of --other with a result through the transform
-    python3 measure.py benchmark <hover.tsv> > words    the benchmark's 60 texts from inflected words
-    python3 measure.py traces <hover.tsv>               right first results whose trace starts with a case: does the
-                                                        case and number agree with the treebank's tag?
+    text <hover.tsv> [--sample 60] | behind <hover.tsv> | frequent <agdt dir> | traces <hover.tsv>
+    rules <hover.tsv | agdt dir> [--forms N] [--changed N] [--lemmas N]   the pack against the same pack without rules
+    exceptions <agdt dir> --exclude <files> [--min 10]   writes sources/exceptions.tsv
+    accentless <agdt dir>      the exceptions whose spelling without accents they or other treebank forms need
+    compare <hover.tsv> --other <languages dir> [--trace <id>] | benchmark <hover.tsv>
 
 hover.tsv is what make-hovers-agdt.py writes. Options: --batch build/lookup-batch, --cli build/hoshidicts-cli,
 --languages languages, --dictionary <wty-grc-en imported>, --exclude <treebank files, comma-separated>. A lookup is a
@@ -34,7 +17,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 ap = argparse.ArgumentParser()
-ap.add_argument('command', choices=['text', 'behind', 'frequent', 'rules', 'compare', 'benchmark', 'traces', 'exceptions'])
+ap.add_argument('command', choices=['text', 'behind', 'frequent', 'rules', 'compare', 'benchmark', 'traces', 'exceptions', 'accentless'])
 ap.add_argument('input')
 ap.add_argument('--batch', default='build/lookup-batch')
 ap.add_argument('--cli', default='build/hoshidicts-cli')
@@ -47,6 +30,7 @@ ap.add_argument('--other')
 ap.add_argument('--trace')
 ap.add_argument('--forms', type=int, default=0)
 ap.add_argument('--changed', type=int, default=0)
+ap.add_argument('--lemmas', type=int, default=0)
 ap.add_argument('--exclude', default='')
 ap.add_argument('--min', type=int, default=10)
 a = ap.parse_args()
@@ -154,7 +138,7 @@ def frequent_forms(agdt):
             form = NFC(re.sub('([βγδζθκλμνξπρστφχψ])\u0313$', '\\1\u2019', unicodedata.normalize('NFD', form)))
             count[form] += 1
             golds[form][NFC(re.sub(r'\d+$', '', lemma))] += 1
-    top = [w for w, _ in count.most_common(a.n)]
+    top = [w for w, _ in count.most_common(None if a.lemmas else a.n)]
     return top, count, golds
 
 
@@ -267,14 +251,45 @@ elif a.command == 'rules':
         print(f'the {a.forms} forms the rules make wrong most often ({len(forms)} forms in all):')
         for w, n in forms.most_common(a.forms):
             print(f'  {n:6d} {w} → {form_ex[w]}')
+    if a.lemmas:
+        per, ex_l = collections.Counter(), collections.defaultdict(collections.Counter)
+        for word, gold, n, x, y in triples:
+            if judge(x, gold, word) not in ('right', 'variant', 'none') and (not y or judge(y, gold, word) in ('right', 'variant')):
+                per[gold] += n
+                ex_l[gold][f'{word} → {x[0]["expression"]}'] += n
+        print(f'lemmas the rules make wrong from right or from no result ({sum(per.values())} tokens):')
+        for g, n in per.most_common(a.lemmas):
+            print(f'  {n:6d} {g}: ' + '; '.join(f'{e} ×{m}' for e, m in ex_l[g].most_common(5)))
     if a.changed:
         for name, c in (('turn from no result into a wrong one', nothing), ('change while both are judged wrong', changed)):
             print(f'the {a.changed} forms the rules {name} ({sum(c.values())} tokens in {len(c)} forms):')
             for w, n in c.most_common(a.changed):
                 print(f'  {n:6d} {w} → {changed_ex[w]}; treebank {"/".join(g for g, _ in changed_gold[w].most_common())}')
+elif a.command == 'accentless':
+    tmp = no_rules_pack('\0')
+    pack = json.loads((tmp / 'grc' / 'transforms.json').read_text(encoding='utf-8'))
+    exc = next(t for t in pack['transforms'] if t['id'] == 'exc')
+    plain = lambda w: NFC(ACCENTS.sub('', unicodedata.normalize('NFD', w)))
+    pairs = [p for r in exc['rules'] for p in r.get('suffixes', [[r.get('inflected'), r.get('deinflected')]])]
+    keep = lambda p: all(plain(v) != p[0] or v == p[0] for v, _ in pairs)
+    exc['rules'] = [{**{k: v for k, v in r.items() if k not in ('inflected', 'deinflected')}, 'type': 'circumfix', 'prefixes': [['', '']],
+                     'suffixes': [p for p in r.get('suffixes', [[r.get('inflected'), r.get('deinflected')]]) if keep(p)]} for r in exc['rules']]
+    exc['rules'] = [r for r in exc['rules'] if r['suffixes']]
+    (tmp / 'grc' / 'transforms.json').write_text(json.dumps(pack, ensure_ascii=False), encoding='utf-8')
+    written = [(w, t) for w, t in pairs if plain(w) != w]
+    need = [w for (w, t), r in zip(written, lookup([w for w, _ in written], str(tmp))) if not r or NFC(r[0]['expression']) != NFC(t)]
+    _, count, golds = frequent_forms(a.input)
+    by_plain = {plain(w): w for w, _ in written}
+    others = [f for f in count if plain(f) in by_plain and f not in dict(written)]
+    first = lambda r: NFC(r[0]['expression']) if r else ''
+    for f, x, y in zip(others, lookup(others), lookup(others, str(tmp))):
+        if golds[f][first(x)] > golds[f][first(y)]:
+            need.append(by_plain[plain(f)])
+    print('\n'.join(dict.fromkeys(need)))
+    shutil.rmtree(tmp)
 elif a.command == 'exceptions':
     top, count, golds = frequent_forms(a.input)
-    bare, without = no_rules_pack(), no_rules_pack('exceptions')
+    bare, without = no_rules_pack(), no_rules_pack('exc')
     res_pack = dict(zip(top, lookup(top, str(without))))
     res_bare = dict(zip(top, lookup(top, str(bare))))
     shutil.rmtree(bare)

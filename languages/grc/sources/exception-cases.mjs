@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Writes the `exc` rows at the end of tests/cases.tsv: each exception reaches its term with the trace `exceptions`,
-// and three negatives (ζά before a form without accents, which no other rule reaches) keep the whole words whole.
+// Writes the `exc` rows at the end of tests/cases.tsv: each exception reaches its term with the trace `exc`,
+// and three negatives (ζά before an exception's spelling without accents, which no other rule reaches) keep the
+// whole words whole.
 //
 //   node languages/grc/sources/exception-cases.mjs [build/hoshidicts-cli]
 
@@ -8,7 +9,7 @@ import {execFileSync} from 'node:child_process';
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {exceptionList} from './own-rules.mjs';
+import {exceptionList, ACCENTLESS} from './own-rules.mjs';
 import {NFC, NFD, stripAccents} from './greek.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -17,11 +18,12 @@ const MARK = '# exceptions: written by sources/exception-cases.mjs from own-rule
 const text = readFileSync(file, 'utf8');
 const head = text.includes(MARK) ? text.slice(0, text.indexOf(MARK)) : text.endsWith('\n') ? text : text + '\n';
 const list = exceptionList();
-const rows = list.map(({form, term}) => `exc\t1\t${form}\t${term}\t*\texceptions`);
+const rows = list.map(({form, term}) => `exc\t1\t${form}\t${term}\t*\texc`);
 const cli = process.argv[2] ?? 'build/hoshidicts-cli';
 const languages = join(here, '..', '..');
 const run = (args, input) => execFileSync(cli, ['--languages', languages, ...args], {input, encoding: 'utf8', maxBuffer: 1 << 30});
-const probes = list.map(({form, term}) => ({text: 'ζά' + stripAccents(NFC(NFD(form).replace(/\u0300/gu, '\u0301'))), term: 'ζά' + term}));
+const probes = list.filter(({form}) => !ACCENTLESS || ACCENTLESS.has(form))
+  .map(({form, term}) => ({text: 'ζά' + stripAccents(NFC(NFD(form).replace(/\u0300/gu, '\u0301'))), term: 'ζά' + term}));
 const variants = run(['preprocess', 'grc', '--stdin', '--all-options'], probes.map((p) => p.text).join('\n') + '\n').trim().split('\n')
   .map((l) => JSON.parse(l).variants.map((v) => v.text));
 const flat = [...new Set(variants.flat())];
