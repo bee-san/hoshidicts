@@ -83,8 +83,8 @@ read from their first word, as the dictionary's own form-of rows read them
 
 ## Rule provenance
 
-`transforms.json` has 151 transforms and 2,272 rules (2,548 with the
-circumfix cross products expanded): 2,145 `own`, 127 `both` and no
+`transforms.json` has 151 transforms and 2,286 rules (2,562 with the
+circumfix cross products expanded): 2,159 `own`, 127 `both` and no
 `yomitan` rule. `sources/build-final.mjs` writes it: `sources/own.json` with
 every Yomitan rule left out and the own rules that make a Yomitan rule's
 deinflection marked `both`.
@@ -201,8 +201,8 @@ deinflection marked `both`.
     not `pre`, `lart` is not `lar`, `mira`, `mia`, `mija` and `miri` are
     not `mi` (`-ri` after i needs three letters before it, `-ja` comes after
     a vowel other than i, so `hija` is `hije`), `urdhërin` is not `urdhë`,
-    `VI` is not `vij`, `vetmi` is not
-    `vetëm`, `hyjni` is not `hyj` (a verb stem before a consonant ending
+    `VI` is not `vij`, `vetmi` is not the noun `vetëm` (it is the definite
+    adjective, `i vetmi`), `hyjni` is not `hyj` (a verb stem before a consonant ending
     does not end in j; the non-active endings have twin rules for the
     digraphs gj and nj, so `përgjigjet` → `përgjigjem`);
   - the one-syllable verbs (jam, kam, ha, pi, di, rri, fle, lë, vë, zë,
@@ -279,12 +279,18 @@ deinflection marked `both`.
     February); `measure.py` lists apart the words shown as themselves, the
     words whose rows no rule reaches and those reached through a rule and a
     row, which it had counted right or skipped; rows for single-rule stem
-    constraints and for `untaggedTerms`.
+    constraints and for `untaggedTerms`;
+  - after audit-hachi-lang-sq-f (MAJOR-7, m18-m21): `qindra` and
+    `dhjetëra` as `mijëra`; the other aorist forms of `ndiej` (`ndjenë`,
+    `ndjemë`, `ndjetë`); `vishuni`; the oblique ordinals (`të katërtit`);
+    the definite of adjectives in -ëm (`i vetmi`, `i sotmi`) and `të
+    mëdhatë`, which four wrong negatives had forbidden; and `jetë`, `vjet`,
+    `koha` and smaller words judged again (Known gaps).
 
 ## Measurements
 
 Every number below is reproduced by `sources/measure-all.sh` (it lists the
-commands) at hoshidicts 81880e5 (GCC 14.3, Release), with wty-sq-en as
+commands) at hoshidicts 2aca937 (GCC 14.3, Release), with wty-sq-en as
 published, imported by `hoshidicts-cli import`, form-of rows included, and
 `lookup.formOf` `follow`. The sample is the 1,000 UniMorph rows of
 `corpus.tsv` and `gaps.tsv` together. The pack's one optional feature is the
@@ -298,21 +304,21 @@ file is measured with every option on and with the defaults.
    hand-written files are measured with their reasons replaced by `*`
    (any trace), since Yomitan's rules have other transform ids; as written,
    the own and final rules pass every row of `defaults.tsv` with the
-   defaults (388 / 388 negatives) and 383 / 388 with every option on.
+   defaults (387 / 387 negatives) and 382 / 387 with every option on.
 
    | Rule set | Sample recall | False candidates | First rank | defaults.tsv positives | defaults.tsv negatives | cases.tsv | yomitan.tsv |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own (`sources/own.json`) | 99.4% (994) / 99.4% | 0.275 / 0.263 | 98.0% / 98.0% | 407 / 407 of 407 | 381 / 386 of 388 | 9 / 0 of 9 | 98 / 98 |
-   | Yomitan (`sources/yomitan.json`) | 37.0% (370) / 35.9% | 0.132 / 0.121 | 93.2% / 93.2% | 64 / 62 | 201 / 207 | 3 / 0 | 98 / 98 |
-   | Union (merge tool) | 99.6% (996) / 99.6% | 0.284 / 0.270 | 98.1% / 98.1% | 407 / 407 | 201 / 206 | 9 / 0 | 98 / 98 |
-   | Final (`transforms.json`) | 99.4% (994) / 99.4% | 0.275 / 0.263 | 98.0% / 98.0% | 407 / 407 | 381 / 386 | 9 / 0 | 98 / 98 |
+   | Own (`sources/own.json`) | 99.4% (994) / 99.4% | 0.275 / 0.263 | 98.0% / 98.0% | 411 / 411 of 411 | 380 / 385 of 387 | 9 / 0 of 9 | 98 / 98 |
+   | Yomitan (`sources/yomitan.json`) | 37.0% (370) / 35.9% | 0.132 / 0.121 | 93.2% / 93.2% | 64 / 62 | 200 / 206 | 3 / 0 | 98 / 98 |
+   | Union (merge tool) | 99.6% (996) / 99.6% | 0.284 / 0.270 | 98.1% / 98.1% | 411 / 411 | 200 / 205 | 9 / 0 | 98 / 98 |
+   | Final (`transforms.json`) | 99.4% (994) / 99.4% | 0.275 / 0.263 | 98.0% / 98.0% | 411 / 411 | 380 / 385 | 9 / 0 | 98 / 98 |
 
    - The final set is the own set with provenance marks, so its numbers are
      the own set's.
    - The union reaches two more sample rows than the final set, `ikinim`
      and `ikiët`: UniMorph errors that give iki a vowel stem, which
      Yomitan's `nim` → `` and `ët` → `` reach because they have no stem
-     class. It breaks 180 of the 388 negatives.
+     class. It breaks 180 of the 387 negatives.
    - `cases.tsv` holds text without ë and ç, which only the optional
      processor reads, so with the defaults no rule set reaches it.
    - With every option on, the processor writes ë for e, so 5 negatives
@@ -328,7 +334,7 @@ file is measured with every option on and with the defaults.
      at d7e82b0 predate it and reject the key). With `pass`, every test file
      ranks the same lemmas first and has more false candidates: the sample
      0.300 against 0.275 (0.285 / 0.263 with the defaults), cases.tsv 0.556
-     / 0.222, defaults.tsv 0.806 / 0.683, yomitan.tsv 0.102 / 0.092;
+     / 0.222, defaults.tsv 0.798 / 0.676, yomitan.tsv 0.102 / 0.092;
      recall and negatives are the same.
 2. **Frequent forms** (`sources/measure.py frequent`): of the 10,000 most
    frequent words of the subtitle list, the rules reach the lemma that the
@@ -356,43 +362,50 @@ file is measured with every option on and with the defaults.
      now show the meant lemma through whole-word rules (`ndjeva` → `ndiej`,
      `ligjet` → `ligj`, `thithe`, `preke`, `preka`, `kërcen`).
    - 221 words shown as themselves, a headword of their own, while their
-     rows name another lemma (837,247 tokens). 39 show the wrong word by my
-     reading (119,538 tokens): `ka` (82,929; has, `kam`) shows the
-     preposition (from) and the noun (ox), `thua` (5,263; you say) shows
+     rows name another lemma (837,247 tokens). 45 show the wrong word by my
+     reading (145,649 tokens): `ka` (82,929; has, `kam`) shows the
+     preposition (from) and the noun (ox), `jetë` (16,723; `të jetë`, that
+     it be, in about three uses of four) shows "life", `koha` (4,215; the
+     time) "age", `vjet` (3,498; years, after numerals) "last year", `thua`
+     (5,263; you say) shows
      "nail", `ndodhi` (5,016; it happened) "event", `sheh` (2,461; sees)
      "sheik", `gjeni` (1,357; you find) "genius", `pe` (1,254; you saw)
      "thread", `pirë` (1,021; drunk) "pore", `shokë` (1,001; friends) "wool
-     belt", `thanë` (952; they said) "cornel", and 30 more (Known gaps); 18
-     are unclear (`parë`, first or seen) and 5 informal spellings. No rule
+     belt", `thanë` (952; they said) "cornel", `fati` (647; the fate) "the
+     Fates", `ari` (579; the gold) "bear", `ujit` (449; of the water) "to
+     irrigate", and 30 more (Known gaps); 14 are unclear (`parë`, first or
+     seen) and 5 informal spellings. No rule
      can change these: the text as written ranks before every deinflection
      (9.6).
    - 395 words whose rows name a lemma no rule reaches (3,687,044 tokens,
-     mostly function words): 19 wrong (211,771 tokens, 195,081 of them the
+     mostly function words): 21 wrong (213,447 tokens, 195,081 of them the
      article `i` → `im`, Known gaps): `dikë` (3,072; someone) "great
      desire", `ide` (2,747; idea) → `hide`, jujube, `eshtë` (2,710) "fiber",
-     `gjer` (405; until) "dormouse", the subjunctives `heqë`, `hedhë`, `zërë`
-     and `vërë`, and 11 more.
+     `farë` (1,535; mostly from `ç'farë`, which the list splits) "seed",
+     `gjer` (405; until) "dormouse", the subjunctives `heqë`, `hedhë`,
+     `zërë`, `vërë` and `merrë`, and 11 more.
    - 209 words without rows whose first result comes through a rule and
-     then a dictionary row (45,600 tokens): 27 wrong (6,262 tokens):
+     then a dictionary row (45,600 tokens): 28 wrong (6,535 tokens):
      `idenë`, `ideja` and `idetë` → `hide`; `kamera` and `kamerat` → `kamë`,
      dagger; `vetura`, `veturë` and `veturën` (car) → `ves`, vice; `patate` →
-     `patë`, goose; `dhëna`, `dhënat`, `dhënave` (data) → `dhen`; and 15
-     more. In this class and the one before, the dictionary's rows lead to
+     `patë`, goose; `dhëna`, `dhënat`, `dhënave` (data) → `dhen`; `pritje`
+     (waiting, a noun wty-sq-en lacks) → the verb `pres`; and 15 more. In this class and the one before, the dictionary's rows lead to
      the wrong term, so no rule can change them either.
 
    Leaving out the article `i` and `re`, which Known gaps lists already,
-   86 of the 10,000 words show a wrong first result in these classes, with
-   138,355 tokens (1.3% of the list's tokens).
-   For 1,172 more words (318,000 tokens, 2.9%) with no form-of or UniMorph
+   95 of the 10,000 words show a wrong first result in these classes, with
+   166,415 tokens (1.5% of the list's tokens).
+   For 1,175 more words (320,000 tokens, 3.0%) with no form-of or UniMorph
    row, the first result comes from the rules alone. A random sample of 60
    (drawn before the audits; the same first results at this commit), judged
    by hand, has 55 right and 5 wrong: `tete` → `tet`, `shoq` → `shok` (`i
    shoq`, her husband), `përgëzime` → `përgëzoj`, `telefonatë` →
    `telefon` and `hekurt` → `hekur`, words the dictionary lacks; the
    first audit's own sample of 60 had 52 right. The 100 most frequent of
-   the 1,172, judged by hand, have 90 right; the 10 wrong are informal
+   the 1,175, judged by hand, have 89 right; the 11 wrong are informal
    spellings without ë (`jane`, `ben`, `bere`, `thash`, `kan`, `beje`,
-   `besh`, `beni`, `pelqen`) and `çmenduri` (Known gaps). Wrong rule-made
+   `besh`, `beni`, `pelqen`), `çmenduri` and `mundohem` (to try) →
+   `mundoj`, glossed only "to torture" (Known gaps). Wrong rule-made
    first results collect where the lookup offers two lemmas: 293 did when
    audit-hachi-lang-sq-d read them all, and it found 12 that show a
    rarer headword the rules make, while wty-sq-en has the meant lemma
@@ -426,19 +439,19 @@ file is measured with every option on and with the defaults.
    and all are right.
 4. **Real text** (`sources/measure.py real`): every word of the 20
    Wikipedia articles looked up with the text from it to the end of its
-   sentence, 124,165 lookups. 49,282 first results are right by script (the
+   sentence, 124,165 lookups. 49,279 first results are right by script (the
    matched text's rows name the result and no other lemma, or it is the
    matched text itself and its rows name no other lemma);
    9 are wrong by script and right on reading them (`domosdoshme` →
    `domosdoshëm`, whose rows name `i domosdoshëm`; `duke qenë` → the
-   headword `qenë`); 25,374 find nothing (names, numbers and words the
-   dictionary of 13,775 headwords lacks). 5,536 are homographs: the
+   headword `qenë`); 25,339 find nothing (names, numbers and words the
+   dictionary of 13,775 headwords lacks). 5,522 are homographs: the
    matched text's rows name the result and another lemma, so the script
    cannot tell (`real/homographs.tsv`, 382 groups of a word and its first
-   result). The 100 largest groups hold 4,930 of them; by my reading the
+   result). The 100 largest groups hold 4,916 of them; by my reading the
    first result is right in all but these: the article `i` → `im` (my,
-   2,155; wty-sq-en has no headword for the article and lists `i` as a
-   form of `im` and `një`), `I` → a Wiktionary page name (64), `m` (the
+   2,144; wty-sq-en has no headword for the article and lists `i` as a
+   form of `im` and `një`), `I` → a Wiktionary page name (61), `m` (the
    metre) → `gusht` (49), `reja` → `re` (cloud) where the adjective `ri`
    (new) is meant (42), `bashkimi`, `bashkimin` → the name `Bashkim` (25),
    `pasur` → `kam` after `i` and `e` (rich, 14), `kisha` → `kam` (church,
@@ -451,26 +464,31 @@ file is measured with every option on and with the defaults.
    `stërvitje` → `stërvis`. 31,909 are the matched text itself, a headword
    of its own, while its rows name another lemma (`real/itself.tsv`, 447
    groups), which the script cannot tell either; I read every group in its
-   contexts. 26 groups with 495 lookups show the wrong word: `ka` (has) →
+   contexts. 34 groups with 635 lookups show the wrong word: `ka` (has) →
    the preposition and "ox" (210), `diellore` (solar) → "sunshade" (94),
+   `vjet` (years, after a numeral at all 67) → "last year" (67), `jetë`
+   (`të jetë`, that it be, at 37 of 40) → "life" (37), `koha` (the time) →
+   "age" (17 of 21),
    bare `re` after `e`, `së` and `të` → "cloud" (59 of 83, Known gaps),
    `ish` (former) → a call to chickens (32), `nisi` (began) → "island" (13),
    `vendore` (local) → "locative case" (13), `ndodhi` (happened) → "event"
    (10), `kthyer` (turned) → "bent" (10), `shënuar` (scored) →
    "distinguished" (9), `arti` (the art) → "Bosnian pine" (7), `përcjellë`
-   (conveyed) → "convoy" (7) and 15 smaller ones. `shqipe` (168: "eagle"
-   first, the Albanian language second), `parë` (218: first, or seen) and
-   `krye` (28) are unclear; the capitalized names among them are counted
-   under Known gaps. The other 12,055 lookups are judged by hand. A random sample of 60 of them, drawn before the audit (11,687
+   (conveyed) → "convoy" (7), `farë` (`një farë`, a kind of) → "seed" (6),
+   `ari` (gold) → "bear" (4), `ujit` (of the water) → "to irrigate" (4) and
+   17 smaller ones. `shqipe` (168: "eagle" first, the Albanian language
+   second), `parë` (218: first, or seen) and `krye` (28) are unclear; the
+   capitalized names among them are counted under Known gaps. The other
+   12,107 lookups are judged by hand. A random sample of 60 of them, drawn before the audit (11,687
    then), had 56 right and 4 wrong; at this commit `dalin` (they go out)
    gives `dal`, not the adjective `dalë`, so 57 are right. The other wrong
    ones are `vat` → `va`, `t’i dhënë` → the headword `dhënë`, and `huaja` →
-   `hua` (the foreign, `huaj`). That is about 5% of these 12,055 lookups
+   `hua` (the foreign, `huaj`). That is about 5% of these 12,107 lookups
    (95% interval about 1.7% to 14%), about 600 of them. Counting every
-   class, about 3,700 of the 124,165 lookups (3.0%; with the sample's
-   interval about 3,200 to 4,800) show a wrong first result by my reading;
-   2,219 of them are the article `i` (`im`, or a Wiktionary page name for
-   `I`), and without it about 1,450 are (1.2%). The
+   class, about 3,800 of the 124,165 lookups (3.1%; with the sample's
+   interval about 3,400 to 4,900) show a wrong first result by my reading;
+   2,205 of them are the article `i` (`im`, or a Wiktionary page name for
+   `I`), and without it about 1,600 are (1.3%). The
    audit's own sample of 60 had 54 right; its wrong ones are in Known gaps,
    or fixed (`e matematikës` no longer gives the adjective `matematik`).
    The sample was drawn before the audits, from the lookups judged by hand
@@ -491,22 +509,22 @@ file is measured with every option on and with the defaults.
    and 18 more feminine nouns, and the masculine `ajra` → `ajër`).
 6. **Lookup speed** (`benchmark-lookup --languages languages --language sq`,
    wty-sq-en mapped): the 70 texts of `sources/benchmark-words.txt` in 6
-   passes, the first dropped, three runs at machine load about 33. The
+   passes, the first dropped, three runs at machine load about 30. The
    budget is 1 ms p50.
 
    | Rule set | p50 | p95 |
    | --- | ---: | ---: |
-   | Final | 17.6-17.8 µs | 30.6-32.6 µs |
-   | Union | 22.6-22.8 µs | 38.0-40.0 µs |
-   | Yomitan's rules | 14.1-14.4 µs | 21.9-23.0 µs |
+   | Final | 17.6-17.8 µs | 30.1-31.3 µs |
+   | Union | 22.4-22.5 µs | 37.4-37.8 µs |
+   | Yomitan's rules | 13.8-14.1 µs | 21.8-22.1 µs |
 7. **WebAssembly** (`sources/wasm-bench.mjs`, Hachidori feat/multi-language
    d7e82b0 prebuilt engines, Node 22, the same texts, dictionary paged).
    The budgets are 50 ms and 20 MB, and the pack has no `pattern` rule.
-   - `hdw_language_load` of this pack: median 9.2 ms single-thread and 9.8
-     ms threaded, over 10 fresh engines (8.3-14.2 ms).
-   - Live heap: +969,200 bytes after the load single-thread, +969,824
+   - `hdw_language_load` of this pack: median 9.1 ms single-thread and 9.6
+     ms threaded, over 10 fresh engines (8.2-14.7 ms).
+   - Live heap: +974,040 bytes after the load single-thread, +974,800
      threaded (mallinfo, `hdw_memory_stats`).
-   - `hdw_lookup`: p50 0.054 ms and p95 0.140 ms single-thread; p50 0.062
+   - `hdw_lookup`: p50 0.052 ms and p95 0.145 ms single-thread; p50 0.060
      ms and p95 0.161 ms threaded.
 8. **Hachidori in Chrome** (feat/multi-language d7e82b0 with this branch in
    `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
@@ -526,13 +544,13 @@ file is measured with every option on and with the defaults.
    `Drita`, `Lumi`, `idenë` and `thirri` fail as Known gaps says, so the
    file leaves them out.
 9. **Differential check** (`tools/check-yomitan.mjs` with
-   `build/hoshidicts-cli`): 2,946 inputs, 9,221 Yomitan results, 0
+   `build/hoshidicts-cli`): 2,952 inputs, 9,240 Yomitan results, 0
    differences; `decapitalize` and `capitalizeFirstLetter` agree with
-   Yomitan's on 1,973 inputs each (the inputs include the test files'
+   Yomitan's on 1,984 inputs each (the inputs include the test files'
    strings, so these counts move with the tests).
 10. **Conformance** (`language-conformance-test`): corpus.tsv 994 / 994,
-    defaults.tsv 795 / 795 with the defaults, cases.tsv 9 / 9,
-    yomitan.tsv 98 / 98, text.tsv 25 / 25, lookup.tsv 114 / 114; gaps.tsv
+    defaults.tsv 798 / 798 with the defaults, cases.tsv 9 / 9,
+    yomitan.tsv 98 / 98, text.tsv 25 / 25, lookup.tsv 121 / 121; gaps.tsv
     0 / 6 (reported); `tests/` and `sources/` hold under 1 MB.
 11. **Mutations** (`sources/mutations.py`): deleting any one stem
     constraint of any transform (239 mutations), or making the one-syllable
@@ -582,7 +600,10 @@ file is measured with every option on and with the defaults.
     also gives), the trie order already decides (`mije`
     moved within its transform), or no Albanian letter is affected
     (apostrophes before NFKC, combining marks outside the word class,
-    letters beyond Latin-1). A `lookup.tsv` row pins
+    letters beyond Latin-1). Of the sixth audit's mutations (`mutate-f.py`)
+    two pass: moving the `ord` transform to the start or the end of the
+    file, which changes nothing, since its rules are whole words and the
+    longest ending is tried first. A `lookup.tsv` row pins
     `lookup.untaggedTerms` `filter`: `cilat` shows `cili` with it and `cila`
     with `pass`.
 
@@ -662,7 +683,12 @@ file is measured with every option on and with the defaults.
   lemma is meant (item 2's 221 and item 4's 31,909; the number is the
   word's occurrences in the subtitle list, in brackets its hovers in the
   20 articles where there are any): `ka` (has) shows the preposition
-  "from" and "ox" (82,929 [210]), `thua` (you say) "nail" (5,263),
+  "from" and "ox" (82,929 [210]), `jetë` (`të jetë`, that it be, about
+  three uses of four) "life" (16,723 [37]), `koha` (the time) "age"
+  (4,215 [17]), `vjet` (years, after numerals) "last year" (3,498 [67]),
+  `fati` (the fate) "the Fates" (647 [3]), `ari` (the gold) "bear" (579
+  [4]), `ujit` (of the water) "to irrigate" (449 [4]), `ujore` (aquatic)
+  "watering site" [2], `thua` (you say) "nail" (5,263),
   `ndodhi` (happened) "event" (5,016 [10]), `sheh` (sees) "sheik" (2,461
   [3]), `gjeni` (you find) "genius" (1,357), `pe` (you saw) "thread"
   (1,254), `pirë` (drunk) "pore" (1,021), `shokë` (friends) "wool belt"
@@ -677,6 +703,9 @@ file is measured with every option on and with the defaults.
   (idea, 2,747), `idenë` (1,240), `ideja` (528) and `idetë` (112) show
   `hide`, jujube, because wty-sq-en lists `ide` as an alternative form of
   `hide`; `dikë` (someone, 3,072) "great desire"; `eshtë` (2,710) "fiber";
+  `farë` (1,535, mostly the second half of `ç'farë`, which the subtitle
+  list splits; `një farë`, a kind of [6]) "seed"; `merrë` (that he take,
+  141) `merë`, fear; `pritje` (waiting, 273) the verb `pres`;
   `kamera` (561) and `kamerat` (272) `kamë`, dagger; `vetura` (292),
   `veturë` (316) and `veturën` (225), car, `ves`, vice; `patate`
   (potatoes, 225) `patë`, goose; `gjer` (until, 405) "dormouse". Homographs
@@ -687,7 +716,10 @@ file is measured with every option on and with the defaults.
   nouns `thirrje` (a call, 525) and `thirre` (369). The pack has no table
   for `thërras`, and wty-sq-en's own rows for `thirri` and `thirra` name
   only `thirr`, which would rank first anyway (9.6). `ndjehem` (631,
-  informal for `ndihem`) shows `ndjej`, to forgive.
+  informal for `ndihem`) shows `ndjej`, to forgive. `mundohem` (to try;
+  828) and its forms (`mundohet`, `mundohesh`, `mundohu`, `mundohemi`,
+  `mundohen` and four more; 2,344 tokens together) show `mundoj`, whose
+  only gloss in wty-sq-en is "to torture": wty-sq-en lacks `mundohem`.
 - Participle adjectives in -ura and -uara (`Shtetet e Bashkuara`, `të
   njohura`) are traced as the aorist (1sg) and then the participle row:
   the aorist `a` → `` reads `bashkuar` + `a`, and a rule's trace beats the
