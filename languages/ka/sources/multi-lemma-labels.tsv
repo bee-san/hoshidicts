@@ -1,0 +1,547 @@
+# Labels for sources/measure-lookups.mjs --labels: first results that are one of several lemmas the word's own wty-ka-en rows name.
+# word<TAB>first result<TAB>label (W: wrong in the usual reading; A: ambiguous, context decides; R: right)<TAB>note
+# The W and A labels and the R labels whose note is "the usual reading" were judged by hand, with audit-hachi-lang-ka's labels
+# (reports/audit-hachi-lang-ka-evidence/inputs/tie-labels.tsv) as the base. The other R labels were made by a rule and spot-checked:
+# every lemma the rows name is a verb and the first result is one of them or the verb its verbal noun names (aspect or version
+# partners, such as გააკეთე → გააკეთებს or აკეთებს), or the rows reach a single lemma.
+# The file covers every such pair in the books, Tatoeba, the 10,000 most frequent words and audit-hachi-lang-ka's two texts for the pack as committed.
+აღწერით	აღწერითი	W	"by the census/description" shown as "descriptive"
+ბაზის	ბაზი	W	"of the base" shown as "bumblebee"
+ბუნებით	ბუნი	W	"by nature" shown as "shaft, handle"
+ბუნების	ბუნი	W	"of nature" shown as "shaft, handle"
+ბუნებისგან	ბუნი	W	"from nature" shown as "shaft, handle"
+გახდა	იხდის	W	"became" shown as "to take off (clothing)": the word's own rows name only იხდის and გაიხდის
+დავით	დავი	W	the name David shown as "dispute"
+დანიშვნის	ნიშნავს	W	"of the appointment" shown as "to mean"; the row names დანიშნავს too
+დგომა	აღდგომა	W	"standing" shown as "Easter"
+დგომას	აღდგომა	W	as დგომა
+დინების	დინები	W	"of the current" shown as "dynes"
+თქვე	მე	W	vocative თქვენ shown as "I, me"
+თქვენა	მე	W	emphatic თქვენ shown as "I, me"
+იყო	იყი	W	"was" (aorist of არის) shown as "vodka, fermented drink" (obs.)
+კერის	კერი	W	"of the hearth" shown as "curry"
+კვლას	კვლავ	W	dative of კვლა "killing" (კლავს) shown as კვლავ "again", whose old form კვლა has no dative
+მათ	მე	W	ergative/dative of ისინი shown as "I, me"
+მან	მე	W	ergative of ის shown as "I, me"
+მით	მე	W	instrumental of ის shown as "I, me"
+მის	მე	W	"his/her" (genitive of ის) shown as "I, me"
+ნებით	ნები	W	"willingly" shown as "palm of the hand"
+ნების	ნები	W	"of will" shown as "palm of the hand"
+პირად	პირი	W	"personal" (attributive of პირადი) shown as "mouth, face"
+სამების	სამი	W	"of the Trinity" shown as "three"
+ტყუპებზე	ტყუპები	W	"about the twins" shown as "Gemini"
+ფენის	ფენი	W	"of the layer" shown as "hairdryer"
+ფილებით	ფილი	W	"with slabs" shown as "Phil"
+შემოქმედებით	შემოქმედი	W	"creatively / by the work" shown as "creator"
+შემოქმედების	შემოქმედი	W	"of the (creative) work" shown as "creator"
+შენა	მე	W	emphatic შენ shown as "I, me"
+ჩვენად	მე	W	adverbial of ჩვენ "we" shown as "I, me"
+ჭამ	ჭა	W	"you eat" (2nd person of ჭამს) shown as the ergative of ჭა "well"
+ალის	ალი	A	genitive of ალი "flame" or of ალა
+ალისა	ალი	A	as ალის
+არყით	არაყი	A	"with vodka" (არაყი) or "with birch" (არყი)
+გორის	გორი	A	genitive of the town Gori or of გორა "hill"
+გორისა	გორი	A	as გორის
+დასთან	დასი	A	"with the sister" (და) or "with the troupe" (დასი)
+დაჭერით	დაჭრის	A	"by catching / catch! (pl.)" (დაიჭერს) or, as wty-ka-en lists it, the imperative of დაჭრის "cut"
+დებით	და	A	instrumental plural of და "sister" or of დება
+დებით	დება	A	as დების
+დების	და	A	genitive plural of და "sister" (დები) or of დება "laying"
+თავის	თავი	A	mostly the possessive "his own" (თავისი); the genitive of თავი "head" in other contexts
+თემები	თემი	A	"communities" (თემი) or "themes" (თემა)
+თვლების	თვალი	A	genitive plural of თვალი "eye, gem" or of თვლა "counting"
+კუბის	კუბი	A	Cuba or cube
+მალის	მალი	A	genitive of მალი "vertebra" or of მალა
+მანქანებით	მანქანები	A	"with cars" (მანქანა) or "with machinery" (მანქანები)
+მანქანების	მანქანები	A	"of cars" (მანქანა) or "of machinery" (მანქანები)
+მეცნიერების	მეცნიერება	A	"of science" or "of scientists"
+მეცნიერების	მეცნიერი	A	"of science" or "of scientists"
+მეცნიერებისა	მეცნიერი	A	as მეცნიერების
+მეცნიერებისა	მეცნიერება	A	as მეცნიერების
+მოთხოვნით	თხოვნა	A	"by demand" (მოთხოვნა) shown as "request" (თხოვნა), the form-of target of მოთხოვნა
+მოთხოვნის	თხოვნა	A	as მოთხოვნით
+მომზადება	მზადება	A	"preparation" (perfective) shown as the imperfective verbal noun
+მოძღვრებად	მოძღვრები	A	"as doctrine" (მოძღვრება) or "as preachers" (მოძღვარი)
+პაპები	პაპი	A	as პაპის
+პაპების	პაპი	A	as პაპის
+პაპის	პაპი	A	"of the pope" (პაპი) or "of grandpa" (პაპა)
+სახსრების	სახსრები	A	"of funds" (სახსრები) or "of joints" (სახსარი)
+ტენის	ტენი	A	genitive of ტენი "moisture" or of ტენა
+ტონის	ტონი	A	"of the tone" (ტონი) or "of a ton" (ტონა)
+ფერად	ფერი	A	adverbial of ფერი "colour" or the attributive of ფერადი "coloured"
+შეთქმულების	შეთქმულება	A	"of the conspiracy" or "of the conspirators"
+შეთქმულების	შეთქმულები	A	"of the conspiracy" or "of the conspirators"
+შენით	შენი	A	"by yourself" (შენ) or "with yours" (შენი)
+ცავ	ცა	A	vocative of ცა "sky" or the dialect word ციცავ
+ხანების	ხანი	A	as ხანის
+ხანებში	ხანი	A	as ხანის
+ხანიდან	ხანი	A	as ხანის
+ხანით	ხანი	A	as ხანის
+ხანის	ხანი	A	genitive of ხანი "khan, time" or of ხანა "age, period"
+ხატების	ხატები	A	"of the icons" (ხატი) or ხატები "pictures"
+ხევის	ხევი	A	genitive of ხევი "gorge" or of ხევა
+ადგილზე	ადგილი	R	the usual reading
+ათენის	ათენი	R	the usual reading
+ბაზის	ბაზა	R	the usual reading
+ბერად	ბერი	R	the usual reading
+ბერის	ბერი	R	the usual reading
+ბრძანებით	ბრძანება	R	the usual reading
+ბუნებით	ბუნება	R	the usual reading
+ბუნების	ბუნება	R	the usual reading
+ბუნებისგან	ბუნება	R	the usual reading
+გარემოების	გარემოება	R	the usual reading
+გეგმავ	გეგმავს	R	the usual reading
+გუნდებად	გუნდი	R	the usual reading
+გუნდები	გუნდი	R	the usual reading
+გუნდების	გუნდი	R	the usual reading
+გუნდიდან	გუნდი	R	the usual reading
+გუნდის	გუნდი	R	the usual reading
+დავით	დავითი	R	the usual reading
+დავის	დავი	R	the usual reading
+დათმობა	დათმობს	R	the usual reading
+დგომა	დგას	R	the usual reading
+დედოფლები	დედოფალი	R	the usual reading
+დენის	დენი	R	the usual reading
+დინების	დინება	R	the usual reading
+ერად	ერი	R	the usual reading
+ერთგულების	ერთგულება	R	the usual reading
+ერთგულებისა	ერთგულება	R	the usual reading
+ერის	ერი	R	the usual reading
+ერისა	ერი	R	the usual reading
+ერისთავები	ერისთავი	R	the usual reading
+ესეები	ესე	R	the usual reading
+თავისად	თავისი	R	the usual reading
+თქვე	თქვენ	R	the usual reading
+თქვენა	თქვენ	R	the usual reading
+იმად	ის	R	the usual reading
+იმათ	ის	R	the usual reading
+იმან	ის	R	the usual reading
+იმას	ის	R	the usual reading
+იმის	ის	R	the usual reading
+იყო	არის	R	the usual reading
+იძულებით	იძულება	R	the usual reading
+კახელები	კახელი	R	the usual reading
+კერის	კერა	R	the usual reading
+კვლევით	კვლევა	R	the usual reading
+კითხვით	კითხვა	R	the usual reading
+კოჭები	კოჭი	R	the usual reading
+მათ	ისინი	R	the usual reading
+მათმა	მათი	R	the usual reading
+მაისურით	მაისური	R	the usual reading
+მან	ის	R	the usual reading
+მერისგან	მერი	R	the usual reading
+მერისთვის	მერი	R	the usual reading
+მით	ის	R	the usual reading
+მის	ის	R	the usual reading
+მონაწილეობით	მონაწილეობა	R	the usual reading
+მოქმედებით	მოქმედება	R	the usual reading
+მტკიცებით	მტკიცება	R	the usual reading
+მუდმივ	მუდმივი	R	the usual reading
+ნებით	ნება	R	the usual reading
+ნების	ნება	R	the usual reading
+ნებისა	ნება	R	the usual reading
+ნიშნის	ნიშანი	R	the usual reading
+პირად	პირადი	R	the usual reading
+პირობით	პირობა	R	the usual reading
+საზღვრები	საზღვარი	R	the usual reading
+საზღვრების	საზღვარი	R	the usual reading
+საზღვრებს	საზღვარი	R	the usual reading
+საზღვრებში	საზღვარი	R	the usual reading
+საზღვრის	საზღვარი	R	the usual reading
+სამების	სამება	R	the usual reading
+სასოებით	სასოება	R	the usual reading
+სასოების	სასოება	R	the usual reading
+სირბილით	სირბილი	R	the usual reading
+სჯა	სჯის	R	the usual reading
+ტანის	ტანი	R	the usual reading
+ტანისა	ტანი	R	the usual reading
+ტყუპებზე	ტყუპი	R	the usual reading
+ფარის	ფარი	R	the usual reading
+ფენის	ფენა	R	the usual reading
+ფილებით	ფილა	R	the usual reading
+ფრანგები	ფრანგი	R	the usual reading
+ქალად	ქალი	R	the usual reading
+ქალებზე	ქალი	R	the usual reading
+ქალებთან	ქალი	R	the usual reading
+ქალები	ქალი	R	the usual reading
+ქალებით	ქალი	R	the usual reading
+ქალების	ქალი	R	the usual reading
+ქალებისთვის	ქალი	R	the usual reading
+ქალებმა	ქალი	R	the usual reading
+ქალებს	ქალი	R	the usual reading
+ქალის	ქალი	R	the usual reading
+ქალისა	ქალი	R	the usual reading
+ქალისკენ	ქალი	R	the usual reading
+ყურიდან	ყური	R	the usual reading
+ყურით	ყური	R	the usual reading
+ყურის	ყური	R	the usual reading
+შემოქმედებით	შემოქმედება	R	the usual reading
+შემოქმედების	შემოქმედება	R	the usual reading
+შენა	შენ	R	the usual reading
+შეფასებით	შეფასება	R	the usual reading
+ჩემ	მე	R	the usual reading
+ჩემით	მე	R	the usual reading
+ცემა	ცემს	R	the usual reading
+წოდებით	წოდება	R	the usual reading
+ჭამ	ჭამს	R	the usual reading
+ადამიანების	ადამიანი	R	the only lemma the rows reach (ადამიანები, ადამიანი)
+ავაშენოთ	ააშენებს	R	verb rows name aspect or version partners: აშენებს, ააშენებს
+აირჩია	აირჩევს	R	verb rows name aspect or version partners: ირჩევს, აირჩევს
+აირჩიე	აირჩევს	R	verb rows name aspect or version partners: ირჩევს, აირჩევს
+აირჩიეთ	აირჩევს	R	verb rows name aspect or version partners: ირჩევს, აირჩევს
+აირჩიეს	აირჩევს	R	verb rows name aspect or version partners: ირჩევს, აირჩევს
+აირჩიოს	აირჩევს	R	verb rows name aspect or version partners: ირჩევს, აირჩევს
+აიღე	აიღებს	R	verb rows name aspect or version partners: აიღებს, იღებს
+აიღეთ	აიღებს	R	verb rows name aspect or version partners: აიღებს, იღებს
+აიღო	იღებს	R	verb rows name aspect or version partners: იღებს, აიღება
+ამისი	ეს	R	the only lemma the rows reach (ამის)
+ამოდი	ამოდის	R	verb rows name aspect or version partners: ამოდის, მიდის
+ამოიღეთ	ამოიღებს	R	verb rows name aspect or version partners: იღებს, ამოიღებს
+ამორჩევა	ამოარჩევს	R	verb rows name aspect or version partners: ამოარჩევს, ამოირჩევს
+ამოღება	იღებს	R	verb rows name aspect or version partners: იღებს, ამოიღებს, ამოუღებს, ამოიღება, ამოეღება, ამოაღებინებს
+არჩევა	არჩევს	R	verb rows name aspect or version partners: არჩევს, აირჩევს
+ატანა	იტანს	R	verb rows name aspect or version partners: იტანს, აიტანს
+აღწერა	აღწერს	R	verb rows name aspect or version partners: აღწერს, აღიწერება
+აღწერაში	აღწერს	R	verb rows name aspect or version partners: აღწერა
+აღწერის	აღწერს	R	verb rows name aspect or version partners: აღწერა
+აშენება	აშენებს	R	verb rows name aspect or version partners: აშენებს, შენება, ააშენებს, აშენდება
+აშლა	აშლის	R	verb rows name aspect or version partners: აშლის, აიშლის, აიშლება, აეშლება
+ბრუნება	აბრუნებს	R	verb rows name aspect or version partners: აბრუნებს, დააბრუნებს, დაუბრუნებს, იბრუნებს, უბრუნებს, ბრუნდება, აბრუნებინებს
+გააგრძელე	გააგრძელებს	R	verb rows name aspect or version partners: გააგრძელებს, აგრძელებს
+გაათავისუფლე	გაათავისუფლებს	R	verb rows name aspect or version partners: ათავისუფლებს, გაათავისუფლებს
+გააკეთე	გააკეთებს	R	verb rows name aspect or version partners: აკეთებს, გააკეთებს
+გააკეთეთ	გააკეთებს	R	verb rows name aspect or version partners: აკეთებს, გააკეთებს
+გაასწორე	გაასწორებს	R	verb rows name aspect or version partners: გაასწორებს, ასწორებს
+გაატარეთ	გაატარებს	R	verb rows name aspect or version partners: ატარებს, გაატარებს
+გააღე	გააღებს	R	verb rows name aspect or version partners: გააღებს, აღებს
+გააღეთ	გააღებს	R	verb rows name aspect or version partners: გააღებს, აღებს
+გააღვიძე	გააღვიძებს	R	verb rows name aspect or version partners: აღვიძებს, გააღვიძებს
+გააღვიძეთ	გააღვიძებს	R	verb rows name aspect or version partners: აღვიძებს, გააღვიძებს
+გააჩერე	გააჩერებს	R	verb rows name aspect or version partners: აჩერებს, გააჩერებს
+გაბედნიერება	გააბედნიერებს	R	verb rows name aspect or version partners: გააბედნიერებს, აბედნიერებს
+გაგზავნა	გაგზავნის	R	verb rows name aspect or version partners: გაგზავნის, გზავნის, გაუგზავნის, უგზავნის, გაიგზავნება
+გაგრძელება	გააგრძელებს	R	verb rows name aspect or version partners: გააგრძელებს, აგრძელებს, გაგრძელდება
+გაგრძელებას	გააგრძელებს	R	verb rows name aspect or version partners: გაგრძელება
+გაგრძელებით	გააგრძელებს	R	verb rows name aspect or version partners: გაგრძელება
+გაგრძელების	გააგრძელებს	R	verb rows name aspect or version partners: გაგრძელება
+გადაადგილება	გადააადგილებს	R	verb rows name aspect or version partners: გადააადგილებს, გადაიადგილებს, გადაუადგილებს, გადაადგილდება
+გადაადგილების	გადააადგილებს	R	verb rows name aspect or version partners: გადაადგილება
+გადათარგმნა	გადათარგმნის	R	verb rows name aspect or version partners: გადათარგმნის, თარგმნა, თარგმნის
+გადათარგმნე	გადათარგმნის	R	verb rows name aspect or version partners: გადათარგმნის, თარგმნის
+გადათარგმნეთ	გადათარგმნის	R	verb rows name aspect or version partners: გადათარგმნის, თარგმნის
+გადაიხადე	გადაიხდის	R	verb rows name aspect or version partners: გადაიხდის, იხდის
+გადაღებები	გადაიღებს	R	verb rows name aspect or version partners: გადაღება
+გადაღების	გადაიღებს	R	verb rows name aspect or version partners: გადაღება
+გაეღვიძა	გაიღვიძებს	R	verb rows name aspect or version partners: გაეღვიძება, გაიღვიძებს
+გავაგრძელოთ	გააგრძელებს	R	verb rows name aspect or version partners: გააგრძელებს, აგრძელებს
+გავაკეთოთ	გააკეთებს	R	verb rows name aspect or version partners: აკეთებს, გააკეთებს
+გავასწოროთ	გაასწორებს	R	verb rows name aspect or version partners: გაასწორებს, ასწორებს
+გავატაროთ	გაატარებს	R	verb rows name aspect or version partners: ატარებს, გაატარებს
+გავგზავნოთ	გაგზავნის	R	verb rows name aspect or version partners: გაგზავნის, გზავნის
+გავიგე	იგებს	R	verb rows name aspect or version partners: გაიგებს
+გავყიდოთ	გაყიდის	R	verb rows name aspect or version partners: გაყიდის, ყიდის
+გავჩერდეთ	გაჩერდება	R	verb rows name aspect or version partners: ჩერდება, გაჩერდება
+გავჩერდით	გაჩერდება	R	verb rows name aspect or version partners: ჩერდება, გაჩერდება
+გავხსნათ	გახსნის	R	verb rows name aspect or version partners: გახსნის, ხსნის
+გაზრდა	გაზრდის	R	verb rows name aspect or version partners: გაიზრდება, გაზრდის, ზრდის
+გათვალისწინებით	გაითვალისწინებს	R	verb rows name aspect or version partners: გათვალისწინება
+გაიმეორე	გაიმეორებს	R	verb rows name aspect or version partners: გაიმეორებს, იმეორებს
+გაიმეორეთ	გაიმეორებს	R	verb rows name aspect or version partners: გაიმეორებს, იმეორებს
+გაიღო	იღება	R	verb rows name aspect or version partners: იღება, გაიღებს
+გაკეთება	აკეთებს	R	verb rows name aspect or version partners: აკეთებს, გააკეთებს, გაკეთდება, გაიკეთებს, გაუკეთებს
+გამართლება	ამართლებს	R	verb rows name aspect or version partners: ამართლებს, გაამართლებს
+გამოიყენე	გამოიყენებს	R	verb rows name aspect or version partners: იყენებს, გამოიყენებს
+გამოიძიეთ	გამოიძიებს	R	verb rows name aspect or version partners: გამოიძიებს, იძიებს
+გამოსვლას	გამოდის	R	verb rows name aspect or version partners: გამოსვლა
+გამოსვლის	გამოდის	R	verb rows name aspect or version partners: გამოსვლა
+გამოყენება	გამოიყენებს	R	verb rows name aspect or version partners: გამოიყენებს, გამოუყენებს, იყენებს
+განსაზღვრა	განსაზღვრავს	R	verb rows name aspect or version partners: განსაზღვრავს, განისაზღვრება
+განხორციელებას	ახორციელებს	R	verb rows name aspect or version partners: განხორციელება
+განხორციელების	ახორციელებს	R	verb rows name aspect or version partners: განხორციელება
+გარეცხე	გარეცხავს	R	verb rows name aspect or version partners: რეცხავს, გარეცხავს
+გასწორება	გაასწორებს	R	verb rows name aspect or version partners: გაასწორებს, გაისწორებს, გაუსწორებს, გასწორდება, გაუსწორდება, ასწორებს
+გატარება	ატარებს	R	verb rows name aspect or version partners: ატარებს, გაატარებს
+გაუგზავნე	გაუგზავნის	R	verb rows name aspect or version partners: გაუგზავნის, უგზავნის
+გაყიდა	გაყიდის	R	verb rows name aspect or version partners: გაყიდის, ყიდის
+გაყიდე	გაყიდის	R	verb rows name aspect or version partners: ყიდის, გაყიდის
+გაყიდეთ	გაყიდის	R	verb rows name aspect or version partners: ყიდის, გაყიდის
+გაჩერდა	გაჩერდება	R	verb rows name aspect or version partners: ჩერდება, გაჩერდება
+გაჩერდე	გაჩერდება	R	verb rows name aspect or version partners: ჩერდება, გაჩერდება
+გაჩერდებიან	გაჩერდება	R	verb rows name aspect or version partners: ჩერდება, გაჩერდება
+გაჩერდი	გაჩერდება	R	verb rows name aspect or version partners: ჩერდება, გაჩერდება
+გაჩერდით	გაჩერდება	R	verb rows name aspect or version partners: ჩერდება, გაჩერდება
+გაჩერდნენ	გაჩერდება	R	verb rows name aspect or version partners: ჩერდება, გაჩერდება
+გაცნობა	გააცნობს	R	verb rows name aspect or version partners: გააცნობს, გაიცნობს
+გახსნა	გახსნის	R	verb rows name aspect or version partners: გახსნის, გაიხსნება, ხსნის
+გდება	აგდებს	R	verb rows name aspect or version partners: გდია, აგდია, უგდია, აგდებს, იგდებს, უგდებს, გადააგდებს
+გება	აგებს	R	verb rows name aspect or version partners: აგებს, იგებს, ეგება
+გლეჯა	გლეჯს	R	verb rows name aspect or version partners: გლეჯს, აგლეჯს, იგლეჯს, უგლეჯს, იგლიჯება, ეგლიჯება, აგლეჯინებს
+გოგონას	გოგო	R	the only lemma the rows reach (გოგონა)
+გოგონასთან	გოგო	R	the only lemma the rows reach (გოგონა)
+გოგონების	გოგო	R	the only lemma the rows reach (გოგონა)
+გოგონებო	გოგო	R	the only lemma the rows reach (გოგონა)
+გოგონებს	გოგო	R	the only lemma the rows reach (გოგონა)
+დააბრუნე	დააბრუნებს	R	verb rows name aspect or version partners: აბრუნებს, დააბრუნებს
+დააგვიანეთ	დააგვიანებს	R	verb rows name aspect or version partners: დააგვიანებს, აგვიანებს
+დაამატე	დაამატებს	R	verb rows name aspect or version partners: ამატებს, დაამატებს
+დაამზადეთ	დაამზადებს	R	verb rows name aspect or version partners: ამზადებს, დაამზადებს
+დაანებე	დაანებებს	R	verb rows name aspect or version partners: ანებებს, დაანებებს
+დაანებეთ	დაანებებს	R	verb rows name aspect or version partners: ანებებს, დაანებებს
+დაარსებიდან	დააარსებს	R	verb rows name aspect or version partners: დაარსება
+დაარსების	დააარსებს	R	verb rows name aspect or version partners: დაარსება
+დაარწმუნე	დაარწმუნებს	R	verb rows name aspect or version partners: არწმუნებს, დაარწმუნებს
+დაასრულე	დაასრულებს	R	verb rows name aspect or version partners: დაასრულებს, ასრულებს
+დაასრულეთ	დაასრულებს	R	verb rows name aspect or version partners: დაასრულებს, ასრულებს
+დაბრუნება	დაბრუნდება	R	verb rows name aspect or version partners: დაბრუნდება, აბრუნებს, დააბრუნებს, დაიბრუნებს, დაუბრუნებს, დაუბრუნდება
+დაბრუნებას	დაბრუნდება	R	verb rows name aspect or version partners: დაბრუნება
+დაბრუნების	დაბრუნდება	R	verb rows name aspect or version partners: დაბრუნება
+დადეთ	დადებს	R	verb rows name aspect or version partners: დადებს, დებს
+დაეთმო	დათმობს	R	verb rows name aspect or version partners: დათმობს, დაუთმობს
+დავანებოთ	დაანებებს	R	verb rows name aspect or version partners: ანებებს, დაანებებს
+დავიბადე	დაიბადება	R	verb rows name aspect or version partners: იბადება, დაიბადება
+დავიბადეთ	დაიბადება	R	verb rows name aspect or version partners: დაიბადება, იბადება
+დავივიწყოთ	დაივიწყებს	R	verb rows name aspect or version partners: დაივიწყებს, ივიწყებს
+დავინახოთ	დაინახავს	R	verb rows name aspect or version partners: ხედავს, დაინახავს
+დავისვენოთ	დაისვენებს	R	verb rows name aspect or version partners: დაისვენებს, ისვენებს
+დავიცვათ	დაიცავს	R	verb rows name aspect or version partners: დაიცავს, იცავს
+დავიძინოთ	დაიძინებს	R	verb rows name aspect or version partners: დაიძინებს, იძინებს
+დავიწყება	დაავიწყდება	R	verb rows name aspect or version partners: დაავიწყდება, დაავიწყებს, დაივიწყებს, ივიწყებს
+დავიწყებაში	დაავიწყდება	R	verb rows name aspect or version partners: დავიწყება
+დავიწყოთ	დაიწყებს	R	verb rows name aspect or version partners: დაიწყებს, იწყებს
+დავსხდეთ	დასხდება	R	verb rows name aspect or version partners: დასხდება, სხდება
+დავტოვოთ	დატოვებს	R	verb rows name aspect or version partners: დატოვებს, ტოვებს
+დავჯდე	დაჯდება	R	verb rows name aspect or version partners: ჯდება, დაჯდება
+დავჯექი	ჯდება	R	verb rows name aspect or version partners: ჯდება, დაჯდება
+დათვლა	ითვლის	R	verb rows name aspect or version partners: ითვლის, დაითვლის, თვლა
+დაიბადა	დაიბადება	R	verb rows name aspect or version partners: დაიბადება, იბადება
+დაიბადე	დაიბადება	R	verb rows name aspect or version partners: დაიბადება, იბადება
+დაიბადნენ	დაიბადება	R	verb rows name aspect or version partners: დაიბადება, იბადება
+დაიბადოს	დაიბადება	R	verb rows name aspect or version partners: დაიბადება, იბადება, დანებდება
+დაივიწყე	დაივიწყებს	R	verb rows name aspect or version partners: დაივიწყებს, ივიწყებს
+დაივიწყეთ	დაივიწყებს	R	verb rows name aspect or version partners: დაივიწყებს, ივიწყებს
+დაითვალე	დაითვლის	R	verb rows name aspect or version partners: ითვლის, დაითვლის
+დაიმახსოვრე	დაიმახსოვრებს	R	verb rows name aspect or version partners: დაიმახსოვრებს, იმახსოვრებს
+დაიმახსოვრეთ	დაიმახსოვრებს	R	verb rows name aspect or version partners: დაიმახსოვრებს, იმახსოვრებს
+დაინახე	დაინახავს	R	verb rows name aspect or version partners: ხედავს, დაინახავს
+დაინახეთ	დაინახავს	R	verb rows name aspect or version partners: ხედავს, დაინახავს
+დაისვენე	დაისვენებს	R	verb rows name aspect or version partners: დაისვენებს, ისვენებს
+დაისვენეთ	დაისვენებს	R	verb rows name aspect or version partners: დაისვენებს, ისვენებს
+დაიძინეთ	დაიძინებს	R	verb rows name aspect or version partners: დაიძინებს, იძინებს
+დაიწერა	იწერება	R	verb rows name aspect or version partners: დაწერს, იწერება, დაიწერს
+დაიწყე	დაიწყებს	R	verb rows name aspect or version partners: დაიწყებს, იწყებს
+დაიწყეთ	დაიწყებს	R	verb rows name aspect or version partners: დაიწყებს, იწყებს
+დაიწყო	დაიწყებს	R	verb rows name aspect or version partners: დაიწყებს, დაიწყება
+დაკარგე	დაკარგავს	R	verb rows name aspect or version partners: დაკარგავს, კარგავს
+დაკარგეთ	დაკარგავს	R	verb rows name aspect or version partners: დაკარგავს, კარგავს
+დაკარგვა	დაკარგავს	R	verb rows name aspect or version partners: დაკარგავს, კარგავს, დაიკარგება
+დაკარგვას	დაკარგავს	R	verb rows name aspect or version partners: დაკარგვა
+დაკარგვის	დაკარგავს	R	verb rows name aspect or version partners: დაკარგვა
+დაკეტვა	კეტავს	R	verb rows name aspect or version partners: კეტავს, დაკეტავს
+დაკვრა	უკრავს	R	verb rows name aspect or version partners: უკრავს, დაჰკრავს, დააკრავს, დაიკრავს, დაუკრავს, დაიკვრება, დაეკვრება, დააკვრევინებს
+დაკვრას	უკრავს	R	verb rows name aspect or version partners: დაკვრა
+დაკვრით	უკრავს	R	verb rows name aspect or version partners: დაკვრა
+დალევას	დალევს	R	verb rows name aspect or version partners: დალევა
+დალევის	დალევს	R	verb rows name aspect or version partners: დალევა
+დამარცხება	დაამარცხებს	R	verb rows name aspect or version partners: დაამარცხებს, ამარცხებს
+დამსხდარიყვნენ	დასხდება	R	verb rows name aspect or version partners: დასხდება, სხდება
+დამჯდარიყო	ჯდება	R	verb rows name aspect or version partners: ჯდება, დაჯდება
+დანიშვნა	ნიშნავს	R	verb rows name aspect or version partners: დანიშნავს, ნიშნავს, ინიშნება
+დაპატიჟე	დაპატიჟებს	R	verb rows name aspect or version partners: პატიჟებს, დაპატიჟებს
+დაპატიჟება	დაპატიჟებს	R	verb rows name aspect or version partners: დაპატიჟებს, პატიჟებს
+დაპყრობას	დაიპყრობს	R	verb rows name aspect or version partners: დაპყრობა
+დაპყრობის	დაიპყრობს	R	verb rows name aspect or version partners: დაპყრობა
+დარეკე	დარეკავს	R	verb rows name aspect or version partners: დარეკავს, რეკავს
+დარწმუნება	დაარწმუნებს	R	verb rows name aspect or version partners: დარწმუნდება, დაარწმუნებს, არწმუნებს
+დასხდნენ	დასხდება	R	verb rows name aspect or version partners: დასხდება, სხდება
+დასხედით	დასხდება	R	verb rows name aspect or version partners: დასხდება, სხდება
+დატოვე	დატოვებს	R	verb rows name aspect or version partners: დატოვებს, ტოვებს
+დაუკარით	დაუკრავს	R	verb rows name aspect or version partners: უკრავს, დაუკრავს
+დაუმატე	დაუმატებს	R	verb rows name aspect or version partners: დაუმატებს, უმატებს
+დაუმატეთ	დაუმატებს	R	verb rows name aspect or version partners: დაუმატებს, უმატებს
+დაძინება	დაიძინებს	R	verb rows name aspect or version partners: დაიძინებს, დააძინებს, იძინებს
+დაძინებამდე	დაიძინებს	R	verb rows name aspect or version partners: დაძინება
+დაწერა	დაწერს	R	verb rows name aspect or version partners: წერს, აწერს, წერა, დაწერს, დაიწერება
+დაწერე	დაწერს	R	verb rows name aspect or version partners: დაწერს, წერს
+დაწერეთ	დაწერს	R	verb rows name aspect or version partners: დაწერს, წერს
+დაწვა	წვავს	R	verb rows name aspect or version partners: წვავს, დაწვავს, დასწვავს, დაიწვავს, დაიწვება, დაეწვება
+დახარჯე	დახარჯავს	R	verb rows name aspect or version partners: ხარჯავს, დახარჯავს
+დახურვა	ხურავს	R	verb rows name aspect or version partners: ხურავს, დახურავს
+დაჯდა	დაჯდება	R	verb rows name aspect or version partners: ჯდება, დაჯდება
+დაჯდე	დაჯდება	R	verb rows name aspect or version partners: ჯდება, დაჯდება
+დაჯდებოდა	დაჯდება	R	verb rows name aspect or version partners: ჯდება, დაჯდება
+დაჯექი	ჯდება	R	verb rows name aspect or version partners: ჯდება, დაჯდება
+დგომას	დგას	R	verb rows name aspect or version partners: დგომა
+დება	დევს	R	verb rows name aspect or version partners: დევს, ადევს, უდევს, დადებს, დებს
+დროს	დრო	R	the only lemma the rows reach (დროის, დრო)
+ვიკითხოთ	იკითხავს	R	verb rows name aspect or version partners: კითხულობს, იკითხავს
+ვიპოვოთ	იპოვის	R	verb rows name aspect or version partners: პოულობს, იპოვის
+ვირჩევ	ირჩევს	R	verb rows name aspect or version partners: ირჩევს, აირჩევს
+ვიყიდე	იყიდის	R	verb rows name aspect or version partners: ყიდულობს, იყიდის
+ვიყიდი	იყიდის	R	verb rows name aspect or version partners: ყიდულობს, იყიდის
+ვიყიდო	იყიდის	R	verb rows name aspect or version partners: ყიდულობს, იყიდის
+ვიყიდოთ	იყიდის	R	verb rows name aspect or version partners: ყიდულობს, იყიდის
+ვყიდულობ	ყიდულობს	R	verb rows name aspect or version partners: ყიდულობს, იყიდის
+ვწერ	წერს	R	verb rows name aspect or version partners: დაწერს, წერს
+თარგმნა	თარგმნის	R	verb rows name aspect or version partners: გადათარგმნის, თარგმნის
+თვის	თვე	R	the only lemma the rows reach (თვისი, თვე)
+თვლა	თვლის	R	verb rows name aspect or version partners: ითვლება, თვლის, ითვლის, დაითვლის, ათვლის, უთვლის, ეთვლება, ათვლევინებს
+თიბვაში	თიბავს	R	verb rows name aspect or version partners: თიბვა
+თლა	თლის	R	verb rows name aspect or version partners: თლის, გათლა
+თრევა	ათრევს	R	the only lemma the rows reach (ათრევს, ითრევს, უთრევს, ეთრევა, ათრევინებს, ეთრევინება)
+თქმა	ამბობს	R	verb rows name aspect or version partners: ეუბნება, ამბობს, იტყვის, ითქმის
+თქმისა	ამბობს	R	verb rows name aspect or version partners: თქმა
+იკითხე	იკითხავს	R	verb rows name aspect or version partners: კითხულობს, იკითხავს
+იკითხეთ	იკითხავს	R	verb rows name aspect or version partners: კითხულობს, იკითხავს
+იპოვე	იპოვის	R	verb rows name aspect or version partners: პოულობს, იპოვის, იპოვნე
+იპოვეთ	იპოვის	R	verb rows name aspect or version partners: პოულობს, იპოვის
+იპოვნა	იპოვის	R	verb rows name aspect or version partners: იპოვნის
+იყიდა	იყიდის	R	verb rows name aspect or version partners: ყიდულობს, იყიდის
+იყიდე	იყიდის	R	verb rows name aspect or version partners: ყიდულობს, იყიდის
+იყიდეთ	იყიდის	R	verb rows name aspect or version partners: ყიდულობს, იყიდის
+იყიდეს	იყიდის	R	verb rows name aspect or version partners: ყიდულობს, იყიდის
+იყიდოს	იყიდის	R	verb rows name aspect or version partners: ყიდულობს, იყიდის
+იწერებოდა	იწერება	R	verb rows name aspect or version partners: დაწერს, იწერება
+კეთება	აკეთებს	R	verb rows name aspect or version partners: აკეთებს, გაკეთება, გააკეთებს, შეაკეთებს, იკეთებს, უკეთებს, აკეთებინებს, გაიკეთებს, გაუკეთებს
+კვრას	უკრავს	R	verb rows name aspect or version partners: კვრა
+მალვა	მალავს	R	verb rows name aspect or version partners: მალავს, დამალავს, იმალავს, უმალავს, იმალება, ემალება, ამალვინებს
+მერის	მერი	R	"of the mayor" or "of Mary": both are მერი; მერე "then" has no genitive
+მიდიან	მიდის	R	verb rows name aspect or version partners: მიდის, წავა
+მიდიოდა	მიდის	R	verb rows name aspect or version partners: მიდის, წავა
+მიდიოდი	მიდის	R	verb rows name aspect or version partners: მიდის, წავა
+მიდიოდნენ	მიდის	R	verb rows name aspect or version partners: მიდის, წავა
+მიდიხარ	მიდის	R	verb rows name aspect or version partners: მიდის, წავა
+მიდიხართ	მიდის	R	verb rows name aspect or version partners: მიდის, წავა
+მივიდეთ	მიდის	R	verb rows name aspect or version partners: მიდის, მიიდებს
+მივიღოთ	მიიღებს	R	verb rows name aspect or version partners: მიიღებს, იღებს
+მიიღე	მიიღებს	R	verb rows name aspect or version partners: მიიღებს, იღებს
+მიიღეთ	მიიღებს	R	verb rows name aspect or version partners: მიიღებს, იღებს
+მიღება	მიიღებს	R	verb rows name aspect or version partners: მიიღებს, იღებს
+მიცემა	აძლევს	R	verb rows name aspect or version partners: აძლევს, მისცემს
+მოამზადე	მოამზადებს	R	verb rows name aspect or version partners: ამზადებს, მოამზადებს
+მოვამზადოთ	მოამზადებს	R	verb rows name aspect or version partners: ამზადებს, მოამზადებს
+მოვიდა	მოდის	R	verb rows name aspect or version partners: მოდის, მოვა
+მოიცადე	მოიცდის	R	verb rows name aspect or version partners: მოიცდის, იცდის
+მოიცადეთ	მოიცდის	R	verb rows name aspect or version partners: მოიცდის, იცდის
+მოპარვა	იპარავს	R	verb rows name aspect or version partners: იპარავს, ჰპარავს, პარავს
+მოსვლა	მოდის	R	verb rows name aspect or version partners: მოვა, მოდის
+მოსულიერებას	მოასულიერებს	R	verb rows name aspect or version partners: მოსულიერება
+მოშლა	მოშლის	R	verb rows name aspect or version partners: მოიშლება, მოშლის, მოიშლის, მოუშლის, მოეშლება
+მოხდა	ხდება	R	verb rows name aspect or version partners: იხდის, ხდება
+ნამგალს	მანგალი	R	the only lemma the rows reach (ნამგალი)
+ნახე	ნახავს	R	verb rows name aspect or version partners: ხედავს, ნახავს
+ნახეთ	ნახავს	R	verb rows name aspect or version partners: ხედავს, ნახავს
+ნახვა	ხედავს	R	verb rows name aspect or version partners: ხედავს, ნახავს, ნახულობს, ანახვებს, ენახვება, ინახავს, უნახავს, ინახება, ანახვინებს, შეინახავს
+ნახვას	ხედავს	R	verb rows name aspect or version partners: ნახვა
+ნახვით	ხედავს	R	verb rows name aspect or version partners: ნახვა
+რეცხვა	რეცხავს	R	verb rows name aspect or version partners: რეცხავს, ირეცხავს, ურეცხავს, ირეცხება, ერეცხება, არეცხვინებს, გარეცხვა, გარეცხავს
+რწყვა	რწყავს	R	verb rows name aspect or version partners: რწყავს, ურწყავს, ირწყვება
+სინჯვა	სინჯავს	R	verb rows name aspect or version partners: სინჯავს, გასინჯავს, ისინჯავს, უსინჯავს, ისინჯება, ესინჯება, ასინჯვინებს
+სმაში	სვამს	R	verb rows name aspect or version partners: სმა
+სმენა	უსმენს	R	verb rows name aspect or version partners: უსმენს, ისმენს, ისმის, ესმის, მოისმენს
+სუნთქვას	სუნთქავს	R	verb rows name aspect or version partners: სუნთქვა
+სუნთქვის	სუნთქავს	R	verb rows name aspect or version partners: სუნთქვა
+ტანა	იტანს	R	verb rows name aspect or version partners: ატანს, იტანს, უტანს, იტანება, ეტანება, ატანინებს
+ტეხა	ტეხს	R	verb rows name aspect or version partners: ტეხს, ატეხს, იტეხს, უტეხს, იტეხება, ატეხინებს
+უახლოეს	ახლო	R	the only lemma the rows reach (უახლოესი)
+უთქვამს	ამბობს	R	verb rows name aspect or version partners: ამბობს, ეუბნება
+ქმნა	ქმნის	R	verb rows name aspect or version partners: შექმნა, ქმნის, უქმნის, იქმნება, აქმნევინებს, შექმნის
+ქმნას	ქმნის	R	verb rows name aspect or version partners: ქმნა
+ყეფა	ყეფს	R	verb rows name aspect or version partners: ყეფს, ჰყეფს
+ყოლა	ჰყავს	R	verb rows name aspect or version partners: ჰყავს, ჰყვება, უყვება
+ყოლის	ჰყავს	R	verb rows name aspect or version partners: ყოლა
+შავარდენს	შევარდენი	R	the only lemma the rows reach (შავარდენი)
+შეასრულე	შეასრულებს	R	verb rows name aspect or version partners: ასრულებს, შეასრულებს
+შეატყობინე	შეატყობინებს	R	verb rows name aspect or version partners: ატყობინებს, შეატყობინებს
+შეატყობინეთ	შეატყობინებს	R	verb rows name aspect or version partners: შეატყობინებს, ატყობინებს
+შეაწუხე	შეაწუხებს	R	verb rows name aspect or version partners: შეაწუხებს, აწუხებს
+შეერთება	შეუერთდება	R	verb rows name aspect or version partners: შეუერთდება, შეაერთებს, შეიერთებს, შეუერთებს, შეერთდება
+შეერთებას	შეუერთდება	R	verb rows name aspect or version partners: შეერთება
+შეერთების	შეუერთდება	R	verb rows name aspect or version partners: შეერთება
+შეერთებისა	შეუერთდება	R	verb rows name aspect or version partners: შეერთება
+შევაკეთოთ	შეაკეთებს	R	verb rows name aspect or version partners: აკეთებს, შეაკეთებს
+შევატყობინოთ	შეატყობინებს	R	verb rows name aspect or version partners: ატყობინებს, შეატყობინებს
+შევიდეთ	შედის	R	verb rows name aspect or version partners: შედის, შეიდებს
+შევსებას	შეავსებს	R	verb rows name aspect or version partners: შევსება
+შეინახე	შეინახავს	R	verb rows name aspect or version partners: ინახავს, შეინახავს
+შეკეთება	აკეთებს	R	verb rows name aspect or version partners: აკეთებს, შეაკეთებს
+შერიგებას	შერიგდება	R	verb rows name aspect or version partners: შერიგება
+შესვლა	შედის	R	verb rows name aspect or version partners: შედის, შევა
+შესვლას	შედის	R	verb rows name aspect or version partners: შესვლა
+შესვლის	შედის	R	verb rows name aspect or version partners: შესვლა
+შექმნა	შექმნის	R	verb rows name aspect or version partners: შექმნის, ქმნის
+შეძლებით	შეძლებს	R	verb rows name aspect or version partners: შეძლება
+შეჭამე	შეჭამს	R	verb rows name aspect or version partners: ჭამს, შეჭამს
+შეხებას	შეეხება	R	verb rows name aspect or version partners: შეხება
+შეხებით	შეეხება	R	verb rows name aspect or version partners: შეხება
+შლა	შლის	R	verb rows name aspect or version partners: შლის, იშლის, უშლის, იშლება, ეშლება, აშლევინებს, ჩაშლა, ჩაშლის
+ჩაიცვი	ჩაიცვამს	R	verb rows name aspect or version partners: იცვამს, ჩაიცვამს
+ჩაიწერე	ჩაიწერს	R	verb rows name aspect or version partners: ჩაწერს, ჩაიწერს
+ჩამოსვლა	ჩამოდის	R	verb rows name aspect or version partners: ჩამოვა, ჩამოდის
+ჩართე	ჩართავს	R	verb rows name aspect or version partners: რთავს, ჩართავს
+ჩაწერა	ჩაწერს	R	verb rows name aspect or version partners: ჩაწერს, ჩაიწერს
+ჩენა	ჩანს	R	verb rows name aspect or version partners: ჩანს, აჩენს, იჩენს, ჩნდება, უჩნდება, უჩანს, უჩენს, აჩენინებს, გააჩენს
+ცემად	სცემს	R	verb rows name aspect or version partners: ცემა
+ცემამ	სცემს	R	verb rows name aspect or version partners: ცემა
+ცემით	სცემს	R	verb rows name aspect or version partners: ცემა
+ცემითა	სცემს	R	verb rows name aspect or version partners: ცემა
+ცურვა	ცურავს	R	verb rows name aspect or version partners: ცურავს, იცურებს, უცურავს, იცურება, ეცურება, აცურვინებს
+ცურვას	ცურავს	R	verb rows name aspect or version partners: ცურვა
+ცურვით	ცურავს	R	verb rows name aspect or version partners: ცურვა
+ძრავის	ძრავა	R	the only lemma the rows reach (ძრავი)
+წადი	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წადით	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავალთ	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავედით	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავიდა	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავიდე	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავიდეთ	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავიდნენ	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავიდოდა	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავიდოდნენ	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავლენ	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავსულიყავი	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წავსულიყავით	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წაიკითხა	კითხულობს	R	verb rows name aspect or version partners: კითხულობს, იკითხება
+წაიკითხე	წაიკითხავს	R	verb rows name aspect or version partners: კითხულობს, წაიკითხავს
+წაიკითხეთ	წაიკითხავს	R	verb rows name aspect or version partners: კითხულობს, წაიკითხავს
+წაკითხვა	წაიკითხავს	R	verb rows name aspect or version partners: წაიკითხავს, კითხულობს
+წამოსვლა	მოდის	R	verb rows name aspect or version partners: მოდის, წამოვა
+წასვლა	მიდის	R	verb rows name aspect or version partners: მიდის, წავა
+წასულა	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წასულან	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წასულიყავი	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წასულიყვნენ	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წასულიყო	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წახვალ	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წახვედი	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წახვედით	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წახვიდე	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წახვიდეთ	წავა	R	verb rows name aspect or version partners: მიდის, წავა
+წევა	ეწევა	R	the only lemma the rows reach (სწევს, იწევს, უწევს, იწევა, ეწევა, აწევინებს)
+წელიწადის	წელი	R	the only lemma the rows reach (წელიწადი)
+წელიწადში	წელი	R	the only lemma the rows reach (წელიწადი)
+წერდა	წერს	R	verb rows name aspect or version partners: დაწერს, წერს
+წვა	წვავს	R	verb rows name aspect or version partners: წვავს, იწვება, იწვავს, უწვავს, დაწვა
+წმენდა	წმენდს	R	verb rows name aspect or version partners: წმენდს, სწმენდს, იწმენდს, უწმენდს, იწმინდება, ეწმინდება, აწმენდინებს
+წმენდას	წმენდს	R	verb rows name aspect or version partners: წმენდა
+წმენდასა	წმენდს	R	verb rows name aspect or version partners: წმენდა
+ჭამა	ჭამს	R	verb rows name aspect or version partners: ჭამს, შეჭამს
+ჭრა	ჭრის	R	verb rows name aspect or version partners: ჭრის, აჭრის, იჭრის, უჭრის, იჭრება, ეჭრება, აჭრევინებს, მოჭრის, დაჭრის
+ხაკერების	ჰაკერი	R	the only lemma the rows reach (ხაკერი)
+ხატვა	ხატავს	R	verb rows name aspect or version partners: ხატავს, ახატავს, იხატავს, უხატავს, იხატება, ეხატება, ხატია, ახატია, უხატია, ახატვინებს, დახატავს
+ხევა	ხევი	R	the only lemma the rows reach (ხევს, იხევს, უხევს, იხევა, ეხევა)
+ხევისკენ	ხევი	R	the only lemma the rows reach (ხევი, ხევა)
+ხვრინი	ხვრინავს	R	verb rows name aspect or version partners: ხვრინვა
+ხმარება	ხმარობს	R	verb rows name aspect or version partners: ეხმარება, ხმარობს, ხმარდება, ახმარებს, იხმარებს, ახმარს
+ხმარებას	ხმარობს	R	verb rows name aspect or version partners: ხმარება
+ხსენება	გაიხსენებს	R	verb rows name aspect or version partners: გაიხსენებს, ახსენებს, იხსენება, ახსენდება
+ხსენებამ	გაიხსენებს	R	verb rows name aspect or version partners: ხსენება
+ხსენებას	გაიხსენებს	R	verb rows name aspect or version partners: ხსენება
+ხსნა	ხსნის	R	verb rows name aspect or version partners: გახსნის, ხსნის, იხსნის, უხსნის, იხსნება, ეხსნება, ახსნევინებს
+ხსნას	ხსნის	R	verb rows name aspect or version partners: ხსნა
+ჯდომა	ჯდება	R	verb rows name aspect or version partners: ჯდება, იჯდება
+ჰკითხე	ჰკითხავს	R	verb rows name aspect or version partners: კითხავს
+ჩვენად	ჩვენ	R	the usual reading
+შენით	შენ	R	the usual reading
+მოიცა	მოიცდის	R	the usual reading ("wait": მოიცადე → მოიცდის)
+თავის	თავისი	A	the possessive "his own" (7 of 8 contexts audit-hachi-lang-ka sampled) or the genitive of თავი "head"

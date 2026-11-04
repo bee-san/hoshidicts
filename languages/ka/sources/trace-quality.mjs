@@ -4,7 +4,8 @@
 // rule set reaches, the share whose trace (the one a lookup shows: fewest
 // steps, then first found; docs/languages.md 9.6) names the transform the
 // row's tags call for: the case of a noun or adjective (and plural, archaic
-// plural), the tense of a verb. Not run by any test.
+// plural), the tense of a verb. It first prints the recall over every row
+// whose form and lemma are Georgian letters and differ. Not run by any test.
 //
 //   node languages/ka/sources/trace-quality.mjs <hoshidicts-cli> <unimorph kat file> [--transforms <file>]
 
@@ -52,6 +53,11 @@ for (const line of out.stdout.toString().split('\n').filter(Boolean)) {
     const j = JSON.parse(line);
     results.set(j.input, j.results);
 }
+let reachedAll = 0;
+for (const [lemmaText, form] of rows) {
+    if ((results.get(form) ?? []).some((r) => r.text === lemmaText)) { reachedAll++; }
+}
+console.log(`all rows: ${reachedAll} of ${rows.length} (${(100 * reachedAll / rows.length).toFixed(2)}%) reached`);
 const byKind = new Map();
 for (const [lemmaText, form, tags] of rows) {
     const need = expected(tags);

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Lookup measurements of README.md (Measurements 2-4). Not run by any test.
 //
-//   node languages/ka/sources/measure-lookups.mjs <wty-ka-en term banks dir> <lookup-batch output> <words.txt> [--counts <freq.tsv>] [--deinflections <file>] [--sample N] [--seed S]
+//   node languages/ka/sources/measure-lookups.mjs <wty-ka-en term banks dir> <lookup-batch output> <words.txt> [--labels <file>] [--counts <freq.tsv>] [--deinflections <file>] [--sample N] [--seed S]
 //
 // <wty-ka-en term banks dir> is the unzipped dictionary (its term_bank_*.json).
 // <lookup-batch output> has one JSON line per hover (sources/lookup-batch.cpp),
@@ -12,7 +12,12 @@
 // form-of row) is right when it is a term one of the word's own form-of rows
 // names (or, when that term has no definition, a term its own form-of rows
 // name), or the word itself when the dictionary has it as a lemma; it is
-// wrong otherwise. Hovers whose word the dictionary does not know are counted, and
+// wrong otherwise. A word whose rows name more than one lemma (იყო names იყი and
+// არის) is right only when the first result is its own lemma, as section 14
+// step 5 asks: --labels gives, for each such (word, first result) pair, W
+// (wrong), A (ambiguous: context decides; reported apart) or R (right), and
+// a pair with no label is reported as unlabelled. Hovers whose word the
+// dictionary does not know are counted, and
 // --sample N prints N of them (seeded) for judging by hand. --counts weighs
 // each word by its count in a frequency list (word<TAB>count) for the share
 // of tokens. --deinflections (hoshidicts-cli deinflect ka --stdin output for
@@ -27,6 +32,15 @@ const sampleN = +opt('--sample', 0);
 const seed = +opt('--seed', 1);
 const countsFile = opt('--counts');
 const deinflectionsFile = opt('--deinflections');
+const labelsFile = opt('--labels');
+const labels = new Map();
+if (labelsFile) {
+    for (const line of readFileSync(labelsFile, 'utf8').split('\n')) {
+        if (!line || line.startsWith('#')) { continue; }
+        const [word, first, label] = line.split('\t');
+        labels.set(`${word}\t${first}`, label);
+    }
+}
 const deinflections = new Map();
 if (deinflectionsFile) {
     for (const line of readFileSync(deinflectionsFile, 'utf8').split('\n').filter(Boolean)) {
@@ -56,6 +70,8 @@ if (countsFile) {
 const results = readFileSync(resultsFile, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
 const words = readFileSync(wordsFile, 'utf8').split('\n').slice(0, results.length);
 let found = 0, entry = 0, judged = 0, wrong = 0, unknown = 0, wrongTokens = 0, judgedTokens = 0, allTokens = 0;
+let ambiguous = 0, ambiguousTokens = 0;
+const unlabelled = new Map();
 const byRule = new Map();
 const wrongList = [];
 const unknownList = [];
@@ -81,7 +97,16 @@ for (let i = 0; i < results.length; i++) {
     }
     judged++;
     judgedTokens += weight;
-    if (!first || right.has(first.expression)) { continue; }
+    if (!first) { continue; }
+    if (right.has(first.expression)) {
+        if (right.size < 2 || first.expression === word) { continue; }
+        const label = labels.get(`${word}\t${first.expression}`);
+        if (label === 'A') { ambiguous++; ambiguousTokens += weight; continue; }
+        if (label !== 'W') {
+            if (label === undefined) { const k = `${word}\t${first.expression}`; unlabelled.set(k, (unlabelled.get(k) ?? 0) + 1); }
+            continue;
+        }
+    }
     // A longer match (a phrase the dictionary has) is not a wrong lemma of the word.
     if ([...first.matched].length > [...words[i]].length) { continue; }
     wrong++;
@@ -90,8 +115,12 @@ for (let i = 0; i < results.length; i++) {
     byRule.set(key, (byRule.get(key) ?? 0) + 1);
     wrongList.push(`${word} → ${first.expression} [${first.trace.join(' > ')}] (right: ${[...right].slice(0, 3).join(', ')})`);
 }
-console.log(JSON.stringify({lookups: results.length, found, firstEntry: entry, judged, wrong, wrongRate: wrong / judged, unknownWord: unknown,
-    ...(countsFile ? {tokens: allTokens, judgedTokens, wrongTokens, wrongTokenShare: wrongTokens / allTokens} : {})}));
+console.log(JSON.stringify({lookups: results.length, found, firstEntry: entry, judged, wrong, wrongRate: wrong / judged, ambiguous, unknownWord: unknown,
+    unlabelledPairs: unlabelled.size,
+    ...(countsFile ? {tokens: allTokens, judgedTokens, wrongTokens, wrongTokenShare: wrongTokens / allTokens, ambiguousTokens} : {})}));
+if (unlabelled.size) {
+    console.log('unlabelled (word, first result) pairs whose word names several lemmas:', [...unlabelled].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k.replace('\t', ' → ')} (${n})`).join('; '));
+}
 console.log('wrong first results by trace:', [...byRule].sort((a, b) => b[1] - a[1]).slice(0, 15).map(([k, v]) => `${k}: ${v}`).join('; '));
 const freq = new Map();
 for (const w of wrongList) { freq.set(w, (freq.get(w) ?? 0) + 1); }

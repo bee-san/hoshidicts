@@ -322,3 +322,247 @@ constraint pp-ebr:stemMinLength	0	სებრ	ს	*	*
 constraint pp-ebr:stemCharacters	0	Qსებრ	Qს	*	*
 constraint pp-urt:stemMinLength	0	თურთ	თ	*	*
 constraint pp-urt:stemCharacters	0	Qთურთ	Qთ	*	*
+word	1	იყო	არის	v	word
+word	1	თქვეს	ამბობს	v	word
+word	1	მითხარი	ეუბნება	v	word
+word	1	აღარა	აღარ	*	word
+word	1	კიდეც	კიდევ	*	word
+word	1	დავით	დავითი	*	word
+pronoun	1	მის	ის	*	pron
+pronoun	1	მით	ის	*	pron
+pronoun	1	შენა	შენ	*	pron
+pronoun	1	თქვე	თქვენ	*	pron
+pronoun	1	არავის	არავინ	*	pron
+indirect	1	მოეწონა	მოსწონს	v	indirect
+indirect	1	მომეწონა	მოსწონს	v	indirect|inv-person
+indirect	1	მოეწონება	მოსწონს	v	indirect
+noun -ება	1	ბუნების	ბუნება	n	gen
+noun -ება	1	ბუნებით	ბუნება	n	ins
+noun -ება	1	ბუნებად	ბუნება	n	adv
+perfect	1	დაუხატავს	დახატავს	v	perf
+perfect	1	დამიხატავს	დახატავს	v	perf|inv-person
+perfect	1	მოუკლავს	მოკლავს	v	perf
+aorist	1	გათალა	გათლის	v	aor
+aorist	1	გათალეს	გათლის	v	aor
+person	1	გაშენებდათ	აშენებს	v	*
+person	1	დაგწერდათ	წერს	v	*
+negative	0	მოიგო	იგი	*	*
+negative	0	მოსული	სული	*	*
+negative	0	ვაშენებ	ვაშენ	*	*
+syncope pair	1	სოფლის	სოფელი	n	gen|sync
+syncope pair	1	წყლის	წყალი	n	gen|sync
+syncope pair	1	ფოთლის	ფოთოლი	n	gen|sync
+syncope pair	1	ნახევრის	ნახევარი	n	gen|sync
+syncope pair	1	ოქტომბრის	ოქტომბერი	n	gen|sync
+syncope pair	1	გოდრის	გოდორი	n	gen|sync
+syncope pair	1	ნიშნის	ნიშანი	n	gen|sync
+syncope pair	1	ყურძნის	ყურძენი	n	gen|sync
+syncope pair	1	საპნის	საპონი	n	gen|sync
+syncope pair	1	ატმის	ატამი	n	gen|sync
+syncope pair	1	ირმის	ირემი	n	gen|sync
+syncope pair	1	ნიღბის	ნიღაბი	n	gen|sync
+syncope pair	1	ხოხბის	ხოხობი	n	gen|sync
+syncope pair	1	კარვის	კარავი	n	gen|sync
+syncope pair	1	მზითვის	მზითევი	n	gen|sync
+syncope pair	1	ნაბდის	ნაბადი	n	gen|sync
+syncope pair	1	ბეჭდის	ბეჭედი	n	gen|sync
+syncope pair	1	არყის	არაყი	n	gen|sync
+syncope pair	1	სომხის	სომეხი	n	gen|sync
+syncope pair	1	მინდვრის	მინდორი	n	gen|sync
+syncope pair	1	მაწვნის	მაწონი	n	gen|sync
+syncope pair	1	ნიგვზის	ნიგოზი	n	gen|sync
+preverb ა	1	ააშენებს	აშენებს	v	pv
+preverb ა	1	ავხატავ	ახატავს	v	pres-2|subj-1
+preverb ა	1	ამხატავს	ახატავს	v	obj-1
+preverb ამო	1	ამოიღებს	იღებს	v	pv
+preverb ამო	1	ამოვხატავ	ამოხატავს	v	pres-2|subj-1
+preverb ამო	1	ამომხატავს	ამოხატავს	v	obj-1
+preverb აღ	1	აღწერს	წერს	v	pv
+preverb აღ	1	აღვხატავ	აღხატავს	v	pres-2|subj-1
+preverb აღ	1	აღმხატავს	აღხატავს	v	obj-1
+preverb გა	1	გააკეთებს	აკეთებს	v	pv
+preverb გა	1	გავხატავ	გახატავს	v	pres-2|subj-1
+preverb გა	1	გამხატავს	გახატავს	v	obj-1
+preverb გადა	1	გადაწერს	წერს	v	pv
+preverb გადა	1	გადავხატავ	გადახატავს	v	pres-2|subj-1
+preverb გადა	1	გადამხატავს	გადახატავს	v	obj-1
+preverb გადმო	1	გადმოწერს	წერს	v	pv
+preverb გადმო	1	გადმოვხატავ	გადმოხატავს	v	pres-2|subj-1
+preverb გადმო	1	გადმომხატავს	გადმოხატავს	v	obj-1
+preverb გამო	1	გამოწერს	წერს	v	pv
+preverb გამო	1	გამოვხატავ	გამოხატავს	v	pres-2|subj-1
+preverb გამო	1	გამომხატავს	გამოხატავს	v	obj-1
+preverb გარდა	1	გარდაქმნის	ქმნის	v	pv
+preverb გარდა	1	გარდავხატავ	გარდახატავს	v	pres-2|subj-1
+preverb გარდა	1	გარდამხატავს	გარდახატავს	v	obj-1
+preverb და	1	დაწერს	წერს	v	pv
+preverb და	1	დავხატავ	დახატავს	v	pres-2|subj-1
+preverb და	1	დამხატავს	დახატავს	v	obj-1
+preverb მი	1	მიწერს	წერს	v	pv
+preverb მი	1	მივხატავ	მიხატავს	v	pres-2|subj-1
+preverb მი	1	მიმხატავს	მიხატავს	v	obj-1
+preverb მიმო	1	მიმოწერს	წერს	v	pv
+preverb მიმო	1	მიმოვხატავ	მიმოხატავს	v	pres-2|subj-1
+preverb მიმო	1	მიმომხატავს	მიმოხატავს	v	obj-1
+preverb მო	1	მოკლავს	კლავს	v	pv
+preverb მო	1	მოვხატავ	მოხატავს	v	pres-2|subj-1
+preverb მო	1	მომხატავს	მოხატავს	v	obj-1
+preverb შე	1	შეჭამს	ჭამს	v	pv
+preverb შე	1	შევხატავ	შეხატავს	v	pres-2|subj-1
+preverb შე	1	შემხატავს	შეხატავს	v	obj-1
+preverb შემო	1	შემოწერს	წერს	v	pv
+preverb შემო	1	შემოვხატავ	შემოხატავს	v	pres-2|subj-1
+preverb შემო	1	შემომხატავს	შემოხატავს	v	obj-1
+preverb ჩა	1	ჩაწერს	წერს	v	pv
+preverb ჩა	1	ჩავხატავ	ჩახატავს	v	pres-2|subj-1
+preverb ჩა	1	ჩამხატავს	ჩახატავს	v	obj-1
+preverb ჩამო	1	ჩამოწერს	წერს	v	pv
+preverb ჩამო	1	ჩამოვხატავ	ჩამოხატავს	v	pres-2|subj-1
+preverb ჩამო	1	ჩამომხატავს	ჩამოხატავს	v	obj-1
+preverb წა	1	წაიკითხავს	იკითხავს	v	pv
+preverb წა	1	წავხატავ	წახატავს	v	pres-2|subj-1
+preverb წა	1	წამხატავს	წახატავს	v	obj-1
+preverb წამო	1	წამოიღებს	იღებს	v	pv
+preverb წამო	1	წამოვხატავ	წამოხატავს	v	pres-2|subj-1
+preverb წამო	1	წამომხატავს	წამოხატავს	v	obj-1
+preverb წარ	1	წარწერს	წერს	v	pv
+preverb წარ	1	წარვხატავ	წარხატავს	v	pres-2|subj-1
+preverb წარ	1	წარმხატავს	წარხატავს	v	obj-1
+person	1	მომწონს	მოსწონს	v	obj-1
+person	1	გვყავს	ჰყავს	v	obj-1pl
+person	1	ვთხოვ	სთხოვს	v	*
+person	1	გჯერა	სჯერა	v	obj-2
+person	1	გქვია	ჰქვია	v	obj-2
+present	1	ხატავ	ხატავს	v	pres-2
+present	1	აკეთებ	აკეთებს	v	pres-2
+present	1	თამაშობ	თამაშობს	v	pres-2
+present	1	სვამ	სვამს	v	pres-2
+present	1	აძლევ	აძლევს	v	pres-2
+present	1	ითმენ	ითმენს	v	pres-2
+word	1	გახდა	ხდება	v	word
+word	1	დაუწყო	დაიწყებს	v	word
+word	1	ფენის	ფენა	*	word
+word	1	ჭამ	ჭამს	v	word
+aorist	1	დაცალე	დაცლის	v	aor
+aorist	1	გაშალეს	გაშლის	v	aor
+aorist	1	დათვალეთ	დათვლის	v	aor
+aorist	1	გაზარდა	გაზრდის	v	aor
+aorist	1	დაიცადა	დაიცდის	v	aor
+aorist	1	მოიხადა	მოიხდის	v	aor
+aorist	1	გათხარა	გათხრის	v	aor
+aorist	1	ვიცვლი	ვიცვლებს	v	aor
+optative	1	გაზარდოს	გაზრდის	v	opt
+optative	1	დათვალოთ	დათვლის	v	opt
+optative	1	დაიცადონ	დაიცდის	v	opt
+optative	1	გათხაროს	გათხრის	v	opt
+optative	1	გაშალო	გაშლის	v	opt
+optative	1	გაგზავნოს	გაგზავნის	v	opt
+optative	1	უშველოს	უშველის	v	opt
+present	1	გაივლი	გაივლის	v	pres-2
+present	1	შველი	შველის	v	pres-2
+present	1	ცლი	ცლის	v	pres-2
+person	1	ვიცვლი	ცვლის	v	pv|subj-1|aor
+person	1	მივეცი	მიეცი	v	subj-1
+negative	0	ტიალო	ტილის	*	*
+negative	0	მოიხედა	მოიხდის	*	*
+negative	0	ჩამოართვა	ჩამორთვის	*	*
+negative	0	იამა	იმის	*	*
+negative	0	დაწერილი	დაწერილის	*	*
+negative	0	მოსული	მოსულის	*	*
+word	1	ბაზის	ბაზა	*	word
+word	1	კერის	კერა	*	word
+word	1	ფილებით	ფილა	*	word
+word	1	ტყუპებზე	ტყუპი	*	word
+word	1	პირად	პირადი	*	word
+word	1	დგომა	დგას	v	word
+word	1	დგომას	დგას	v	word
+word	1	დაუწყეს	დაიწყებს	v	word
+negative	0	მოეცა	მოსცს	*	*
+negative	0	მოეწ ნა	მოსწ ნს	*	*
+negative	0	მოეწონია	მოსწონის	*	*
+negative	0	გადაუბამს	ბამს	*	*
+two orders	1	ვაკეთებ	აკეთებს	v	subj-1|pres-2
+two orders	1	ვაკეთებ	აკეთებს	v	pres-2|subj-1
+two orders	1	ვთამაშობ	თამაშობს	v	subj-1|pres-2
+two orders	1	ვთამაშობ	თამაშობს	v	pres-2|subj-1
+two orders	1	ვხატავ	ხატავს	v	subj-1|pres-2
+two orders	1	ვხატავ	ხატავს	v	pres-2|subj-1
+two orders	1	ვდგამ	დგამს	v	subj-1|pres-2
+two orders	1	ვდგამ	დგამს	v	pres-2|subj-1
+two orders	1	ვარჩევ	არჩევს	v	subj-1|pres-2
+two orders	1	ვარჩევ	არჩევს	v	pres-2|subj-1
+two orders	1	ვკბენ	კბენს	v	subj-1|pres-2
+two orders	1	ვკბენ	კბენს	v	pres-2|subj-1
+two orders	1	გავყოფ	გაყოფს	v	subj-1|pres-2
+two orders	1	გავყოფ	გაყოფს	v	pres-2|subj-1
+two orders	1	გავჭრი	გაჭრის	v	subj-1|pres-2
+two orders	1	გავჭრი	გაჭრის	v	pres-2|subj-1
+two orders	1	გავშლი	გაშლის	v	subj-1|pres-2
+two orders	1	გავშლი	გაშლის	v	pres-2|subj-1
+two orders	1	ვიმალები	იმალება	v	subj-1|pres-2
+two orders	1	ვიმალები	იმალება	v	pres-2|subj-1
+two orders	1	ვაკეთებთ	აკეთებს	v	subj-1|pres-pl
+two orders	1	ვაკეთებთ	აკეთებს	v	pres-pl|subj-1
+two orders	1	ვიმალებით	იმალება	v	subj-1|pres-pl
+two orders	1	ვიმალებით	იმალება	v	pres-pl|subj-1
+two orders	1	გინდათ	უნდა	v	obj-2|pres-pl
+two orders	1	გინდათ	უნდა	v	pres-pl|obj-2
+two orders	1	მხატავენ	ხატავს	v	obj-1|pres-3pl
+two orders	1	მხატავენ	ხატავს	v	pres-3pl|obj-1
+two orders	1	გვჭრიან	ჭრის	v	obj-1pl|pres-3pl
+two orders	1	გვჭრიან	ჭრის	v	pres-3pl|obj-1pl
+two orders	1	გვეხმარებიან	ეხმარება	v	obj-1pl|pres-3pl
+two orders	1	გვეხმარებიან	ეხმარება	v	pres-3pl|obj-1pl
+two orders	1	მოვდივარ	მოდის	v	subj-1|theme-12
+two orders	1	მოვდივარ	მოდის	v	theme-12|subj-1
+two orders	1	მიყვარხარ	უყვარს	v	obj-1|theme-12
+two orders	1	მიყვარხარ	უყვარს	v	theme-12|obj-1
+two orders	1	მოვდივართ	მოდის	v	subj-1|theme-12
+two orders	1	მოვდივართ	მოდის	v	theme-12|subj-1
+two orders	1	მიყვარხართ	უყვარს	v	obj-1|theme-12
+two orders	1	მიყვარხართ	უყვარს	v	theme-12|obj-1
+perfect	1	დამალულვარ	დამალული	*	perf-pass
+perfect	1	გაზრდილვარ	გაზრდილი	*	perf-pass
+perfect	1	დამალულხარ	დამალული	*	perf-pass
+perfect	1	გაზრდილხარ	გაზრდილი	*	perf-pass
+perfect	1	დამალულა	დამალული	*	perf-pass
+perfect	1	გაზრდილა	გაზრდილი	*	perf-pass
+perfect	1	დამალულვართ	დამალული	*	perf-pass
+perfect	1	გაზრდილვართ	გაზრდილი	*	perf-pass
+perfect	1	დამალულხართ	დამალული	*	perf-pass
+perfect	1	გაზრდილხართ	გაზრდილი	*	perf-pass
+perfect	1	დამალულან	დამალული	*	perf-pass
+perfect	1	გაზრდილან	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყავი	დამალული	*	perf-pass
+perfect	1	გაზრდილიყავი	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყო	დამალული	*	perf-pass
+perfect	1	გაზრდილიყო	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყავით	დამალული	*	perf-pass
+perfect	1	გაზრდილიყავით	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყვნენ	დამალული	*	perf-pass
+perfect	1	გაზრდილიყვნენ	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყოს	დამალული	*	perf-pass
+perfect	1	გაზრდილიყოს	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყოთ	დამალული	*	perf-pass
+perfect	1	გაზრდილიყოთ	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყონ	დამალული	*	perf-pass
+perfect	1	გაზრდილიყონ	გაზრდილი	*	perf-pass
+person	1	ვთხოვე	სთხოვს	v	subj-1|aor
+person	1	ვკითხე	ჰკითხავს	v	subj-1|aor
+perfect	1	გაუტეხივარ	გატეხავს	v	perf|inv-pl
+perfect	1	გაეთბოთ	გაათბობს	v	pluperf|inv-pl
+case	1	სამშობლოსი	სამშობლო	n	gen
+plural	1	დედათ	დედა	n	pl-archaic
+case	1	მეფედა	მეფე	n	adv|ext
+postposition	1	მასში	ის	*	pron
+postposition	1	მასზე	ის	*	pron
+clitic	1	ამავე	ეს	*	pron|cl-ve
+copula	1	ადრეა	ადრე	*	cop
+copula	1	ბოლოა	ბოლო	*	cop
+copula	1	კენგურუა	კენგურუ	*	cop
+negative	0	დაიმალა	დაიმალებება	*	*
+pronoun	1	შენად	შენ	*	pron
+pronoun	1	ჩვენად	ჩვენ	*	pron
+pronoun	1	თქვენად	თქვენ	*	pron
+word	1	მოიცა	მოიცდის	v	word
+word	1	თავის	თავისი	*	word

@@ -9,7 +9,7 @@
 // 1. Writes <out dir>/yomitan-endings.tsv: every ending Yomitan's rules strip
 //    or restore, on ten common lemmas, declined by this script (written for
 //    the pack; no dictionary data).
-// 2. Runs eval-language on it and on <out dir>/../corpus-gaps.tsv with the
+// 2. Runs eval-language on it and on <out dir>/corpus-gaps.tsv with the
 //    transforms file, then with each Yomitan rule removed, and prints recall
 //    and false candidates for each.
 // The transforms file is transforms.json (or a copy) and the dictionary

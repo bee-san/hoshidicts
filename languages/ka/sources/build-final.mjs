@@ -12,9 +12,9 @@
 // the 130 forms sources/yomitan-ablation.mjs builds from their endings (the
 // own rules reach all of them), and adds false candidates and wrong first
 // results: on the forms built from their endings, false candidates 0.36 →
-// 0.51 per row and first rank 92.3% → 85.4%; on the two books of README.md,
-// 534 first results change, nearly all to bare stems (რომელმაც → რომელ,
-// მოისმა → მ, მესმის → მე). README.md, Rule provenance, has the numbers. No
+// 0.51 per row and first rank 92.3% → 85.4%; on the two books and Tatoeba,
+// hundreds of first results change, nearly all to bare stems (რომელმაც →
+// რომელ, მოისმა → მ, მესმის → მე). README.md, Rule provenance, has the numbers. No
 // own rule makes the same deinflection as a Yomitan rule, so no rule is
 // `both`, and what remains is sources/own.json with its conditions, which
 // already have Yomitan's definitions where both files define a condition.

@@ -84,7 +84,15 @@
         "ptcl": "Particle",
         "intj": "Interjection",
         "det": "Determiner",
-        "ptcpl": "Participle"
+        "ptcpl": "Participle",
+        "phrase": "Phrase",
+        "suf": "Suffix",
+        "pref": "Prefix",
+        "char": "Character",
+        "vdt": "Ditransitive verb",
+        "vr": "Reflexive verb",
+        "prov": "Proverb",
+        "prep": "Preposition"
       }
     },
     "frequencySamples": null,

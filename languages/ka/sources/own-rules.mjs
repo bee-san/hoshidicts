@@ -48,16 +48,19 @@ const here = dirname(fileURLToPath(import.meta.url));
 // phrase როგორ არა, and so are the stems of prefix and circumfix rules,
 // whose person prefixes and preverbs must not reach past the first word.
 const CONS = '[ბგდვზთკლმნპჟრსტფქღყშჩცძწჭხჯჰ]';
+const CONS_E = '[ბგდვზთკლმნპჟრსტფქღყშჩცძწჭხჯჰე]';
 const VSTEM = '[აეოუ]'; // vowels a noun stem can end in (-ი is the nominative ending)
 const LETTERS = '[{mkhedruli}\\-]';
 const WORDS = '[{mkhedruli}\\- ]';
 
 // --- Conditions ---------------------------------------------------------------
 // n, adj, pron and v are the parts of speech dictionaries tag terms with.
-// vs and vp keep the verb rules from feeding themselves: a rule for an
-// ending takes vp (or the text as written) and gives vs, a rule for a person
-// prefix takes vs and gives vp, so an ending rule whose output ends in an
-// ending it reads (-ა → -ება) never applies to that output. dat, gen, ins and adv are
+// vs, vp and vq bound the verb rules: a rule for an ending reads the text as
+// written (or a clitic's output) and gives vs; a rule for a person prefix
+// reads vs and gives vp; a second ending rule reads vp and gives vq, which
+// only the preverb rules read. So a verb takes at most an ending, a person
+// prefix and another ending (გაშენებდათ → გაშენებდა → აშენებდა → აშენებს),
+// and no ending rule reads its own output (-ა → -ება). dat, gen, ins and adv are
 // intermediate states: a case form whose postposition or extension was
 // removed, which only the rules of that case take.
 //
@@ -77,6 +80,7 @@ const conditions = {
     pron: {name: 'Pronoun', isDictionaryForm: true},
     vs: {name: 'Verb whose ending was made third person singular', isDictionaryForm: false},
     vp: {name: 'Verb whose person prefix was made third person', isDictionaryForm: false},
+    vq: {name: 'Verb whose ending was made third person after its person prefix', isDictionaryForm: false},
     vf: {name: 'Verb in the present, made from the future', isDictionaryForm: false},
     dat: {name: 'Dative form before a postposition', isDictionaryForm: false},
     gen: {name: 'Genitive form before a postposition', isDictionaryForm: false},
@@ -148,16 +152,21 @@ transform('dat', 'dative', 'Dative case: -ს (სახლს → სახლ�
     suffix('ს', '', ['dat'], NOM, {stemMinLength: 2, stemEndsWith: VSTEM}),
 ]);
 transform('gen', 'genitive', 'Genitive case: -ის, with the last vowel of an -ა or -ე stem dropped (დედის → დედა) and syncope (წყლის → წყალი); -ს after an -ო or -უ stem (რადიოს → რადიო).', [
+    // A noun in -ება before the plural of a noun in -ი (ბუნების "of nature",
+    // not "of the shafts"): the longer ending is tried first.
+    suffix('ების', 'ება', ['gen'], NOM, {stemMinLength: 1}),
     ...reducedStemRules('ის', ['gen'], NOM, 'gens'),
     suffix('ს', '', ['gen'], NOM, {stemMinLength: 2, stemEndsWith: '[ოუ]'}),
     suffix('სი', '', ['gen'], NOM, {stemMinLength: 2, stemEndsWith: '[ოუ]'}),
 ]);
 transform('ins', 'instrumental', 'Instrumental case: -ით (სახლით → სახლი, დედით → დედა, წყლით → წყალი); -თი or -თ after an -ო or -უ stem (რადიოთი → რადიო).', [
+    suffix('ებით', 'ება', ['ins'], NOM, {stemMinLength: 1}),
     ...reducedStemRules('ით', ['ins'], NOM, 'inss'),
     suffix('თი', '', ['ins'], NOM, {stemMinLength: 2, stemEndsWith: '[ოუ]'}),
     suffix('თ', '', ['ins'], NOM, {stemMinLength: 2, stemEndsWith: '[ოუ]'}),
 ]);
 transform('adv', 'adverbial', 'Adverbial case: -ად (სახლად → სახლი, კარგად → კარგი, ქვეყნად → ქვეყანა); -დ after an -ე, -ო or -უ stem (მეფედ → მეფე).', [
+    suffix('ებად', 'ება', ['advc'], NOM, {stemMinLength: 1}),
     ...reducedStemRules('ად', ['advc'], NOM, 'advs').filter((rule) => rule.deinflected !== 'ე'),
     suffix('დ', '', ['advc'], NOM, {stemMinLength: 2, stemEndsWith: '[ეოუ]'}),
 ]);
@@ -197,13 +206,13 @@ transform('ext', '-ა extension', 'The vowel -ა added to a case ending in car
 ]);
 
 // --- Postpositions written together with a case form -------------------------
-transform('pp-shi', '-ში (in)', 'The postposition -ში "in", on the dative, whose -ს it replaces (სახლში → სახლს, სახლებში → სახლებს); a pronoun keeps the -ს (მასში → მას).', [
+// A pronoun keeps its -ს before -ში and -ზე (მასში, მასზე); those forms are
+// whole words of the pron transform.
+transform('pp-shi', '-ში (in)', 'The postposition -ში "in", on the dative, whose -ს it replaces (სახლში → სახლს, სახლებში → სახლებს).', [
     suffix('ში', 'ს', [], ['dat'], {stemMinLength: 2}),
-    suffix('ში', '', [], ['dat'], {stemMinLength: 2, stemEndsWith: '[ს]'}),
 ]);
-transform('pp-ze', '-ზე (on)', 'The postposition -ზე "on, about", on the dative (სახლზე → სახლს, მასზე → მას).', [
+transform('pp-ze', '-ზე (on)', 'The postposition -ზე "on, about", on the dative, whose -ს it replaces (სახლზე → სახლს).', [
     suffix('ზე', 'ს', [], ['dat'], {stemMinLength: 2}),
-    suffix('ზე', '', [], ['dat'], {stemMinLength: 2, stemEndsWith: '[ს]'}),
 ]);
 transform('pp-tan', '-თან (at, with)', 'The postposition -თან "at, near, with", on the dative: it replaces the -ს of a consonant stem (სახლთან → სახლს) and follows it after a vowel stem or a pronoun (დედასთან → დედას, მასთან → მას).', [
     suffix('თან', 'ს', [], ['dat'], {stemMinLength: 2, stemEndsWith: CONS}),
@@ -248,7 +257,7 @@ transform('sup', 'superlative', 'Superlative უ-...-ესი "most, very" (უ
     circumfix([['უ', '']], [['ესი', '']], ['nom'], ['adj'], {stemMinLength: 2, stemEndsWith: '[ო]'}),
 ]);
 transform('moder', 'moderative', 'Moderative მო-...-ო "-ish" (მოთეთრო → თეთრი, მოწითალო → წითელი).', [
-    circumfix([['მო', '']], [['ო', 'ი'], ['ალო', 'ელი']], ['nom'], ['adj'], {stemMinLength: 2, stemEndsWith: CONS}),
+    circumfix([['მო', '']], [['ო', 'ი'], ['ალო', 'ელი']], ['nom'], ['adj'], {stemMinLength: 3, stemEndsWith: CONS}),
 ]);
 // An adjective before a noun in the dative or adverbial loses its -ი
 // (ახალ სახლს, ქართულ ენაზე).
@@ -271,12 +280,12 @@ transform('cl-gha', '-ღა (still, only)', 'The clitic -ღა "still, only, a
     suffix('ღა', '', [], [], {stemMinLength: 2}),
 ]);
 transform('cop', 'copula -ა', 'The copula "is" written onto the word before it: -ა after a vowel (კარგია → კარგი, ქვეყანაა → ქვეყანა), -აა after a consonant (სადაა → სად, კარგადაა → კარგად).', [
+    suffix('აა', '', [], [], {stemMinLength: 2, stemEndsWith: CONS}),
     suffix('ია', 'ი', [], [], {stemMinLength: 2}),
     suffix('ეა', 'ე', [], [], {stemMinLength: 2}),
     suffix('აა', 'ა', [], [], {stemMinLength: 2}),
     suffix('ოა', 'ო', [], [], {stemMinLength: 2}),
     suffix('უა', 'უ', [], [], {stemMinLength: 2}),
-    suffix('აა', '', [], [], {stemMinLength: 2, stemEndsWith: CONS}),
 ]);
 transform('quot', 'quotative -ო', 'The quotative clitic -ო at the end of reported speech, "he/she/they say" (მოვალო → მოვალ, წავიდაო → წავიდა).', [
     suffix('ო', '', [], [], {stemMinLength: 3}),
@@ -294,18 +303,43 @@ transform('quot-2', 'quotative -თქო', 'The quotative clitic -თქო "sa
 // cannot reach.
 const PRONOUN_FORMS = {
     'მე': ['ჩემთვის', 'ჩემზე', 'ჩემთან', 'ჩემგან', 'ჩემში', 'ჩემკენ', 'ჩემსავით', 'ჩემამდე'],
-    'შენ': ['შენთვის', 'შენზე', 'შენთან', 'შენგან', 'შენში', 'შენკენ', 'შენსავით', 'შენამდე'],
-    'ჩვენ': ['ჩვენთვის', 'ჩვენზე', 'ჩვენთან', 'ჩვენგან', 'ჩვენში', 'ჩვენკენ', 'ჩვენსავით', 'ჩვენამდე'],
-    'თქვენ': ['თქვენთვის', 'თქვენზე', 'თქვენთან', 'თქვენგან', 'თქვენში', 'თქვენკენ', 'თქვენსავით', 'თქვენამდე'],
-    'ის': ['მას', 'მან', 'მისთვის', 'მასზე', 'მასთან', 'მისგან', 'მასში', 'მისკენ', 'მასავით', 'იმას', 'იმან', 'იმის', 'იმისი', 'იმისა', 'იმით', 'იმად', 'იმ', 'იმისთვის', 'იმაზე', 'იმასთან', 'იმისგან', 'იმაში', 'იმისკენ', 'იმასავით', 'იმათ'],
+    'შენ': ['შენა', 'შენად', 'შენთვის', 'შენზე', 'შენთან', 'შენგან', 'შენში', 'შენკენ', 'შენსავით', 'შენამდე'],
+    'ჩვენ': ['ჩვენად', 'ჩვენთვის', 'ჩვენზე', 'ჩვენთან', 'ჩვენგან', 'ჩვენში', 'ჩვენკენ', 'ჩვენსავით', 'ჩვენამდე'],
+    'თქვენ': ['თქვენა', 'თქვე', 'თქვენად', 'თქვენთვის', 'თქვენზე', 'თქვენთან', 'თქვენგან', 'თქვენში', 'თქვენკენ', 'თქვენსავით', 'თქვენამდე'],
+    'ის': ['მას', 'მან', 'მის', 'მით', 'მისთვის', 'მასზე', 'მასთან', 'მისგან', 'მასში', 'მისკენ', 'მასავით', 'იმას', 'იმან', 'იმის', 'იმისი', 'იმისა', 'იმით', 'იმად', 'იმ', 'იმისთვის', 'იმაზე', 'იმასთან', 'იმისგან', 'იმაში', 'იმისკენ', 'იმასავით', 'იმათ'],
     'ისინი': ['მათ', 'მათთვის', 'მათზე', 'მათთან', 'მათგან', 'მათში', 'მათკენ', 'მათსავით'],
     'ეს': ['ამას', 'ამან', 'ამის', 'ამისი', 'ამისა', 'ამით', 'ამად', 'ამ', 'ამისთვის', 'ამაზე', 'ამასთან', 'ამისგან', 'ამაში', 'ამისკენ', 'ამასავით', 'ამათ', 'ესენი'],
     'ეგ': ['მაგას', 'მაგან', 'მაგის', 'მაგისი', 'მაგით', 'მაგ', 'მაგისთვის', 'მაგაზე', 'მაგასთან', 'მაგაში', 'მაგათ', 'ეგენი'],
+    'არავინ': ['არავის'],
     'ვინ': ['ვის', 'ვისთვის', 'ვისზე', 'ვისთან', 'ვისგან', 'ვისკენ'],
     'რა': ['რას', 'რამ', 'რის', 'რით', 'რად', 'რისთვის', 'რაზე', 'რასთან', 'რისგან', 'რაში', 'რისკენ'],
 };
 transform('pron', 'pronoun case', 'A case form of a personal, demonstrative or interrogative pronoun, alone or with a postposition (ჩემთვის → მე, მას → ის, ამაზე → ეს, რაში → რა).',
     Object.entries(PRONOUN_FORMS).flatMap(([lemma, forms]) => forms.map((form) => wholeWord(form, lemma, [], ['pron']))));
+
+// --- Frequent words -----------------------------------------------------------
+// Words the dictionary's own rows name together with another lemma, which a
+// lookup would show first (იყო "was" names იყი "vodka" before არის), and
+// suppletive forms no rule reaches. A whole-word rule is tried before any
+// shorter ending, so its lemma is found first.
+transform('word', 'word form', 'A frequent form whose lemma no regular rule reaches first: a form of "to be", "to become", "to say" or "to tell" (იყო → არის, გახდა → ხდება, თქვეს → ამბობს, მითხარი → ეუბნება), an emphatic particle (აღარა → აღარ), the colloquial მოიცა "wait" → მოიცდის, კიდეც → კიდევ, the name დავით → დავითი, and words the dictionary lists under two lemmas (ფენის → ფენა, not ფენი "hairdryer"; ჭამ → ჭამს, not ჭა "well").', [
+    wholeWord('იყო', 'არის', [], ['v']),
+    wholeWord('გახდა', 'ხდება', [], ['v']),
+    ...['დაუწყო', 'დაუწყეს'].map((w) => wholeWord(w, 'დაიწყებს', [], ['v'])),
+    wholeWord('მოიცა', 'მოიცდის', [], ['v']),
+    ...['თქვი', 'თქვით', 'თქვეს'].map((w) => wholeWord(w, 'ამბობს', [], ['v'])),
+    ...['უთხარი', 'უთხარით', 'მითხარი', 'მითხარით', 'მითხარ', 'გვითხარი', 'გვითხარით', 'უთხრეს'].map((w) => wholeWord(w, 'ეუბნება', [], ['v'])),
+    wholeWord('აღარა', 'აღარ', [], []),
+    wholeWord('ვეღარა', 'ვეღარ', [], []),
+    wholeWord('კიდეც', 'კიდევ', [], []),
+    wholeWord('დავით', 'დავითი', [], NOM),
+    // Words whose own rows name two lemmas, the wrong one found first: the
+    // whole-word rule is tried first, so its lemma comes first.
+    ...[['ფენის', 'ფენა'], ['ბაზის', 'ბაზა'], ['კერის', 'კერა'], ['ფილებით', 'ფილა'], ['ტყუპებზე', 'ტყუპი'], ['პირად', 'პირადი'],
+        ['თავის', 'თავისი']]
+        .map(([w, l]) => wholeWord(w, l, [], NOM)),
+    ...[['დგომა', 'დგას'], ['დგომას', 'დგას'], ['ჭამ', 'ჭამს']].map(([w, l]) => wholeWord(w, l, [], ['v'])),
+]);
 
 // --- Verbs --------------------------------------------------------------------
 // A verb form is preverb + person marker + version vowel + root + thematic
@@ -319,7 +353,7 @@ const PREVERBS = ['ა', 'ამო', 'აღ', 'გა', 'გადა', 'გ�
 const PV = ['', ...PREVERBS];
 const VIN = ['vp'];
 const VOUT = ['v', 'vs'];
-const VF_IN = ['vs', 'vp'];
+const VF_IN = ['vs', 'vp', 'vq'];
 const VF = ['v', 'vf'];
 // The third person singular of an active verb ends in a thematic suffix and
 // -ს, or in a root consonant and -ს.
@@ -327,7 +361,9 @@ const ACTIVE = ['ებს', 'ავს', 'ობს', 'ამს', 'ს', 'ი�
 
 transform('pres-2', '2nd person', 'Second person singular of the present or future, also the first person once its ვ- is removed: the stem without -ს (აკეთებ → აკეთებს, ხატავ → ხატავს, ჭრი → ჭრის, იმალები → იმალება).', [
     ...['ებ', 'ობ', 'ავ', 'ამ', 'ევ', 'ენ', 'ოფ'].map((e) => suffix(e, e + 'ს', VIN, VOUT, {stemMinLength: 2})),
-    suffix('ი', 'ის', VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
+    suffix('ი', 'ის', VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS, stemNotEndsWith: '[ლ]'}),
+    // -ლი after a consonant or ე (გაივლი, შლი, შველი), not the participles -ული, -ილი (მოსული).
+    suffix('ლი', 'ლის', VIN, VOUT, {stemMinLength: 1, stemEndsWith: CONS_E}),
     suffix('ი', 'ა', VIN, VOUT, {stemMinLength: 2, stemEndsWith: '[ბვ]'}),
 ]);
 transform('pres-1', 'person prefix, bare stem', 'A first-person subject (ვ-) or a first- or second-person object (მ-, გ-, გვ-) on the bare stem of a verb whose stem ends in its root, made third person (ვწერ → წერს, დავწერ → დაწერს, მიჭერ → იჭერს); and the second person of such a verb with the version vowel ი- (იჭერ → იჭერს).', [
@@ -371,7 +407,16 @@ transform('subj', 'subjunctive', 'Present and future subjunctive: -დე, -დ�
 // for; a strong aorist shows a root vowel that the present lacks (გავჭერი,
 // გაჭრის; მოვკალი, მოკლავს).
 const STRONG = {stemMinLength: 2, stemEndsWith: CONS, stemChange: {from: ['ე', 'ა'], to: '', occurrence: 'last', between: CONS}};
-// The third person singular -ა is not read after -ებ- or -ობ- (the aorist
+// With the endings -ე, -ა, -ეთ, -ეს and the optative -ო the root vowel is ა,
+// in the roots თლ, ცლ, შლ, თვლ, ცვლ, ზრდ, ხდ, ცდ and თხრ (გათალა → გათლის,
+// გაზარდა → გაზრდის, დაიცადა → დაიცდის, გათხარა → გათხრის). Each is a
+// literal ending after its consonant: a stem change would also take
+// ტიალო (ტილის) or ჩამოართვა (ჩამორთვის), and ე (მოიხედა, მოახსენა) is
+// never this vowel.
+const STRONG_A = [['ალ', '[თცშვ]'], ['არდ', '[ზ]'], ['ად', '[ხც]'], ['არ', '[ხ]']];
+const strongA = (endings) => endings.flatMap((e) => STRONG_A.map(([r, c]) => suffix(r + e, r.slice(1) + 'ის', VIN, VOUT, {stemMinLength: 1, stemEndsWith: c})));
+// A weak aorist in -ი or -ით is not read after ლ: მოსული, დაწერილი are
+// participles. The third person singular -ა is not read after -ებ- or -ობ- (the aorist
 // drops the thematic suffix, so გაკეთება is a verbal noun), nor as a root
 // verb's after ვ (მოწევა, გაცემა are verbal nouns); after another ბ it is
 // (დააბა → დააბამს).
@@ -381,15 +426,19 @@ transform('aor', 'aorist', 'Aorist (past), whose second person is also the imper
     ...ACTIVE.map((t) => suffix('ბა', 'ბ' + t, VIN, VOUT, {stemMinLength: 1, stemNotEndsWith: '[ეო]'})),
     ...['ებს', 'ობს', 'ოფს'].map((t) => suffix('ო', t, VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS})),
     ...['ი', 'ით'].flatMap((e) => ACTIVE.map((t) => suffix(e, t, VIN, VOUT, STRONG))),
-    ...['ი', 'ით'].flatMap((e) => ['ავს', 'ამს', 'ებს'].map((t) => suffix(e, t, VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS}))),
+    ...strongA(['ე', 'ა', 'ეთ', 'ეს']),
+    ...['ი', 'ით'].flatMap((e) => ['ავს', 'ამს', 'ებს'].map((t) => suffix(e, t, VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS, stemNotEndsWith: '[ლ]'}))),
+    ...['ლი', 'ლით'].flatMap((e) => ['ავს', 'ამს', 'ებს'].map((t) => suffix(e, 'ლ' + t, VIN, VOUT, {stemMinLength: 1, stemEndsWith: CONS_E}))),
     ...['ე', 'ა', 'ეთ', 'ეს'].map((e) => suffix(e, 'ს', VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS, stemChange: {from: ['ი'], to: 'ე', occurrence: 'last', between: CONS}})),
     ...['იე', 'ია', 'იეთ', 'იეს'].map((e) => suffix(e, 'ევს', VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS})),
-    ...['ე', 'ა', 'ეთ', 'ნენ', 'ი', 'ით'].map((e) => suffix(e, 'ება', VIN, VOUT, {stemMinLength: 2})),
+    ...['ე', 'ა', 'ეთ', 'ნენ'].map((e) => suffix(e, 'ება', VIN, VOUT, {stemMinLength: 2})),
+    ...['ი', 'ით'].map((e) => suffix(e, 'ება', VIN, VOUT, {stemMinLength: 2, stemNotEndsWith: '[ლ]'})),
     suffix('ო', 'ობა', VIN, VOUT, {stemMinLength: 2}),
     ...['დი', 'და', 'დით', 'დნენ'].map((e) => suffix(e, 'დება', VIN, VOUT, {stemMinLength: 2})),
 ]);
 transform('opt', 'optative', 'Optative, also the third-person imperative: -ო, -ოს, -ოთ, -ონ, and -ა, -ას, -ათ, -ან after a strong root (დაწეროს → დაწერს, გავჭრა → გავჭრის); of passives -ო, -ოს, -ოთ, -ონ and -დე, -დეს, -დეთ, -დნენ (დაიმალოს → დაიმალება).', [
     ...['ო', 'ოს', 'ოთ', 'ონ'].flatMap((e) => ACTIVE.map((t) => suffix(e, t, VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS}))),
+    ...strongA(['ო', 'ოს', 'ოთ', 'ონ']),
     ...['ა', 'ას', 'ათ', 'ან'].flatMap((e) => ['ის', 'ავს', 'ამს'].map((t) => suffix(e, t, VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS}))),
     ...['ო', 'ოს', 'ოთ', 'ონ'].map((e) => suffix(e, 'ს', VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS, stemChange: {from: ['ი'], to: 'ე', occurrence: 'last', between: CONS}})),
     ...['იო', 'იოს', 'იოთ', 'იონ'].map((e) => suffix(e, 'ევს', VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS})),
@@ -405,18 +454,18 @@ transform('opt', 'optative', 'Optative, also the third-person imperative: -ო, 
 const VPERF = ['vperf'];
 conditions.vperf = {name: 'Verb, perfect series, third person', isDictionaryForm: false};
 transform('inv-pl', 'perfect, plural', 'The -თ of a plural subject in the perfect series (დაგვიწერიათ → დაგვიწერია, დაეწერათ → დაეწერა).', [
-    suffix('იათ', 'ია', VPERF, VPERF, {stemMinLength: 2}),
     ...['ივარ', 'იხარ', 'ივართ', 'იხართ'].map((e) => suffix(e, 'ია', VPERF, VPERF, {stemMinLength: 2, stemEndsWith: CONS})),
     suffix('ათ', 'ა', VPERF, VPERF, {stemMinLength: 2}),
     suffix('ოთ', 'ოს', VPERF, VPERF, {stemMinLength: 2}),
     suffix('ოთ', 'ო', VPERF, VPERF, {stemMinLength: 2}),
 ]);
 transform('inv-person', 'perfect, 1st/2nd person', 'A first- or second-person subject in the perfect series, marked like an indirect object (დამიწერია → დაუწერია, დამეწერა → დაეწერა).', [
-    circumfix(PV.flatMap((p) => ['მი', 'გი', 'გვი', 'ვუ'].map((m) => [p + m, p + 'უ'])), [['ია', 'ია']], VPERF, VPERF, {stemMinLength: 1}),
+    circumfix(PV.flatMap((p) => ['მი', 'გი', 'გვი', 'ვუ'].map((m) => [p + m, p + 'უ'])), [['ია', 'ია'], ['ავს', 'ავს'], ['ამს', 'ამს']], VPERF, VPERF, {stemMinLength: 1}),
     circumfix(PV.flatMap((p) => ['მე', 'გე', 'გვე'].map((m) => [p + m, p + 'ე'])), [['ა', 'ა'], ['ო', 'ო'], ['ს', 'ს']], VPERF, VPERF, {stemMinLength: 1}),
 ]);
-transform('perf', 'perfect', 'Perfect (evidential past), third person singular -უ-...-ია, made into the future (დაუწერია → დაწერს, გაუკეთებია → გააკეთებს, უთამაშია → ითამაშებს).', [
+transform('perf', 'perfect', 'Perfect (evidential past), third person singular -უ-...-ია, and -უ-...-ავს, -ამს of -ავ and -ამ verbs, made into the future (დაუწერია → დაწერს, გაუკეთებია → გააკეთებს, უთამაშია → ითამაშებს, დაუხატავს → დახატავს).', [
     circumfix(PV.map((p) => [p + 'უ', p]), ['ს', 'ავს', 'ამს', 'ის', 'ებს'].map((t) => ['ია', t]), VPERF, VOUT, {stemEndsWith: CONS}),
+    circumfix(PREVERBS.map((p) => [p + 'უ', p]), [['ავს', 'ავს'], ['ამს', 'ამს']], VPERF, VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'უ', p + 'ა']), [['ია', 'ს'], ['ია', 'ობს'], ['ია', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'უ', p + 'უ']), [['ია', 'ს'], ['ია', 'ებს'], ['ია', 'ავს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'უ', p + 'ი']), [['ია', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
@@ -432,6 +481,11 @@ transform('perf-subj', 'perfect subjunctive', 'Perfect subjunctive, third person
     circumfix(PV.map((p) => [p + 'ე', p + 'ა']), [['ინოს', 'ს'], ['ოს', 'ობს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'ე', p + 'უ']), [['ას', 'ებს'], ['ოს', 'ს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'ე', p + 'ი']), [['ოს', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
+]);
+// The indirect verb მოსწონს "likes" makes its aorist and future with ე-
+// (მოეწონა, მოეწონება; მომეწონა "I liked it" after the inversion step).
+transform('indirect', 'indirect verb, aorist and future', 'The aorist and future of the indirect verb მოსწონს "likes" (მოეწონა → მოსწონს, მომეწონა → მოეწონა → მოსწონს, მოეწონება → მოსწონს).', [
+    circumfix([['მოე', 'მოს']], [['ა', 'ს'], ['ება', 'ს']], VPERF, VOUT, {stemMinLength: 3, stemEndsWith: CONS}),
 ]);
 // Intransitive (passive) verbs make the perfect series from the past
 // participle and the copula (დამალულა "it has hidden", დავმალულვარ "I
@@ -451,6 +505,9 @@ transform('ptcp-pass', 'past participle', 'The past participle of an intransitiv
 // the one-letter preverb ა- five, so short words that start like a person
 // marker (ვისი, მისი, მათ, ამისი) are left alone.
 const personMin = (p) => (p === '' ? 4 : p.length === 1 ? 5 : 3);
+// Removing ვ- from a first-person form gives the second-person form, which
+// wty-ka-en often lists as a form of the verb (მივეცი → მიეცი → მისცემს), so
+// the output is a dictionary form as well as vp.
 transform('subj-1', '1st person ვ-', 'The first-person subject marker ვ- (ვაკეთებ → აკეთებ, დავწერე → დაწერე), and before a verb with a third-person indirect object ს- or ჰ- (ვთხოვ → სთხოვ).', PV.flatMap((p) => [
     prefix(p + 'ვ', p, ['vs'], ['v', 'vp'], {stemMinLength: personMin(p)}),
     prefix(p + 'ვ', p + 'ს', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
@@ -462,7 +519,6 @@ function objectRules(marker, extra = {}) {
         prefix(p + marker, p + 'ს', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
         prefix(p + marker, p + 'ჰ', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[გკქყპფ]'}),
         prefix(p + marker + 'ი', p + 'უ', ['vs'], ['v', 'vp'], {stemMinLength: personMin(p) - 1}),
-        prefix(p + marker + 'ი', p + 'ი', ['vs'], ['v', 'vp'], {stemMinLength: personMin(p) - 1}),
     ]);
 }
 transform('obj-1', '1st person object მ-', 'A first-person singular object or experiencer, made third person (მხატავს → ხატავს, მიყვარს → უყვარს, მომწონს → მოსწონს, მყავს → ჰყავს).', objectRules('მ'));
@@ -491,6 +547,18 @@ transform('pv', 'future → present', 'A preverb removed: the future made into t
     circumfix([['ი', '']], [['ებს', 'ობს'], ['ებს', 'ავს'], ['ებს', 'ეობს'], ['ებს', 'ებს'], ['ებს', 'ს'], ['ებს', 'ის'], ['ავებს', 'ავს'], ['ავებს', 'აობს'], ['ის', 'ობს']], VF_IN, VF, {stemMinLength: 3}),
     circumfix([['ი', 'ი']], [['ებს', 'ის']], VF_IN, VF, {stemMinLength: 2}),
 ]);
+
+// --- Ending rules in two states ------------------------------------------------
+// Each rule of an ending transform reads the text as written and gives vs, or
+// reads vp (after a person prefix) and gives vq (see the conditions above).
+const ENDING_TRANSFORMS = new Set(['pres-2', 'pres-pl', 'pres-3pl', 'theme-12', 'impf', 'subj', 'aor', 'opt']);
+for (const t of transforms) {
+    if (!ENDING_TRANSFORMS.has(t.id)) { continue; }
+    t.rules = t.rules.flatMap((rule) => {
+        if (rule.conditionsIn.join() !== 'vp') { throw new Error(`${t.id}: an ending rule must read vp`); }
+        return [{...rule, conditionsIn: [], conditionsOut: ['v', 'vs']}, {...rule, conditionsIn: ['vp'], conditionsOut: ['v', 'vq']}];
+    });
+}
 
 // --- Phrases ------------------------------------------------------------------
 // The transforms whose suffix rules' stems may hold spaces (see WORDS).
