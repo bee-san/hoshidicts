@@ -685,8 +685,8 @@ python3 languages/grc/sources/mutate.py <scratch dir>
   classes, 117 fields, no step); `yomitan.tsv` 59/59, `corpus.tsv` 902/902,
   `cases.tsv` 680/680, `defaults.tsv` 8/8 with the defaults, `text.tsv`
   18/18, `lookup.tsv` 25/25 with the defaults, `gaps.tsv` 0/98; every own
-  and both transform has a passing row. The full `ctest` passes, 61 of 61,
-  on main 78f0cee.
+  and both transform has a passing row. The full `ctest` passes, 63 of 63,
+  on main ee96851.
 - **Traces in the tests.** The 42 `trace` rows of `cases.tsv` give their
   reasons (`λόγους` → λόγος `acc-pl`, `ἔλυσα` → λύω
   `accent|augment|aorist|ind-act-1sg`, `δίκα` → δίκη `doric-alpha`,
@@ -735,7 +735,7 @@ python3 languages/grc/sources/mutate.py <scratch dir>
 - **Hachidori** (feat/multi-language 803f7b6e with this branch in
   `third_party/hoshidicts`, `node scripts/sync-languages.mjs`, then
   `node test/chrome-language-pack.mjs` with wty-grc-en.zip and 11 cases of
-  real sentences), at HACHIDORI_HEAD: 15 checks pass and none fails, among them
+  real sentences), at 35d5910: 15 checks pass and none fails, among them
   ξυνέγραψε → συγγράφω (with the trace of Known gaps), ἄειδε → ἀείδω,
   ἔπεμψαν → πέμπω, γένοιτ’ → γίγνομαι, the Anki note and the switch to
   Japanese and back.
