@@ -176,14 +176,17 @@ rules is the own set, and it is the final set.
   its author; nine added from the judged samples of the real texts
   (`teče`, `stupi`, three forms of `jezero` and four of `rešiti`;
   Measurements 4); four from the fourth audit's samples (`brani`,
-  `prolaze`, `izlaze`, `vuče`); and 46 ties below the depth the audits
-  judged (1,500 to 31,000 occurrences), judged by the author with
-  Tatoeba's sentences and the texts where the readings were close (`boli`
-  → `boljeti`, the verb in 61 of Tatoeba's 66 sentences and 7 of the 10 of
-  *Zlatarevo zlato*; `pomažeš` → `pomagati`, not `pomazati` "anoint";
-  `buku` → `buka`; `braće` → `braća`, not a future of `brati`; `laži` →
-  `laž`). Words with two common readings are left out (`pravu`, `strani`,
-  `smijem`, `puni`, `čisti`, `puste`, `predstave`, `posjeti`).
+  `prolaze`, `izlaze`, `vuče`); and 46 more ties of 1,500 to 31,000
+  occurrences, judged by the author with Tatoeba's sentences and the texts
+  where the readings were close (`boli` → `boljeti`, the verb in 61 of
+  Tatoeba's 66 sentences and 7 of the 10 of *Zlatarevo zlato*; `pomažeš` →
+  `pomagati`, not `pomazati` "anoint"; `buku` → `buka`; `braće` → `braća`,
+  not a future of `brati`; `laži` → `laž`). 41 of them are below the depth
+  the second audit judged; `boli`, `laži`, `novinama`, `potvrdi` and
+  `svetlu` are within it, among the ties that audit left out as ambiguous,
+  and the author judged them by the counts above. Words with two common
+  readings are left out (`pravu`, `strani`, `smijem`, `puni`, `čisti`,
+  `puste`, `predstave`, `posjeti`).
   `sources/prefer-tests.py` looks each word up with and
   without these rules and writes a `prefer` row of `tests/lookup.tsv` for
   257 of them, with both readings in the test dictionary; each row fails
@@ -277,7 +280,7 @@ rules is the own set, and it is the final set.
     ties (`sources/judged-cyrillic-ties.tsv`), negative rows for the
     letters ж, ч, ш and ђ, the measure of l-participles whose rows name only
     a noun (`sources/judged-shadowed-verbs.tsv`), and 50 more preferred
-    readings: the fourth audit's four and 46 ties below the judged depth.
+    readings: the fourth audit's four and 46 more frequent ties.
 
 ## Measurements
 
@@ -374,10 +377,11 @@ and keep their conditions for chaining. Both values are reported below;
      common readings (`pravila`, `boje`, `plate`, `pale`). The second audit
      judged 370 more ties by hand (260 hr and 110 sr-only): 23 were wrong;
      22 are in `PREFER` now, and `leni` → `leniti` remains (`len` is only a
-     reference to `lijen`, a longer chain). Below that depth the author
-     judged the ties of 1,500 to 31,000 occurrences
-     (`reports/hachi-lang-sh-evidence/scans-after-sh-d/`), 46 of which are
-     `PREFER` entries now (Rule provenance).
+     reference to `lijen`, a longer chain). The author judged the ties of
+     1,500 to 31,000 occurrences the audits' lists do not hold
+     (`reports/hachi-lang-sh-evidence/scans-after-sh-d/`): 46 are `PREFER`
+     entries now, 5 of them ties the second audit had left out as ambiguous
+     (Rule provenance).
    - **In Cyrillic.** `measure.py judged --cyrillic --prefer-list` looks up
      the 361 words of the judged ties and `PREFER` in Serbian Cyrillic: 23
      show another lemma first (in Latin, 1). Three of them (`био`, `сада`,
