@@ -111,14 +111,14 @@
   ["mensurus", "mēnsūrus", "v", "v", 0, ["about to measure"], 110, ""],
   ["locus", "locus", "n", "n", 0, ["place"], 111, ""],
   ["loco", "locō", "v", "v", 0, ["to place"], 112, ""],
-  ["loca", "", "non-lemma", "n", 0, [["locus", ["plural"]]], 113, ""],
+  ["loca", "", "non-lemma", "n", 0, [["locus", ["plural"]], ["loco", ["imperative"]]], 113, ""],
   ["animal", "animal", "n", "n", 0, ["animal"], 115, ""],
   ["animalis", "animālis", "adj", "adj", 0, ["animal"], 116, ""],
   ["exerceo", "exerceō", "v", "v", 0, ["to train"], 117, ""],
   ["exercitum", "", "non-lemma", "v", 0, [["exerceo", ["supine"]]], 118, ""],
   ["oportet", "oportet", "v", "v", 0, ["it is right"], 119, ""],
   ["oporteo", "oporteō", "v", "v", 0, ["to require"], 120, ""],
-  ["oportere", "", "non-lemma", "v", 0, [["oportet", ["infinitive"]]], 121, ""],
+  ["oportere", "", "non-lemma", "v", 0, [["oportet", ["infinitive"]], ["oporteo", ["infinitive"]]], 121, ""],
   ["dica", "dica", "n", "n", 0, ["lawsuit"], 122, ""],
   ["tertius", "tertius", "num", "", 0, ["third"], 123, ""],
   ["tertio", "tertiō", "v", "v", 0, ["to do thrice"], 124, ""],
@@ -131,5 +131,10 @@
   ["argentus", "argentus", "adj", "adj", 0, ["silvery"], 133, ""],
   ["natus", "nātus", "n", "n", 0, ["son"], 134, ""],
   ["natis", "natis", "n", "n", 0, ["buttock"], 135, ""],
-  ["queo", "queō", "v", "v", 0, ["to be able"], 136, ""]
+  ["queo", "queō", "v", "v", 0, ["to be able"], 136, ""],
+  ["sol", "sōl", "n", "n", 0, ["sun"], 137, ""],
+  ["solus", "sōlus", "adj", "adj", 0, ["alone"], 138, ""],
+  ["prope", "", "adv", "adv", 0, ["near"], 139, ""],
+  ["proximus", "", "n", "n", 0, ["neighbour"], 140, ""],
+  ["exercitu", "", "non-lemma", "v", 0, [["exerceo", ["supine"]]], 141, ""]
 ]

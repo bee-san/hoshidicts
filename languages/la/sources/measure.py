@@ -1,26 +1,8 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Measurements of README.md (Measurements 2-4). Not run by any test.
-
-    python3 measure.py headwords <wty-la-en.zip> <out.pickle>
-    python3 measure.py freq <out.tsv> <pg*.txt>...
-    python3 measure.py hovers <out.txt> (<pg*.txt> | --tatoeba <lat_sentences.tsv>)...
-    python3 measure.py judge <headwords.pickle> <hover.txt> <lookups.jsonl> --transforms <transforms.json> [--freq <freq.tsv>] [--top N] [--show N]
-        [--homographs <tsv>] [--reach <cli> [--languages <dir>] [--corpus <tsv>,...]] [--kinds 1]
-        [--sample N --sample-out <file> [--sample-of ambiguous|own|changed] [--seed S]] [--same-as <lookups.jsonl>]
-    python3 measure.py first <corpus.tsv> <lookups.jsonl>
-
-headwords keeps each term's parts of speech (rows with definitions) and the
-lemmas its form-of rows name, with their kind (ref_kind). freq counts the words
-of Project Gutenberg ebooks under their most frequent spelling. hovers writes,
-for every word, the text to the end of its sentence (one per line), from
-ebooks or a Tatoeba export. judge judges the first result of each answer of
-languages/en/sources/lookup-batch.cpp as README.md, Measurements, says;
---reach keeps the words whose lemma a rule reaches, --kinds counts enclitic,
-esse, pronoun and esse-form positions, --sample draws positions to judge by
-hand, --freq weights by frequency, --same-as counts the wrong first results
-other lookups (with no rules) also give. first breaks first rank down.
-"""
+"""Measurements of README.md (Measurements 2-4); commands in README.md, Measurements 6.
+headwords, freq, hovers: inputs. judge: judges lookup-batch.cpp's first results
+(README.md, How first results are judged). first: first rank of a corpus."""
 import collections
 import json
 import pickle

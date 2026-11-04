@@ -223,17 +223,8 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["turam", "tura"], ["suram", "sura"], ["turae", "tura"], ["surae", "sura"], ["turis", "tura"], ["suris", "sura"], ["turas", "tura"], ["suras", "sura"], ["turarum", "tura"], ["surarum", "sura"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemMinLength": 3, "stemNotStartsWithText": "fac"},
-        {"type": "circumfix", "prefixes": [["tect", "tect"], ["dict", "dict"], ["peccat", "peccat"], ["fat", "fat"], ["arv", "arv"], ["vot", "vot"], ["bell", "bell"], ["mandat", "mandat"], ["promiss", "promiss"], ["praecept", "praecept"], ["punct", "punct"], ["institut", "institut"], ["iacul", "iacul"], ["argent", "argent"]], "suffixes": [["a", "um"], ["i", "um"], ["o", "um"], ["is", "um"], ["orum", "um"]], "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[]"},
-        {"type": "circumfix", "prefixes": [["pluvi", "pluvi"], ["music", "music"], ["iniuri", "iniuri"], ["aquil", "aquil"], ["penn", "penn"], ["vine", "vine"], ["vesper", "vesper"], ["mathematic", "mathematic"], ["ros", "ros"], ["rut", "rut"]], "suffixes": [["ae", "a"], ["am", "a"], ["as", "a"], ["is", "a"], ["arum", "a"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemCharacters": "[]"},
-        {"type": "wholeWord", "inflected": "loca", "deinflected": "locus", "conditionsIn": [], "conditionsOut": ["n2s"]},
-        {"type": "wholeWord", "inflected": "viris", "deinflected": "vir", "conditionsIn": [], "conditionsOut": ["n2s"]},
-        {"type": "wholeWord", "inflected": "animalia", "deinflected": "animal", "conditionsIn": [], "conditionsOut": ["n3s"]},
-        {"type": "wholeWord", "inflected": "exercitum", "deinflected": "exercitus", "conditionsIn": [], "conditionsOut": ["n4s"]},
-        {"type": "wholeWord", "inflected": "exercitu", "deinflected": "exercitus", "conditionsIn": [], "conditionsOut": ["n4s"]},
-        {"type": "wholeWord", "inflected": "nate", "deinflected": "natus", "conditionsIn": [], "conditionsOut": ["n2s"]},
-        {"type": "wholeWord", "inflected": "nāvem", "deinflected": "nāvis", "conditionsIn": [], "conditionsOut": ["n3s"]},
-        {"type": "wholeWord", "inflected": "navem", "deinflected": "navis", "conditionsIn": [], "conditionsOut": ["n3s"]},
-        {"type": "wholeWord", "inflected": "que", "deinflected": "qui", "conditionsIn": [], "conditionsOut": []}
+        {"type": "circumfix", "prefixes": [["tect", "tect"], ["dict", "dict"], ["peccat", "peccat"], ["fat", "fat"], ["arv", "arv"], ["vot", "vot"], ["bell", "bell"], ["mandat", "mandat"], ["promiss", "promiss"], ["praecept", "praecept"], ["punct", "punct"], ["institut", "institut"], ["iacul", "iacul"], ["argent", "argent"], ["pact", "pact"]], "suffixes": [["a", "um"], ["i", "um"], ["o", "um"], ["is", "um"], ["orum", "um"]], "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[]"},
+        {"type": "circumfix", "prefixes": [["pluvi", "pluvi"], ["music", "music"], ["iniuri", "iniuri"], ["aquil", "aquil"], ["penn", "penn"], ["vine", "vine"], ["vesper", "vesper"], ["mathematic", "mathematic"], ["ros", "ros"], ["rut", "rut"], ["form", "form"]], "suffixes": [["ae", "a"], ["am", "a"], ["as", "a"], ["is", "a"], ["arum", "a"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemCharacters": "[]"}
       ]
     },
     {
@@ -779,7 +770,12 @@
         {"type": "wholeWord", "inflected": "supellectilem", "deinflected": "supellex", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "hiemem", "deinflected": "hiems", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "suem", "deinflected": "sus", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "suffix", "inflected": "rtem", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 3, "stemStartsWithText": "fo"}
+        {"type": "suffix", "inflected": "rtem", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 3, "stemStartsWithText": "fo"},
+        {"type": "wholeWord", "inflected": "exercitum", "deinflected": "exercitus", "conditionsIn": [], "conditionsOut": ["n4s"]},
+        {"type": "wholeWord", "inflected": "nāvem", "deinflected": "nāvis", "conditionsIn": [], "conditionsOut": ["n3s"]},
+        {"type": "wholeWord", "inflected": "navem", "deinflected": "navis", "conditionsIn": [], "conditionsOut": ["n3s"]},
+        {"type": "wholeWord", "inflected": "manum", "deinflected": "manus", "conditionsIn": [], "conditionsOut": ["n4s"]},
+        {"type": "wholeWord", "inflected": "parentem", "deinflected": "parens", "conditionsIn": [], "conditionsOut": ["n3s"]}
       ]
     },
     {
@@ -902,7 +898,8 @@
         {"type": "suffix", "inflected": "cum", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["n3s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 3, "stemStartsWithText": "la"},
         {"type": "suffix", "inflected": "orum", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n2s"], "stemMinLength": 4, "stemStartsWithText": "arm"},
         {"type": "suffix", "inflected": "orum", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 4, "stemStartsWithText": "arm"},
-        {"type": "suffix", "inflected": "rtium", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 3, "stemStartsWithText": "fo"}
+        {"type": "suffix", "inflected": "rtium", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 3, "stemStartsWithText": "fo"},
+        {"type": "wholeWord", "inflected": "parentum", "deinflected": "parens", "conditionsIn": [], "conditionsOut": ["n3s"]}
       ]
     },
     {
@@ -918,7 +915,6 @@
         {"type": "suffix", "inflected": "iros", "deinflected": "ir", "conditionsIn": [], "conditionsOut": ["n2s"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "as", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n1p"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "os", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["n2p"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
-        {"type": "wholeWord", "inflected": "viris", "deinflected": "vis", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "domos", "deinflected": "domus", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "deos", "deinflected": "deus", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
@@ -956,7 +952,8 @@
         {"type": "wholeWord", "inflected": "domo", "deinflected": "domus", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "deo", "deinflected": "deus", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "supellectili", "deinflected": "supellex", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "suffix", "inflected": "o", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 7, "stemStartsWithText": "argent"}
+        {"type": "suffix", "inflected": "o", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 7, "stemStartsWithText": "argent"},
+        {"type": "wholeWord", "inflected": "exercitu", "deinflected": "exercitus", "conditionsIn": [], "conditionsOut": ["n4s"]}
       ]
     },
     {
@@ -1049,7 +1046,10 @@
         {"type": "wholeWord", "inflected": "iecoris", "deinflected": "iecur", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "iocineris", "deinflected": "iecur", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "supellectilis", "deinflected": "supellex", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "hiemis", "deinflected": "hiems", "conditionsIn": [], "conditionsOut": ["n"]}
+        {"type": "wholeWord", "inflected": "hiemis", "deinflected": "hiems", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "solis", "deinflected": "sol", "conditionsIn": [], "conditionsOut": ["n3s"]},
+        {"type": "wholeWord", "inflected": "parentis", "deinflected": "parens", "conditionsIn": [], "conditionsOut": ["n3s"]},
+        {"type": "wholeWord", "inflected": "lateris", "deinflected": "latus", "conditionsIn": [], "conditionsOut": ["n3s"]}
       ]
     },
     {
@@ -1096,7 +1096,11 @@
         {"type": "suffix", "inflected": "ua", "deinflected": "u", "conditionsIn": [], "conditionsOut": ["n4s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
         {"type": "wholeWord", "inflected": "vires", "deinflected": "vis", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "boves", "deinflected": "bos", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "suffix", "inflected": "rtes", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 3, "stemStartsWithText": "fo"}
+        {"type": "suffix", "inflected": "rtes", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 3, "stemStartsWithText": "fo"},
+        {"type": "wholeWord", "inflected": "loca", "deinflected": "locus", "conditionsIn": [], "conditionsOut": ["n2s"]},
+        {"type": "wholeWord", "inflected": "animalia", "deinflected": "animal", "conditionsIn": [], "conditionsOut": ["n3s"]},
+        {"type": "wholeWord", "inflected": "parentes", "deinflected": "parens", "conditionsIn": [], "conditionsOut": ["n3s"]},
+        {"type": "wholeWord", "inflected": "latera", "deinflected": "latus", "conditionsIn": [], "conditionsOut": ["n3s"]}
       ]
     },
     {
@@ -1169,7 +1173,8 @@
         {"type": "wholeWord", "inflected": "coniuge", "deinflected": "coniunx", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "iecore", "deinflected": "iecur", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "supellectile", "deinflected": "supellex", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "hieme", "deinflected": "hiems", "conditionsIn": [], "conditionsOut": ["n"]}
+        {"type": "wholeWord", "inflected": "hieme", "deinflected": "hiems", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "latere", "deinflected": "latus", "conditionsIn": [], "conditionsOut": ["n3s"]}
       ]
     },
     {
@@ -1272,7 +1277,8 @@
         {"type": "wholeWord", "inflected": "coniugi", "deinflected": "coniunx", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "iecori", "deinflected": "iecur", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "hiemi", "deinflected": "hiems", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "suffix", "inflected": "rti", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["n3s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 3, "stemStartsWithText": "fo"}
+        {"type": "suffix", "inflected": "rti", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["n3s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 3, "stemStartsWithText": "fo"},
+        {"type": "wholeWord", "inflected": "lateri", "deinflected": "latus", "conditionsIn": [], "conditionsOut": ["n3s"]}
       ]
     },
     {
@@ -2002,7 +2008,8 @@
         {"type": "wholeWord", "inflected": "quaelibet", "deinflected": "quilibet", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "quaecumque", "deinflected": "quicumque", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "quaepiam", "deinflected": "quispiam", "conditionsIn": [], "conditionsOut": []},
-        {"type": "wholeWord", "inflected": "quaecunque", "deinflected": "quicunque", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "quaecunque", "deinflected": "quicunque", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "que", "deinflected": "qui", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -2233,7 +2240,9 @@
         {"type": "wholeWord", "inflected": "hiemibus", "deinflected": "hiems", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "suibus", "deinflected": "sus", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "subus", "deinflected": "sus", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "suffix", "inflected": "rtibus", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 3, "stemStartsWithText": "fo"}
+        {"type": "suffix", "inflected": "rtibus", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 3, "stemStartsWithText": "fo"},
+        {"type": "wholeWord", "inflected": "parentibus", "deinflected": "parens", "conditionsIn": [], "conditionsOut": ["n3s"]},
+        {"type": "wholeWord", "inflected": "lateribus", "deinflected": "latus", "conditionsIn": [], "conditionsOut": ["n3s"]}
       ]
     },
     {
@@ -2242,7 +2251,8 @@
       "description": "Noun, vocative singular.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "e", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotStartsWithText": "pen"}
+        {"type": "suffix", "inflected": "e", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotStartsWithText": "pen"},
+        {"type": "wholeWord", "inflected": "nate", "deinflected": "natus", "conditionsIn": [], "conditionsOut": ["n2s"]}
       ]
     },
     {
@@ -2276,7 +2286,8 @@
         {"type": "wholeWord", "inflected": "maxime", "deinflected": "magnus", "conditionsIn": [], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "minime", "deinflected": "parvus", "conditionsIn": [], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "minus", "deinflected": "parvus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "plurimum", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]}
+        {"type": "wholeWord", "inflected": "plurimum", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "proxime", "deinflected": "prope", "conditionsIn": [], "conditionsOut": ["adv"]}
       ]
     },
     {

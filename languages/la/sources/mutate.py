@@ -156,6 +156,8 @@ MUTANTS['longer stems of the exclusions'] = drop_rules(lambda tr, r: 'stemStarts
 for stem in ('nav', 'argent', 'patri', 'mens', 'bell', 'suppl', 'cop', 'ac', 'la', 'arm', 'fo', 'can', 'imp', 'loc', 'Ital', 'exist', 'jur', 'curt', 'coel', 'line', 'gen', 'put', 'scrib', 'pen', 'fac', 'man'):
     MUTANTS[f'{stem}- left to the dictionary'] = drop_key('stemNotStartsWithText', stem)
 
+for w in ('loca', 'animalia', 'exercitum', 'exercitu', 'oportere', 'dicam', 'nate', 'que', 'solis', 'proxime'):
+    MUTANTS[f'{w} whole word'] = drop_rules(lambda tr, r, w=w: r['type'] == 'wholeWord' and r['inflected'] == w)
 MUTANTS['untaggedTerms pass'] = lambda t, l: l['lookup'].update(untaggedTerms='pass') or 1
 
 results = []

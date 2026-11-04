@@ -16,11 +16,8 @@ import {formatTransforms} from '../../../tools/lib/json.mjs';
 const here = dirname(fileURLToPath(import.meta.url));
 
 // --- Conditions --------------------------------------------------------------
-// v, n, adj and adv are defined as in Yomitan's Latin rules, as
-// tools/merge-transforms.mjs requires. v has no parts there, so a form that
-// must match a row tagged v carries v besides the marker the next rule takes:
-// a perfect brought to its first person is [vpf, v] (rēxērunt → rēxī, which a
-// form-of row names as regō's), a participle [ptc, v] (amātōrum → amātus).
+// v, n, adj and adv as in Yomitan's rules (merge-transforms.mjs needs it); a
+// form that must match a row tagged v also carries v: [vpf, v], [ptc, v].
 const conditions = {
     v: {name: 'Verb', isDictionaryForm: true},
     n: {name: 'Noun', isDictionaryForm: true, subConditions: ['ns', 'np']},
@@ -57,10 +54,8 @@ const conditions = {
 };
 
 // --- Rule collection ----------------------------------------------------------
-// Every rule is added with the slot (form) that makes it. Rules that are equal
-// in every field are one rule, in one transform named after all their slots:
-// regent (future of regō) and ament (present subjunctive of amō) both end in
-// -ent → -ō, so that rule's transform is "future / present subjunctive, 3rd pl".
+// Rules equal in every field are one rule, in a transform named after all
+// their slots (-ent → -ō: "future / present subjunctive, 3rd pl").
 const SLOTS = new Map();
 const RULES = new Map();
 let order = 0;
@@ -82,11 +77,8 @@ function add(slotId, rule) {
     if (!entry.slots.includes(slotId)) { entry.slots.push(slotId); }
 }
 
-// A lookup tries prefixes of several words (section 9.2), and a suffix rule's
-// stem is everything before its ending. An ending of one or two letters must
-// not take a stem with a space, or it fires on a word followed by a short one
-// (in eō read as in eus); a longer ending can, which lets the last word of a
-// two-word headword inflect (senātūs cōnsultī → senātūs cōnsultum).
+// Endings of one or two letters take no space in their stem (in eō is not in
+// eus); longer ones may (senātūs cōnsultī → senātūs cōnsultum).
 const WORD = '[^ ]';
 // A capitalised word is tried before it is decapitalised, so a rule reading it
 // reaches a capitalised headword first (Mane read as Mānēs). Short noun and
@@ -116,12 +108,9 @@ function exceptStems(slotIds, rule, stems) {
 function sfx(slotId, inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
     const adjective = conditionsOut.some((c) => c.startsWith('adj'));
     const noun = !adjective && conditionsOut.some((c) => c === 'n' || /^n[1-5]/u.test(c));
-    // A common noun's or a verb's endings of three letters or fewer take no
-    // capital in their stem (names have rules of their own; Crēdisne was read
-    // as Crēs, Annuit as annō);
-    // adjectives keep it for the proper adjectives (Rōmāna). A longer verb
-    // ending may take a stem with a space, which reaches idioms such as
-    // grātiās agere and certiōrem facere (grātiās agunt → grātiās agō).
+    // Noun and verb endings of three letters or fewer take no capital in
+    // their stem (Crēdisne is not Crēs); longer verb endings may take a space
+    // (grātiās agunt → grātiās agō).
     const length = [...inflected].length;
     const verb = !adjective && conditionsOut.some((c) => c === 'v' || c === 'vpf');
     const guard = (noun || verb) && length <= 3 ? {stemCharacters: LOWER_WORD} : length <= 2 && !inflected.includes(' ') ? {stemCharacters: WORD} : {};
@@ -1130,7 +1119,7 @@ declension('n', 'ia', '', {'gen-pl': 'ium', 'dat-pl': 'ibus'}, ['n3p'], NOUN_MIN
 declension('n', 'es', '', {'gen-pl': 'um|ium', 'dat-pl': 'ibus'}, ['n3p'], NOUN_MIN);
 // Irregular nouns.
 for (const [lemma, table] of [
-    ['vis', {'acc-sg': 'vim', 'abl-sg': 'vi', 'nom-pl': 'vires', 'gen-pl': 'virium', 'dat-pl': 'viribus', 'acc-pl': 'vires|viris'}],
+    ['vis', {'acc-sg': 'vim', 'abl-sg': 'vi', 'nom-pl': 'vires', 'gen-pl': 'virium', 'dat-pl': 'viribus', 'acc-pl': 'vires'}],
     ['bos', {'gen-sg': 'bovis', 'dat-sg': 'bovi', 'acc-sg': 'bovem', 'abl-sg': 'bove', 'nom-pl': 'boves', 'gen-pl': 'boum|bovum', 'dat-pl': 'bubus|bobus', 'acc-pl': 'boves'}],
     ['iter', {'gen-sg': 'itineris', 'dat-sg': 'itineri', 'abl-sg': 'itinere', 'nom-pl': 'itinera', 'gen-pl': 'itinerum', 'dat-pl': 'itineribus'}],
     ['senex', {'gen-sg': 'senis', 'dat-sg': 'seni', 'acc-sg': 'senem', 'abl-sg': 'sene', 'nom-pl': 'senes', 'gen-pl': 'senum', 'dat-pl': 'senibus'}],
@@ -1477,12 +1466,9 @@ function buildTransforms() {
         }
         transform.rules.push(entry.rule);
     }
-    // Ties go by discovery (section 9.6), so this order decides them: names
-    // (capitalised words: Galliam is Gallia's), n-first and ord; adjectives
-    // (summō: summus before summum; nouns first gave more wrong first results
-    // in the test books); nouns and pronouns, the dative and ablative plural
-    // late (maris is mare's) and the vocative last (mēnse is mēnsis); the
-    // adverb in -e (sōle is sōl); verbs, perfect first (dedit is dō's).
+    // Ties go by discovery (9.6): names, n-first and ord; adjectives (summō);
+    // nouns and pronouns, the dative and ablative plural late (maris) and the
+    // vocative last (mēnse); the adverb in -e (sōle); verbs, perfect first.
     const all = [...groups.values()];
     const rank = (t) => (t.id === 'adj-e+adverb' || t.id === 'adverb' ? 2
         : /^(name-|n-first|ord$)/u.test(t.id) ? -1
@@ -1493,11 +1479,8 @@ function buildTransforms() {
 }
 
 // --- Rare readings of frequent forms left to the dictionary ----------------------------
-// A rule that reaches a rare lemma of a frequent form ties with the common
-// lemma that the form's own form-of rows also name, and the rule's reading
-// is found first (section 9.6): nāvī read as nāvus before nāvis. These rules
-// leave such a stem out (stemNotStartsWithText); the dictionary's form-of
-// rows still give the rare reading, after the common one.
+// A rule's rare lemma ties with the common one the form's rows name and is
+// found first (9.6: nāvī as nāvus). These stems are left to the rows.
 for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
     ['adj-i', 'i', 'us', ['adj12', 'ptc', 'v'], 'nav'],        // nāvī: nāvis, not nāvus
     ['adj-o', 'o', 'us', ['adj12', 'ptc', 'v'], 'argent'],     // argentō: argentum, not argentus
@@ -1545,17 +1528,14 @@ for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
     exceptStems(matches[0].slots, matches[0].rule, stem.split('|'));
 }
 
-// Nouns that a participle headword shadows: adjectives come first on ties,
-// and wty-la-en has headwords for future participles (creātūrus) and some
-// perfect ones (tēctus), so these noun forms come first: the -tūra and -sūra
-// nouns (creātūram, Scrīptūrīs, mēnsūrae) and second-declension neuters that
-// are nouns in most sentences (tēcta, dictīs, peccātī, vōta, arva, fātīs).
+// Nouns a participle or adjective headword shadows on ties (README.md):
+// creātūram, tēcta, pluviae.
 slot('n-first', 'noun', 'A noun form that is also a form of a participle headword: creātūram → creātūra, tēcta → tēctum.');
 add('n-first', {type: 'circumfix', prefixes: [['', '']], suffixes: ['am', 'ae', 'is', 'as', 'arum'].flatMap((e) => [['t', 's'].map((c) => [`${c}ur${e}`, `${c}ura`])].flat()),
     conditionsIn: [], conditionsOut: ['n1s'], stemMinLength: 3, stemNotStartsWithText: 'fac'}); // not futūrīs, saturae, factūram (esse)
-add('n-first', {type: 'circumfix', prefixes: ['tect', 'dict', 'peccat', 'fat', 'arv', 'vot', 'bell', 'mandat', 'promiss', 'praecept', 'punct', 'institut', 'iacul', 'argent'].map((x) => [x, x]), suffixes: ['a', 'i', 'o', 'is', 'orum'].map((e) => [e, 'um']),
+add('n-first', {type: 'circumfix', prefixes: ['tect', 'dict', 'peccat', 'fat', 'arv', 'vot', 'bell', 'mandat', 'promiss', 'praecept', 'punct', 'institut', 'iacul', 'argent', 'pact'].map((x) => [x, x]), suffixes: ['a', 'i', 'o', 'is', 'orum'].map((e) => [e, 'um']),
     conditionsIn: [], conditionsOut: ['n2s'], stemCharacters: '[]'});
-add('n-first', {type: 'circumfix', prefixes: ['pluvi', 'music', 'iniuri', 'aquil', 'penn', 'vine', 'vesper', 'mathematic', 'ros', 'rut'].map((x) => [x, x]),
+add('n-first', {type: 'circumfix', prefixes: ['pluvi', 'music', 'iniuri', 'aquil', 'penn', 'vine', 'vesper', 'mathematic', 'ros', 'rut', 'form'].map((x) => [x, x]),
     suffixes: ['ae', 'am', 'as', 'is', 'arum'].map((e) => [e, 'a']), conditionsIn: [], conditionsOut: ['n1s'], stemCharacters: '[]'});
 // wty-la-en tags no ordinal, so only a rule with no conditions reaches one
 // before the noun of the same form (decimam: decimus, not decima "tithe").
@@ -1563,12 +1543,24 @@ slot('ord', 'ordinal', 'An ordinal before the noun of the same form: decimam →
 add('ord', {type: 'circumfix', prefixes: ['decim', 'sext', 'proxim', 'terti'].map((x) => [x, x]), suffixes: ['a', 'am', 'ae', 'as', 'arum'].map((e) => [e, 'us']),
     conditionsIn: [], conditionsOut: [], stemCharacters: '[]'});
 
-// A whole-word rule's term ranks before one only references reach (9.6), and
-// the reading key no longer applies to this pack: these frequent words showed
-// a rule's rare lemma first (loca: locō, viris: vīs, exercitum: exerceō).
-for (const [a, b, c] of [['loca', 'locus', 'n2s'], ['viris', 'vir', 'n2s'], ['animalia', 'animal', 'n3s'], ['exercitum', 'exercitus', 'n4s'], ['exercitu', 'exercitus', 'n4s'],
-    ['nate', 'natus', 'n2s'], ['nāvem', 'nāvis', 'n3s'], ['navem', 'navis', 'n3s']]) { whole('n-first', a, b, [], [c]); }
-whole('n-first', 'que', 'qui', [], []); // que for quae, not queō
+// Whole-word rules rank first (9.6 standing) and trace as their case: these
+// frequent words showed a rule's rare lemma first on main's engine.
+const W = (slots, a, b, c) => { for (const x of slots) { whole(x, a, b, [], c); } };
+W(['n-nom-pl', 'n-acc-pl'], 'loca', 'locus', ['n2s']);
+W(['n-nom-pl', 'n-acc-pl'], 'animalia', 'animal', ['n3s']);
+W(['n-acc-sg'], 'exercitum', 'exercitus', ['n4s']);
+W(['n-dat-sg', 'n-abl-sg'], 'exercitu', 'exercitus', ['n4s']);
+W(['n-voc-sg'], 'nate', 'natus', ['n2s']);
+W(['n-acc-sg'], 'nāvem', 'nāvis', ['n3s']);
+W(['n-acc-sg'], 'navem', 'navis', ['n3s']);
+W(['n-gen-sg'], 'solis', 'sol', ['n3s']);
+W(['n-acc-sg'], 'manum', 'manus', ['n4s']);
+// parēns and latus "side" before the participles pārēns and lātus, spelled alike
+for (const [slots, a, b] of [[['n-nom-pl', 'n-acc-pl'], 'parentes', 'parens'], [['n-gen-pl'], 'parentum', 'parens'], [['n-gen-sg'], 'parentis', 'parens'],
+    [['n-acc-sg'], 'parentem', 'parens'], [['n-dat-pl'], 'parentibus', 'parens'], [['n-abl-sg'], 'latere', 'latus'], [['n-dat-pl'], 'lateribus', 'latus'],
+    [['n-nom-pl', 'n-acc-pl'], 'latera', 'latus'], [['n-gen-sg'], 'lateris', 'latus'], [['n-dat-sg'], 'lateri', 'latus']]) { W(slots, a, b, ['n3s']); }
+W(['pron-nom-sg-f', 'pron-nom-pl-f', 'pron-nom-pl-n', 'pron-acc-pl-n'], 'que', 'qui', []); // que for quae, not queō
+W(['adverb'], 'proxime', 'prope', ['adv']);
 whole('inf', 'oportere', 'oportet', [], ['v']);
 whole('fut-1s', 'dicam', 'dico', [], ['v']);
 

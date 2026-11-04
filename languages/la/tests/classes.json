@@ -5415,6 +5415,9 @@
         ["argenti", "argenti"],
         ["nate", "nate"],
         ["que", "que"],
+        ["solis", "solis"],
+        ["proxime", "proxime"],
+        ["exercitu", "exercitu"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "arma virumque canō, trōiae quī prīmus ab ōrīs ītaliam vēnit."]
       ]
     },
@@ -7302,6 +7305,9 @@
         ["argenti", "Argenti"],
         ["nate", "Nate"],
         ["que", "Que"],
+        ["solis", "Solis"],
+        ["proxime", "Proxime"],
+        ["exercitu", "Exercitu"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit."]
       ]
     }
