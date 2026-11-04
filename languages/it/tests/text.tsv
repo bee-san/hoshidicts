@@ -1,0 +1,50 @@
+# options: default
+# Source: written for this pack (GPL-3.0-or-later), except the four rows of the category yomitan, from Yomitan's test/language/italian-processors.test.js at d3c54c10264673eca0d66b970ef74cd5c8b048e3 (GPL-3.0-or-later, Copyright (C) 2025-2026 Yomitan Authors).
+# The optional addFinalAccent processor is off here; tests/cases.tsv has the rows that need it.
+# category	valid	input	variant
+yomitan	1	dell'Italia	Italia
+yomitan	1	nell'Italia	Italia
+yomitan	1	c'erano	erano
+yomitan	1	c’erano	erano
+nfkc	1	ﬁne	fine
+nfkc	1	ｃａｓａ	casa
+apostrophe	1	l’amico	l'amico
+apostrophe	1	lʼamico	l'amico
+elision	1	l'amico	amico
+elision	1	L'amico	amico
+elision	1	Dell'acqua	acqua
+elision	1	quest'anno	anno
+elision	1	un'amica	amica
+elision	1	sant'Antonio	Antonio
+elision	1	c'è	è
+elision	1	m'alzo	alzo
+elision	1	po	po'
+elision	1	l	l'
+elision	0	L	L'
+elision	0	V	V'
+elision	1	V	V
+elision	1	dov	dov'
+elision	0	po	po
+elision	0	da	da'
+decapitalize	1	Parlavano	parlavano
+decapitalize	1	ITALIA	italia
+decapitalize	1	È	è
+decapitalize	1	PERCHÉ	perché
+capitalize	1	roma	Roma
+capitalize	1	italia	Italia
+diacritics	1	città	citta
+diacritics	1	perché	perche
+diacritics	1	Città	citta
+diacritics	0	Già	Gia
+diacritics	0	Sarà	Sara
+diacritics	0	è poi	e poi
+diacritics	0	sè stesso	se stesso
+chè	1	perchè	perché
+chè	1	poichè	poiché
+chè	1	benchè	benché
+elision	0	pezzo d'oro	pezzo oro
+elision	0	una bell'idea	una idea
+accent	0	citta	città
+accent	0	parlo	parlò
+capitals	0	i	I
+capitals	1	it	It

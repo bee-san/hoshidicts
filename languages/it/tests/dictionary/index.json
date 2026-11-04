@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts it test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Italian dictionary for languages/it/tests/lookup.tsv, written for the pack. Like wty-it-en it leaves the rules column empty on every row, so the lookups run as the pack's untaggedTerms pass reads such a dictionary. Iero and Gia stand for the proper names of a full dictionary that rules or processors could reach by mistake; pairs such as nuova and nuovo, domare and domandare, or tempo and tempio make the ties the pack's order and preferred readings decide; alzare is left out so that alziamoci is read through the reflexive rules.",
+  "sourceLanguage": "it",
+  "targetLanguage": "en"
+}
