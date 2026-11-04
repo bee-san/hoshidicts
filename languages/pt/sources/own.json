@@ -943,6 +943,7 @@
         {"type": "wholeWord", "inflected": "cantes", "deinflected": "cantar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "comas", "deinflected": "comer", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "metas", "deinflected": "meter", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "toques", "deinflected": "tocar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "es", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemStartsWithText": "est"}
       ]
     },

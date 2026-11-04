@@ -262,5 +262,19 @@
   ["moído", "", "adj", "", 0, ["ground; worn out"], 261, ""],
   ["moer", "", "v", "", 0, ["to grind"], 262, ""],
   ["moída", "", "non-lemma", "", 0, [["moer", ["singular feminine past participle"]]], 263, ""],
-  ["moída", "", "non-lemma", "", 0, [["moído", ["singular feminine"]]], 264, ""]
+  ["moída", "", "non-lemma", "", 0, [["moído", ["singular feminine"]]], 264, ""],
+  ["tocar", "", "v", "", 0, ["to touch; to play"], 265, ""],
+  ["toque", "", "n masc", "", 0, ["touch; ringtone"], 266, ""],
+  ["toques", "", "non-lemma", "", 0, [["tocar", ["second-person singular present subjunctive"]]], 267, ""],
+  ["toques", "", "non-lemma", "", 0, [["toque", ["plural"]]], 268, ""],
+  ["expressar", "", "v", "", 0, ["to express"], 269, ""],
+  ["exprimir", "", "v", "", 0, ["to express (in words)"], 270, ""],
+  ["expresso", "", "adj", "", 0, ["express"], 271, ""],
+  ["expressa", "", "non-lemma", "", 0, [["expressar", ["third-person singular present indicative"]]], 272, ""],
+  ["expressa", "", "non-lemma", "", 0, [["exprimir", ["singular feminine past participle short-form"]]], 273, ""],
+  ["expressa", "", "non-lemma", "", 0, [["expresso", ["singular feminine"]]], 274, ""],
+  ["blogue", "", "n masc", "", 0, ["blog"], 275, ""],
+  ["blogar", "", "v", "", 0, ["to blog"], 276, ""],
+  ["blogues", "", "non-lemma", "", 0, [["blogar", ["second-person singular present subjunctive"]]], 277, ""],
+  ["blogues", "", "non-lemma", "", 0, [["blogue", ["plural"]]], 278, ""]
 ]

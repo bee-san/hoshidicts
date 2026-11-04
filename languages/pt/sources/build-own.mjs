@@ -1123,7 +1123,7 @@ for (const [slot, form, lemma] of [
     ['present-tu', 'falas', 'falar'], ['present-tu', 'esperas', 'esperar'], ['present-tu', 'levas', 'levar'], ['present-tu', 'procuras', 'procurar'],
     ['present-tu', 'chegas', 'chegar'], ['present-tu', 'ajudas', 'ajudar'], ['present-tu', 'olhas', 'olhar'], ['present-tu', 'moras', 'morar'],
     ['present-tu', 'corres', 'correr'], ['subjunctive-tu', 'batas', 'bater'], ['subjunctive-tu', 'cantes', 'cantar'],
-    ['subjunctive-tu', 'comas', 'comer'], ['subjunctive-tu', 'metas', 'meter'],
+    ['subjunctive-tu', 'comas', 'comer'], ['subjunctive-tu', 'metas', 'meter'], ['subjunctive-tu', 'toques', 'tocar'],
 ]) {
     const verbSlot = !['feminine', 'plural'].includes(slot);   // the participle takes vf and gives v, as the verbs
     add(slot, {type: 'wholeWord', inflected: form, deinflected: lemma,

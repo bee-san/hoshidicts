@@ -114,6 +114,12 @@ ranking	1	comas isso	comer	comas
 ranking	0	comas isso	coma	comas
 ranking	1	moída na hora	moído	moída
 ranking	0	moída na hora	moer	moída
+ranking	1	toques nas minhas coisas	tocar	toques
+ranking	0	toques nas minhas coisas	toque	toques
+ranking	1	expressa bem	expressar	expressa
+ranking	0	expressa bem	exprimir	expressa
+ranking	1	blogues pessoais	blogue	blogues
+ranking	0	blogues pessoais	blogar	blogues
 pronouns	1	chama-se João	chamar	chama-se
 pronouns	0	chama-se João	chama	chama
 pronouns	1	deixa-me ir	deixar	deixa-me

@@ -3372,7 +3372,7 @@
     "transforms[35].rules[29].stemCharacters": [],
     "transforms[35].rules[30].stemCharacters": [],
     "transforms[35].rules[31].stemCharacters": [],
-    "transforms[35].rules[40].stemCharacters": [
+    "transforms[35].rules[41].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -3380,7 +3380,7 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[35].rules[40].stemNotEndsWith": [
+    "transforms[35].rules[41].stemNotEndsWith": [
       [99, 99],
       [103, 103]
     ],
@@ -8704,6 +8704,9 @@
         ["crias da loba", "crias da loba"],
         ["comas isso", "comas isso"],
         ["moída na hora", "moída na hora"],
+        ["toques nas minhas coisas", "toques nas minhas coisas"],
+        ["expressa bem", "expressa bem"],
+        ["blogues pessoais", "blogues pessoais"],
         ["chama-se João", "chama-se joão"],
         ["deixa-me ir", "deixa-me ir"],
         ["fazê-lo agora", "fazê-lo agora"],
@@ -10964,6 +10967,9 @@
         ["crias da loba", "Crias da loba"],
         ["comas isso", "Comas isso"],
         ["moída na hora", "Moída na hora"],
+        ["toques nas minhas coisas", "Toques nas minhas coisas"],
+        ["expressa bem", "Expressa bem"],
+        ["blogues pessoais", "Blogues pessoais"],
         ["chama-se João", "Chama-se João"],
         ["deixa-me ir", "Deixa-me ir"],
         ["fazê-lo agora", "Fazê-lo agora"],
