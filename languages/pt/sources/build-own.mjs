@@ -1051,6 +1051,24 @@ for (const [slot, form, lemma] of [
     ['participle', 'atestada', 'atestar'], ['participle', 'alisada', 'alisar'], ['participle', 'rebolada', 'rebolar'],
     ['participle', 'guisados', 'guisar'], ['participle', 'lambidas', 'lamber'], ['participle', 'ocorrida', 'ocorrer'],
     ['participle', 'baldadas', 'baldar'], ['participle', 'buriladas', 'burilar'], ['participle', 'baralhadas', 'baralhar'],
+    // A noun or adjective read as a verb form (third audit, MAJOR-4): a
+    // written-out irregular form (dados as dar's participle, termos as ter's
+    // personal infinitive, vias and vinhas as the tu imperfect of ver and
+    // vir), a longer verb ending (baterias, garantias, saias, ruídos), a short
+    // participle (gastos, ganhos, rotas, surpresas, descobertas), or the
+    // present before the feminine (segura, completa, suja, ativa), where the
+    // Tatoeba sentences and the texts mean the noun or adjective (the audit's
+    // verdicts on every sentence of these words, and samples read for larga,
+    // checa, fixa and oculta).
+    ['plural', 'dados', 'dado'], ['plural', 'termos', 'termo'], ['plural', 'surpresas', 'surpresa'], ['plural', 'saias', 'saia'],
+    ['plural', 'vinhas', 'vinha'], ['plural', 'crias', 'cria'], ['plural', 'vias', 'via'], ['plural', 'gastos', 'gasto'],
+    ['plural', 'descobertas', 'descoberta'], ['plural', 'baterias', 'bateria'], ['plural', 'garantias', 'garantia'], ['plural', 'rotas', 'rota'],
+    ['plural', 'ruídos', 'ruído'], ['plural', 'ganhos', 'ganho'],
+    ['feminine', 'segura', 'seguro'], ['feminine', 'completa', 'completo'], ['feminine', 'suja', 'sujo'], ['feminine', 'ativa', 'ativo'],
+    ['feminine', 'activa', 'activo'], ['feminine', 'larga', 'largo'], ['feminine', 'checa', 'checo'], ['feminine', 'fixa', 'fixo'],
+    ['feminine', 'oculta', 'oculto'], ['feminine', 'suma', 'sumo'],
+    // and the reverse: caminha is caminhar, not cama's diminutive.
+    ['present-ele', 'caminha', 'caminhar'],
     // A plural read as an irregular verb form (pedir's peças, ver's verdes,
     // cear's ceias), and tais, whose -ais needs a longer stem (mais is not a
     // plural of mal).
@@ -1073,7 +1091,7 @@ for (const [slot, form, lemma] of [
     ['present-eu', 'tremo', 'tremer'], ['subjunctive-eles', 'vendam', 'vender'],
     // and criar and desviar read as the imperfect of crer and desver (-ia is
     // longer than -a).
-    ['present-ele', 'cria', 'criar'], ['present-tu', 'crias', 'criar'], ['present-eles', 'criam', 'criar'],
+    ['present-ele', 'cria', 'criar'], ['present-eles', 'criam', 'criar'],
     ['present-ele', 'desvia', 'desviar'], ['present-tu', 'desvias', 'desviar'], ['present-eles', 'desviam', 'desviar'],
     // and those found in the texts and Tatoeba sentences of the measurements:
     // delirar as the pluperfect of delir; render-se, assentar-se and
