@@ -109,7 +109,9 @@ const UNPOINTED_WORDS = [['זאל', 'זאָל'], ['דאך', 'דאָך'], ['וו�
     // read as written, a rule would come first (measure.py agree): לייט as a form of לייטן, יינגל as a diminutive of
     // יונג, פילן as an adjective, מאכער as a plural of מאך; פרי is פֿרי (early) more often than פּרי (fruit)
     ['לייט', 'לײַט'], ['יינגל', 'ייִנגל'], ['יינגלעך', 'ייִנגלעך'], ['פילן', 'פֿילן'], ['מאכער', 'מאַכער'], ['פרי', 'פֿרי'],
-    ['פיין', 'פֿײַן']];
+    ['פיין', 'פֿײַן'],
+    // a final פ that the postprocessor would write ף: טיפ (type) is טיפּ
+    ['טיפ', 'טיפּ']];
 
 // --- Verbs -------------------------------------------------------------------------------
 // The infinitive is the stem and -ן, or -ען after ם, ן, נג, נק, a consonant and ל
@@ -349,13 +351,16 @@ const umlaut = ([from, to], betweenMinLength) =>
 // The endings of a noun or adjective after its stem: the generic rule (the stem
 // ends in a letter that may end a word) and one rule per final letter, whose
 // medial form stands before the ending (וואָכן → וואָך).
-function stemEndings(ending, {finals = Object.keys(FINAL_OF)} = {}) {
+function stemEndings(ending, {finals = Object.keys(FINAL_OF), allFinals = false} = {}) {
     // A stem that ends in a medial letter gives the medial letter; the convertFinalLetters postprocessor
     // writes it final, as the final-letter rules below do.
     const out = [{inflected: ending, deinflected: '', c: {}, final: false}];
-    // Only פֿ needs a rule of its own: the postprocessor writes the other medial letters final (וואָכן →
-    // וואָכ → וואָך), but a stem in פֿ ends in the rafe, which it leaves (קויפֿן → קויף needs this rule).
-    for (const medial of finals.filter((m) => m === FE)) {
+    // Only פֿ needs a rule of its own where nothing reads the output further: the postprocessor writes the
+    // other medial letters final (וואָכן → וואָכ → וואָך), but a stem in פֿ ends in the rafe, which it leaves
+    // (קויפֿן → קויף). An adjective ending is read further when a participle declines (גענומענע →
+    // גענומען → נעמען), and the postprocessor writes only the chain's last text, so the adjective endings
+    // keep a rule for every final letter (`allFinals`).
+    for (const medial of finals.filter((m) => allFinals || m === FE)) {
         out.push({inflected: medial + ending, deinflected: FINAL_OF[medial], c: {}, final: true});
     }
     return out;
@@ -363,8 +368,8 @@ function stemEndings(ending, {finals = Object.keys(FINAL_OF)} = {}) {
 // Adds the endings of `stemEndings`, plain and, when `umlauts` is set, with each
 // vowel change; a final letter's rule changes the vowel just before it.
 // `plain` constrains only the rule without a final letter.
-function endingRules(id, ending, conditionsIn, conditionsOut, {finals, umlauts = false, extra = {}, plain = {}} = {}) {
-    for (const {inflected, deinflected, c: base, final} of stemEndings(ending, {finals})) {
+function endingRules(id, ending, conditionsIn, conditionsOut, {finals, umlauts = false, extra = {}, plain = {}, allFinals = false} = {}) {
+    for (const {inflected, deinflected, c: base, final} of stemEndings(ending, {finals, allFinals})) {
         if (inflected === '') { continue; }
         const c = final ? base : {...base, ...plain};
         // An empty stem gives an empty text, which is never looked up, unless a final letter is written.
@@ -416,6 +421,11 @@ suffix('plural', 'יות', '', [], NOUN, {stemMinLength: 2});  // אות → א�
 // A compound ends like its last word (טויטפֿייגל → טויטפֿויגל).
 for (const [form, singular] of [['פֿייגל', 'פֿויגל'], ['פֿיס', 'פֿוס'], ['ניס', 'נוס']]) { suffix('plural', form, singular, [], NOUN); }
 wholeWord('plural', 'זין', 'זון', [], NOUN);
+// Plurals whose stem ends in a final letter, which the postprocessor writes at a cost of one step, so
+// a reading with no step comes first: לעכער is "holes" (not the verb לעכערן's stem) and הייכן "heights"
+// (not the adjective הויך).
+wholeWord('plural', 'לעכער', 'לאָך', [], NOUN);
+wholeWord('plural', 'הייכן', 'הייך', [], NOUN);
 for (const [form, singular] of [['ברידער', 'ברודער'], ['טעכטער', 'טאָכטער'], ['מיטער', 'מוטער'], ['נעמען', 'נאָמען'], ['ציין', 'צאָן'],
     ['חדשים', 'חודש'], ['נשים', 'אשה'], ['ימים', 'יום'], ['מײַז', 'מויז'], ['לײַז', 'לויז'], ['אייער', 'איי']]) {
     wholeWord('plural', form, singular, [], NOUN);
@@ -475,20 +485,21 @@ transform('superlative', 'superlative',
     'Superlative, -סט (-ט after ס), often with a changed vowel and declined (שענסט, גרעסטע → שיין, גרויס).');
 
 const ADJ = ['adj'];
-endingRules('adjE', 'ע', [], ADJ);
-endingRules('adjEr', 'ער', [], ADJ);
-endingRules('adjN', 'ן', [], ADJ, {finals: ['כ', FE, 'צ']});
-endingRules('adjN', 'עם', [], ADJ, {finals: ['מ', 'נ']});
-endingRules('adjN', 'ען', [], ADJ, {finals: ['מ', 'נ'], extra: {stemEndsWith: '[{vowelEnd}מנ]'}});  // נײַען, פֿרומען
-endingRules('adjS', 'ס', [], ADJ);
+endingRules('adjE', 'ע', [], ADJ, {allFinals: true});
+endingRules('adjEr', 'ער', [], ADJ, {allFinals: true});
+endingRules('adjN', 'ן', [], ADJ, {finals: ['כ', FE, 'צ'], allFinals: true});
+endingRules('adjN', 'עם', [], ADJ, {finals: ['מ', 'נ'], allFinals: true});
+endingRules('adjN', 'ען', [], ADJ, {finals: ['מ', 'נ'], extra: {stemEndsWith: '[{vowelEnd}מנ]'}, allFinals: true});  // נײַען, פֿרומען
+endingRules('adjS', 'ס', [], ADJ, {allFinals: true});
 // Syllabic n and l take ע before the ending: אָפֿן → אָפֿענע, איידל → איידעלע.
 // Also after a vowel: a participle in -ען declines so (געזען → געזעענע, אָנגעזען → אָנגעזעענעם).
 for (const [id, ending] of [['adjE', 'ע'], ['adjEr', 'ער'], ['adjN', 'עם']]) {
     suffix(id, 'ענ' + ending, 'ן', [], ADJ, {stemMinLength: 1});
 }
-for (const [id, ending] of [['adjE', 'ע'], ['adjEr', 'ער']]) {
-    suffix(id, 'על' + ending, 'ל', [], ADJ, {stemMinLength: 1, stemNotEndsWith: VOWEL_END});
-}
+// After a vowel letter -עלע is kept for the name וועלוועלע (Velvele); -עלער reads וועלוועלער (cheaper) as
+// וועלוול, where the וו is a consonant.
+suffix('adjE', 'עלע', 'ל', [], ADJ, {stemMinLength: 1, stemNotEndsWith: VOWEL_END});
+suffix('adjEr', 'עלער', 'ל', [], ADJ, {stemMinLength: 1});
 // Adjectives in -ע (Slavic: מאָדנע, טשיקאַווע) take -ר, -ם and -ס: מאָדנער, מאָדנעם, טשיקאַוועס.
 suffix('adjEr', 'ער', 'ע', [], ADJ, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('adjN', 'עם', 'ע', [], ADJ, {stemMinLength: 2, stemEndsWith: CONSONANT});
@@ -511,6 +522,9 @@ for (const pair of UMLAUT) {
 suffix('superlative', 'שט', 'ש', ADJ, ADJ, {stemMinLength: 2});  // לעפּיש → לעפּישט
 suffix('superlative', 'י' + HIRIQ + 'עסט', 'י', ADJ, ADJ, {stemMinLength: 1});
 suffix('superlative', 'סט', 'ס', ADJ, ADJ, {stemMinLength: 1});
+// A participle's superlative is read further (געלונגענסטע → געלונגענסט → געלונגען → געלינגען), and the
+// postprocessor writes only the chain's last text final, so -נסט also gives -ן.
+suffix('superlative', 'נסט', 'ן', ADJ, ADJ, {stemMinLength: 1});
 for (const pair of UMLAUT) {
     suffix('superlative', 'סט', 'ס', ADJ, ADJ, {stemMinLength: 1, stemChange: umlaut(pair, 0)});
 }

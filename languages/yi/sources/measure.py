@@ -7,6 +7,8 @@ directory and never committed (README.md, Sources and licences).
         every single-word form-of row of wty-yi-en whose lemma has a row
         with definitions, as rows for eval-language (what the dictionary
         says each inflected form is a form of)
+    python3 languages/yi/sources/measure.py hovers <sentences.txt> <out.txt>
+        every word of each line, to the end of its sentence, one per line (the benchmark's hover texts)
     python3 languages/yi/sources/measure.py freq <cache> <languages dir> <out dir>
         the 10,000 most frequent words of the YIVO-spelled Wikisource pages (frequency_pages), looked up
     python3 languages/yi/sources/measure.py text <cache> <languages dir> <out dir>
@@ -458,9 +460,18 @@ def agree(cache, languages, out, top='2000'):
         print('  ' + '\t'.join(map(str, r)))
 
 
+def hover_texts(sentences, out):
+    """The hover texts of each line of `sentences`, as the timings read them."""
+    with open(sentences, encoding='utf-8') as f, open(out, 'w', encoding='utf-8') as o:
+        for line in f:
+            for _, hover in hovers(line.strip()):
+                o.write(hover + '\n')
+
+
 def main():
     command, *args = sys.argv[1:] or ['']
-    commands = {'forms': forms, 'freq': freq, 'text': text, 'phrases': phrases, 'tables': tables, 'wiki': wiki, 'agree': agree}
+    commands = {'forms': forms, 'freq': freq, 'text': text, 'phrases': phrases, 'tables': tables, 'wiki': wiki, 'agree': agree,
+                'hovers': hover_texts}
     if command not in commands:
         sys.exit(__doc__)
     commands[command](*args)

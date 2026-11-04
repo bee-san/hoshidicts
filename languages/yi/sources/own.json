@@ -75,7 +75,8 @@
         {"type": "wholeWord", "inflected": "פילן", "deinflected": "פֿילן", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "מאכער", "deinflected": "מאַכער", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "פרי", "deinflected": "פֿרי", "conditionsIn": [], "conditionsOut": []},
-        {"type": "wholeWord", "inflected": "פיין", "deinflected": "פֿײַן", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "פיין", "deinflected": "פֿײַן", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "טיפ", "deinflected": "טיפּ", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -627,6 +628,8 @@
         {"type": "suffix", "inflected": "פֿיס", "deinflected": "פֿוס", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ניס", "deinflected": "נוס", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]"},
         {"type": "wholeWord", "inflected": "זין", "deinflected": "זון", "conditionsIn": [], "conditionsOut": ["ns"]},
+        {"type": "wholeWord", "inflected": "לעכער", "deinflected": "לאָך", "conditionsIn": [], "conditionsOut": ["ns"]},
+        {"type": "wholeWord", "inflected": "הייכן", "deinflected": "הייך", "conditionsIn": [], "conditionsOut": ["ns"]},
         {"type": "wholeWord", "inflected": "ברידער", "deinflected": "ברודער", "conditionsIn": [], "conditionsOut": ["ns"]},
         {"type": "wholeWord", "inflected": "טעכטער", "deinflected": "טאָכטער", "conditionsIn": [], "conditionsOut": ["ns"]},
         {"type": "wholeWord", "inflected": "מיטער", "deinflected": "מוטער", "conditionsIn": [], "conditionsOut": ["ns"]},
@@ -744,7 +747,11 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ע", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "כע", "deinflected": "ך", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "מע", "deinflected": "ם", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "נע", "deinflected": "ן", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "פֿע", "deinflected": "ף", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "צע", "deinflected": "ץ", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ענע", "deinflected": "ן", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "עלע", "deinflected": "ל", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemNotEndsWith": "{vowelEnd}"},
         {"type": "suffix", "inflected": "יִע", "deinflected": "י", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"}
@@ -757,9 +764,13 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ער", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "כער", "deinflected": "ך", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "מער", "deinflected": "ם", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "נער", "deinflected": "ן", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "פֿער", "deinflected": "ף", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "צער", "deinflected": "ץ", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ענער", "deinflected": "ן", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
-        {"type": "suffix", "inflected": "עלער", "deinflected": "ל", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemNotEndsWith": "{vowelEnd}"},
+        {"type": "suffix", "inflected": "עלער", "deinflected": "ל", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ער", "deinflected": "ע", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "יִער", "deinflected": "י", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1}
       ]
@@ -771,9 +782,15 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ן", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "כן", "deinflected": "ך", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "פֿן", "deinflected": "ף", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "צן", "deinflected": "ץ", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "עם", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "מעם", "deinflected": "ם", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "נעם", "deinflected": "ן", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ען", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemEndsWith": "[{vowelEnd}מנ]"},
+        {"type": "suffix", "inflected": "מען", "deinflected": "ם", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[{vowelEnd}מנ]"},
+        {"type": "suffix", "inflected": "נען", "deinflected": "ן", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[{vowelEnd}מנ]"},
         {"type": "suffix", "inflected": "ענעם", "deinflected": "ן", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "עם", "deinflected": "ע", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "עלן", "deinflected": "ל", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemMinLength": 1},
@@ -788,7 +805,11 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ס", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "כס", "deinflected": "ך", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "מס", "deinflected": "ם", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "נס", "deinflected": "ן", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "פֿס", "deinflected": "ף", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "צס", "deinflected": "ץ", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "עס", "deinflected": "ע", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"}
       ]
     },
@@ -859,6 +880,7 @@
         {"type": "suffix", "inflected": "שט", "deinflected": "ש", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "יִעסט", "deinflected": "י", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "סט", "deinflected": "ס", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "נסט", "deinflected": "ן", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "סט", "deinflected": "ס", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 0}},
         {"type": "suffix", "inflected": "סט", "deinflected": "ס", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 0}},
         {"type": "suffix", "inflected": "סט", "deinflected": "ס", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemCharacters": "[^ ]", "stemChange": {"from": ["ע"], "to": "וי", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 0}},

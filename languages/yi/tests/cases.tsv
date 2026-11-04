@@ -363,5 +363,14 @@ stems	0	וואסערען	וואס	*	*
 plural	1	דערפֿער	דאָרף	n	plural
 comparison	1	שערפֿער	שאַרף	adj	comparative
 adjective	0	וועלוועלע	וועלוול	*	*
-adjective	0	וועלוועלער	וועלוול	*	*
 participle	1	געליינט	לייענען	v	pastParticiple
+participle	1	גענומענע	נעמען	v	pastParticiple|adjE
+participle	1	אָנגעקומענע	אָנקומען	v	pastParticiple|adjE
+participle	1	געשריבנס	שרײַבן	v	pastParticiple|adjS
+participle	1	גענומענעם	נעמען	v	pastParticiple|adjN
+participle	0	פֿירט	פֿירן	*	pastParticiple
+plural	1	לעכער	לאָך	n	plural
+unpointed	1	טיפ	טיפּ	*	unpointed
+plural	1	הייכן	הייך	n	plural
+adjective	1	וועלוועלער	וועלוול	adj	adjEr
+participle	1	געלונגענסטע	געלינגען	v	pastParticiple|superlative|adjE
