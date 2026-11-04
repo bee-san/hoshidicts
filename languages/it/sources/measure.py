@@ -281,7 +281,8 @@ def tie_class(word, f, rows):
         return TIE_CLASSES[1]
     if re.search(r"[aiu]ti$", w) and e.endswith("rsi") and len(f["trace"]) == 1:
         return TIE_CLASSES[2]
-    if w.endswith("e") and f["trace"] != ["plural"] and re.search(r"r(e|si)$", e) and w[:-1] + "a" in named:
+    if (w.endswith("e") and e.lower() != w and f["trace"] and f["trace"] != ["plural"] and re.search(r"[aei]r(e|si)$", e)
+            and w[:-1] + "a" in named):
         return TIE_CLASSES[3]
     if re.search(r"[cg]h?i$", w) and f["trace"] == ["plural"] and e == re.sub(r"h?i$", "o", w) and w[:-1] + "io" in named:
         return TIE_CLASSES[4]
