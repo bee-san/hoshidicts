@@ -108,47 +108,53 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
 - 113 transforms: 79 own, 34 Yomitan (Yomitan's 35 without `superlative`,
   whose two `най-` prefix rules are left out; the own superlative rules go
   to the positive in one step).
-- 8,552 rules: 4,668 own, 490 both, 3,394 Yomitan. By type: 5,968 suffix,
-  2,515 whole-word and 69 circumfix (prefix and suffix) rules, written as 657
+- 8,565 rules: 4,686 own, 490 both, 3,389 Yomitan. By type: 5,963 suffix,
+  2,533 whole-word and 69 circumfix (prefix and suffix) rules, written as 657
   JSON rules because rules that differ only in their affixes are one cross
   product (section 7.3; a whole word is a cross product whose stem is empty,
   `stemCharacters` `[]`). No `pattern` rule: Yomitan's 64 non-literal rules
   map to suffix rules with `stemChange` (the о/е → і alternation),
   `stemEndsWith` (fleeting vowels), `stemContains` (the zero ending) and
   literal palatalised endings.
-- `both`: 1,257 of the 5,158 own rules make a replacement one of Yomitan's
+- `both`: 1,257 of the 5,176 own rules make a replacement one of Yomitan's
   rules makes (the same affixes and stem change, an overlapping part of
   speech). 490 of them are in cross products all of whose pairs Yomitan
   makes and are marked `both`; the other 767 sit in own cross products with
   pairs Yomitan lacks and keep the mark `own`, so the rules stay in the order
   `build-own.mjs` gives them (rules matching at one place apply in file
   order, which decides ties, section 9.6).
-- **Yomitan rules left out**: the 155 of `sources/yomitan-removed.tsv`,
+- **Yomitan rules left out**: the 160 of `sources/yomitan-removed.tsv`,
   each named by its transform, affixes, constraints and conditions, chosen by
   `sources/select-removals.py` from `eval-language --per-rule` on the
   measurement set: every form of the kaikki tables (311,298 rows, written by
   `build-corpus.mjs --all`), `tests/cases.tsv` and Yomitan's test with any
-  trace. A rule is left out when it breaks a negative, when it adds false
-  candidates and recovers no row, or when it adds at least 5 false candidates
-  and more than three per row it recovers:
+  trace, with the pack's `language.json` (its `formOfNormalizer` changes
+  which deinflections count as false candidates). A rule is left out when it
+  breaks a negative, when it adds false candidates and recovers no row, or
+  when it adds at least 5 false candidates and more than three per row it
+  recovers; the selection runs again on the rules left (158, then 2):
   - 26 break 35 negatives, such as `imperative` `й` → `ти` (білий → білити,
     новий → новити, любий → любити, старий → старити), `active participle`
     `лий` → `ти` (малий → мати, милий → мити), `genitive` `ого` → `ий`
     (того → тий, його → йий), `present` `у` → `ати` (вужчу → вужчати,
     сильнішу → сильнішати, живу → живати), `superlative` `най-` (найближча
     → ближчий, where the own rules give близький) and `genitive` `ю` →
-    nothing (бою → бо; it also adds 539 false candidates: даю → да, морю →
+    nothing (бою → бо; it also adds 540 false candidates: даю → да, морю →
     мор, синю → син);
-  - 26 add 1,971 false candidates and recover 110 rows, such as `passive
-    participle` `тий` → `ти` and `ний` → `ти` (448 and 447 for 17 and 16
-    rows) and `truncated stem` `а` → `ати` (100: кара → карати, літа →
-    літати; it recovers зна → знати and бува → бувати of Yomitan's test);
-  - 103 recover nothing and add 1,408 false candidates, such as `present`
-    `у` → `ити` (491: буду → будити, живу → живити, любу → любити) and
-    `active participle` `ачий` → `ати` (323).
+  - 28 add 1,989 false candidates and recover 116 rows, such as `passive
+    participle` `тий` → `ти` and `ний` → `ти` (447 each for 17 and 16
+    rows), `truncated stem` `а` → `ати` (99: кара → карати, літа →
+    літати; it recovers зна → знати and бува → бувати of Yomitan's test)
+    and `imperative` `імся` and `іться` → `атися` (12 and 10 for 3 rows
+    each);
+  - 106 recover nothing and add 1,463 false candidates, such as `present`
+    `у` → `ити` (489: буду → будити, живу → живити, любу → любити),
+    `active participle` `ачий` → `ати` (323) and `present` `деться`,
+    `дешся` and `дуться` → `датися` (3 each).
 
-  Together they are the only rules for 198 rows and add 4,897 false
-  candidates. Measurements 1 and 4 compare the final set with the union.
+  Together they are the only rules for 204 rows and add 4,972 false
+  candidates; five of them (the imperatives in -імся and -іться and the
+  three of датися) are left out since the pack set `formOfNormalizer`. Measurements 1 and 4 compare the final set with the union.
 - **Own rules**: every rule's stem is limited to one word (`{stem}`: letters,
   the apostrophes and the hyphen), so не знаю is not не знати.
   - Nouns: the endings of the four declensions with the hard, soft and mixed
@@ -200,12 +206,14 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
   - Frequent homographs: when the rules reach two lemmas of a word in one
     step each and the word's rows name both, the term found first comes
     first (docs/languages.md 9.6), and for many frequent words that was the
-    rarer one (року → рок, голові → гол, погані → погань, од → ода). 229
+    rarer one (року → рок, голові → гол, погані → погань, од → ода). 247
     whole-word rules, found before any suffix rule, put the lemma a reader
     means first: року → рік, голові → голова, погані → поганий, банку →
     банк, добра → добрий, заплачу → заплатити, шию → шия, статей → стаття,
     тлі → тло, осі → вісь, методи → метод, держав → держава, перекладу →
-    переклад, дій → дія, the nine forms of танк (танків → танк, not танок,
+    переклад, дій → дія, численні → численний, додаткові → додатковий,
+    світові → світовий (18 adjective plurals in -і whose noun reading came
+    first), the nine forms of танк (танків → танк, not танок,
     a dance), на ході → хід, в вічі → око, трупах → труп; Львові → Львів
     has an empty `conditionsOut`, since wty-uk-en gives names no part of
     speech. The words are the hand-labelled frequent words of both
@@ -214,7 +222,7 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
     same, the other table forms of those lemmas that had the same problem,
     and the words the reviews' context samples decided (банку, назву,
     складу, мила, умов, заклади, мешканці, держав, образи, карі).
-  - Spellings of 1928-1933: wty-uk-en has 578 entries glossed "1928–1933
+  - Spellings of 1928-1933: wty-uk-en has 574 entries glossed "1928–1933
     spelling of" a modern word, often of another gender (аналіза for
     аналіз, міністер for міністр). The rules reach both, and for 61 modern
     words some form shows the old spelling first. Whole-word rules settle
@@ -266,7 +274,9 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
   1928-1933, labels with two lemmas kept only for one word under two
   headwords or with a hand count in Known gaps, the old spellings judged
   as another lemma, rows for українці, статей, тлі and Львові, and, after
-  main's #83, `lookup.formOfNormalizer`.
+  main's #83, `lookup.formOfNormalizer`. After the seventh: 18 adjective
+  plurals in -і (численні, додаткові, світові), the removals selected again
+  with the normalizer (160), and rows for держав, дій and змах.
 
 ## Measurements
 
@@ -327,40 +337,47 @@ identical).
    rules produce are tagged (`n` 14,062 rows, `v` 6,318, `adj` 5,625). With
    `pass`, the final set ranks as many lemmas first on `corpus.tsv` (929 of
    988), `gaps.tsv` (9 of 14) and `cases.tsv` (454 of 521) and one fewer on
-   the measurement set (293,927 against 293,928 of 312,325); recall and
+   the measurement set (293,930 against 293,931 of 312,325); recall and
    negatives are the same, and false candidates per row rise from 0.536 to
    0.553 on `corpus.tsv`, from 1.165 to 1.248 on `cases.tsv` and from 0.535
    to 0.565 on the measurement set.
 
    The lookup fields that read the dictionary's references (docs/languages.md
-   9.6, 9.10), each measured on its own against the final set (Measurements
-   2 to 4 give the full counts):
+   9.6, 9.10), each changed on its own from the final set and measured with
+   the same labels (Measurements 2 to 4 give the final set's full counts):
 
    | Field | Frequent words wrong (uk_50k, Wikipedia) | Texts wrong (Kotsiubynsky, Franko) | After function words, wrong | First rank, measurement set | False candidates per form |
    | --- | ---: | ---: | ---: | ---: | ---: |
-   | Defaults | 1, 1 | 1,815, 479 | 51 | 293,927 | 0.505 |
-   | `formOfNormalizer` (set) | 1, 1 | 1,816, 479 | 46 | 293,928 | 0.535 |
-   | `ownEntry: "afterReferences"` | 21, 28 | 3,531, 1,119 | 2,537 | 294,767 | 0.505 |
-   | `confirmedOrder: "references"` | 83, 100 | 4,849, 1,864 | 14,510 | 293,860 | 0.505 |
+   | Final (`formOfNormalizer` set, the others at their defaults) | 1, 1 | 1,813, 479 | 46 | 293,931 | 0.535 |
+   | Without `formOfNormalizer` | 1, 1 | 1,812, 479 | 51 | 293,930 | 0.505 |
+   | With `ownEntry: "afterReferences"` | 21, 30 | 3,582, 1,146 | 2,562 | 294,780 | 0.535 |
+   | With `confirmedOrder: "references"` | 84, 101 | 4,872, 1,868 | 14,548 | 293,860 | 0.535 |
 
-   - `formOfNormalizer` (`[{"strip": "[\\u0300\\u0301]"}, {"map": {" impf":
-     "", " pf": ""}}]`): 30,902 of wty-uk-en's 464,595 references name a text
-     no row has, and for 29,914 the text without its stress marks and
-     aspect tag is a headword (`татусь` → `[["та́то", ["endearing form"]]]`,
-     `взяття` → `взя́ти pf`). With the steps, вдає shows удавати, not удати (5
-     Tatoeba places), 23 lookups that found nothing find their lemma
-     (горобчик → горобець, татусь → тато, взяття → взяти), and Радів at a
-     sentence start shows Рада; the other aspect of a reflexive verb joins
-     the list (зачиняєтеся: зачиняти after зачинятися), which raises the
-     false candidates. `lookup.tsv`'s татусь and взяття rows fail without
-     each step.
+   - `formOfNormalizer`, two steps:
+     `[{"strip": "[\\u0301]"}, {"map": {" impf": "", " pf": ""}}]`.
+     30,902 of wty-uk-en's 464,595 references name a text no row has, and for
+     29,914 the text without its acute stress marks and aspect tag is a
+     headword (`татусь` → `[["та́то", ["endearing form"]]]`,
+     `взяття` → `взя́ти pf`, `змах` → `зма́хувати impf`). The grave accent marks 10 references,
+     all of драм-машина, whose forms the rules reach, so the steps leave it.
+     With the steps, вдає shows удавати, not удати (5 Tatoeba places), 23
+     lookups that found nothing find their lemma (горобчик → горобець, татусь →
+     тато, взяття → взяти), Радів at a sentence start shows Рада, and two the
+     judge cannot see change: тамо (dialect там) shows дамба, and the heading
+     «Паска» shows Пасха. The other aspect of a reflexive verb joins the list
+     (зачиняєтеся: зачиняти after зачинятися), which raises the false
+     candidates. `lookup.tsv`'s татусь, взяття and змах rows fail without each
+     step. The removed Yomitan rules were selected with these steps (Rule
+     provenance).
    - `ownEntry: "afterReferences"` puts the forms a headword's rows name
-     before it: він → віна (1,436 text lookups), більше → багато, мов →
-     мовити, се → сей; the letters' entries still come first (Я, А). It
-     changes no wrong first result to a right one.
+     before it: він → віна (1,436 text lookups, 1,534 after function
+     words), більше → багато, мов → мовити, се → сей; the letters' entries
+     still come first (Я, А). It changes no wrong first result to a right
+     one.
    - `confirmedOrder: "references"` follows the bank order of a word's rows,
-     which for the personal pronouns is я first (нього → я 451, тебе → я
-     2,341); 80 text lookups turn right (цвіте → цвіт, бочки → бочка).
+     which for the personal pronouns is я first (тебе → я 2,341, вас → я
+     1,565); 102 lookups turn right (цвіте → цвіт, бочки → бочка), 19,052
+     wrong.
    - `formOfIgnore`: no rule name of the 990 that wty-uk-en's references
      carry causes a wrong first result in the measurements (the wrong
      references are other spellings, учительський → вчительський, which
@@ -374,9 +391,9 @@ identical).
      list is lowercase, and the subtitles' Бобе is the vocative of the name
      Боб, which a lookup with its capital finds first, while the label
      follows Kotsiubynsky's бобе, the Yiddish "grandma", which wty-uk-en
-     lacks. Of the 10,000, 6,348 show the right first result, 382 have no
+     lacks. Of the 10,000, 6,348 show the right first result, 381 have no
      row in the dictionary (not judged here; the texts' hand-judged sample
-     below covers such words), and 3,269 find nothing: most are Russian words of the subtitles (решили, хватит,
+     below covers such words), and 3,270 find nothing: most are Russian words of the subtitles (решили, хватит,
      получил) and names.
    - Yomitan's rules: 4,097 reached, 62 wrong first, 0.85% of the reached
      words' tokens (пане → паня, роботу → робот, року → рок, говори →
@@ -391,14 +408,14 @@ identical).
      first, пер → перти (пер. is an abbreviation in Wikipedia, which the
      dictionary does not have). Of the 10,000, 8,723 are right, 631 have no
      row and 645 find nothing. Among the reached words, Yomitan's rules have
-     80 wrong, 4.26% of their tokens (року → рок, складу → скласти, селі →
+     83 wrong, 4.30% of their tokens (року → рок, складу → скласти, селі →
      сель, даними → даний, міністром → міністер); the union 18, 0.28%
      (роботу → робот, посаду → посад, кар'єру → кар'єр); the own rules 10,
      0.49% (яка → як, статі → стата, ролі → роля, медалі → медаля). The
      written-language words these rules now settle had shown the rarer
      lemma first (статей → стать, тлі → тля, осі → оса, Львові → Лев,
      мешканці → мешканка, держав → держати, танків → танок, перекладу →
-     перекласти).
+     перекласти, численні → числення, світові → світ).
 3. **Words after function words** (`sources/measure.py phrases`): every word
    of Tatoeba's Ukrainian sentences that follows a preposition, a particle, a
    conjunction, a pronoun or a form of бути, looked up from that word to the
@@ -407,7 +424,7 @@ identical).
    | Rule set | After a preposition (62,614) | particle (45,934) | conjunction (33,092) | pronoun (149,467) | бути (10,397) | All: wrong first results |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
    | Own | 94 | 18 | 10 | 34 | 3 | 159 |
-   | Yomitan | 529 | 135 | 48 | 387 | 65 | 1,164 |
+   | Yomitan | 530 | 135 | 49 | 387 | 65 | 1,166 |
    | Union | 317 | 11 | 15 | 114 | 6 | 463 |
    | Final | 23 | 3 | 5 | 13 | 2 | 46 |
 
@@ -420,7 +437,7 @@ identical).
    goddess, for Атени, Athens, 5 each) and 10 right (Афін → Афіни). The
    union's 463 are mostly роботу → робот (233), адресу → адрес (29) and
    підлогу → підлог (20), where Yomitan's genitive comes before the own
-   accusative; Yomitan's 1,164 also have добра → добро (120), готові → гот
+   accusative; Yomitan's 1,166 also have добра → добро (120), готові → гот
    (84) and голові → гол (41). їм is labelled with both of its common
    readings (вони, їсти), so these tables count neither: of its 253 lookups
    after a function word, 142 mean вони, which the final set gives first,
@@ -430,22 +447,21 @@ identical).
 
    | Text | Lookups | Right | Wrong (by script) | Tie (apart) | Not in the dictionary | Longer match | Nothing found |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Kotsiubynsky, vol. 2 | 127,968 | 110,051 | 1,816 | 55 | 2,223 | 389 | 13,434 |
+   | Kotsiubynsky, vol. 2 | 127,968 | 110,054 | 1,813 | 55 | 2,223 | 389 | 13,434 |
    | Franko, *Захар Беркут* | 50,957 | 43,689 | 479 | 43 | 984 | 153 | 5,609 |
 
-   - The 2,295 wrong first results are 2,032 sentence-initial one-letter
+   - The 2,292 wrong first results are 2,032 sentence-initial one-letter
      words that show the letter's own entry (А 606, І 490, Я 426, В 208,
      З 146, У 83, О 32), 115 other sentence-initial capitals that show a
      proper noun (Мені → Мена 39, Або → Аба 18, Мене → Мен 16, Дім → Діма
      6, бобе, the Yiddish "grandma", → Боб 2, Радів → Рада), both in Known
-     gaps, 140 ties
-     the homograph rules leave, by the frequency proxy, at most 3 lookups
-     each (цвіте → цвісти, сліпу → сліпа, бочки → бочок), among them 6
-     spellings of 1928-1933 the judge now counts as wrong (оркестри →
-     оркестра, циліндра → циліндер, металеві → металь), бобе → боб (4, the
-     Yiddish word), оріхів → Оріхів (3: оріх is only a reference to горіх,
-     Known gaps) and свистячі → свистіти (wty-uk-en files свистячий under
-     свистати).
+     gaps; 137 ties the homograph rules leave, by the frequency proxy, at
+     most 3 lookups each (цвіте → цвісти, сліпу → сліпа, бочки → бочок),
+     among them 5 spellings of 1928-1933 the judge counts as wrong (оркестри
+     → оркестра, циліндра → циліндер); and 8 the label or the rows judge:
+     бобе → боб (4, the Yiddish word), оріхів → Оріхів (3: оріх is only a
+     reference to горіх, Known gaps) and свистячі → свистіти (wty-uk-en
+     files свистячий under свистати).
    - The 98 ties no frequency list decides are names but one (Measure
      notes). By hand 55 are wrong: Мирослави, Мирославу and Мирославі →
      Мирослав for the heroine Мирослава (43), Іванові → Іванів for the
@@ -453,14 +469,15 @@ identical).
      Іванових → Іванов (2), Антонові → Антонів (1 of 2), Петрові → Петрів;
      43 are right (Андрієві → Андрій, Антона → Антон, Юстини → Юстина,
      Іванове серце → Іванів, европейці → европеєць).
-   - The proxy judges 5,630 lookups whose word has no label in
+   - The proxy judges 5,624 lookups whose word has no label in
      `sources/homographs.tsv` and whose first result is not the word itself.
-     By hand, a random sample of 60 (seed 2031) has 4 wrong among the 59
+     By hand, a random sample of 60 (seed 2031) has 4 wrong among the 58
      the proxy calls right: Долі тремтіли → доля for the adverb долі (down),
      Я зараз заплачу → заплатити for заплакати, тепла, материна турбота →
-     тепло for теплий, на лови → ловити for лов; the one it calls wrong is
-     right (розколе стелю → розколоти). That estimates about 370 wrong first
-     results among those 5,630 lookups, where the proxy finds 141. Other
+     тепло for теплий, на дні міжгір'я → день for дно; the two it calls
+     wrong are right (розколе стелю → розколоти, кару → кара). That
+     estimates about 380 wrong first results among those 5,624 lookups,
+     where the proxy finds 138. Other
      samples of this population found between 2 and 8 wrong per 60: the
      reviews', and this round's draw before the last label changed, with 5
      of 56 (шовкові вилоги → шовк twice, злі духи → зло), about 560.
@@ -471,21 +488,21 @@ identical).
      кепі → копа, гуща → густий, насилу → наситити, шептання → шептати), so
      the first result is the nearest headword the rules reach; for вечера
      (supper, an older spelling of вечеря) the right lemma is second, after
-     вечір. Together that estimates about 2.1% wrong first results among the
-     159,882 lookups that find something (the 2,295, 55 among the ties,
-     about 230 more among the proxy's ties and about 855 among the words
+     вечір. Together that estimates about 2.2% wrong first results among the
+     159,882 lookups that find something (the 2,292, 55 among the ties,
+     about 240 more among the proxy's ties and about 855 among the words
      without rows; 2.3% with the other draw's 560); without the letter
      entries at sentence starts, which the engine's order decides (Known
      gaps), about 0.9%.
    - Besides the 2,147 sentence-initial letters and proper nouns that every
-     rule set shows, the final set has 116 and 32 wrong; Yomitan's rules
+     rule set shows, the final set has 113 and 32 wrong; Yomitan's rules
      1,200 and 301 (од → ода 417, білі → біль 63, роботу → робот 36, зелені
-     → зелень 34); the union 245 and 81 (роботу → робот 36, морі → мор 32,
-     пане → паня 25); the own rules 225 and 76 (яка → як 58, яку → як 26,
+     → зелень 34); the union 242 and 81 (роботу → робот 36, морі → мор 32,
+     пане → паня 25); the own rules 222 and 76 (яка → як 58, яку → як 26,
      брів → брести 9).
    - Removing the Yomitan rules: the final set against the same union
-     without the removals (own transforms first, one-word limit): 1,816 and
-     479 wrong against 1,819 and 480 in the texts, 46 against 51 after
+     without the removals (own transforms first, one-word limit): 1,813 and
+     479 wrong against 1,816 and 480 in the texts, 46 against 51 after
      function words, the same among the frequent words of both lists; 3 more
      right first results in Kotsiubynsky and 1 in Franko.
 5. **Performance** (section 13).
@@ -516,14 +533,14 @@ identical).
    - Differential check (`tools/check-yomitan.mjs <yomitan d3c54c1> uk --cli
      build/hoshidicts-cli`): rules 12,304 inputs, 86,933 Yomitan results, 0
      differences; processors `decapitalize`, `capitalizeFirstLetter`,
-     `removeUkrainianDiacritics` and `ukrainianApostropheVariants` on 1,776 to
-     1,800 inputs each, 7 differences, all from the one row of
+     `removeUkrainianDiacritics` and `ukrainianApostropheVariants` on 1,779 to
+     1,803 inputs each, 7 differences, all from the one row of
      `sources/yomitan-differences.tsv`: the pack's `removeUkrainianDiacritics`
      also removes the grave accent (мо̀ва), which Yomitan's keeps.
    - Conformance (`language-conformance-test languages/uk`): corpus.tsv
-     988/988, cases.tsv 732/732, text.tsv 26/26, lookup.tsv 48/48, gaps.tsv
+     988/988, cases.tsv 732/732, text.tsv 26/26, lookup.tsv 51/51, gaps.tsv
      0/14 (reported); classes.json agrees (11 classes, 1,085 fields, 2
-     steps, 3,528 outputs); 1,220 of the 8,552 rules are exercised by a
+     steps, 3,534 outputs); 1,220 of the 8,565 rules are exercised by a
      passing row; `tests/` and `sources/` hold 999,190 bytes.
    - Stem constraints (`sources/mutate.py`, docs/languages.md 14 step 7):
      206 deletions, one per own transform and constraint (`stemMinLength`
@@ -546,7 +563,9 @@ identical).
      санях), the one-word limit of the -ці plurals (на хлопці), and the -ці
      plurals themselves (українці → українець: deleting the -xці → -xець
      pairs, only -нці, or going back to one ці → ець rule), and
-     `formOfNormalizer` or its aspect step (татусь → тато, взяття → взяти).
+     `formOfNormalizer` or either key of its aspect step (татусь → тато,
+     взяття → взяти, змах → змахувати), and the rules of держав and дій
+     (both lemmas are in the test dictionary).
      The other homograph rules have no row each; the frequent-word and text
      measurements show them.
    - Hachidori (feat/multi-language d7e82b0c with this branch at 1d2181b in
@@ -650,7 +669,9 @@ identical).
   of Іван (8 of 10 in Kotsiubynsky), and Атен the goddess Атена (an
   alternative of Афіна) for Атени, Athens (5 in Tatoeba).
 - Words whose reading depends on the text keep one order, and their labels
-  list both readings, so `measure.py` counts every such lookup as right.
+  list both readings, so `measure.py` counts every such lookup as right
+  (дій's label names дія alone, so Tatoeba's 5 imperatives count as wrong;
+  держав, плати and ходи have no label, and the proxy follows the rule).
   These are the hand counts, from Tatoeba, the two texts, the reviews'
   Wikipedia articles and Wikipedia's search snippets (12 per word, read at
   uk.wikipedia.org; "n of m" where only n of the m occurrences were read):
@@ -664,6 +685,13 @@ identical).
   | склади | скласти | the imperative 3 of 5 | склад 1 of 1 | склад 1 of 1 (articles) |
   | дію | діяти | діяти 2 of 3 | | дія 11 of 11 (articles) |
   | дій | дія | the imperative 5 of 11 | | дія 16 of 16 (articles), 12 of 12 (snippets) |
+  | держав | держава | держава 4 of 5 | держати 6 of 6 | держава 12 of 12 (articles), 12 of 12 |
+  | плати | платити | платити 2 of 2 | платити 5 of 7 | плата 7 of 12 (Ла-Плата 4) |
+  | ходи | ходити | ходити 11 of 13 (хід: chess moves) | ходити 10 of 11 | хід 10 of 12 |
+  | світові | світовий | світ 2 of 3 (усьому світові) | світовий 2 of 2 | світовий 12 of 12 |
+  | типові | типовий | тип 1 of 1 (такому типові) | | типовий 12 of 12 |
+  | судові | судовий | | суд 3 of 3 (*Захар Беркут*) | судовий 12 of 12 |
+  | корінні | корінний | | коріння 2 of 2 | корінний 12 of 12 |
   | ліг | лягти | лягти 11 of 11 | лягти 5 of 5 | ліга 1 of 1 (articles) |
   | цілі | ціль | ціль 7 of 10 | цілий 19 of 28 | ціль 10 of 12 |
   | роти | рота | | рот 8 of 8 | рота 12 of 12 |
@@ -706,12 +734,17 @@ identical).
   fight: 4 Tatoeba sentences and 2 in the texts; Wikipedia means боєць).
 - Below Wikipedia's 10,000 most frequent words the ties continue: of ranks
   10,001 to 30,000 the final set reaches 11,834 words, and the proxy calls
-  the first result of 94 of them wrong (0.80% of their tokens): водні →
-  водень, напоїв → напоїти, метали → метати, взаємодію → взаємодіяти,
-  образі → образа, трудові → труд, аналізі → аналіза. Some of the 94 are the
-  proxy's mistakes for one word under two headwords (святі → святий,
-  справжнього → справжній); the sixth review read 18 of its 85 and found 17
-  wrong.
+  the first result of 82 of them wrong (0.67% of their tokens): напоїв →
+  напоїти, метали → метати, взаємодію → взаємодіяти, образі → образа,
+  аналізі → аналіза. Some of the 82 are the proxy's mistakes for one word
+  under two headwords (святі → святий, справжнього → справжній); the sixth
+  review read 18 of its 85 and found 17 wrong.
+  - Adjective plurals in -і whose noun reading comes first: the seventh
+    review's scan of ranks 10,001 to 30,000 found 46, and the proxy counts
+    most of them as right, since the noun is the more frequent lemma. 13 of
+    them have rules now (складові, урядові, судові, передові, водні,
+    трудові); the others remain (випадкові → випадок, кінцеві → кінець,
+    звукові → звук, письмові → письмо, бокові → бік, ґрунтові → ґрунт).
 - A capitalised word at the start of a sentence matches a capitalised row
   with no processor step, which ranks before the common word that needs
   `decapitalize` (section 9.6). The rules cannot change this order.
@@ -725,7 +758,7 @@ identical).
     wrong (Measurements 1).
   - Proper nouns of another spelling: Мені → Мена (a town) at 3,816 Tatoeba
     sentence starts, Мене → Мен (Maine) at 472, Ані → Аня at 31; in the
-    texts 114 lookups (Мені 39, Або → Аба 18, Мене 16, Дім → Діма 6). By the
+    texts 115 lookups (Мені 39, Або → Аба 18, Мене 16, Дім → Діма 6). By the
     same order По shows the river Po (59 in the texts) and Того Togo (3).
     These need the host to say where a sentence starts, the framework issue
     the lead noted for German.
@@ -741,7 +774,13 @@ identical).
   conjunction "as if"; мова, 142), плач (crying; плакати, 126). The words'
   own rows name the meant lemma, which `lookup.ownEntry: "afterReferences"`
   puts first (тату → тато, рада → радий), at the cost of він → віна and
-  the other words of Measurements 1.
+  the other words of Measurements 1. On Wikipedia's list the same order
+  shows став (pond) for стати (rank 62; "became" in 10 of 12 snippets),
+  стала (a constant; 12 of 12 "became"), міст (bridge) for the genitive
+  plural of місто (11 of 12), білка (squirrel) for білок (protein; 7 of
+  12), мов (12 of 12 мова) and померла (12 of 12 the verb); with батьків,
+  ту, жила, вина and рота these words hold 473,026 tokens, about 0.5% of
+  the reached words' tokens (the seventh review's count).
 - The у/в alternation (`alternateInitialUV`) decides the first result of
   168 lookups in the texts whose word has no row of its own: усякі →
   всякий, уважай → вважати, втіху → утіха, урятував → врятувати. For 15 it
