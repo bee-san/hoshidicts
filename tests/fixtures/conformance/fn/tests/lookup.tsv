@@ -1,0 +1,10 @@
+# Hand-written for the test: whole lookups in tests/dictionary/.
+# category	valid	text	expression	matched
+formOfNormalizer	1	davati	dati	davati
+formOfNormalizer	0	dvije	dva	dvije
+formOfIgnore	1	줄 수 있어	줄	줄
+formOfIgnore	0	줄 수 있어	수	줄 수
+ownEntry	1	געווען	זײַן	געווען
+ownEntry	0	געווען	געווען	געווען
+readings	1	sibi	sui	sibi
+readings	0	sibi	sibus	sibi

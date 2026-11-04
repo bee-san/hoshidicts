@@ -1267,12 +1267,21 @@ std::unique_ptr<PackData> parse(std::string_view language_json, std::string_view
     // capabilities (its characterView pattern is the next class field)
     Declared declared;
     if (!trusted) check_capabilities(root, parser, declared);
+    // capabilities.readings, which one key of the lookup's order reads
+    // (section 9.6), also for a built-in pack.
+    {
+      const Object& capabilities = as_object(require(root, "capabilities", ""), "capabilities");
+      const std::string_view readings =
+          one_of(require(capabilities, "readings", "capabilities"), "capabilities.readings", {"required", "optional", "none"});
+      pack->readings = readings == "required" ? Readings::Required : readings == "optional" ? Readings::Optional : Readings::None;
+    }
 
     // lookup
     const std::string lpath = "lookup";
     const Object& lookup = as_object(require(root, "lookup", ""), lpath);
     check_keys(lookup, lpath, {"searchResolution", "preprocessors", "postprocessors", "readingNormalizer", "transforms",
-                               "traceSelection", "formOf", "untaggedTerms", "functionWords", "variantPasses"});
+                               "traceSelection", "formOf", "untaggedTerms", "formOfIgnore", "formOfNormalizer",
+                               "confirmedOrder", "ownEntry", "functionWords", "variantPasses"});
     pack->resolution = one_of(require(lookup, "searchResolution", lpath), "lookup.searchResolution", {"character", "word"}) == "word"
                            ? Resolution::Word
                            : Resolution::Character;
@@ -1311,6 +1320,41 @@ std::unique_ptr<PackData> parse(std::string_view language_json, std::string_view
       pack->untagged_terms = one_of(*untagged_terms, "lookup.untaggedTerms", {"filter", "pass"}) == "pass"
                                  ? UntaggedTerms::Pass
                                  : UntaggedTerms::Filter;
+    }
+    // How references are followed and ranked (sections 9.6 and 9.10). A pack
+    // that reads form-of rows as terms follows no reference and confirms no
+    // term, so it keeps every default.
+    const bool as_term = pack->form_of == FormOf::AsTerm;
+    const std::string with_as_term = " with lookup.formOf \"asTerm\", which follows no reference";
+    if (const Json* ignore = get(lookup, "formOfIgnore")) {
+      const std::string ipath = "lookup.formOfIgnore";
+      pack->form_of_ignore = string_array(*ignore, ipath);
+      for (size_t i = 0; i < pack->form_of_ignore.size(); ++i) {
+        const std::string& name = pack->form_of_ignore[i];
+        if (name.empty()) fail(item(ipath, i), "may not be empty");
+        if (std::ranges::find(pack->form_of_ignore, name) != pack->form_of_ignore.begin() + static_cast<std::ptrdiff_t>(i)) {
+          fail(item(ipath, i), "the rule name " + json_quote(name) + " is listed twice");
+        }
+      }
+      if (as_term && !pack->form_of_ignore.empty()) fail(ipath, "must be empty" + with_as_term);
+    }
+    if (const Json* normalizer = get(lookup, "formOfNormalizer"); normalizer != nullptr && !normalizer->is_null()) {
+      if (as_term) fail("lookup.formOfNormalizer", "must be null" + with_as_term);
+      pack->form_of_normalizer = parser.step_list(*normalizer, "lookup.formOfNormalizer", false, false, &pack->class_fields);
+    }
+    if (const Json* order = get(lookup, "confirmedOrder")) {
+      pack->confirmed_order = one_of(*order, "lookup.confirmedOrder", {"discovery", "references"}) == "references"
+                                  ? ConfirmedOrder::References
+                                  : ConfirmedOrder::Discovery;
+      if (as_term && pack->confirmed_order != ConfirmedOrder::Discovery) {
+        fail("lookup.confirmedOrder", "must be \"discovery\"" + with_as_term);
+      }
+    }
+    if (const Json* own = get(lookup, "ownEntry")) {
+      pack->own_entry = one_of(*own, "lookup.ownEntry", {"first", "afterReferences"}) == "afterReferences"
+                            ? OwnEntry::AfterReferences
+                            : OwnEntry::First;
+      if (as_term && pack->own_entry != OwnEntry::First) fail("lookup.ownEntry", "must be \"first\"" + with_as_term);
     }
     if (const Json* words = get(lookup, "functionWords")) pack->function_words = string_array(*words, "lookup.functionWords");
     if (const Json* passes = get(lookup, "variantPasses")) {
@@ -1413,6 +1457,11 @@ namespace {
   if (pack->reading_normalizer) {
     NamedSteps named{"lookup.readingNormalizer", {}};
     for (const auto& step : *pack->reading_normalizer) named.steps.push_back(&step);
+    pack->named_steps.push_back(std::move(named));
+  }
+  if (pack->form_of_normalizer) {
+    NamedSteps named{"lookup.formOfNormalizer", {}};
+    for (const auto& step : *pack->form_of_normalizer) named.steps.push_back(&step);
     pack->named_steps.push_back(std::move(named));
   }
   for (const auto& [name, steps] : pack->display_transforms) {

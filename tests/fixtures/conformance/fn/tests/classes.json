@@ -1,0 +1,51 @@
+{
+  "generator": "tools/check-classes.mjs",
+  "unicode": "17.0",
+  "classes": {
+    "letter": [
+      [65, 90],
+      [97, 122],
+      [192, 591],
+      [1424, 1535],
+      [7680, 7935],
+      [44032, 55203]
+    ]
+  },
+  "fields": {
+    "text.pattern": [
+      [65, 90],
+      [97, 122],
+      [192, 591],
+      [1424, 1535],
+      [7680, 7935],
+      [44032, 55203]
+    ],
+    "text.wordCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 591],
+      [1424, 1535],
+      [7680, 7935],
+      [44032, 55203]
+    ],
+    "lookup.formOfNormalizer[1].strip": [
+      [783, 783],
+      [785, 785]
+    ]
+  },
+  "steps": [
+    {
+      "processor": "lookup.formOfNormalizer",
+      "step": 2,
+      "cases": [
+        ["davati", "davati"],
+        ["dvije", "dvije"],
+        ["줄 수 있어", "줄 수 있어"],
+        ["געווען", "געווען"],
+        ["sibi", "sibi"],
+        ["Ne mogu davati.", "Ne mogu davati."],
+        ["dati", "dati"]
+      ]
+    }
+  ]
+}

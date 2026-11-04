@@ -44,6 +44,10 @@
     "traceSelection": "shortest",
     "formOf": "follow",
     "untaggedTerms": "filter",
+    "formOfIgnore": [],
+    "formOfNormalizer": null,
+    "confirmedOrder": "discovery",
+    "ownEntry": "first",
     "functionWords": [],
     "variantPasses": []
   },

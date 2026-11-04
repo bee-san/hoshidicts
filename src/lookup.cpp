@@ -58,6 +58,9 @@ struct Followed {
   // The reference's rules: the lookup's followed_rules[first_rule, first_rule + rule_count).
   uint32_t first_rule;
   uint32_t rule_count;
+  // The reference's position among those the lookup noted, in the order it
+  // read them: for the rows of one text, the dictionaries' bank order.
+  uint32_t sequence;
   // A row of the matched text itself names the term (the deinflection has no
   // trace), so it is dictionary-confirmed (section 9.6).
   bool confirms;
@@ -89,6 +92,24 @@ struct Candidate {
   // matched text itself reached the term, whichever trace the candidate
   // keeps, or 0.
   size_t confirmed_len = 0;
+  // The sequence of the first such reference at confirmed_len, for
+  // lookup.confirmedOrder "references" (section 9.6).
+  uint32_t confirmed_rank = UINT32_MAX;
+  // The longest matched length at which a deinflection whose trace starts
+  // with a wholeWord rule reached the term (directly or through a reference
+  // of a row it found), whichever trace the candidate keeps, or 0. Only for
+  // a pack that follows references.
+  size_t whole_word_len = 0;
+  // Set just before sorting (section 9.6): the trace length the candidate
+  // ranks with, which is depth() except for a matched text's own entry under
+  // lookup.ownEntry "afterReferences", and its standing among candidates
+  // that tie up to that length: 4 when a whole-word trace reached it and it
+  // is dictionary-confirmed, 3 when only a whole-word trace reached it, 2
+  // when it is only dictionary-confirmed, 1 for such an own entry, 0
+  // otherwise. With formOf "asTerm" every standing is 0 and rank_depth is
+  // depth().
+  uint32_t rank_depth = 0;
+  unsigned char standing = 0;
 
   const Deinflection& deinflection() const { return base[index]; }
   // The trace length: the deinflection's, plus the reference's rules.
@@ -96,6 +117,9 @@ struct Candidate {
   // Dictionary-confirmed (section 9.6): a form-of reference of a row of the
   // matched text reached the term.
   bool confirmed() const { return confirmed_len == matched_len; }
+  // A deinflection whose trace starts with a wholeWord rule reached the term
+  // at its matched length (section 9.6).
+  bool whole_word() const { return whole_word_len == matched_len; }
 };
 
 uint64_t key_hash(std::string_view expression, std::string_view reading) {
@@ -305,6 +329,16 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   std::vector<std::vector<std::string>> metadata_reading_store;
   bool metadata_added = false;
 
+  // Whether a deinflection's trace starts with a wholeWord rule: a rule that
+  // read the matched text itself, after the processors (section 9.6).
+  const auto starts_with_whole_word = [transforms](const Deinflection* base, uint32_t di) {
+    if (transforms == nullptr) return false;
+    const Deinflection* n = &base[di];
+    if (n->parent == Deinflection::npos) return false;
+    while (base[n->parent].parent != Deinflection::npos) n = &base[n->parent];
+    return n->via < Deinflection::step_base && transforms->rules[n->via].type == lang::RuleType::WholeWord;
+  };
+
   // Merges the terms of one deinflection of a prefix's variant into the
   // candidates, keeping each term's longest matched form (and, with the
   // `shortest` trace selection, its fewest steps and shortest trace there).
@@ -313,6 +347,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   auto add_terms = [&](size_t matched_len, const Deinflection* base, uint32_t di, const std::string* form, int steps,
                        RawTerms&& terms, size_t rank, const Followed* reference = nullptr) {
     const auto store_index = static_cast<uint32_t>(term_store.size());
+    const bool whole_word = follow && !terms.terms.empty() && starts_with_whole_word(base, di);
     for (auto& term : terms.terms) {
       const std::string_view key = reading_key(terms, term);
       const uint64_t h = key_hash(term.expression, key);
@@ -324,7 +359,16 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
           better = steps < existing->steps || (steps == existing->steps && depth < existing->depth());
         }
         if (reference != nullptr && reference->confirms) {
-          existing->confirmed_len = std::max(existing->confirmed_len, matched_len);
+          // The first confirming reference at the longest length counts.
+          if (matched_len > existing->confirmed_len) {
+            existing->confirmed_len = matched_len;
+            existing->confirmed_rank = reference->sequence;
+          } else if (matched_len == existing->confirmed_len) {
+            existing->confirmed_rank = std::min(existing->confirmed_rank, reference->sequence);
+          }
+        }
+        if (whole_word) {
+          existing->whole_word_len = std::max(existing->whole_word_len, matched_len);
         }
         if (better) {
           existing->matched_len = matched_len;
@@ -347,7 +391,10 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
                                        .steps = steps,
                                        .dict_rank = rank,
                                        .reference = reference,
-                                       .confirmed_len = reference != nullptr && reference->confirms ? matched_len : 0});
+                                       .confirmed_len = reference != nullptr && reference->confirms ? matched_len : 0,
+                                       .confirmed_rank = reference != nullptr && reference->confirms ? reference->sequence
+                                                                                                     : UINT32_MAX,
+                                       .whole_word_len = whole_word ? matched_len : 0});
       }
     }
     term_store.push_back(std::move(terms));
@@ -398,6 +445,13 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     return (row_conditions(rules) & conditions) != 0;
   };
 
+  // lookup.formOfIgnore (section 9.10): a reference carrying a listed rule.
+  const auto ignored = [&](const FormOfReference& reference) {
+    return std::ranges::any_of(reference.rules, [&](const std::string& rule) {
+      return std::ranges::find(pack.form_of_ignore, rule) != pack.form_of_ignore.end();
+    });
+  };
+
   const auto note_references = [&](size_t matched_len, const Deinflection* base, uint32_t di, int steps) {
     for (const RawFormOfRow& row : form_of_rows) {
       if (!row_passes(base[di].conditions, row.dict_name, row.rules)) {
@@ -405,6 +459,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       }
       references.clear();
       DictionaryQuery::read_form_of(row, pins, references);
+      // A row any of whose references carries a rule the pack ignores
+      // contributes none of them.
+      if (!pack.form_of_ignore.empty() && std::ranges::any_of(references, ignored)) {
+        continue;
+      }
       for (auto& reference : references) {
         if (!followed) {
           followed = std::make_unique<std::deque<Followed>>();
@@ -416,6 +475,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
                                      .text = std::move(reference.form_of),
                                      .first_rule = static_cast<uint32_t>(followed_rules.size()),
                                      .rule_count = static_cast<uint32_t>(reference.rules.size()),
+                                     .sequence = static_cast<uint32_t>(followed->size()),
                                      .confirms = base[di].depth == 0});
         std::ranges::move(reference.rules, std::back_inserter(followed_rules));
       }
@@ -455,18 +515,40 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     add_terms(matched_len, base, di, &form, steps, std::move(terms), SIZE_MAX);
   };
 
+  // lookup.formOfNormalizer (section 9.10): a reference's text after the
+  // pack's steps, or empty when they leave it as it is (or empty it).
+  const auto normalize_form_of = [&](const std::string& text) {
+    std::string normalized;
+    std::u32string in;
+    if (lang::decode_utf8(text, in)) {
+      std::u32string out;
+      lang::apply_single(*pack.form_of_normalizer, in, out);
+      normalized = lang::to_utf8(out);
+    }
+    if (normalized == text) normalized.clear();
+    return normalized;
+  };
+
   // Follows the form-of references noted since the last call, each as a
   // deinflection to its text with no conditions (Yomitan's
   // _getDictionaryDeinflections). One hop: the references of the rows they
-  // reach are not followed.
+  // reach are not followed. A text that no row of the selection has is
+  // looked up once more after the pack's formOfNormalizer, if it has one; the
+  // reference then names the text that was found.
   const auto follow_noted = [&]() {
     if (!followed) {
       return;
     }
     for (; followed_done < followed->size(); ++followed_done) {
-      const Followed& reference = (*followed)[followed_done];
+      Followed& reference = (*followed)[followed_done];
       form_of_rows.clear();
       auto terms = query_.query_raw(reference.text, pins, selection, false, normalizer, &form_of_rows);
+      if (pack.form_of_normalizer && terms.terms.empty() && form_of_rows.empty()) {
+        if (std::string normalized = normalize_form_of(reference.text); !normalized.empty()) {
+          terms = query_.query_raw(normalized, pins, selection, false, normalizer, &form_of_rows);
+          reference.text = std::move(normalized);
+        }
+      }
       collect_metadata(terms);
       add_terms(reference.matched_len, reference.base, reference.index, &reference.text, reference.steps,
                 std::move(terms), SIZE_MAX, &reference);
@@ -815,13 +897,63 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     return reading_key(term_store[c.store_index], *c.term) == primary_reading;
   };
 
+  // The keys of section 9.6 after the trace length, set per candidate.
+  // Metadata-only terms, which are ranked apart, keep standing 0.
+  for (auto& c : candidates) {
+    c.rank_depth = c.depth();
+  }
+  if (follow) {
+    const auto has_glossaries = [](const Candidate& c) { return c.term->first_glossary != UINT32_MAX; };
+    for (auto& c : candidates) {
+      if (!has_glossaries(c)) continue;
+      c.standing = c.whole_word() ? (c.confirmed() ? 4 : 3) : c.confirmed() ? 2 : 0;
+    }
+    // lookup.ownEntry "afterReferences": the matched text's own entry ranks as
+    // if its trace were as long as the shortest of the dictionary-confirmed
+    // terms with its matched length and steps, and after them.
+    if (pack.own_entry == lang::OwnEntry::AfterReferences) {
+      struct Shortest {
+        size_t matched_len;
+        int steps;
+        uint32_t depth;
+      };
+      std::vector<Shortest> shortest_confirmed;
+      for (const auto& c : candidates) {
+        if (!has_glossaries(c) || !c.confirmed()) continue;
+        auto it = std::ranges::find_if(shortest_confirmed, [&](const Shortest& s) {
+          return s.matched_len == c.matched_len && s.steps == c.steps;
+        });
+        if (it == shortest_confirmed.end()) {
+          shortest_confirmed.push_back({c.matched_len, c.steps, c.depth()});
+        } else {
+          it->depth = std::min(it->depth, c.depth());
+        }
+      }
+      for (auto& c : candidates) {
+        if (!has_glossaries(c) || c.depth() != 0 || c.reference != nullptr || c.confirmed()) continue;
+        const auto it = std::ranges::find_if(shortest_confirmed, [&](const Shortest& s) {
+          return s.matched_len == c.matched_len && s.steps == c.steps;
+        });
+        if (it != shortest_confirmed.end()) {
+          c.rank_depth = it->depth;
+          c.standing = 1;
+        }
+      }
+    }
+  }
+
   const size_t retained_count = std::min(candidates.size(), static_cast<size_t>(max_results));
   // Ties every key leaves go to the candidate found first (section 9.6),
   // except for a pack that reads form-of rows as terms (Japanese), whose ties
-  // keep the order they have always had (the parity tests pin it).
+  // keep the order they have always had (the parity tests pin it). With
+  // lookup.confirmedOrder "references", two dictionary-confirmed terms go by
+  // the bank order of the references that confirm them first. "Written form
+  // equals reading" counts only where readings are required.
   const bool discovery_order = follow;
-  auto less = [frequency_dictionary, frequency_descending, primary_reading, discovery_order, &matches_primary_reading](
-                  const Candidate& a, const Candidate& b) {
+  const bool references_order = follow && pack.confirmed_order == lang::ConfirmedOrder::References;
+  const bool reading_order = pack.readings == lang::Readings::Required;
+  auto less = [frequency_dictionary, frequency_descending, primary_reading, discovery_order, references_order,
+               reading_order, &matches_primary_reading](const Candidate& a, const Candidate& b) {
     if (!primary_reading.empty()) {
       const bool primary_a = matches_primary_reading(a);
       const bool primary_b = matches_primary_reading(b);
@@ -840,16 +972,19 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       return steps_a < steps_b;
     }
 
-    auto trace_len_a = a.depth();
-    auto trace_len_b = b.depth();
+    auto trace_len_a = a.rank_depth;
+    auto trace_len_b = b.rank_depth;
     if (trace_len_a != trace_len_b) {
       return trace_len_a < trace_len_b;
     }
 
-    // A lemma the dictionary itself names as a form of the matched text comes
-    // before one only the rules propose (puedo: poder before podar).
-    if (a.confirmed() != b.confirmed()) {
-      return a.confirmed();
+    // A term a whole-word rule reaches from the matched text (the pack's word
+    // for it), then a lemma the dictionary itself names as a form of the
+    // matched text, come before one only the other rules propose (puedo:
+    // poder before podar); a term that is both comes first, and a matched
+    // text's own entry that ranks after its references comes after both.
+    if (a.standing != b.standing) {
+      return a.standing > b.standing;
     }
 
     auto match_a = a.term->expression == *a.form;
@@ -885,8 +1020,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
 
     auto a_reading_expr_match = a.term->expression == a.term->reading;
     auto b_reading_expr_match = b.term->expression == b.term->reading;
-    if (a_reading_expr_match != b_reading_expr_match) {
+    if (reading_order && a_reading_expr_match != b_reading_expr_match) {
       return a_reading_expr_match > b_reading_expr_match;
+    }
+    if (references_order && a.confirmed() && b.confirmed() && a.confirmed_rank != b.confirmed_rank) {
+      return a.confirmed_rank < b.confirmed_rank;
     }
     // Candidates are elements of one vector, in the order they were found.
     return discovery_order && &a < &b;

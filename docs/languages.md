@@ -178,6 +178,10 @@ An abridged English example (section 4.8 has Arabic and Japanese excerpts):
     "traceSelection": "shortest",
     "formOf": "follow",
     "untaggedTerms": "filter",
+    "formOfIgnore": [],
+    "formOfNormalizer": null,
+    "confirmedOrder": "discovery",
+    "ownEntry": "first",
     "functionWords": [],
     "variantPasses": []
   },
@@ -263,6 +267,17 @@ The engine-facing block.
 | `untaggedTerms` | `"filter"` or `"pass"` | How the part-of-speech filter (section 9.4) treats a dictionary row whose `rules` name no tag. `filter` is Yomitan's behaviour and the default: such a row matches only a form without conditions. `pass`: such a row carries D, every condition with `isDictionaryForm: true` and its `subConditions`, so it matches every form whose conditions overlap D; a form with only intermediate conditions (no dictionary form, such as Spanish `imp`) still does not match it. Tagged rows are filtered as before, and form-of rows (9.10) follow the same test. Choose `pass` when the recommended dictionaries leave `rules` empty on the rows the pack's rules should reach: on every row (wty-pt-en, wty-ru-en, wty-it-en) or on whole parts of speech the rules produce (wty-el-en's nouns and adjectives). Keep `filter` when the dictionary tags those parts of speech and leaves only other rows empty, such as names, phrases, affixes and some form-of rows (wty-en-en, wty-es-en): there `pass` adds false candidates and ranks no more lemmas first. Confirm the choice with `eval-language` on both values (section 14 step 5). The template says `filter`; the Japanese pack has no such field and filters, as before. |
 | `functionWords` | array of strings | Words a host's segmenter may split around (section 9.8; Japanese particles today). |
 | `variantPasses` | array | Opt-in extra passes, each `{"id", "builtin", "optional": true}`, that a request enables by id. Japanese declares `nekoSpeech` (section 11.4). |
+
+Four more fields refine how a `follow` pack reads references. A pack with
+`formOf: "asTerm"` follows none, so it keeps each at its default and the
+conformance test refuses any other value.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `formOfIgnore` | array of strings | Reference rule names (section 9.10). A row any of whose form-of references carries one of these rules contributes no reference: none of its references is followed, and a row that has no other definition is no term, like any row of only references. Rows without such a reference are read as before. Empty by default. For Korean, `eumhun`: kty-ko-en writes a hanja's meaning-and-sound label as a headword whose references carry it (`줄 수` → `[["수", ["eumhun"]], ["수", ["hanja form"]]]`), so *줄 수 있어* showed 수 over two words before the verb 주다. For Vietnamese, `classifier`: wty-vi-en's classifier rows point from a classifier to every noun it counts (`cái` → 924 nouns), which made *cái bàn* about three times slower. |
+| `formOfNormalizer` | array of steps or null | Steps for a reference whose text no row of the selection has (section 9.10): the text is looked up once more after them. The step kinds of `readingNormalizer` without `builtin` and `alternatives`. Null by default. Serbo-Croatian needs one: wty-sh-en names lemmas with their accent marks (`davati` → *dȁti*), while its headwords have none (*dati*). |
+| `confirmedOrder` | `"discovery"` or `"references"` | How two dictionary-confirmed terms (section 9.6) that tie on every other key are ordered. `discovery`, the default: the term the lookup found first, so a term a rule reaches comes before one only a reference reaches. `references`: the term whose confirming reference comes first in the matched text's own rows, in bank order, then discovery. With wty-la-en, 46 of 59 frequent Latin forms show their lemma first with `references` and 41 with `discovery` (9.6). |
+| `ownEntry` | `"first"` or `"afterReferences"` | Where the matched text's own entry ranks against the terms its own form-of rows name (section 9.6). `first`, the default: before them, on its empty trace. `afterReferences`: after them, when the matched text has both. It helps with wty-sh-en, where *bilo* showed "pulse" before *biti*, and hurts with wty-yi-en, whose articles' rows name each other (9.6). |
 
 ### 4.5 Readings and pronunciations
 
@@ -1121,12 +1136,40 @@ so the engine does not do it.
 ### 9.6 Order and grouping
 
 Results are ordered by the comparator hoshidicts uses today: primary reading,
-matched length, processor steps, trace length, dictionary-confirmed, written
+matched length, processor steps, trace length, standing (below), written
 form equals the form looked up, the chosen frequency, dictionary rank, score,
-written form equals reading. Dictionary rank is the position in the request's
-dictionary selection (section 9.7). Where the reading equals the expression,
-as for languages without readings, the reading terms compare equal strings
-and have no effect.
+written form equals reading, and in packs that follow references the
+references' order (`lookup.confirmedOrder: "references"`) and discovery
+order. Dictionary rank is the position in the request's dictionary
+selection (section 9.7).
+
+**Written form equals reading** counts only in packs whose
+`capabilities.readings` is `required` (Japanese). The importer writes the
+expression into an empty reading (4.5), so where readings are a spelling
+variant that dictionaries give for some rows only, the key ranked the rows
+without one first. wty-la-en leaves the reading empty for a headword without
+long vowels and writes the macrons otherwise, so `sibi` showed sibus
+("crafty") before suī and `rei` reus before rēs. Without the key, 41 of the
+59 frequent Latin forms of audit-hachi-lang-la's list (PR #65's pack, wty-la-en)
+show the lemma the auditor judged right first, against 25 with it. With
+wty-zh-en it changes the first result of 64 of the 10,000 most frequent
+words of FrequencyWords zh_cn_50k: 39 now show the traditional form the
+dictionary gives as the main one (什么 → 什麼, not 孰麼), 2 an alternative
+instead (里面 → 內面), and 23 another alternative.
+
+A term's **standing** orders terms that tie on matched length, steps and
+trace length. From the highest:
+
+1. a term that both a whole-word trace (below) and a dictionary-confirmed
+   reference reach;
+2. a term a whole-word trace reaches;
+3. a dictionary-confirmed term;
+4. the matched text's own entry under `lookup.ownEntry: "afterReferences"`
+   (below);
+5. any other term.
+
+A pack with `formOf: "asTerm"` follows no reference, so every term has the
+last standing.
 
 A term is **dictionary-confirmed** when a form-of reference of a row of the
 matched text itself (after processors, before any rule) reached it (section
@@ -1138,8 +1181,35 @@ in the row of a deinflected form confirms nothing: in wty-es-en *jovencita*
 is a form of *jovencito*, and *jovencito*, which the diminutive rule also
 reaches from *jovencita*, is a form of *joven*; *joven* is not confirmed for
 *jovencita*. A confirmed term never outranks a longer match, fewer steps or a
-shorter trace. A pack with `formOf: "asTerm"` follows no reference, so no term
-is confirmed.
+shorter trace.
+
+A **whole-word trace** is one whose first rule is a `wholeWord` rule: that
+rule read the matched text itself, after the processors, so its `inflected`
+is the matched text and the pack names the term for exactly that word. The
+term counts as reached by one whichever trace it keeps, also when the
+whole-word rule's output is a row whose reference names it. Its standing
+puts it before a dictionary-confirmed term at equal matched length, steps
+and trace length, never before a longer match, fewer steps or a shorter
+trace. kty-ko-en's row for 그는 is only `[["글다", ["formal present
+determiner"]]]`, and the Korean pack's whole-word rule `particle` reads 그는
+as 그 (he, that) with one step, as many as the reference: with this key 그 comes
+first, at all 534 of the 69,969 positions of the Korean Tatoeba sentences
+where the word is 그는. Of those positions, 1,104 change their first result,
+all to a whole-word trace's term: 우리는 → 우리 (237, before 우리다), 걸 → 것
+(146, before 걸다), 나를 → 나 (72), 그를 → 그 (65), 나와 → 나 (21), 마라 and 마요 → 말다
+(11, before 마다). A term both reach comes first of all: Esperanto's rules read
+*ĉiujn* as *ĉiuj* and, in two steps, *ĉiu*, which the row of *ĉiujn* names.
+Among the 10,000 most frequent words of FrequencyWords, the key changes the
+first result of 12 in Korean (the words above), 128 in Basque (127 from
+*izan*, which the rows name, to *\*edun*, which the pack's auxiliary rules
+name; the Basque judge counts both as the auxiliary), one in French (*qu* →
+*qu'*), one in Chinese (远远 → 远, the reduplication rule, before the
+traditional 遠遠) and none in German, Greek and Vietnamese, with kty-ko-en and
+the packs' wty-*-en dictionaries. A pack's whole-word rules thus decide their
+words against the dictionary's rows, so check them against those rows: PR
+#67's Serbo-Croatian rules read *djecu*, *djece* and *braću* as *dijete* and
+*brat*, and *tima* as *taj*, which now come before the *djeca*, *braća* and
+*tim* the rows name (9 of hr_50k's 10,000 words).
 
 With `formOf: "follow"`, two candidates that every key ties are ordered by
 when the lookup first found their terms: the scan's prefixes from the longest
@@ -1150,6 +1220,42 @@ reach (9.10); then variant passes and their references. The order is the same
 on every platform. With `asTerm` (Japanese) such ties keep the order
 hoshidicts always gave them, which the standard library's `partial_sort`
 decides; the Japanese parity tests pin it (section 11.3).
+
+**`lookup.confirmedOrder: "references"`** orders two dictionary-confirmed
+terms that tie on every key before discovery order by the reference that
+first confirms each: the lookup reads the matched text's rows in the order of
+the dictionary selection, each dictionary's rows in bank order and a row's
+references in order. With `discovery` (the default) a term a rule reaches is
+found during the scan, before the terms that only references reach (9.10
+item 4), so it comes first: in wty-la-en the rows of *dicam* name *dīcō* and
+*dica*, and the noun rule's *dica* came first. Of the 59 Latin forms above,
+`references` shows the lemma first for 46 (it puts *dīcō*, *forma*, *capiō* and
+*populāris* first, and *sē*, *reus* and *mentum* before *suī*, *rēs* and *mēns*,
+which the bank lists second). With kty-ko-en (and `formOfIgnore: ["eumhun"]`)
+it changes 353 of the 69,969 Tatoeba positions: 마세요 → 말다 and 마셨어요 →
+마시다 instead of 마다, but 간다 → 갈다 and 들어 → 들다 instead of 가다 and 듣다.
+Measure both values on the pack's frequent words and texts before choosing.
+
+**`lookup.ownEntry: "afterReferences"`** ranks the matched text's own entry
+(the term found as the text itself, with no trace) after the terms its own
+form-of rows name. When those dictionary-confirmed terms have the own entry's
+matched length and processor steps, the own entry ranks as if its trace were
+as long as the shortest of theirs, with the standing after theirs: it comes
+right after them, before any other term with that trace length, and a term
+with a shorter trace comes before both. A matched text without form-of rows
+keeps its own entry first, and so does an own entry that its own rows name.
+With wty-sh-en (PR #67's pack with the `formOfNormalizer` of 9.10), 1,132 of
+the 10,000 most frequent words of FrequencyWords hr_50k show their own entry
+first by default and 198 with `afterReferences`; of the 33 among them that
+audit-hachi-lang-sh-b judged wrong (*bilo* "pulse" for *biti*, *imam*
+"cleric" for *imati*), 4 still show their own entry. With wty-yi-en it
+trades: of the 1,455 frequent words the Yiddish pack's `measure.py freq`
+judges, 16 turn right (*געווען* → *זײַן*, *האָב* → *האָבן*; 9,928
+occurrences) and 33 turn wrong (9,000), such as *עס* "it" → *עסן* and *מיין*
+"my" → *מיינען*; in the pack's three Wikisource texts the wrong first results
+rise from 1,233 to 4,286 of 66,644 lookups, most of them articles, whose rows
+name each other (*די* → *דאָס*, *דער* → *דאָס*). The default, `first`, keeps
+today's order: the own entry first on its empty trace.
 
 Candidates are grouped by `(expression, reading)` as today. With
 `traceSelection: "first"` a term keeps the first deinflection that reached it
@@ -1222,7 +1328,9 @@ as Yomitan's translator does (`_getDeinflections` and
    5), and a row without one keeps them in its glossary.
 2. For every deinflection whose form found rows (sections 9.3 and 9.4), each
    reference of each row that passes the part-of-speech filter for that
-   deinflection becomes a deinflection of its own: the same matched text and
+   deinflection becomes a deinflection of its own, unless one of the row's
+   references carries a rule the pack's `formOfIgnore` lists (below): the
+   same matched text and
    processor steps, the text `formOf` (not postprocessed), no conditions, and
    the deinflection's trace followed by one step per rule, in the
    dictionary's order. Such a step has the rule as its id and name, no
@@ -1239,7 +1347,10 @@ as Yomitan's translator does (`_getDeinflections` and
    *poder*). wty-el-en, which tags only verbs, leaves 126,455 of its 263,911
    form-of rows untagged.
 3. `formOf` is looked up in the request's dictionary selection (9.7), within
-   `lookup_dictionary()`'s dictionary, without the part-of-speech filter. The
+   `lookup_dictionary()`'s dictionary, without the part-of-speech filter.
+   When no row of the selection has that text and the pack has a
+   `formOfNormalizer`, the text after its steps is looked up once more
+   (below). The
    terms it finds join grouping, ordering and `traceSelection` like any other
    (9.6), with their own frequencies and pitches; when the row naming them is
    the matched text's own (no rule applied), they are dictionary-confirmed.
@@ -1261,6 +1372,71 @@ as Yomitan's translator does (`_getDeinflections` and
    (`GlossaryEntry::drop_form_of`), and without other arrays. A row whose
    arrays are all something other than references is an ordinary row, its
    glossary unchanged.
+
+**References the pack ignores.** `lookup.formOfIgnore` lists reference rule
+names. A row any of whose references carries one of them contributes no
+reference at item 2: none of its references is followed, the others
+included, and a row that is only references is dropped as item 5 drops any
+such row. A row that also has other definitions stays a term without its
+references. Rows whose references carry no listed rule are read as before.
+The list is empty by default, and a pack with `formOf: "asTerm"` keeps it
+empty. Two dictionaries need it:
+
+- kty-ko-en writes a hanja's meaning-and-sound label as a headword whose
+  references carry the rule `eumhun`: `["줄 수", "", "non-lemma", "",
+  [["수", ["eumhun"]], ["수", ["hanja form"]]]]` (3,297 rows). A lookup of
+  *줄 수 있어* matched 줄 수 over two words and followed it to the syllable 수.
+  With `formOfIgnore: ["eumhun"]`, 71 of the 69,969 positions of the Korean
+  Tatoeba sentences change their first result, all of them from a reference
+  of such a row to the word itself or its lemma (줄 수 → 줄, 8; 갈 거 → 갈, 6;
+  받을 수 → 받다, 5; 이 시 → 이, 14). The Korean judge's wrong first results fall
+  from 2,204 to 2,175: the 37 these rows caused go, and 8 positions now show
+  an own entry its hand verdicts count as wrong (갈 for 가다).
+- wty-vi-en has a row tagged `classifier` from a classifier to every noun it
+  counts (`cái` → 924 nouns, `con` → 834, `cây` → 645; 4,276 rows). With
+  `formOfIgnore: ["classifier"]`, *cái bàn* takes 236 µs instead of 778 µs
+  natively (*con mèo* 212 µs instead of 699 µs), the p95 of the pack's 80
+  benchmark texts falls from 866 µs to 452 µs, and no first result of the 10,000
+  most frequent words of vi_50k changes. Listing `Hán-Nôm` as well changes 57
+  of them (*quốc* shows Quốc instead of 囻, *giác* nothing), so the Vietnamese
+  pack should not list it.
+
+The ignored rows still cost what reading them costs: a lookup decompresses
+every row with references to read their rules. With an empty list the check
+is one test per row.
+
+**Normalized references.** `lookup.formOfNormalizer` is a step list, with the
+step kinds of `readingNormalizer` but no `builtin` and no `alternatives`.
+When no row of the selection has a reference's text (item 3; a text whose
+only rows are references has rows), the text after these steps is looked up
+once more, if the steps change it. The reference then names the text that
+was found, which a result shows as `deinflected`; the trace is the
+reference's, and the processor steps are the deinflection's. A text a row
+has is never normalized. Of wty-sh-en's 1,157,944 references, 4,811 name a
+text no row has, and for 1,621 of those the text without its accent marks is
+a headword: `davati` → `[["dȁti", ["imperfective form"]]]`, `pokušavati` →
+*pòkušati*, while the headwords are *dati* and *pokušati*. Following them found
+nothing. Serbo-Croatian removes the marks after a vowel or *r*, as Yomitan's
+`removeSerboCroatianAccentMarks` does:
+
+```json
+"formOfNormalizer": [
+  {"normalize": "NFD"},
+  {"pattern": "([aeiourAEIOURаеиоуАЕИОУрР])[\\u0300-\\u036F]+", "replace": "$1", "global": true},
+  {"normalize": "NFC"}
+]
+```
+
+NFD separates the marks from their letters and NFC joins the rest again. A
+`strip` of every combining mark would also take the caron of *č*, *š* and *ž*
+and the acute of *ć*, whose marks follow consonants. With these steps and
+PR #67's pack, 21 of the 10,000 most frequent words of hr_50k show a wrong
+first result instead of 54 (the Serbo-Croatian judge; 0.064% instead of 0.173%
+of the list's tokens), and 29 of sr_50k's instead of 62. A pack whose
+references are written as its headwords are, or whose references match
+readings (wty-la-en's macron spellings are its readings), needs no
+normalizer; tests/classes.json records its steps as it records other step
+lists (12.1).
 
 The importer flags each record whose row holds a reference, in the record
 slot every reader since `.hoshidicts_2` skips (`src/json/form_of.hpp`); the
@@ -1290,7 +1466,10 @@ Where hoshidicts differs from Yomitan:
   processor chain, inflection chain, exact matches, frequency, dictionary and
   score by headword length and then string comparison, so for *puedo* it
   lists *podar* before *poder*. hoshidicts breaks the remaining ties by
-  discovery order instead (9.6).
+  discovery order instead (9.6). Yomitan has no counterpart of the
+  whole-word standing, `confirmedOrder` or `ownEntry` either, and no
+  `formOfIgnore` or `formOfNormalizer`: it follows every reference, as
+  written.
 
 ## 10. Engine API
 
@@ -1507,7 +1686,9 @@ a deinflected text counts as a false candidate only when a row of it with
 definitions passes the filter, and so does the text a form-of reference
 names, when the row naming it passes the filter for the deinflection that
 found it (that row may be the source's own) and the text has a row with
-definitions. Both apply the pack's `untaggedTerms` as a lookup does (9.4),
+definitions. A row whose references carry a rule of the pack's
+`formOfIgnore` names no text, and a text without any row counts by its
+`formOfNormalizer` form, as in a lookup. Both apply the pack's `untaggedTerms` as a lookup does (9.4),
 whatever its `formOf`. `--per-rule` gives
 one entry per rule in the JSON (a cross product's rules summed): `recovers`
 counts rows every matching path of which uses the rule, `falseCandidates`
@@ -1660,13 +1841,17 @@ For every pack it checks:
 1. `language.json` and `transforms.json` against the schemas in this file:
    required fields (every key of section 4's English example except
    `lookup.postprocessors`, `readingNormalizer`, `traceSelection`, `formOf`,
-   `untaggedTerms`, `functionWords`, `variantPasses`, a processor's `name`,
+   `untaggedTerms`, `formOfIgnore`, `formOfNormalizer`, `confirmedOrder`,
+   `ownEntry`, `functionWords`, `variantPasses`, a processor's `name`,
    `keepInput` and `optional`, and the `labels` entries), no unknown keys (per rule type, so
    `stemChange` on a `prefix` rule is an error), `host.frequencySamples`
    lists of exactly 10 words, `code` equal to the directory name,
    condition and word-list references defined, at most 32 condition bits, no
    cycles in `subConditions` or class references, unique ids, builtins known,
-   `then` and display transforms free of `builtin` and `alternatives`,
+   `then`, display transforms and `formOfNormalizer` free of `builtin` and
+   `alternatives`, `formOfIgnore` names non-empty and listed once,
+   `formOfIgnore`, `formOfNormalizer`, `confirmedOrder` and `ownEntry` at their
+   defaults when `formOf` is `asTerm`,
    engine-effect settings boolean, setting effects naming declared processors,
    transforms, passes, display transforms or optional capabilities, affixes of
    at most 64 code points.
@@ -1701,13 +1886,16 @@ For every pack it checks:
    step, its output on each input, the step applied alone. `processor` is the
    processor id for `lookup.preprocessors` and `lookup.postprocessors` (ids
    are unique across both) and the JSON path of the list for the others
-   (`lookup.readingNormalizer`, `presentation.displayTransforms.<name>`,
-   `transforms[i].rules[j].then`); `step` counts a processor's steps across
+   (`lookup.readingNormalizer`, `lookup.formOfNormalizer`,
+   `presentation.displayTransforms.<name>`, `transforms[i].rules[j].then`);
+   `step` counts a processor's steps across
    its variants in order, and is the list index for the others. The inputs
    are the sources of every deinflection TSV in `tests/`, `text.tsv` inputs,
    `lookup.tsv` texts, then the `host.sample` strings, first occurrence kept.
-   `steps` lists preprocessors, postprocessors, `readingNormalizer`, display
-   transforms in key order, then `then` lists. The file is compared byte for
+   `steps` lists preprocessors, postprocessors, `readingNormalizer`,
+   `formOfNormalizer`, display transforms in key order, then `then` lists, and
+   `fields` has their `strip` and `normalize.within` classes in the same
+   order. The file is compared byte for
    byte (two-space JSON, scalar arrays and range pairs on one line, written by
    `tools/lib/json.mjs`). The conformance test computes the same with the
    engine and requires equality.
@@ -1970,6 +2158,19 @@ Korean (#51).
      a word list up as a host does. Spanish *puedo* (806,048 occurrences)
      listed *podar* above *poder*; 48 of the 10,000 words had a wrong lemma
      above the right one, 14 after the fix.
+   - **Check what the dictionary's references do.** Group the frequent
+     words' wrong first results by their cause, and measure the fields of
+     sections 4.4, 9.6 and 9.10 that address it, with the frequent words and
+     with real text, before setting one:
+     `formOfIgnore` when references with one rule name put wrong terms first
+     or slow lookups down (kty-ko-en's `eumhun`, wty-vi-en's `classifier`);
+     `formOfNormalizer` when references name spellings the headwords lack
+     (wty-sh-en's accent marks); `confirmedOrder: "references"` when two
+     lemmas the word's own rows name tie and the bank lists the right one
+     first; `ownEntry: "afterReferences"` when a word's own entry is a
+     homograph of the form its rows name. Each of these helped one language
+     and hurt another (9.6, 9.10). Check the pack's whole-word rules against
+     the words' own rows too: they now come first on a tie with them (9.6).
    - **Look up real text.** Look up every word of a public-domain text,
      such as a Project Gutenberg book of 50,000 words or more, as a host
      does: the text from the word to the end of its sentence.
@@ -2060,6 +2261,8 @@ Checklist for reviewers:
 - `lookup.untaggedTerms` is `pass` only when the recommended dictionary
   leaves `rules` empty on every row or on whole parts of speech the rules
   produce, and `eval-language` is reported with both values (step 5).
+- `formOfIgnore`, `formOfNormalizer`, `confirmedOrder` and `ownEntry` are set
+  only with measurements of the pack with and without them (step 5).
 - Recall, false candidates and first rank are reported for your rules,
   Yomitan's, their union and the final set, with every option on and with
   the defaults.

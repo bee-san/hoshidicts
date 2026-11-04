@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    },
+    "pron": {
+      "name": "Pronoun",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "topic",
+      "name": "topic",
+      "description": "an ordinary rule that also reaches 그 from 그는",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "는", "deinflected": "", "conditionsIn": [], "conditionsOut": ["pron"]}
+      ]
+    },
+    {
+      "id": "polite",
+      "name": "polite",
+      "description": "a rule before the whole-word rule: 그는요 → 그는 → 그",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "요", "deinflected": "", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "particle",
+      "name": "particle",
+      "description": "the pack's whole-word rule for 그는",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "그는", "deinflected": "그", "conditionsIn": [], "conditionsOut": ["pron"]}
+      ]
+    },
+    {
+      "id": "acc",
+      "name": "accusative",
+      "description": "the whole-word rule for ciujn",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "ciujn", "deinflected": "ciuj", "conditionsIn": [], "conditionsOut": ["pron"]}
+      ]
+    },
+    {
+      "id": "pl",
+      "name": "plural",
+      "description": "the whole-word rule for ciuj",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "ciuj", "deinflected": "ciu", "conditionsIn": ["pron"], "conditionsOut": ["pron"]}
+      ]
+    },
+    {
+      "id": "pres-3s",
+      "name": "present, 3rd sg",
+      "description": "the rule that reaches dedo from dedit",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "it", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "fem",
+      "name": "feminine",
+      "description": "the rule that reaches bila from bilo and dobra from dobro",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "o", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "wyw",
+      "name": "wyw",
+      "description": "a probe whole-word rule whose output wyz is a row that names wy",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "wyx", "deinflected": "wyz", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "yx",
+      "name": "yx",
+      "description": "a probe rule that reaches wy from wyx before the whole-word rule's reference does",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "yx", "deinflected": "y", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    }
+  ]
+}

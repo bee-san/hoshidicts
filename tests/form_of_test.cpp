@@ -297,6 +297,12 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
                               R"("searchResolution": "character")"),
                      transforms, &error),
         "the character resolution copy loads: " + error);
+  // fk is fc with confirmedOrder "references" (9.6).
+  check(registry.add(replaced(replaced(replaced(language, R"("code": "fo")", R"("code": "fk")"), R"("searchResolution": "word")",
+                                       R"("searchResolution": "character")"),
+                              R"("formOf": "follow")", R"("formOf": "follow", "confirmedOrder": "references")"),
+                     transforms, &error),
+        "the character resolution copy with confirmedOrder references loads: " + error);
   const Lookup lookup(query, registry);
   const auto run = [&](const std::string& text, const std::string& code = "fo", LookupOptions options = {}) {
     options.language = code;
@@ -477,6 +483,10 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
   // yb and ya from yqv at three, where nothing confirms them.
   check(brief(run("yqv", "fc")) == "yb(yqv;yb;tie2) ya(yqv;ya;tie2)",
         "a confirmation at a shorter match does not count: " + brief(run("yqv", "fc")));
+  // ... nor for lookup.confirmedOrder "references": the two are not
+  // confirmed at yqv, so discovery order decides.
+  check(brief(run("yqv", "fk")) == "yb(yqv;yb;tie2) ya(yqv;ya;tie2)",
+        "confirmedOrder references orders only terms confirmed at their length: " + brief(run("yqv", "fk")));
   // ... and one at a shorter match does not undo the one at the term's own:
   // the rows of wqv and of wq both name wa, and wq's is followed last.
   check(brief(run("wqv", "fc")) == "wa(wqv;wa;tie2) wb(wqv;wb;tie2)",

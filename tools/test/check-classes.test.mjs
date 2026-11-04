@@ -84,6 +84,36 @@ describe('check-classes', () => {
         ]);
     });
 
+    test('lookup.formOfNormalizer is recorded after readingNormalizer, without builtins or alternatives', () => {
+        const dir = copyFixture();
+        const file = join(dir, 'xx', 'language.json');
+        const language = JSON.parse(readFileSync(file, 'utf8'));
+        language.lookup.readingNormalizer = [{strip: '[\\u0301]'}];
+        language.lookup.formOfNormalizer = [{normalize: 'NFD'}, {strip: '[\\u0300\\u030F]'}, {case: 'lower'}, {pattern: '([aeiou])\\u0301', replace: '$1', global: true}, {normalize: 'NFC'}];
+        writeFileSync(file, JSON.stringify(language));
+        const pack = loadPack('xx', {languagesDir: dir});
+        assert.deepEqual(stepLists(pack.language, null).map((s) => s.name).slice(4, 7), ['dropApostrophe', 'lookup.readingNormalizer', 'lookup.formOfNormalizer']);
+        const expectations = computeExpectations(pack);
+        assert.deepEqual(Object.keys(expectations.fields).slice(2, 6), [
+            'lookup.preprocessors[2].variants[0][1].strip',
+            'lookup.readingNormalizer[0].strip',
+            'lookup.formOfNormalizer[1].strip',
+            'presentation.displayTransforms.stripMarks[1].strip',
+        ]);
+        assert.deepEqual(expectations.fields['lookup.formOfNormalizer[1].strip'], [[0x300, 0x300], [0x30F, 0x30F]]);
+        assert.deepEqual(expectations.steps.map((s) => [s.processor, s.step]).slice(4, 6), [['lookup.formOfNormalizer', 2], ['lookup.formOfNormalizer', 3]]);
+        const pattern = expectations.steps[5];
+        assert.deepEqual(pattern.cases.find(([input]) => input === 'café'), ['café', 'café']);
+        for (const [bad, reason] of [[{builtin: 'kana.toHiragana'}, /lookup\.formOfNormalizer\[0\]: builtins are not allowed here/],
+            [{alternatives: {a: ['b']}}, /lookup\.formOfNormalizer\[0\]: alternatives are not allowed here/]]) {
+            language.lookup.formOfNormalizer = [bad];
+            writeFileSync(file, JSON.stringify(language));
+            const result = run(['--languages', dir, 'xx', '--write']);
+            assert.equal(result.status, 1);
+            assert.match(result.stderr, reason);
+        }
+    });
+
     test('--write writes the file and a check then passes; a changed file fails', () => {
         const dir = copyFixture();
         const file = join(dir, 'xx', 'tests', 'classes.json');

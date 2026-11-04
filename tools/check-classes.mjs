@@ -14,7 +14,8 @@
 // and for the transforms file `transforms[2].rules[0].stemCharacters`. A step
 // is named by its processor's `id` (preprocessors and postprocessors), or by
 // the JSON path of its step list (`lookup.readingNormalizer`,
-// `presentation.displayTransforms.<name>`, `transforms[2].rules[0].then`);
+// `lookup.formOfNormalizer`, `presentation.displayTransforms.<name>`,
+// `transforms[2].rules[0].then`);
 // `step` counts the steps of a processor across its variants in order.
 
 import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'node:fs';
@@ -63,6 +64,9 @@ export function stepLists(language, transforms) {
     }
     if (Array.isArray(lookup.readingNormalizer)) {
         out.push({name: 'lookup.readingNormalizer', path: 'lookup.readingNormalizer', lists: [{path: 'lookup.readingNormalizer', steps: lookup.readingNormalizer}], allowBuiltin: true, allowAlternatives: true});
+    }
+    if (Array.isArray(lookup.formOfNormalizer)) {
+        out.push({name: 'lookup.formOfNormalizer', path: 'lookup.formOfNormalizer', lists: [{path: 'lookup.formOfNormalizer', steps: lookup.formOfNormalizer}], allowBuiltin: false, allowAlternatives: false});
     }
     for (const [name, steps] of Object.entries(language.presentation?.displayTransforms ?? {})) {
         const path = `presentation.displayTransforms${key(name)}`;

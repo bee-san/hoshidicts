@@ -306,6 +306,17 @@ if(HOSHIDICTS_TESTS)
     endif()
     add_test(NAME untagged-terms COMMAND untagged-terms-test ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
+    # How a pack that follows form-of references refines them (docs/languages.md
+    # 4.4, 9.6, 9.10): formOfIgnore, formOfNormalizer, whole-word rules, the
+    # reading key, confirmedOrder and ownEntry.
+    add_executable(form-of-options-test tests/form_of_options_test.cpp)
+    target_include_directories(form-of-options-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(form-of-options-test PRIVATE hoshidicts glaze::glaze unordered_dense)
+    if(MSVC)
+        target_compile_options(form-of-options-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME form-of-options COMMAND form-of-options-test ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+
     # The C API with a language request, compiled as C (docs/languages.md 11.3).
     add_executable(c-smoke-test tests/c_smoke_test.c)
     target_link_libraries(c-smoke-test PRIVATE hoshidicts)
@@ -445,6 +456,12 @@ if(HOSHIDICTS_TESTS AND HOSHIDICTS_CLI)
                      -DFIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/untagged-terms
                      -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/cli_untagged_terms_test.cmake)
+    # eval-language with lookup.formOfIgnore and formOfNormalizer (docs/languages.md 9.10, 10.3).
+    add_test(NAME cli-form-of-options
+             COMMAND ${CMAKE_COMMAND} -DCLI=$<TARGET_FILE:hoshidicts-cli>
+                     -DFIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/form-of-options
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/cli_form_of_options_test.cmake)
     # tools/check-yomitan.mjs with the real CLI (the tool tests use a stand-in)
     # on the tool tests' fixture pack, whose setting names an optional
     # transform that its sources/yomitan.json lacks (docs/languages.md 8.2).
@@ -529,5 +546,61 @@ if(HOSHIDICTS_LANGUAGE_TESTS)
                      -DEDIT=language.json "-DFROM=\"formOf\": \"maybe\""
                      "-DTO=\"formOf\": \"follow\", \"untaggedTerms\": \"maybe\""
                      "-DREASON=fv: language.json: lookup.untaggedTerms: must be one of filter, pass, not \"maybe\""
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    # lookup.formOfIgnore, formOfNormalizer, confirmedOrder and ownEntry (4.4,
+    # 9.6, 9.10, 12.1): the fn pack sets them all and conforms, its
+    # tests/classes.json records the normalizer's steps, and copies with one
+    # edit each are refused for exactly that reason.
+    add_test(NAME language-form-of-options
+             COMMAND language-conformance-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fn
+                     ${CMAKE_CURRENT_BINARY_DIR})
+    add_test(NAME language-form-of-normalizer-builtin
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fn
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/form-of-normalizer-builtin
+                     -DEDIT=language.json "-DFROM={\"normalize\": \"NFD\"}," "-DTO={\"builtin\": \"hangul.disassemble\"},"
+                     "-DREASON=fn: language.json: lookup.formOfNormalizer[0]: builtins are not allowed here"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    add_test(NAME language-form-of-normalizer-alternatives
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fn
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/form-of-normalizer-alternatives
+                     -DEDIT=language.json "-DFROM={\"normalize\": \"NFD\"}," "-DTO={\"alternatives\": {\"a\": [\"b\"]}},"
+                     "-DREASON=fn: language.json: lookup.formOfNormalizer[0]: alternatives are not allowed here"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    add_test(NAME language-form-of-normalizer-classes
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fn
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/form-of-normalizer-classes
+                     -DEDIT=language.json "-DFROM=\"strip\": \"[" "-DTO=\"strip\": \"[q"
+                     "-DREASON=fields.lookup.formOfNormalizer[1].strip: the engine accepts other code points than JavaScript"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    add_test(NAME language-form-of-ignore-value
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fn
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/form-of-ignore-value
+                     -DEDIT=language.json "-DFROM=\"formOfIgnore\": [\"eumhun\"]" "-DTO=\"formOfIgnore\": \"eumhun\""
+                     "-DREASON=fn: language.json: lookup.formOfIgnore: must be an array, not a string"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    add_test(NAME language-form-of-as-term
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fn
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/form-of-as-term
+                     -DEDIT=language.json "-DFROM=\"formOf\": \"follow\"" "-DTO=\"formOf\": \"asTerm\""
+                     "-DREASON=fn: language.json: lookup.formOfIgnore: must be empty with lookup.formOf \"asTerm\", which follows no reference"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    add_test(NAME language-confirmed-order-value
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fn
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/confirmed-order-value
+                     -DEDIT=language.json "-DFROM=\"confirmedOrder\": \"references\"" "-DTO=\"confirmedOrder\": \"bank\""
+                     "-DREASON=fn: language.json: lookup.confirmedOrder: must be one of discovery, references, not \"bank\""
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    add_test(NAME language-own-entry-value
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fn
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/own-entry-value
+                     -DEDIT=language.json "-DFROM=\"ownEntry\": \"afterReferences\"" "-DTO=\"ownEntry\": \"last\""
+                     "-DREASON=fn: language.json: lookup.ownEntry: must be one of first, afterReferences, not \"last\""
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
 endif()

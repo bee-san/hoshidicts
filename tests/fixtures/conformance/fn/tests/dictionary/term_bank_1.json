@@ -1,0 +1,17 @@
+[
+  ["dati", "", "v", "v", 0, ["to give"], 1, ""],
+  ["davati", "", "non-lemma", "", 0, [["dȁti", ["imperfective form"]]], 2, ""],
+  ["dvije", "", "non-lemma", "", 0, [["dvȃ", ["feminine"]]], 3, ""],
+  ["dvȃ", "", "non-lemma", "", 0, [["dva", ["alternative form"]]], 15, ""],
+  ["dva", "", "num", "", 0, ["two"], 4, ""],
+  ["줄", "", "n", "n", 0, ["rope; line"], 5, ""],
+  ["수", "", "n", "n", 0, ["number; way, means"], 6, ""],
+  ["줄 수", "", "non-lemma", "", 0, [["수", ["eumhun"]], ["수", ["hanja form"]]], 7, ""],
+  ["געווען", "", "n", "n", 0, ["the past"], 8, ""],
+  ["געווען", "", "non-lemma", "", 0, [["זײַן", ["past participle"]]], 9, ""],
+  ["זײַן", "", "v", "v", 0, ["to be"], 10, ""],
+  ["sibi", "", "non-lemma", "", 0, [["sui", ["dative singular"]]], 11, ""],
+  ["sibi", "", "non-lemma", "", 0, [["sibus", ["genitive singular"]]], 12, ""],
+  ["sibus", "", "adj", "", 0, ["crafty"], 13, ""],
+  ["sui", "suī", "pron", "", 0, ["oneself"], 14, ""]
+]
