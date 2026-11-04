@@ -1,20 +1,11 @@
-#!/usr/bin/env node
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Writes languages/uk/sources/own.json: the Ukrainian deinflection rules
-// written for this pack (docs/languages.md, section 14 step 2), from the
-// paradigm tables in this file. The tables follow the standard description of
-// Ukrainian inflection: the four noun declensions with their hard, soft and
-// mixed groups, the і ~ о/е alternation, fleeting vowels and consonant
-// mutations; adjective declension and comparison; pronouns and numerals; the
-// two verb conjugations with their stem classes and mutations, the synthetic
-// future, the past, the imperative, participles, adverbial participles and
-// the reflexive -ся/-сь.
+// Writes languages/uk/sources/own.json, the Ukrainian rules written for this
+// pack (docs/languages.md 14 step 2), from the paradigm tables below:
 //
 //   node languages/uk/sources/build-own.mjs [--out <file>]
 //
-// Every suffix rule's stem is limited to {stem} (letters, combining
-// marks, apostrophes, hyphens), so no rule reads a word followed by another
-// word as one (docs/languages.md, section 14 step 2).
+// Every suffix rule's stem is limited to {stem} (letters, apostrophes,
+// hyphens), so no rule reads a word followed by another word as one.
 
 import {writeFileSync} from 'node:fs';
 import {dirname, join, resolve} from 'node:path';
