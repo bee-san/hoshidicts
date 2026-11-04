@@ -547,6 +547,21 @@ that display transforms and `then` steps may not use `builtin` or
 `alternatives`. Hosts implement `case`, `normalize`, `strip`, `map` and
 `pattern` for display transforms.
 
+A text a step writes, a `map` value, an alternative or a `pattern`
+replacement, is at most 64 code points; packs with longer ones do not load.
+And the engine stops a step list once its text has more than 16 × (n + 32)
+code points, n being the code points of the text it was given (for
+processors, the text `process_text` was given; for a rule's `then` list,
+the search's input), with a repeated `pattern` checked after every round. A
+processor whose list goes past that adds nothing for the text, as if the
+list had not changed it (with `"keepInput": false` the text is kept), a
+`readingNormalizer` or `formOfNormalizer` leaves its text as it was, and a
+rule's output is dropped (section 7.4). So a pattern that doubles the text,
+repeated 16 times, stops after the round that passes the limit instead of
+writing 65,536 copies; a `normalize` step expands one code point to at most
+18 (NFKD of U+FDFA), well within it. `tests/classes.json` records a step
+applied alone, without the limit (section 12.1).
+
 ### 6.3 Builtins
 
 Builtins are the only code a pack can name. Each is small, deterministic and
@@ -724,7 +739,10 @@ instead of the four single fields: `{"type": "circumfix", "prefixes": [["و",
 combination, expanded when the pack loads. Arabic's generated rules fit in a
 few dozen such rows instead of 6,570.
 
-Affixes are at most 64 code points; the conformance test rejects longer ones.
+Affixes, and the texts a rule writes in their place (`deinflected`,
+`deinflectedPrefix`, `deinflectedSuffix`, the deinflected half of a
+cross-product pair, `stemChange.to` and a pattern's `replacement`), are at
+most 64 code points; packs with longer ones do not load (section 7.4).
 
 ### 7.4 Recursion and cycles
 
@@ -763,31 +781,59 @@ With `e` → `is` and `is` → `ae`, neither with conditions, *Rome* gives
 *Romis*, *Romae*, *Romais*, *Romaae*, … for ever, growing a code point every
 second step. The search before these bounds recursed until the stack
 overflowed; Yomitan's `LanguageTransformer.transform` (d3c54c1), a loop over
-a growing list, never returns. So that every search ends, whatever a pack's
-rules say, three bounds apply to each search, the text a search starts from
-(a processed variant of the scanned text, or a variant pass's reading) being
-its input:
+a growing list, never returns. So that every search and every lookup ends in
+bounded time and memory, whatever a pack says, these bounds apply. The text a
+search starts from (a processed variant of the scanned text, or a variant
+pass's reading) is its input:
 
 | Bound | Value | What happens |
 | --- | ---: | --- |
 | growth | 32 code points | an output more than 32 code points longer than the input is neither recorded nor expanded |
 | depth | 128 rules | an output that would be the 129th rule of its chain is neither recorded nor expanded |
 | results | 65,536 | the search stops once it holds 65,536 deinflections, the input included |
+| work | 1,048,576 units | the search stops when its work budget is spent; a lookup's searches share one budget |
+
+The work budget counts a unit for every rule application a search tries
+(every rule whose conditions and options let it apply to a text), one more
+for every 256 bytes the application writes (its output, and each step of its
+`then` list, a code point counting 4 bytes), and one for every code point a
+regular expression reads (a `pattern` rule, and each round of a `pattern`
+step in its `then` list). A search given no budget has one of its own. A
+lookup gives all of its searches one budget: every prefix it scans, each
+processed variant of it and each variant pass reading; once the budget is
+spent, each later search records its input and nothing more, so the text as
+written is still looked up. `Deinflector::deinflect_neko_speech`, a corpus
+row (section 12.2) and `hoshidicts-cli deinflect` share one budget across a
+text's searches in the same way.
+
+Two limits keep each rule application small. The texts a rule writes are at
+most 64 code points (7.3), as are those of steps (6.2), so a rule's output
+before its `then` list is at most 64 times its input. And a step list stops
+once its text has more than 16 × (n + 32) code points, n being the code
+points of the search's input: in a rule's `then` list the text so far is the
+output, which the growth bound drops (a `then` step that writes 8 copies of
+each code point, with `repeat`, stops at its third round on a 2-code-point
+input). Processors use the same limit (section 6.2).
 
 Growth and depth end every chain; the results bound also ends a search whose
 rules fan out, which 2 rules can make exponential (each replacing the first
 `a` with `b` or with `c` gives 2^17 − 1 texts from 16 `a`s, all of one
-length). Only an output a bound drops is lost; everything recorded before it
-stays, in the same order. The bounds apply to each search: a lookup makes one
-for each scanned prefix and each of its processed variants (at most 4,096,
-section 6.1) and each variant pass reading, so they bound a lookup's work by
-that many searches. The values come from a census of the unbounded
-search on main 5ca9a6f, for the 15 packs on main and the 11 in open pull
-requests: each pack's corpus strings and their prefixes, `host.sample` texts
-and their windows of 1 to 16 code points, inputs built from its affixes,
-20,000 generated strings (rule endings chained onto stems), and for Japanese
-the 206,148 inputs of `ja-deinflect-parity`, each with every option on and
-with the defaults:
+length); the work budget ends a search whose rules each apply to every text
+(with 2,000 rules that append to a text, the search of `a` spends it holding
+540 deinflections), and a lookup whose processors make many variants of each
+prefix. Only an output a bound drops, and what the searches after a spent
+budget would have found, is lost; everything recorded before stays, in the
+same order. Memory is bounded with the work: besides each search's input, a
+lookup holds at most one deinflection per unit, each at most 32 code points
+longer than its search's input.
+
+The values come from two censuses. The first measured the unbounded search
+on main 5ca9a6f, for the 15 packs on main and the 11 in open pull requests:
+each pack's corpus strings and their prefixes, `host.sample` texts and their
+windows of 1 to 16 code points, inputs built from its affixes, 20,000
+generated strings (rule endings chained onto stems), and for Japanese the
+206,148 inputs of `ja-deinflect-parity`, each with every option on and with
+the defaults:
 
 | | Deepest chain | Longest output | Largest search |
 | --- | ---: | ---: | ---: |
@@ -795,14 +841,30 @@ with the defaults:
 | any pack, corpus, prefixes, samples, affix inputs | 10 rules (Tagalog) | +17 (Serbo-Croatian *i* → *i/languages M to Z*) | 2,694 (Ancient Greek) |
 | any pack, generated strings | 15 rules (Tagalog) | +13 (English placeholders) | 6,058 (Ancient Greek) |
 
+The second measured the work of whole lookups with these bounds, for the 26
+packs on main 9c4ccdf and in open pull requests: a lookup of every corpus
+string, one at every cursor position of the `host.sample` texts, of every
+input built from the affixes, of 5,000 generated strings and, for Japanese,
+of the parity inputs, with every option on and with the defaults, at scan
+lengths 16 and 32 (1,200,686 lookups each):
+
+| | Scan 16 | Scan 32 |
+| --- | ---: | ---: |
+| Japanese, the parity inputs | 3,262 units | 3,262 units |
+| any pack, corpus strings and samples | 82,619 (Arabic) | 82,619 (Arabic) |
+| any pack, every input | 300,455 (Arabic, a generated string) | 455,236 (Arabic, a generated string) |
+
 The depth bound is about 3 times the parity test's deepest chain and 8 times
 the deepest from other inputs; the margin is about twice the longest output;
-the results bound about 10 times the largest search. None is reached by any
-input of the census, so every result above is the same with the bounds, and
-`ja-deinflect-parity` checks that none is reached on its inputs, their
-processed variants and their cat-speech readings. A pack that reaches one
-fails the conformance test (section 12.1 step 7), and `hoshidicts-cli
-deinflect` and `eval-language` say so on standard error (section 10.3).
+the results bound about 10 times the largest search; the work budget about
+13 times the busiest lookup of real text and 2.3 times the busiest of all.
+None is reached by any input of either census, so every result above is the
+same with the bounds, and `ja-deinflect-parity` checks that none is reached
+on its inputs, their processed variants and their cat-speech readings, nor by
+the lookups of its sources, deep chains and generated strings. A pack that
+reaches one fails the conformance test (section 12.1 step 7), and
+`hoshidicts-cli deinflect` and `eval-language` say so on standard error
+(section 10.3).
 
 The search keeps its own stack of the texts it is expanding, so a chain of
 128 rules takes no more native or WebAssembly stack than a chain of one; the
@@ -817,11 +879,13 @@ tests reverse it.
 The engine keeps the matches of one trie walk (at most 64 per trie, the
 affix limit) on the search's own stack, which each thread reuses from one
 search to the next, allocates nothing per rule application except the
-output string, and runs the cycle check only for rules whose output is not
-shorter than their input. The growth bound counts code points only for an
-output longer than a quarter of its input's bytes plus the margin, which no
-Japanese output of a 16-code-point scan is. Repeated outputs are not
-deduplicated during the search, and each one is looked up (section 9.5).
+output string (a buffer of its own, so that a long output a bound drops is
+never carried into a later result), and runs the cycle check only for rules
+whose output is not shorter than their input. The growth bound counts the
+input's code points only once an output is longer than a quarter of the
+input's bytes plus the margin, and an output's only when it is longer than
+the limit in bytes. Repeated outputs are not deduplicated during the search,
+and each one is looked up (section 9.5).
 
 ### 7.6 The `pattern` dialect
 
@@ -1857,9 +1921,11 @@ Japanese transform id equal to its name:
   100,000 strings built from a fixed seed by chaining rule endings onto kana,
   kanji and Latin stems. It also requires that no search of these inputs, of
   their processed variants or of their cat-speech readings reaches a search
-  bound (section 7.4), and prints how far the searches went: the longest
-  chain has 44 rules, the longest output adds 1 code point, the largest
-  search holds 212 deinflections.
+  bound (section 7.4), and that no lookup of the sources, the deep chains and
+  every tenth generated string needs more than one work budget, and prints
+  how far they went: the longest chain has 44 rules, the longest output adds
+  1 code point, the largest search holds 212 deinflections, the busiest
+  lookup uses 2,033 units of work.
 - `ja-process-parity`: processor variants and steps for the same inputs.
 - `ja-lookup-parity`: `lookup()` and `lookup_dictionary()` results (matched,
   deinflected, trace, term, frequencies, pitches, preprocessor steps) on a
@@ -1921,8 +1987,8 @@ For every pack it checks:
    `formOfIgnore`, `formOfNormalizer`, `confirmedOrder` and `ownEntry` at their
    defaults when `formOf` is `asTerm`,
    engine-effect settings boolean, setting effects naming declared processors,
-   transforms, passes, display transforms or optional capabilities, affixes of
-   at most 64 code points.
+   transforms, passes, display transforms or optional capabilities, affixes
+   and the texts rules and steps write of at most 64 code points.
 2. Every class parses and means the same in the engine and in JavaScript, and
    every pattern and `case` step gives the same output in both on the pack's
    corpus strings. The expectations are `tests/classes.json`, written with
@@ -1981,22 +2047,30 @@ For every pack it checks:
 5. Coverage: every `own` and `both` transform has at least one passing
    `valid = 1` row, and the rules no row exercises are printed.
 6. `README.md` exists and has the sections of the template.
-7. The search bounds (section 7.4): every corpus string (the sources of every
-   deinflection TSV, `text.tsv` inputs, `lookup.tsv` texts and the
-   `host.sample` strings) and every input built from the rules' affixes
-   (each rule's inflected form alone, on stems of the pack's eight most used
+7. The search bounds (section 7.4), on the searches lookups make. The test
+   looks up every corpus string (the sources of every deinflection TSV,
+   `text.tsv` inputs, `lookup.tsv` texts and the `host.sample` strings) whole,
+   with all its prefixes; each `host.sample` text at every cursor position,
+   16 code points; and every input built from the rules' affixes (each
+   rule's inflected form alone, on stems of the pack's eight most used
    letters and on its first three short words, `circumfix` and `phrasal`
    frames, `stemChange` contexts and pattern anchors, as the differential
-   check builds them, section 8.2) is searched as a corpus row searches it,
-   with every option on and, when the pack has options, with its defaults; no
-   search may reach a bound. A pack that reaches one fails once, with the
-   number of inputs that reach a bound, the first of them and its chain, the
-   rule of each step named by its transform id and its index in that
-   transform, the first and last five steps of a longer chain. For the loop
-   of section 7.4 the line is (one line, wrapped here):
+   check builds them, section 8.2), the whole input only. Each lookup makes
+   the searches `Lookup` makes, every prefix, each processed variant and each
+   variant pass reading (more than a lookup with word resolution or no pass
+   to try makes), with every option on and, when the pack has options, with
+   its defaults. No search may reach a bound, and the searches of no lookup
+   may need more work together than one budget. A pack that fails fails
+   once, with the number of lookups that do and the first of them with its
+   chain: the rule of each step named by its transform id and its index in
+   that transform, the first and last five steps of a longer chain, and each
+   text of more than 48 code points shown by its first 40. For the results
+   and work bounds it also names the three rules that made the most of that
+   search's deinflections. For the loop of section 7.4 the line is (one line,
+   wrapped here):
 
    ```text
-   FAIL lp: the deinflection search reached a bound (docs/languages.md 7.4) on 13 of 15 inputs;
+   FAIL lp: the deinflection search reached a bound (docs/languages.md 7.4) in 22 of 38 lookups;
      the first, Rome: an output more than 32 code points longer than the text the search started
      from, after 65 steps: Rome -name[0]-> Romis -name[1]-> Romae -name[0]-> Romais -name[1]->
      Romaae -name[0]-> Romaais ... (55 more) ... -name[0]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaais
@@ -2004,14 +2078,15 @@ For every pack it checks:
      -name[1]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae -name[0]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaais (dropped)
    ```
 
-   The next four inputs that reach a bound follow, each on a line starting
-   "also". A conforming pack's line says how far its searches went, so its
-   author sees how close they come:
+   The next four lookups that fail follow, each on a line starting "also". A
+   conforming pack's line says how far its searches went, so its author sees
+   how close they come:
 
    ```text
-   ja: search bounds: 7268 inputs (1474 corpus strings and host.sample texts, 5794 built from the
-     rules' affixes) stay within them: the longest chain has 6 of 128 rules, the longest output
-     adds 1 of 32 code points, the largest search holds 41 of 65536 deinflections
+   ja: search bounds: 7354 lookups (1474 of corpus strings and host.sample texts, 86 at their cursor
+     positions, 5794 of inputs built from the rules' affixes; 40423 texts searched) stay within them:
+     the longest chain has 6 of 128 rules, the longest output adds 1 of 32 code points, the largest
+     search holds 41 of 65536 deinflections, the busiest lookup uses 124 of 1048576 units of work
    ```
 
    Such a loop usually comes from rules whose outputs have no conditions
@@ -2441,6 +2516,11 @@ who measures better values uses them and says why.
 
 ## 16. Known limits
 
+- **One regular expression is not bounded inside.** The work budget (7.4)
+  counts the code points a `pattern` reads, not the steps the regular
+  expression takes on them. A pattern with nested repeated groups, which the
+  dialect allows (7.6), can still take exponential time on one text of a
+  lookup's length; keep repeated groups unnested.
 - **No morphology.** Deinflection proposes forms; it does not analyse.
   Agglutinative languages (Korean, Basque, Georgian) produce long traces and
   some false candidates, which the dictionary query and part-of-speech filter

@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 #include <memory>
 #include <optional>
 #include <span>
@@ -40,12 +41,39 @@ struct Step {
 
 using StepList = std::vector<Step>;
 
+// The longest text a pack writes literally (sections 6.2 and 7.3): a rule's
+// affixes and the texts that replace them, a map value, an alternative, a
+// pattern's replacement. The parser refuses longer ones.
+inline constexpr size_t max_literal_code_points = 64;
+
+// What a step list may write (sections 6.2 and 7.4): a list stops once its
+// text has more than `max_code_points`; `written` adds up the code points of
+// every step's output (of every round of a repeated pattern), and `read` the
+// code points every `pattern` step's regular expression read (every round).
+struct StepLimit {
+  size_t max_code_points = SIZE_MAX;
+  size_t written = 0;
+  size_t read = 0;
+};
+
+// The longest text a step list may make from a text of `n` code points.
+constexpr size_t step_limit(size_t n) { return 16 * (n + 32); }
+
 // Applies one step that yields one text (every kind but alternatives).
 void apply_step(const Step& step, const std::u32string& in, std::u32string& out);
+// The same within `limit`: false when the output has more code points than
+// it allows (for a repeated pattern, the text of the round that passed it).
+bool apply_step(const Step& step, const std::u32string& in, std::u32string& out, StepLimit& limit);
 // Applies a step list, appending its outputs (one unless it has alternatives).
 void apply_steps(const StepList& steps, const std::u32string& in, std::vector<std::u32string>& out);
+// The same within `limit`: an output that would pass it is `in` instead, as
+// if the list had not changed the text.
+void apply_steps(const StepList& steps, const std::u32string& in, std::vector<std::u32string>& out, StepLimit& limit);
 // Applies a step list that has no alternatives.
 void apply_single(const StepList& steps, const std::u32string& in, std::u32string& out);
+// The same within `limit`: false when a step's output passes it, with `out`
+// that output; the later steps do not run.
+bool apply_single(const StepList& steps, const std::u32string& in, std::u32string& out, StepLimit& limit);
 
 struct Processor {
   std::string id;

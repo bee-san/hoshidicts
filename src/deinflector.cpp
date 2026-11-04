@@ -73,8 +73,10 @@ std::vector<DeinflectionResult> Deinflector::deinflect_neko_speech(const std::st
   std::vector<std::string> readings;
   pass->builtin->variants(text, readings);
   hoshidicts::lang::Deinflections deinflections;
+  // The readings' searches share one work budget, as a lookup's do.
+  hoshidicts::lang::SearchBudget budget;
   for (auto& reading : readings) {
-    pack.transforms->deinflect_from_step(std::move(reading), pass->step, deinflections);
+    pack.transforms->deinflect_from_step(std::move(reading), pass->step, deinflections, nullptr, nullptr, &budget);
   }
   return convert(pack, deinflections);
 }

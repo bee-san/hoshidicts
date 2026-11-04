@@ -21,7 +21,7 @@ using Json = json::Value;
 using Object = json::Object;
 using Array = json::Array;
 
-constexpr size_t max_affix_code_points = 64;
+constexpr size_t max_affix_code_points = max_literal_code_points;
 constexpr size_t max_condition_bits = 32;
 
 struct Failure : std::runtime_error {
@@ -228,6 +228,11 @@ struct PackParser {
     };
   }
 
+  // A text a step writes (section 6.2): a map value or an alternative.
+  void step_text(const std::u32string& text, const std::string& path) {
+    if (text.size() > max_literal_code_points) fail(path, "a text a step writes is longer than 64 code points");
+  }
+
   std::unique_ptr<Pattern> pattern(std::string_view source, std::string_view replacement, bool global,
                                    const std::string& path) {
     std::string error;
@@ -278,6 +283,7 @@ struct PackParser {
       for (const auto& [key, value] : as_object(require(o, "map", path), mpath)) {
         if (key.empty()) fail(mpath, "a map key may not be empty");
         s.map.emplace_back(decode(key, mpath), decode(as_string(value, member(mpath, key)), member(mpath, key)));
+        step_text(s.map.back().second, member(mpath, key));
       }
       std::ranges::stable_sort(s.map, [](const auto& a, const auto& b) {
         return a.first.size() != b.first.size() ? a.first.size() > b.first.size() : a.first < b.first;
@@ -293,6 +299,10 @@ struct PackParser {
       s.repeat = get(o, "repeat") != nullptr && as_bool(*get(o, "repeat"), member(path, "repeat"));
       s.pattern = pattern(as_string(require(o, "pattern", path), member(path, "pattern")),
                           as_string(require(o, "replace", path), member(path, "replace")), global, path);
+      const std::string_view replace = as_string(require(o, "replace", path), member(path, "replace"));
+      if (replace.size() > max_literal_code_points && code_point_count(replace) > max_literal_code_points) {
+        fail(member(path, "replace"), "a text a step writes is longer than 64 code points");
+      }
     } else if (kind == "alternatives") {
       if (!allow_alternatives) fail(path, "alternatives are not allowed here");
       if (!only_step) fail(path, "an alternatives step must be the only step of its variant");
@@ -302,7 +312,10 @@ struct PackParser {
       for (const auto& [key, value] : as_object(require(o, "alternatives", path), apath)) {
         if (key.empty()) fail(apath, "an alternatives key may not be empty");
         std::vector<std::u32string> choices;
-        for (const auto& choice : string_array(value, member(apath, key))) choices.push_back(decode(choice, member(apath, key)));
+        for (const auto& choice : string_array(value, member(apath, key))) {
+          choices.push_back(decode(choice, member(apath, key)));
+          step_text(choices.back(), member(apath, key));
+        }
         s.alternatives.emplace_back(decode(key, apath), std::move(choices));
       }
       std::ranges::stable_sort(s.alternatives, [](const auto& a, const auto& b) {
@@ -651,6 +664,13 @@ struct TransformsParser {
       fail(member(rule_path, key), "an affix is longer than 64 code points");
     }
   }
+  // A text a rule writes in place of what it matched (section 7.3): its
+  // deinflected parts, a stem change's `to` and a pattern's replacement.
+  void written(std::string_view s, const std::string& path) {
+    if (s.size() > max_affix_code_points && code_point_count(s) > max_affix_code_points) {
+      fail(path, "a text a rule writes is longer than 64 code points");
+    }
+  }
 
   // Stem constraints; returns whether there is one.
   bool stem_constraints(const Object& o, const std::string& path, Rule& rule) {
@@ -699,6 +719,7 @@ struct TransformsParser {
       if (change->from[i].empty()) fail(item(member(cpath, "from"), i), "may not be empty");
     }
     change->to = as_string(require(c, "to", cpath), member(cpath, "to"));
+    written(change->to, member(cpath, "to"));
     if (const Json* occurrence = get(c, "occurrence")) {
       change->last = one_of(*occurrence, member(cpath, "occurrence"), {"first", "last"}) == "last";
     }
@@ -762,6 +783,7 @@ struct TransformsParser {
       const auto p = string_array(a[i], item(path, i));
       if (p.size() != 2) fail(item(path, i), "must be [inflected, deinflected]");
       affix(p[0], item(path, i));
+      written(p[1], item(path, i));
       out.emplace_back(p[0], p[1]);
     }
     return out;
@@ -826,8 +848,11 @@ struct TransformsParser {
     } else {
       return false;
     }
-    // An empty or possibly over-long affix is decided by parse_rule.
-    if (inflected.empty() || inflected.size() > max_affix_code_points) return false;
+    // An empty or possibly over-long affix or written text is decided by
+    // parse_rule.
+    if (inflected.empty() || inflected.size() > max_affix_code_points || deinflected.size() > max_affix_code_points) {
+      return false;
+    }
     uint32_t bits_in = 0;
     uint32_t bits_out = 0;
     if (!plain_conditions(*in, bits_in) || !plain_conditions(*out, bits_out)) return false;
@@ -888,6 +913,7 @@ struct TransformsParser {
       rule.a = literal("inflected");
       rule.b = literal("deinflected");
       affix(rule.a, path, "inflected");
+      written(rule.b, member(path, "deinflected"));
       const bool constrained = stem_constraints(o, path, rule);
       if (rule.a.empty() && !constrained) fail(member(path, "inflected"), "may be empty only with a stem constraint");
       if (type == "suffix") stem_change(o, path, rule);
@@ -897,6 +923,7 @@ struct TransformsParser {
       rule.b = literal("deinflected");
       if (rule.a.empty()) fail(member(path, "inflected"), "may not be empty");
       affix(rule.a, path, "inflected");
+      written(rule.b, member(path, "deinflected"));
     } else if (type == "circumfix") {
       rule.type = RuleType::Circumfix;
       stem_constraints(o, path, rule);
@@ -928,6 +955,8 @@ struct TransformsParser {
       rule.d = literal("deinflectedSuffix");
       affix(rule.a, path, "inflectedPrefix");
       affix(rule.c, path, "inflectedSuffix");
+      written(rule.b, member(path, "deinflectedPrefix"));
+      written(rule.d, member(path, "deinflectedSuffix"));
       set.rules.push_back(std::move(rule));
       return;
     } else if (type == "replace") {
@@ -937,6 +966,7 @@ struct TransformsParser {
       rule.b = literal("deinflected");
       if (rule.a.empty()) fail(member(path, "inflected"), "may not be empty");
       affix(rule.a, path, "inflected");
+      written(rule.b, member(path, "deinflected"));
       if (const Json* occurrence = get(o, "occurrence")) {
         const std::string_view which = one_of(*occurrence, member(path, "occurrence"), {"all", "first", "last"});
         rule.more().occurrence = which == "all" ? Occurrence::All : which == "first" ? Occurrence::First : Occurrence::Last;
@@ -947,6 +977,7 @@ struct TransformsParser {
       rule.a = literal("inflected");
       rule.b = literal("deinflected");
       affix(rule.a, path, "inflected");
+      written(rule.b, member(path, "deinflected"));
       rule.more().followed_by = word_list(require(o, "followedBy", path), member(path, "followedBy"));
     } else if (type == "interposedObject") {
       rule.type = RuleType::InterposedObject;
@@ -965,6 +996,7 @@ struct TransformsParser {
       rule.a = as_string(rule.anchor_prefix ? *prefix : *suffix, member(path, anchor_key));
       if (rule.a.empty()) fail(member(path, anchor_key), "may not be empty");
       affix(rule.a, path, anchor_key);
+      written(literal("replacement"), member(path, "replacement"));
       rule.more().pattern = parser.pattern(literal("pattern"), literal("replacement"), false, path);
     }
     parse_then(o, path, rule);

@@ -129,18 +129,38 @@ using Deinflections = std::vector<Deinflection>;
 // code points beyond the text the search starts from, or one that would be
 // rule `max_depth + 1` of its chain, is neither recorded nor expanded, and a
 // search stops when it holds `max_results` deinflections, its text included.
+// A search also stops when its work budget (SearchBudget) is spent: one unit
+// for every rule application it tries and one for every `work_bytes` bytes
+// the application writes (its output, and each step of the rule's `then`
+// list, counting 4 bytes a code point).
 struct SearchBounds {
   static constexpr size_t max_growth = 32;
   static constexpr uint32_t max_depth = 128;
   static constexpr size_t max_results = 65536;
+  static constexpr size_t max_work = size_t{1} << 20;
+  static constexpr size_t work_bytes = 256;
 };
 
-// The first time a bound cut a search short: which bound, and the output it
-// dropped, which rule `rule` gave from deinflection `parent` (an index into
-// the search's list). The conformance test fails a pack whose inputs reach
-// a bound (section 12.1).
+// The work left to the searches that share it (section 7.4). A lookup gives
+// all of its searches one budget, so that it ends within
+// SearchBounds::max_work whatever number of prefixes, processed variants and
+// variant pass readings it searches; a search given none has its own. A
+// search that finds the budget spent records its text and nothing more.
+struct SearchBudget {
+  size_t work_left = SearchBounds::max_work;
+
+  bool spent() const { return work_left == 0; }
+  void spend(size_t units) { work_left -= units < work_left ? units : work_left; }
+};
+
+// How a bound cut a search short: the bound that stopped it (results or
+// work), or else the first that dropped an output; the output it dropped,
+// which rule `rule` gave from deinflection `parent` (an index into the
+// search's list). When the work budget ran out, `rule` is the rule the search
+// could not try and `text` is empty. The conformance test fails a pack whose
+// inputs reach a bound (section 12.1).
 struct BoundHit {
-  enum class Bound : unsigned char { None, Growth, Depth, Results };
+  enum class Bound : unsigned char { None, Growth, Depth, Results, Work };
   Bound bound = Bound::None;
   uint32_t parent = Deinflection::npos;
   uint32_t rule = 0;
@@ -166,14 +186,16 @@ class TransformSet {
   // Every deinflection of `text`, depth first within SearchBounds (section
   // 7.4), appended to `out` after a result for `text` itself. `enabled`
   // lists, by transform index, the optional transforms a request turned on
-  // (null: none). `hit`, when given and still empty, receives the first
-  // bound that cut the search short.
+  // (null: none). `hit`, when given and still empty, receives how a bound cut
+  // the search short (BoundHit). `budget`, when given, is the work budget the
+  // search shares with others; otherwise it has one of its own.
   void deinflect(const std::string& text, Deinflections& out, const std::vector<bool>* enabled = nullptr,
-                 BoundHit* hit = nullptr) const;
+                 BoundHit* hit = nullptr, SearchBudget* budget = nullptr) const;
   // The same for a text a variant pass produced: its first trace step is
   // `step` (a trace step index), with no rule.
   void deinflect_from_step(std::string text, uint32_t step, Deinflections& out,
-                           const std::vector<bool>* enabled = nullptr, BoundHit* hit = nullptr) const;
+                           const std::vector<bool>* enabled = nullptr, BoundHit* hit = nullptr,
+                           SearchBudget* budget = nullptr) const;
 
   // The trace step (transform index, or a pass step) of a deinflection's `via`.
   uint32_t step_of(uint32_t via) const {
@@ -253,14 +275,14 @@ class TransformSet {
   struct Frame;
   struct Match;
   struct Stack;
-  void search(Run& run, uint32_t root) const;
+  void search(Run& run) const;
   void push_frame(Stack& stack, const std::string& text, uint32_t index) const;
-  bool next_output(const Run& run, Stack& stack, Frame& frame, std::string& output, uint32_t& rule,
+  bool next_output(Run& run, Stack& stack, Frame& frame, std::string& output, uint32_t& rule,
                    uint32_t& conditions_out) const;
-  bool apply(const Rule& rule, const std::string& text, size_t matched, std::string& out) const;
+  bool apply(Run& run, const Rule& rule, const std::string& text, size_t matched, std::string& out) const;
   bool stem_ok(const Rule& rule, std::string_view stem) const;
   bool change_stem(const Rule& rule, std::string_view stem, std::string& out) const;
-  bool finish_then(const Rule& rule, std::string& text) const;
+  bool finish_then(Run& run, const Rule& rule, std::string& text) const;
 
   Trie suffixes_;
   Trie prefixes_;

@@ -156,8 +156,12 @@ std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::stri
   std::vector<SourceDeinflection> out;
   BoundHit hit;
   BoundHit* const hit_ptr = search != nullptr ? &hit : nullptr;
+  // The source's searches share one work budget, as a lookup's do.
+  SearchBudget budget;
+  size_t work_left = budget.work_left;
   const auto searched = [&](const Deinflections& list, size_t begin, const std::string& from) {
-    if (search != nullptr) add_search(pack, list, begin, hit, from, *search);
+    if (search != nullptr) add_search(pack, list, begin, hit, work_left - budget.work_left, from, *search);
+    work_left = budget.work_left;
   };
   const auto emit = [&](const Deinflections& list) {
     for (const auto& d : list) {
@@ -189,7 +193,7 @@ std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::stri
   for (const auto& variant : process_text(pack.preprocessors, source, enabled, limit_reached)) {
     Deinflections list;
     if (pack.transforms) {
-      pack.transforms->deinflect(variant.text, list, &enabled_transforms, hit_ptr);
+      pack.transforms->deinflect(variant.text, list, &enabled_transforms, hit_ptr, &budget);
       searched(list, 0, variant.text);
     } else {
       list.push_back(Deinflection{variant.text, 0, Deinflection::npos, Deinflection::none, 0});
@@ -204,7 +208,8 @@ std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::stri
         if (pack.transforms) {
           // Each reading is its own search, in the same list.
           const size_t begin = pass_list.size();
-          pack.transforms->deinflect_from_step(std::move(reading), pass.step, pass_list, &enabled_transforms, hit_ptr);
+          pack.transforms->deinflect_from_step(std::move(reading), pass.step, pass_list, &enabled_transforms, hit_ptr,
+                                               &budget);
           if (pass_list.size() > begin) searched(pass_list, begin, variant.text);
         } else if (!reading.empty()) {
           pass_list.push_back(Deinflection{std::move(reading), 0, Deinflection::npos, Deinflection::step_base + pass.step, 1});
@@ -216,35 +221,79 @@ std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::stri
   return out;
 }
 
-SourceSearch search_source(const PackData& pack, std::string_view source, TestOptions options,
-                           std::set<std::string>* searched) {
-  SourceSearch search;
-  if (!pack.transforms) return search;
+namespace {
+// Adds what `one` did to `into`: the larger counts, the sums of work and
+// searches, and its bound when `into` has none yet.
+void merge_search(const SourceSearch& one, SourceSearch& into) {
+  into.depth = std::max(into.depth, one.depth);
+  into.growth = std::max(into.growth, one.growth);
+  into.results = std::max(into.results, one.results);
+  into.work += one.work;
+  into.searches += one.searches;
+  if (one.bound != BoundHit::Bound::None && into.bound == BoundHit::Bound::None) {
+    into.bound = one.bound;
+    into.steps = one.steps;
+    into.texts = one.texts;
+    into.busiest = one.busiest;
+  }
+}
+}  // namespace
+
+SourceSearch lookup_search(const PackData& pack, std::string_view text, size_t scan, TestOptions options,
+                           SearchCache& cache) {
+  SourceSearch lookup;
+  if (!pack.transforms) return lookup;
   const RowOptions o = row_options(pack, options);
   const EnabledOptions enabled{o.ids};
   const auto& set = *pack.transforms;
-  BoundHit hit;
-  Deinflections list;
-  for (const auto& variant : process_text(pack.preprocessors, source, enabled)) {
-    if (!variant.text.empty() && (searched == nullptr || searched->insert(variant.text).second)) {
-      list.clear();
-      set.deinflect(variant.text, list, &o.enabled_transforms, &hit);
-      add_search(pack, list, 0, hit, variant.text, search);
+  // The search of `searched` (a processed variant, or a reading of the
+  // variant `from`), with a budget of its own, from the cache or now.
+  const auto search = [&](std::string searched, const VariantPass* pass, const std::string& from) {
+    auto found = cache.find(searched);
+    if (found == cache.end()) {
+      SourceSearch one;
+      Deinflections list;
+      BoundHit hit;
+      SearchBudget budget;
+      if (pass == nullptr) {
+        set.deinflect(searched, list, &o.enabled_transforms, &hit, &budget);
+      } else {
+        set.deinflect_from_step(searched, pass->step, list, &o.enabled_transforms, &hit, &budget);
+      }
+      if (!list.empty()) add_search(pack, list, 0, hit, SearchBounds::max_work - budget.work_left, from, one);
+      found = cache.emplace(std::move(searched), std::move(one)).first;
     }
-    if (!o.all) continue;  // every variant pass is optional (section 4.4)
-    for (const auto& pass : pack.variant_passes) {
-      std::vector<std::string> readings;
-      pass.builtin->variants(variant.text, readings);
-      for (auto& reading : readings) {
-        // A reading's search is the search of its text, after the pass step.
-        if (reading.empty() || (searched != nullptr && !searched->insert(reading).second)) continue;
-        list.clear();
-        set.deinflect_from_step(std::move(reading), pass.step, list, &o.enabled_transforms, &hit);
-        add_search(pack, list, 0, hit, variant.text, search);
+    merge_search(found->second, lookup);
+  };
+  // The prefixes a lookup scans: every one of up to `scan` code points, or
+  // only the whole text.
+  std::vector<size_t> ends;
+  for (size_t i = 0, n = 0; i < text.size(); ++n) {
+    i += 1;
+    while (i < text.size() && (static_cast<unsigned char>(text[i]) & 0xC0) == 0x80) ++i;
+    if (scan == 0) {
+      if (i == text.size()) ends.push_back(i);
+    } else if (n < scan) {
+      ends.push_back(i);
+    }
+  }
+  for (const size_t end : ends) {
+    for (const auto& variant : process_text(pack.preprocessors, text.substr(0, end), enabled)) {
+      if (!variant.text.empty()) search(variant.text, nullptr, variant.text);
+      if (!o.all) continue;  // every variant pass is optional (section 4.4)
+      for (const auto& pass : pack.variant_passes) {
+        std::vector<std::string> readings;
+        pass.builtin->variants(variant.text, readings);
+        for (auto& reading : readings) {
+          if (!reading.empty()) search(std::move(reading), &pass, variant.text);
+        }
       }
     }
   }
-  return search;
+  // One budget covers the whole lookup.
+  if (lookup.bound == BoundHit::Bound::None && lookup.work > SearchBounds::max_work)
+    lookup.bound = BoundHit::Bound::Work;
+  return lookup;
 }
 
 bool row_matches(const PackData& pack, const CorpusRow& row, const std::vector<SourceDeinflection>& deinflections,
@@ -283,8 +332,10 @@ bool row_matches(const PackData& pack, const CorpusRow& row, const std::vector<S
   return found;
 }
 
-void add_search(const PackData& pack, const Deinflections& list, size_t begin, const BoundHit& hit,
+void add_search(const PackData& pack, const Deinflections& list, size_t begin, const BoundHit& hit, size_t work,
                 const std::string& from, SourceSearch& search) {
+  search.work += work;
+  ++search.searches;
   const auto code_points = [](const std::string& text) {
     size_t n = 0;
     for (unsigned char c : text) n += (c & 0xC0) != 0x80;
@@ -323,6 +374,18 @@ void add_search(const PackData& pack, const Deinflections& list, size_t begin, c
   }
   search.steps.push_back(rule_name(hit.rule));
   search.texts.push_back(hit.text);
+  // Which rules made this search so large (section 12.1 step 7).
+  if (hit.bound == BoundHit::Bound::Results || hit.bound == BoundHit::Bound::Work) {
+    std::map<uint32_t, size_t> made;
+    for (size_t i = begin; i < list.size(); ++i) {
+      if (list[i].via < Deinflection::step_base) ++made[list[i].via];
+    }
+    std::vector<std::pair<size_t, uint32_t>> ranked;
+    for (const auto& [rule, count] : made) ranked.emplace_back(count, rule);
+    std::ranges::stable_sort(ranked, [](const auto& a, const auto& b) { return a.first > b.first; });
+    for (size_t k = 0; k < ranked.size() && k < 3; ++k)
+      search.busiest.emplace_back(rule_name(ranked[k].second), ranked[k].first);
+  }
 }
 
 std::string describe(const SourceSearch& hit) {
@@ -340,10 +403,35 @@ std::string describe(const SourceSearch& hit) {
     case BoundHit::Bound::Results:
       out = "more than " + std::to_string(SearchBounds::max_results) + " deinflections in one search";
       break;
+    case BoundHit::Bound::Work:
+      if (hit.steps.empty()) {
+        return "more than " + std::to_string(SearchBounds::max_work) + " units of work in one lookup (its " +
+               std::to_string(hit.searches) + " searches need " + std::to_string(hit.work) + ")";
+      }
+      out = "more than " + std::to_string(SearchBounds::max_work) + " units of work";
+      break;
   }
+  // A text of more than 48 code points is shown by its first 40.
+  const auto shown = [](const std::string& text) {
+    size_t n = 0;
+    size_t cut = text.size();
+    for (size_t i = 0; i < text.size(); ++i) {
+      if ((static_cast<unsigned char>(text[i]) & 0xC0) == 0x80) continue;
+      if (n == 40) cut = i;
+      ++n;
+    }
+    if (n <= 48) return text;
+    return text.substr(0, cut) + "... (" + std::to_string(n) + " code points)";
+  };
   const size_t n = hit.steps.size();
-  out += ", after " + std::to_string(n) + (n == 1 ? " step: " : " steps: ") + (hit.texts.empty() ? "" : hit.texts[0]);
-  const auto step = [&](size_t k) { out += " -" + hit.steps[k] + "-> " + hit.texts[k + 1]; };
+  out += ", after " + std::to_string(n) + (n == 1 ? " step: " : " steps: ") +
+         (hit.texts.empty() ? "" : shown(hit.texts[0]));
+  // The last step is the rule whose output the bound dropped, or the one the
+  // work budget left untried.
+  const bool untried = hit.bound == BoundHit::Bound::Work;
+  const auto step = [&](size_t k) {
+    out += " -" + hit.steps[k] + "-> " + (untried && k + 1 == n ? std::string("(not tried)") : shown(hit.texts[k + 1]));
+  };
   if (n <= 10) {
     for (size_t k = 0; k < n; ++k) step(k);
   } else {
@@ -351,7 +439,14 @@ std::string describe(const SourceSearch& hit) {
     out += " ... (" + std::to_string(n - 10) + " more) ...";
     for (size_t k = n - 5; k < n; ++k) step(k);
   }
-  return out + " (dropped)";
+  if (!untried) out += " (dropped)";
+  if (!hit.busiest.empty()) {
+    out += "; the rules that made the most of its deinflections:";
+    for (size_t k = 0; k < hit.busiest.size(); ++k) {
+      out += (k ? ", " : " ") + hit.busiest[k].first + " (" + std::to_string(hit.busiest[k].second) + ")";
+    }
+  }
+  return out;
 }
 
 namespace {

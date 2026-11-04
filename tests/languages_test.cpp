@@ -523,6 +523,52 @@ void test_steps() {
     const auto v = lang::process_text(processors, "aaaaaaa", {}, &limit);  // 4^7 = 16384 combinations
     check(limit && v.size() == lang::max_text_variants, "variant limit");
   }
+  {
+    // A step list stops once its text passes step_limit(n) (section 6.2): a
+    // pattern that doubles the text, repeated 16 times, stops after the round
+    // that passes it, and the later steps do not run.
+    lang::Step twice;
+    twice.kind = lang::StepKind::Pattern;
+    twice.pattern = pattern("([a-z])", "$1$1", true);
+    twice.repeat = true;
+    lang::Step upper = case_step(lang::CaseMode::Upper);
+    std::u32string out;
+    check(lang::step_limit(4) == 576, "step_limit(4)");
+    lang::StepLimit limit{lang::step_limit(4)};
+    check(!lang::apply_single({twice, upper}, u32("abcd"), out, limit) && out.size() == 1024 &&
+              out.find(U'A') == std::u32string::npos,
+          "a repeated doubling stops after the round that passes the limit: " + std::to_string(out.size()));
+    check(limit.written == 8 + 16 + 32 + 64 + 128 + 256 + 512 + 1024,
+          "every round counts as written: " + std::to_string(limit.written));
+    lang::StepLimit wide{size_t{2} << 16};
+    check(lang::apply_single({twice}, u32("ab"), out, wide) && out.size() == 2 << 16,
+          "within the limit the 16 rounds all run: " + std::to_string(out.size()));
+    // Unlimited, as tests/classes.json records a step alone (section 12.1).
+    lang::apply_single({twice}, u32("abcd"), out);
+    check(out.size() == 4 << 16, "without a limit: " + std::to_string(out.size()));
+    // A processor's list that passes the limit leaves the text as it was,
+    // with keepInput false too.
+    for (const bool keep : {true, false}) {
+      lang::Processor doubling{"double", "", keep, false, {{twice}}};
+      const std::vector<lang::Processor> processors{doubling};
+      const auto v = lang::process_text(processors, "abcd", {});
+      check(v.size() == 1 && v[0].text == "abcd" && v[0].steps == 0,
+            std::string("a processor past the limit keeps the text, keepInput ") + (keep ? "true" : "false"));
+    }
+    lang::Step alternatives;
+    alternatives.kind = lang::StepKind::Alternatives;
+    alternatives.alternatives.emplace_back(u32("a"), std::vector<std::u32string>{std::u32string(64, U'x')});
+    lang::Processor wide_alternatives{"wide", "", true, false, {{alternatives}}};
+    const std::vector<lang::Processor> processors{wide_alternatives};
+    // 12 a: 2^12 combinations of 12 + 63 k code points, k the a replaced;
+    // those with k = 11 or 12 pass step_limit(12) = 704 and are the text as
+    // it was, so the longest variant has k = 10.
+    const auto v = lang::process_text(processors, std::string(12, 'a'), {});
+    size_t longest = 0;
+    for (const auto& x : v) longest = std::max(longest, x.text.size());
+    check(lang::step_limit(12) == 704 && longest == 2 + 10 * 64,
+          "alternatives past the limit are the text as it was: " + std::to_string(longest));
+  }
 }
 
 // --- packs -----------------------------------------------------------------------
@@ -1052,7 +1098,9 @@ void test_search_bounds() {
     if (pack) {
       lang::BoundHit hit;
       const auto list = search(*pack, "a", &hit);
-      check(hit.bound == Bound::Growth && list.size() == max_results,
+      // The growth bound drops outputs on the way; the results bound stops
+      // the search, and the report names it.
+      check(hit.bound == Bound::Results && list.size() == max_results,
             "growing fan-out: bounded: " + std::to_string(list.size()));
       size_t longest = 0;
       for (const auto& d : list) longest = std::max(longest, code_points(d.text));
@@ -1062,7 +1110,7 @@ void test_search_bounds() {
   {
     // A loop that only a variant pass's reading starts: the report's chain
     // begins with the pass step, from the text the pass read, as corpus rows
-    // and the conformance test see it (deinflect_source, search_source).
+    // and the conformance test see it (deinflect_source, lookup_search).
     const auto pack =
         load(transforms_json(transform(
                  "loop", R"({"type":"suffix","inflected":"な","deinflected":"なe","conditionsIn":[],"conditionsOut":[]},
@@ -1085,19 +1133,323 @@ void test_search_bounds() {
                 described.ends_with(" (dropped)"),
             "the pass chain described: " + described);
       check(search.growth == max_growth, "the pass search grows by the margin");
-      const auto again = lang::search_source(data, "にゃ", lang::TestOptions::All);
-      check(again.bound == search.bound && again.steps == search.steps && again.texts == search.texts,
-            "search_source reports the same chain");
+      // lookup_search of the whole text (scan 0): the text and its five
+      // readings (な, だ, ら, ま, じゃ), the same chain.
+      lang::SearchCache cache;
+      const auto again = lang::lookup_search(data, "にゃ", 0, lang::TestOptions::All, cache);
+      check(again.bound == search.bound && again.steps == search.steps && again.texts == search.texts &&
+                again.searches == 6 && cache.size() == 6 && cache.contains("な"),
+            "lookup_search reports the same chain: " + std::to_string(again.searches) + " searches");
+      const auto cached = lang::lookup_search(data, "にゃ", 0, lang::TestOptions::All, cache);
+      check(cache.size() == 6 && cached.bound == again.bound && cached.steps == again.steps &&
+                cached.work == again.work && cached.searches == again.searches,
+            "a text searched before is taken from the cache");
+      // With prefixes: に as well.
+      lang::SearchCache prefixes;
+      check(lang::lookup_search(data, "にゃ", 16, lang::TestOptions::All, prefixes).searches == 7 &&
+                prefixes.contains("に"),
+            "lookup_search searches every prefix");
       lang::SourceSearch defaults;
       lang::deinflect_source(data, "にゃ", &limit, lang::TestOptions::Default, &defaults);
+      lang::SearchCache defaults_cache;
       check(defaults.bound == Bound::None &&
-                lang::search_source(data, "にゃ", lang::TestOptions::Default).bound == Bound::None,
+                lang::lookup_search(data, "にゃ", 16, lang::TestOptions::Default, defaults_cache).bound == Bound::None,
             "with the pack's defaults the pass is off: no bound");
-      std::set<std::string> searched;
-      lang::search_source(data, "にゃ", lang::TestOptions::All, &searched);
-      check(searched.contains("にゃ") && searched.contains("な") &&
-                lang::search_source(data, "にゃ", lang::TestOptions::All, &searched).bound == Bound::None,
-            "a text searched before is not searched again");
+    }
+  }
+  {
+    // Texts a rule or a step writes are at most 64 code points (sections 6.2
+    // and 7.3), as affixes are; 64 load.
+    struct Case {
+      std::string rule;  // with T for the text
+      std::string field;
+      std::string lists = "{}";
+    };
+    const std::vector<Case> cases = {
+        {R"({"type":"suffix","inflected":"s","deinflected":"T","conditionsIn":[],"conditionsOut":[]})", "deinflected"},
+        {R"({"type":"wholeWord","inflected":"go","deinflected":"T","conditionsIn":[],"conditionsOut":[]})",
+         "deinflected"},
+        {R"({"type":"replace","inflected":"a","deinflected":"T","conditionsIn":[],"conditionsOut":[]})", "deinflected"},
+        {R"({"type":"phrasal","inflected":"ed","deinflected":"T","followedBy":"particles","conditionsIn":[],"conditionsOut":[]})",
+         "deinflected", R"({"particles":["up"]})"},
+        {R"({"type":"circumfix","inflectedPrefix":"ge","deinflectedPrefix":"T","inflectedSuffix":"t","deinflectedSuffix":"en","conditionsIn":[],"conditionsOut":[]})",
+         "deinflectedPrefix"},
+        {R"({"type":"circumfix","inflectedPrefix":"ge","deinflectedPrefix":"","inflectedSuffix":"t","deinflectedSuffix":"T","conditionsIn":[],"conditionsOut":[]})",
+         "deinflectedSuffix"},
+        {R"({"type":"circumfix","prefixes":[["ge","T"]],"suffixes":[["t","en"]],"conditionsIn":[],"conditionsOut":[]})",
+         "prefixes[0]"},
+        {R"({"type":"suffix","inflected":"o","deinflected":"ar","stemChange":{"from":["ie"],"to":"T"},"conditionsIn":[],"conditionsOut":[]})",
+         "stemChange.to"},
+        {R"J({"type":"pattern","pattern":"(a)$","replacement":"T","anchorSuffix":"a","conditionsIn":[],"conditionsOut":[]})J",
+         "replacement"},
+        {R"({"type":"suffix","inflected":"s","deinflected":"","then":[{"map":{"a":"T"}}],"conditionsIn":[],"conditionsOut":[]})",
+         "then[0].map.a"},
+        {R"J({"type":"suffix","inflected":"s","deinflected":"","then":[{"pattern":"(a)","replace":"T"}],"conditionsIn":[],"conditionsOut":[]})J",
+         "then[0].replace"},
+    };
+    std::string kana64;
+    for (int i = 0; i < 64; ++i) kana64 += "あ";
+    for (const auto& c : cases) {
+      const auto with = [&](const std::string& text) {
+        std::string rule = c.rule;
+        rule.replace(rule.find('T'), 1, text);
+        std::string e;
+        const bool loaded = load(transforms_json(transform("w", rule), c.lists), &e) != nullptr;
+        return std::pair{loaded, e};
+      };
+      const auto [ok64, e64] = with(std::string(64, 'x'));
+      const auto [ok_kana, e_kana] = with(kana64);
+      const auto [ok65, e65] = with(std::string(65, 'x'));
+      const auto [ok_kana65, e_kana65] = with(kana64 + "あ");
+      const std::string writes = c.field.starts_with("then") ? "a text a step writes" : "a text a rule writes";
+      check(ok64 && ok_kana && !ok65 && !ok_kana65 &&
+                e65.find(c.field + ": " + writes + " is longer than 64 code points") != std::string::npos &&
+                e_kana65.find(c.field + ": ") != std::string::npos,
+            c.field + " is at most 64 code points: " + e64 + e_kana + " / " + e65);
+    }
+  }
+  {
+    // One rule application is bounded too (section 7.4): a `then` step that
+    // makes 8 copies of each code point, repeated (8^16 copies) or written 12
+    // times (8^12), stops at the round that passes step_limit(2) = 544 code
+    // points, and the growth bound drops that output.
+    const std::string eight = R"J({"pattern":"(.)","replace":"$1$1$1$1$1$1$1$1","global":true)J";
+    std::string twelve;
+    for (int k = 0; k < 12; ++k) twelve += (k ? "," : "") + eight + "}";
+    for (const std::string& then : {eight + R"(,"repeat":true})", twelve}) {
+      const auto pack = load(
+          transforms_json(transform(
+              "t",
+              R"({"type":"suffix","inflected":"s","deinflected":"s","conditionsIn":[],"conditionsOut":[],"then":[)" +
+                  then + "]}")),
+          &error);
+      check(pack != nullptr, "multiplying then pack loads: " + error);
+      if (!pack) continue;
+      lang::BoundHit hit;
+      const auto list = search(*pack, "as", &hit);
+      check(
+          list.size() == 1 && hit.bound == Bound::Growth && code_points(hit.text) == 1024 && lang::step_limit(2) == 544,
+          "a then list that multiplies the text stops at the round past the limit: " +
+              std::to_string(code_points(hit.text)));
+      lang::SourceSearch source;
+      bool limit = false;
+      lang::deinflect_source(pack->data(), "as", &limit, lang::TestOptions::All, &source);
+      const std::string described = lang::describe(source);
+      check(described.find(" -t[0]-> " + std::string(40, 'a') + "... (1024 code points) (dropped)") !=
+                    std::string::npos &&
+                described.size() < 300,
+            "describe shortens a long dropped output: " + described);
+      // Its work: 1 for the try, (1024 output bytes + 4 x (16 + 128 + 1024)
+      // code points written) / 256 = 22, and 2 + 16 + 128 code points the
+      // regular expression read: 169. An optional rule that is off costs
+      // nothing.
+      const auto with_optional = load(
+          transforms_json(
+              transform(
+                  "t",
+                  R"({"type":"suffix","inflected":"s","deinflected":"s","conditionsIn":[],"conditionsOut":[],"then":[)" +
+                      then + "]}") +
+              "," +
+              transform("off",
+                        R"({"type":"suffix","inflected":"s","deinflected":"z","conditionsIn":[],"conditionsOut":[]})",
+                        R"(,"optional":true)")),
+          &error);
+      check(with_optional != nullptr, "the pack with an optional rule loads: " + error);
+      if (with_optional) {
+        lang::SearchBudget budget;
+        lang::Deinflections list2;
+        with_optional->data().transforms->deinflect("as", list2, nullptr, nullptr, &budget);
+        check(source.work == 169 && lang::SearchBounds::max_work - budget.work_left == 169 && list2.size() == 1,
+              "the work of a multiplying then list: " + std::to_string(source.work) + " and " +
+                  std::to_string(lang::SearchBounds::max_work - budget.work_left));
+      }
+    }
+  }
+  {
+    // Each output has a buffer of its own (section 7.5): the first rule's 60
+    // code points, made by its `then` step, are dropped, and the second rule's
+    // output, kept, does not inherit their buffer.
+    const auto pack = load(
+        transforms_json(transform(
+            "t",
+            R"J({"type":"suffix","inflected":"s","deinflected":"","conditionsIn":[],"conditionsOut":[],"then":[{"pattern":"(.)","replace":"$1$1$1$1","global":true}]},
+                    {"type":"suffix","inflected":"s","deinflected":"x","conditionsIn":[],"conditionsOut":[]})J")),
+        &error);
+    check(pack != nullptr, "buffer pack loads: " + error);
+    if (pack) {
+      lang::BoundHit hit;
+      const auto list = search(*pack, std::string(15, 'a') + "s", &hit);
+      check(list.size() == 2 && list[1].text == std::string(15, 'a') + "x" && hit.bound == Bound::Growth &&
+                code_points(hit.text) == 60,
+            "the then rule's output is dropped, the plain rule's kept");
+      // Without a report, which would take the first dropped output away.
+      const auto unreported = search(*pack, std::string(15, 'a') + "s", nullptr);
+      check(unreported.size() == 2 && unreported[1].text.capacity() < 60,
+            "a dropped output's buffer is not kept: capacity " +
+                std::to_string(unreported.size() == 2 ? unreported[1].text.capacity() : 0));
+    }
+  }
+  {
+    // The work budget (section 7.4): 2,000 rules that each append to every
+    // text cost a unit each, so the search stops at the work bound once it
+    // has tried 2^20 rule applications, long before it holds 65,536
+    // deinflections. A second search given the spent budget records its text
+    // and nothing more; one with a budget of its own runs.
+    std::string rules;
+    for (int i = 0; i < 2000; ++i) {
+      rules += std::string(i ? "," : "") + R"({"type":"suffix","inflected":"","deinflected":"x)" + std::to_string(i) +
+               R"(","conditionsIn":[],"conditionsOut":[],"stemMinLength":1})";
+    }
+    const auto pack = load(transforms_json(transform("wide", rules)), &error);
+    check(pack != nullptr, "wide pack loads: " + error);
+    if (pack) {
+      const auto& set = *pack->data().transforms;
+      lang::SearchBudget budget;
+      lang::BoundHit hit;
+      lang::Deinflections list;
+      set.deinflect("a", list, nullptr, &hit, &budget);
+      check(hit.bound == Bound::Work && budget.spent() && hit.text.empty() && list.size() > 100 &&
+                list.size() < lang::SearchBounds::max_work / 1000,
+            "the work bound ends a wide search: " + std::to_string(list.size()) + " results");
+      lang::BoundHit second;
+      const size_t before = list.size();
+      set.deinflect("b", list, nullptr, &second, &budget);
+      check(list.size() == before + 1 && list.back().text == "b" && second.bound == Bound::Work,
+            "a search with a spent budget records its text only");
+      lang::Deinflections own;
+      set.deinflect("b", own);
+      check(own.size() == before, "a search with a budget of its own: " + std::to_string(own.size()));
+      lang::SourceSearch source;
+      bool limit = false;
+      lang::deinflect_source(pack->data(), "a", &limit, lang::TestOptions::All, &source);
+      const std::string described = lang::describe(source);
+      check(source.bound == Bound::Work && source.work == lang::SearchBounds::max_work &&
+                described.starts_with("more than 1048576 units of work, after ") &&
+                described.find("-> (not tried); the rules that made the most of its deinflections: wide[0] (") !=
+                    std::string::npos,
+            "the work bound described: " + described);
+    }
+  }
+  {
+    // A pattern rule that does not match still read the text: on aaaa its
+    // anchor matches and its pattern reads 4 code points, so the try costs
+    // 1 + 4 = 5 units.
+    const auto pack = load(
+        transforms_json(transform(
+            "p",
+            R"J({"type":"pattern","pattern":"(b)a$","replacement":"$1","anchorSuffix":"a","conditionsIn":[],"conditionsOut":[]})J")),
+        &error);
+    check(pack != nullptr, "pattern pack loads: " + error);
+    if (pack) {
+      lang::SearchBudget budget;
+      lang::Deinflections list;
+      pack->data().transforms->deinflect("aaaa", list, nullptr, nullptr, &budget);
+      check(list.size() == 1 && lang::SearchBounds::max_work - budget.work_left == 5,
+            "a pattern that does not match costs what it read: " +
+                std::to_string(lang::SearchBounds::max_work - budget.work_left));
+    }
+  }
+  {
+    // A lookup's searches need one budget together (lookup_search): with a
+    // cache that says the searches of a and ab use 600,000 units each, the
+    // lookup of ab needs 1,200,000, past the budget, though neither search
+    // reached a bound.
+    const auto pack =
+        load(transforms_json(transform(
+                 "s", R"({"type":"suffix","inflected":"s","deinflected":"","conditionsIn":[],"conditionsOut":[]})")),
+             &error);
+    if (pack) {
+      lang::SearchCache cache;
+      cache["a"].work = 600000;
+      cache["a"].searches = 1;
+      cache["ab"].work = 600000;
+      cache["ab"].searches = 1;
+      const auto lookup = lang::lookup_search(pack->data(), "ab", 16, lang::TestOptions::All, cache);
+      check(lookup.bound == Bound::Work && lookup.work == 1200000 && lookup.searches == 2 && lookup.steps.empty() &&
+                lang::describe(lookup) == "more than 1048576 units of work in one lookup (its 2 searches need 1200000)",
+            "a lookup that needs more than one budget: " + lang::describe(lookup));
+      lang::SearchCache fresh;
+      check(lang::lookup_search(pack->data(), "ab", 16, lang::TestOptions::All, fresh).bound == Bound::None,
+            "the same lookup, searched: no bound");
+    }
+  }
+  {
+    // Deinflector::deinflect_neko_speech gives its readings one budget: with
+    // 2,000 appending rules the first reading's search spends it, and the
+    // other four readings record their texts only.
+    std::string rules;
+    for (int i = 0; i < 2000; ++i) {
+      rules += std::string(i ? "," : "") + R"({"type":"suffix","inflected":"","deinflected":"x)" + std::to_string(i) +
+               R"(","conditionsIn":[],"conditionsOut":[],"stemMinLength":1})";
+    }
+    const auto pack = load(transforms_json(transform("wide", rules)), &error,
+                           R"(,"variantPasses":[{"id":"nekoSpeech","builtin":"ja.nekoSpeech","optional":true}])");
+    check(pack != nullptr, "wide neko pack loads: " + error);
+    if (pack) {
+      const auto results = Deinflector(pack).deinflect_neko_speech("にゃ");
+      lang::Deinflections one;
+      pack->data().transforms->deinflect("な", one);
+      check(results.size() == one.size() + 4, "the readings share one budget: " + std::to_string(results.size()) +
+                                                  " results, one reading alone " + std::to_string(one.size()));
+    }
+  }
+  {
+    // The growth bound counts code points, also when outputs keep the bytes
+    // of the text the search started from: 𝒜 (4 bytes) -> aaaa adds 3 code
+    // points a step in the same 64 bytes, あ (3 bytes) -> aaa adds 2.
+    const auto lc = load(
+        transforms_json(transform(
+            "lc",
+            R"({"type":"replace","inflected":"𝒜","deinflected":"aaaa","occurrence":"first","conditionsIn":[],"conditionsOut":[]})")),
+        &error);
+    const auto ld = load(
+        transforms_json(transform(
+            "ld",
+            R"({"type":"replace","inflected":"あ","deinflected":"aaa","occurrence":"first","conditionsIn":[],"conditionsOut":[]})")),
+        &error);
+    check(lc != nullptr && ld != nullptr, "multibyte packs load: " + error);
+    if (lc && ld) {
+      std::string script;
+      std::string kana;
+      for (int i = 0; i < 16; ++i) script += "𝒜";
+      for (int i = 0; i < 40; ++i) kana += "あ";
+      // 16 + 3k > 48 from k = 11, 40 + 2k > 72 from k = 17.
+      check(search(*lc, script, nullptr).size() == 11 && search(*ld, kana, nullptr).size() == 17,
+            "growth in code points from a multibyte text: " + std::to_string(search(*lc, script, nullptr).size()) +
+                " and " + std::to_string(search(*ld, kana, nullptr).size()));
+    }
+  }
+  {
+    // Phrasal endings apply longest first (section 7.4): -ked before -ed.
+    const auto pack = load(
+        transforms_json(
+            transform(
+                "ked",
+                R"({"type":"phrasal","inflected":"ked","deinflected":"kA","followedBy":"particles","conditionsIn":[],"conditionsOut":[]})") +
+                "," +
+                transform(
+                    "ed",
+                    R"({"type":"phrasal","inflected":"ed","deinflected":"B","followedBy":"particles","conditionsIn":[],"conditionsOut":[]})"),
+            R"({"particles":["up"]})"),
+        &error);
+    check(pack != nullptr, "phrasal order pack loads: " + error);
+    if (pack) {
+      const auto r = deinflect(*pack, "looked up");
+      check(r == std::vector<std::string>{"looked up::", "lookA up::ked", "lookB up::ed"}, "phrasal order: " + join(r));
+    }
+  }
+  {
+    // affix_inputs (section 12.1 step 7): a suffix alone, on stems of the
+    // most used letters (a c d g o t, then b e from the class), and on the
+    // first short words.
+    const auto pack =
+        load(transforms_json(transform(
+                 "s", R"({"type":"suffix","inflected":"s","deinflected":"","conditionsIn":[],"conditionsOut":[]})")),
+             &error);
+    if (pack) {
+      const auto inputs = lang::affix_inputs(pack->data(), {"cat", "dog"});
+      check(inputs == std::vector<std::string>{"s", "as", "acds", "dgotbs", "cats", "dogs"},
+            "affix inputs: " + join(inputs));
     }
   }
 #if defined(__unix__) || defined(__APPLE__)
@@ -1773,6 +2125,58 @@ void test_json() {
   }
 }
 
+// A lookup's searches share one work budget (section 7.4). With 2,000 rules
+// that append to every text, the search of the longest prefix, walkedqq,
+// spends it, so the search of walked records only its text and its -ed rule
+// is never tried: walk is found only as the prefix walk. A lookup of walked
+// itself tries -ed first, and a pack without the 2,000 rules finds walk from
+// walked within walkedqq.
+void test_lookup_budget() {
+  const auto root =
+      std::filesystem::temp_directory_path() / ("hoshidicts-lookup-budget-" + std::to_string(std::random_device{}()));
+  std::filesystem::create_directories(root);
+  const std::string index = R"({"title":"budget","format":3,"revision":"1"})";
+  const std::string bank = R"([["walk","","v","v",0,["to walk"],0,""]])";
+  {
+    std::ofstream(root / "budget.zip", std::ios::binary)
+        << build_zip({{"index.json", index}, {"term_bank_1.json", bank}});
+  }
+  const auto imported = dictionary_importer::import((root / "budget.zip").string(), root.string());
+  check(imported.success, "import the budget dictionary: " + imported.error);
+  DictionaryQuery query;
+  check(query.add_term_dict((root / "budget").string()), "load the budget dictionary");
+  std::string language = language_json();
+  language.replace(language.find(R"("searchResolution":"word")"), std::strlen(R"("searchResolution":"word")"),
+                   R"("searchResolution":"character")");
+  const std::string past = transform(
+      "past", R"({"type":"suffix","inflected":"ed","deinflected":"","conditionsIn":[],"conditionsOut":["v"]})");
+  std::string wide;
+  for (int i = 0; i < 2000; ++i) {
+    wide += std::string(i ? "," : "") + R"({"type":"suffix","inflected":"","deinflected":"x)" + std::to_string(i) +
+            R"(","conditionsIn":[],"conditionsOut":[],"stemMinLength":1})";
+  }
+  hoshidicts::LanguageRegistry registry;
+  std::string error;
+  check(registry.add(language, transforms_json(past + "," + transform("wide", wide)), &error),
+        "add the wide pack: " + error);
+  std::string plain = language;
+  plain.replace(plain.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":"yy")");
+  check(registry.add(plain, transforms_json(past), &error), "add the plain pack: " + error);
+  const Lookup lookup(query, registry);
+  const auto first = [&](const std::string& text, const std::string& code) {
+    LookupOptions options;
+    options.language = code;
+    const auto results = lookup.lookup(text, 16, 16, options);
+    return results.empty() ? std::string("(none)") : results.front().term.expression + "|" + results.front().matched;
+  };
+  check(first("walked", "xx") == "walk|walked",
+        "a lookup tries -ed before the budget is spent: " + first("walked", "xx"));
+  check(first("walkedqq", "yy") == "walk|walked",
+        "without the wide rules walkedqq finds walk: " + first("walkedqq", "yy"));
+  check(first("walkedqq", "xx") == "walk|walk", "the lookup's searches share one budget: " + first("walkedqq", "xx"));
+  std::filesystem::remove_all(root);
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -1790,6 +2194,7 @@ int main(int argc, char** argv) {
   test_replaced_rules();
   test_registry();
   test_word_lookup();
+  test_lookup_budget();
   test_probe_packs(argv[1]);
   std::printf("%zu cases, %d failures\n", cases, failures);
   return failures == 0 ? 0 : 1;

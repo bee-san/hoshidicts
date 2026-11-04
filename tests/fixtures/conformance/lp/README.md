@@ -11,7 +11,9 @@ longer applies to the first rule's output and the pack conforms
 (`language-search-bounds-conditions`). A copy with an optional preprocessor
 that rewrites the final `e` and `is` loops only with the pack's defaults, and
 fails as well (`language-search-bounds-defaults`); `tests/corpus.tsv` runs
-with the defaults so that its rows pass in that copy too.
+with the defaults so that its rows pass in that copy too. A copy whose
+optional preprocessor leaves the loop alone fails in both modes, and each
+lookup counts once (`language-search-bounds-both-modes`).
 
 ## Sources and licences
 

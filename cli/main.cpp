@@ -356,9 +356,12 @@ int cmd_deinflect(Context& context, const Arguments& args) {
     // A search a bound cut short (section 7.4) is reported on stderr.
     lang::BoundHit hit;
     lang::SourceSearch search;
+    lang::SearchBudget budget;  // the input's searches share one, as a lookup's do
+    size_t work_left = budget.work_left;
     if (pack.transforms) {
-      pack.transforms->deinflect(input, list, &enabled_transforms, &hit);
-      lang::add_search(pack, list, 0, hit, input, search);
+      pack.transforms->deinflect(input, list, &enabled_transforms, &hit, &budget);
+      lang::add_search(pack, list, 0, hit, work_left - budget.work_left, input, search);
+      work_left = budget.work_left;
     } else {
       list.push_back(lang::Deinflection{input, 0, lang::Deinflection::npos, lang::Deinflection::none, 0});
     }
@@ -369,8 +372,10 @@ int cmd_deinflect(Context& context, const Arguments& args) {
       for (auto& reading : readings) {
         if (pack.transforms) {
           const size_t begin = list.size();
-          pack.transforms->deinflect_from_step(std::move(reading), pass->step, list, &enabled_transforms, &hit);
-          lang::add_search(pack, list, begin, hit, input, search);
+          pack.transforms->deinflect_from_step(std::move(reading), pass->step, list, &enabled_transforms, &hit,
+                                               &budget);
+          lang::add_search(pack, list, begin, hit, work_left - budget.work_left, input, search);
+          work_left = budget.work_left;
         } else if (!reading.empty()) {
           list.push_back(lang::Deinflection{std::move(reading), 0, lang::Deinflection::npos,
                                             lang::Deinflection::step_base + pass->step, 1});
@@ -665,8 +670,10 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
       std::u32string in;
       std::u32string out;
       if (hoshidicts::lang::decode_utf8(text, in)) {
-        hoshidicts::lang::apply_single(*pack.form_of_normalizer, in, out);
-        if (std::string normalized = hoshidicts::lang::to_utf8(out); !normalized.empty() && normalized != text) {
+        hoshidicts::lang::StepLimit limit{hoshidicts::lang::step_limit(in.size())};
+        const bool within = hoshidicts::lang::apply_single(*pack.form_of_normalizer, in, out, limit);
+        if (std::string normalized = hoshidicts::lang::to_utf8(out);
+            within && !normalized.empty() && normalized != text) {
           target = QueryAccess::query_raw(query, normalized, pins, &target_rows);
           found = std::move(normalized);
         }

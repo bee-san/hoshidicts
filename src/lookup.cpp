@@ -238,7 +238,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       }
       std::u32string out;
       std::vector<std::u32string> outputs;
-      lang::apply_steps(*steps, in, outputs);
+      lang::StepLimit limit{lang::step_limit(in.size())};
+      lang::apply_steps(*steps, in, outputs, limit);
       return outputs.empty() ? std::string(reading) : lang::to_utf8(outputs.front());
     }
   };
@@ -259,6 +260,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   std::vector<Candidate> candidates;
   ankerl::unordered_dense::map<uint64_t, uint32_t> index;
   std::vector<Deinflections> deinflection_store;
+  // The work budget all the searches of this lookup share (section 7.4).
+  lang::SearchBudget search_budget;
   std::vector<RawTerms> term_store;
   // Postprocessed forms the candidates look at (only with postprocessors;
   // a deque allocates even when empty, so it is made on first use).
@@ -529,8 +532,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     std::u32string in;
     if (lang::decode_utf8(text, in)) {
       std::u32string out;
-      lang::apply_single(*pack.form_of_normalizer, in, out);
-      normalized = lang::to_utf8(out);
+      lang::StepLimit limit{lang::step_limit(in.size())};
+      if (lang::apply_single(*pack.form_of_normalizer, in, out, limit)) normalized = lang::to_utf8(out);
     }
     if (normalized == text) normalized.clear();
     return normalized;
@@ -615,7 +618,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     for (auto& variant : processor_results) {
       Deinflections deinflection_results;
       if (transforms != nullptr) {
-        transforms->deinflect(variant.text, deinflection_results, enabled_transforms_ptr);
+        transforms->deinflect(variant.text, deinflection_results, enabled_transforms_ptr, nullptr, &search_budget);
       } else {
         deinflection_results.push_back(Deinflection{variant.text, 0, Deinflection::npos, Deinflection::none, 0});
       }
@@ -742,7 +745,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
           for (auto& reading : readings) {
             if (transforms != nullptr) {
               transforms->deinflect_from_step(std::move(reading), pass->step, deinflection_results,
-                                              enabled_transforms_ptr);
+                                              enabled_transforms_ptr, nullptr, &search_budget);
             } else if (!reading.empty()) {
               deinflection_results.push_back(Deinflection{std::move(reading), 0, Deinflection::npos,
                                                           Deinflection::step_base + pass->step, 1});
