@@ -13,7 +13,9 @@ The rules are written in Latin letters. The `cyrillicToLatin` preprocessor
 gives every Cyrillic text its Latin spelling, so `кућама` reaches `kuća`,
 and the Cyrillic form itself still finds the Cyrillic entries of the
 dictionary (`кућама` → `кућа`), which wiktionary-to-yomitan writes for most
-words. The recommended dictionary has no part-of-speech tags, so the pack
+words. Where those Cyrillic rows name two lemmas, they tie and come in the
+dictionary's order, so the frequent ones also have a Cyrillic rule for the
+dominant lemma (Rule provenance). The recommended dictionary has no part-of-speech tags, so the pack
 sets `lookup.untaggedTerms` to `pass` (section 9.4; Measurements) and keeps
 the conditions on its rules.
 
@@ -47,9 +49,11 @@ the conditions on its rules.
   lemma and part of speech, Latin letters. The rules reach 982
   (`corpus.tsv`); the other 18 are in `gaps.tsv`.
 - `tests/cases.tsv`, `tests/text.tsv`, `tests/lookup.tsv`,
-  `tests/dictionary/` (untagged like wty-sh-en: 77 hand-written rows, and
-  263 rows of `term_bank_2.json` that `sources/prefer-tests.py` writes, each
-  a headword with the gloss "(test entry)"),
+  `tests/dictionary/` (untagged like wty-sh-en: 84 hand-written rows, and
+  512 rows of `term_bank_2.json` that `sources/prefer-tests.py` writes, each
+  a headword with the gloss "(test entry)" or a Cyrillic word's form-of row
+  naming two of them), `sources/cyrillic-twins.tsv` (written by the same
+  script),
   `sources/benchmark-words.txt` (70 sentences), `sources/chrome-cases.tsv`
   and the scripts in `sources/`: written for this pack (GPL-3.0-or-later).
   `sources/judged-ties-hr.tsv` and `sources/judged-ownentry.tsv` are the
@@ -57,7 +61,8 @@ the conditions on its rules.
   audit-hachi-lang-sh-b, 2026-11-03), written for it: the lemma of the
   dominant reading of the 185 most frequent ties among the 10,000 most
   frequent words of hr_50k, and the frequent words whose own entry comes
-  first with another meaning (Measurements 2).
+  first with another meaning (Measurements 2; six of them added by
+  audit-hachi-lang-sh-c).
 - Not committed, used for the measurements below (all in
   `hachi-lang-cache/sh/` on the build machine):
   - the dictionary [wty-sh-en](https://huggingface.co/datasets/daxida/wty-release/resolve/main/latest/dict/sh/en/wty-sh-en.zip)
@@ -92,8 +97,8 @@ the conditions on its rules.
 
 ## Rule provenance
 
-`transforms.json` has 180 transforms and 2,335 rules, all `own`, written in
-1,032 rows (737 `wholeWord`, 160 `circumfix`, 124 `suffix`, 10 `pattern`
+`transforms.json` has 181 transforms and 2,452 rules, all `own`, written in
+1,149 rows (854 `wholeWord`, 160 `circumfix`, 124 `suffix`, 10 `pattern`
 and 1 `prefix`): the suffix rules of a transform that differ only in their
 ending are one `circumfix` row in the cross-product form with an empty
 prefix (section 7.3), which the engine expands when the pack loads. There
@@ -102,7 +107,7 @@ transforms (`tools/port-yomitan-transforms.mjs` says "Yomitan has no
 ext/js/language/sh/*-transforms.js"), so the union of the own and Yomitan
 rules is the own set, and it is the final set.
 
-- **Nouns** (20 transforms, 281 rules; 26 and 57 for irregular nouns): the
+- **Nouns** (20 transforms, 304 rules; 26 and 57 for irregular nouns): the
   a-declension (masculine on a consonant, neuter on -o and -e, the long
   plural -ovi/-evi, k/g/h → c/z/s before -i, the vocative with k/g/h →
   č/ž/š, the fleeting a of `starac`/`starca`, `momak`, `san`, `pas`,
@@ -114,7 +119,7 @@ rules is the own set, and it is the final set.
   `smrću`, `ljubavlju`), the plural-only nouns in -e (`novine`), and
   `čovjek`/`ljudi`, `dijete`/`djeca`, `brat`/`braća`, `oko`/`oči`,
   `uho`/`uši`, `otac`, `kći`, `put`, `vrijeme`, `kola`.
-- **Adjectives** (13 and 2 transforms, 252 and 61 rules): indefinite and
+- **Adjectives** (13 and 2 transforms, 260 and 62 rules): indefinite and
   definite endings with the -eg/-em of palatal stems, the fleeting a (`dobar`,
   `sretan`, `koristan`, `kratak`, `topao`, `kakav`, with voicing in `sladak`,
   `težak`, `nizak`), `cio`/`ceo` (`cijelog`, `celog`) and `beo` (`belog`),
@@ -122,7 +127,7 @@ rules is the own set, and it is the final set.
   `skuplji`, `bolji`, `veći`, `teže`, `šire`), and naj- superlatives.
 - **Verbs** (16 present, 12 participle, 14 aorist and imperfect, 3
   imperative, 5 future, 2 adverbial-participle and 1 verbal-noun transform,
-  with 549, 302, 281, 143, 17, 44 and 14 rules; 46 transforms and 134 rules
+  with 612, 306, 281, 145, 17, 44 and 14 rules; 46 transforms and 136 rules
   for irregular verbs): the present of the a-, i- and e-types with their
   consonant changes (`pišem`, `kažem`, `plačem`, `krećem`, `kupujem`,
   `dajem`, `pijem`, `krenem`, `uzmem`, `berem`, `zovem`, `pečem`, `mogu`,
@@ -134,7 +139,7 @@ rules is the own set, and it is the final set.
   `raditi ću`), the verbal noun, and the forms of `biti`,
   `htjeti`/`hteti`, `moći`, `ići`, `otići` (`odem`, `ode`, `odoh`), `dati`,
   `stajati` and `klati`.
-- **Pronouns and numerals** (20 transforms, 200 rules): personal,
+- **Pronouns and numerals** (20 transforms, 212 rules): personal,
   reflexive, interrogative, negative and indefinite pronouns, `sav`, the
   short forms of possessives and demonstratives (`svom` → `svoj`, `time` →
   `taj`), `dva`, `tri`, `četiri`, `oba`.
@@ -170,7 +175,26 @@ rules is the own set, and it is the final set.
   207 of them, with both readings in the test dictionary; each row fails
   without its rule. The other 3 (`nove`, `novu`, `novom`) only choose the
   adjective's trace over a noun ending's for the same `nov`, which no test
-  can observe.
+  can observe. `smete` is read by the verb rules (`smeti:v`), so its trace
+  is the present 2pl.
+- **Cyrillic twins.** A Cyrillic word reaches these Latin rules only
+  through `cyrillicToLatin`, a processor step, while its own Cyrillic
+  form-of rows name its lemmas with none; those references tie and come in
+  bank order (9.6), which often lists the rarer lemma first (`нема` → `нем`,
+  `реци` → `река`). For the PREFER words and the judged ties, the reading
+  of the dominant lemma is also a Cyrillic whole-word rule in the same
+  transform, which comes before the references. `sources/prefer-tests.py`
+  keeps the 115 of the 323 candidates that change a lookup of wty-sh-en
+  (`sources/cyrillic-twins.tsv`) and writes a `prefer` row for each, with
+  the Cyrillic word's form-of row in the test dictionary; all 322 `prefer`
+  rows fail without the PREFER rules and the twins.
+- **Headword.** wty-sh-en files the conjunction, the pronoun and the letter
+  `i` under `i/languages M to Z`, Wiktionary's title for half of its split
+  page for i, and has no headword `i`; `i` then reached the dictionary only
+  as `I`, whose references name the letter `И` first. Two whole-word rules
+  (a `headword` transform with no part of speech) read `i` and `I` as that
+  headword, so the conjunction comes first. With a dictionary without the
+  split, they find nothing.
 - **Stem constraints.** No stem contains a space, and verb, adjective and
   comparative stems contain no capital letter (`{lowerStem}`): a capitalised
   sentence start such as `Kao` is not read as an l-participle (`Kati`, a
@@ -204,30 +228,38 @@ rules is the own set, and it is the final set.
     `brat`, `sat` and `rat` are not `brati`, `sati` and `rati`;
   - the future patterns read only an infinitive-like word before the clitic:
     `vrt će`, `studenti će` and `radost će` are not verbs.
-- **History.** The first commit of this pack, `sh: own rules` (1ebdbc5),
-  has the own rules as written before Yomitan was read: 177 transforms and
-  1,498 rules, with every Cyrillic rule left to the `cyrillicToLatin`
-  processor. Yomitan's processors were ported in the next commit (1723f54).
-  Later commits changed the rules after measuring:
+- **History** (commits named by subject, as `git log --oneline
+  origin/main..HEAD` lists them). The first commit of this pack, `sh: own
+  rules`, has the own rules as written before Yomitan was read: 177
+  transforms and 1,498 rules, with every Cyrillic rule left to the
+  `cyrillicToLatin` processor. Yomitan's processors were ported in the next
+  commit, `sh: port Yomitan's processors`. Later commits changed the rules
+  after measuring:
   - missing paradigms found in the corpus gaps (`koristan`, `korisniji`,
     `zapadniji`, `društava`, `novinama`, `prezirem`, `donesem`, `uzimljem`,
     `sretnem`, `koljem`, `nabrojen`, the jotated imperfect `voljah`);
   - the per-root classes and exclusions listed above, each after a frequent
     word showed a wrong lemma, and the capital guards (Measurements 4);
   - the cross-product rows, which keep `tests/` and `sources/` under 1 MB;
-  - after the first audit (f894104 and later): the preferred readings, the
-    -sti l-participles per root, `bačen`, `cio`/`beo`, `otići`, the closed
-    list of -ad collectives, the three-letter masculine stems, and
+  - after the first audit (`sh: fixes for audit-hachi-lang-sh (MAJOR-1,
+    MAJOR-2 and minors)` and later): the preferred readings, the -sti
+    l-participles per root, `bačen`, `cio`/`beo`, `otići`, the closed list
+    of -ad collectives, the three-letter masculine stems, and
     `untaggedTerms: "pass"` once hoshidicts #58 was on main;
-  - after the second audit (7f0f80e): 23 more preferred readings, six
-    removed that changed no lookup (`uda`, `pade`, `stare`, `svako`,
-    `novoj`, `leni`), the `prefer` rows, and the own-entry measure.
+  - after the second (`sh: fixes for audit-hachi-lang-sh-b …`): 23 more
+    preferred readings, six removed that changed no lookup (`uda`, `pade`,
+    `stare`, `svako`, `novoj`, `leni`), the `prefer` rows, and the
+    own-entry measure;
+  - after the third (`sh: fixes for audit-hachi-lang-sh-c …`): the
+    Cyrillic twins, the headword rules for `i`, `smeti:v`, and the letter
+    and Cyrillic measures.
 
 ## Measurements
 
-hoshidicts main 39cebbe (with #58, `lookup.untaggedTerms`, 0a73e5e; its
-commits after 1fed676 add only other packs), GCC 14.3, Release; the pack at
-7f0f80e (the next commit changes only this README); wty-sh-en as published,
+hoshidicts main 5ac86a3 (with #58, `lookup.untaggedTerms`, 0a73e5e; its
+commits after 1fed676 add only other packs), GCC 14.3, Release; the pack as
+committed in `sh: measure.py compares lemmas across scripts …` (the commit
+after it changes only this README); wty-sh-en as published,
 imported by `hoshidicts-cli import`. Every number comes from
 `sources/measure-all.sh`:
 
@@ -241,8 +273,9 @@ It runs `eval-language`, `sources/measure.py`, `sources/mutate.py`,
 `languages/en/sources/lookup-batch.cpp` built as its header says.
 `FILTER=1` measures a copy of the pack with `untaggedTerms: "filter"`. The
 outputs, with the hand-judged samples (`judged-*.tsv`), are on the build
-machine in `reports/hachi-lang-sh-evidence/measure-pass-7f0f80e/` and
-`reports/hachi-lang-sh-evidence/measure-filter-7f0f80e/`.
+machine in `reports/hachi-lang-sh-evidence/measure-pass-after-sh-c/` and
+`reports/hachi-lang-sh-evidence/measure-filter-after-sh-c/`. `measure.py`
+compares lemmas across scripts and accent marks (`рећи` is `reći`).
 
 **The dictionary has no part-of-speech tags.** wty-sh-en leaves the `rules`
 column empty on all 987,099 rows (wiktionary-to-yomitan writes it only for
@@ -255,7 +288,7 @@ and keep their conditions for chaining. Both values are reported below;
 `pass` ranks more lemmas first (93.1% of the sample against 79.2%).
 
 1. **eval-language** on the 1,000 sampled rows (`corpus.tsv` + `gaps.tsv`)
-   and on `cases.tsv` (995 positives, 78 negatives). The pack has no
+   and on `cases.tsv` (997 positives, 79 negatives). The pack has no
    optional processor, transform or pass, so every file gives the same
    numbers with every option on and with the defaults (a copy with
    `# options: default` added). "Processors only" is the pack with no rules
@@ -263,22 +296,22 @@ and keep their conditions for chaining. Both values are reported below;
 
    | Rule set | Sample recall | False candidates per row (pass / filter) | First rank (pass / filter) | cases.tsv recall | cases.tsv negatives | cases.tsv first rank (pass / filter) |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own = union = final (`sources/own.json`, `transforms.json`) | 98.2% (982) | 0.387 / 0.058 | 93.1% / 79.2% | 995 / 995 | 78 / 78 | 78.8% / 65.0% |
-   | Processors only (Yomitan has no transforms) | 1.3% (13) | 0.058 / 0.058 | 79.2% / 79.2% | 7 / 995 | 78 / 78 | 65.0% / 65.0% |
+   | Own = union = final (`sources/own.json`, `transforms.json`) | 98.2% (982) | 0.387 / 0.058 | 93.1% / 79.2% | 997 / 997 | 79 / 79 | 78.8% / 65.0% |
+   | Processors only (Yomitan has no transforms) | 1.3% (13) | 0.058 / 0.058 | 79.2% / 79.2% | 7 / 997 | 79 / 79 | 65.0% / 65.0% |
 
    - Without the rules, 79.2% of the sample still ranks first through the
      dictionary's form-of rows. The rules add 13.9 points with `pass`, for
      forms the dictionary lists without a working reference (below) or not at
      all.
    - **Per rule** (`--per-rule`, sample and `cases.tsv`, pass): 458 of the
-     1,032 rows recover a row no other rule reaches, none breaks a negative,
+     1,149 rows recover a row no other rule reaches, none breaks a negative,
      and 14 add false candidates (25 in all) without recovering a row: 8
      pronoun rows (second readings of pronoun forms), one row each of an
      irregular noun, a noun, an adjective and a comparative ending, and two
      present rules (11 of the 25). They are kept.
 2. **Frequent forms** (`measure.py frequent`): the 10,000 most frequent
-   words of each subtitle list. A rule reaches 5,389 hr words (110,864,360
-   tokens) and 5,783 sr words (150,481,779); a word counts when a lemma its
+   words of each subtitle list. A rule reaches 5,390 hr words (114,525,442
+   tokens) and 5,785 sr words (155,441,951); a word counts when a lemma its
    form-of rows name, after accent marks are removed and through up to two
    more references, is among its deinflections.
 
@@ -304,17 +337,25 @@ and keep their conditions for chaining. Both values are reported below;
      it is not an independent measure. `measure.py ties` judges every tie by
      lemma frequency (a form's count shared among the lemmas its form-of
      rows name, over hr_50k and sr_50k; wrong when another lemma is three
-     times as frequent): of 746 hr ties, 242 right, 29 wrong (0.085% of the
-     tokens) and 475 undecided; of 768 sr ties, 244, 29 (0.089%) and 495.
-     Read by hand, 5 of the 29 hr ones are wrong (`ulazi`, `ulaze` and
+     times as frequent): of 735 hr ties, 248 right, 26 wrong (0.074% of the
+     tokens) and 461 undecided; of 763 sr ties, 251, 26 (0.075%) and 486.
+     Read by hand, 5 of the 26 hr ones are wrong (`ulazi`, `ulaze` and
      `prelazi`, whose verbs are only references to `ući` and `preći`;
-     `udaje`; `adama`), 13 are right (`stiže` is the present of `stizati`,
-     `svakog` the genitive of `svaki`; `teče` → `teći`, where the adverb
-     `tek` misleads the frequency) and 11 have two common readings
-     (`pravila`, `plate`, `pale`, `nastave`). The second audit judged 370
+     `udaje`; `adama`), 9 are right (`stiže` is the present of `stizati`;
+     `teče` → `teći`, where the adverb `tek` misleads the frequency) and 12
+     have two common readings (`pravila`, `boje`, `plate`, `pale`). The second audit judged 370
      more ties by hand (260 hr and 110 sr-only): 23 were wrong; 22 are in
      `PREFER` now, and `leni` → `leniti` remains (`len` is only a reference
      to `lijen`, a longer chain).
+   - **In Cyrillic.** `measure.py judged --cyrillic --prefer-list` looks up
+     the 311 words of the judged ties and `PREFER` in Serbian Cyrillic: 20
+     show another lemma first (in Latin, 1). Three of them (`био`, `сада`,
+     `нови`) are own entries whose definitions name the right lemma; the 17
+     others, 683,401 hr tokens of their Latin spellings (0.37%), are words
+     whose Cyrillic form-of rows do not name the dominant lemma, so no rule
+     can put it first (`била` → `било` for `бити`, `постоји` → `постајати`,
+     `ноћи` → `ноћити`, `воде` → `водити`; Known gaps). Before the twins the
+     third audit counted 100.
    - **Own entries.** A first result that is the word's own entry (an empty
      trace) is right by script, because the word is a headword. When the
      word's form-of rows also name another lemma, listed later, it can be a
@@ -325,10 +366,18 @@ and keep their conditions for chaining. Both values are reported below;
      of the tokens) and 1,284 sr (42.7%); most are right (pronouns,
      clitics, adverbs, `dobro`). The second audit read the entries of the
      700 most frequent hr ones and the most frequent sr ones the hr list
-     lacks (`sources/judged-ownentry.tsv`): 27 are wrong in each list,
-     2,299,103 hr tokens (1.25%) and 3,144,930 sr (1.31%); strictly,
-     leaving out `radi`, `može`, `stara`, `luda` (a second common use) and
-     the Croatian `video`, 22 (0.99%) and 23 (1.07%). Known gaps lists them.
+     lacks, and the third added six (`sources/judged-ownentry.tsv`): 33 are
+     wrong in each list, 4,082,911 hr tokens (2.22%) and 5,501,819 sr
+     (2.29%); strictly, leaving out `radi`, `može`, `stara`, `luda`, `tih`,
+     `stari` (a second common use) and the Croatian `video`, 26 (1.91%) and
+     27 (2.02%). `si` (1,614,317 hr occurrences) shows the dative of `sebe`
+     before the "you are" of `biti`. Known gaps lists them.
+   - **Letters.** A headword whose only entry is a letter of the alphabet
+     (`A`, `А`, `И`, `У`) comes first for 20 of the hr 10,000 words (0.15%
+     of the tokens) and 16 of the sr (0.12%), all one-letter fragments and
+     abbreviations (`g`, `l`, `d`, `t`, `h`); `measure.py` counts such a
+     first result as wrong (`letter`) in items 3 and 4. `i` was the largest
+     before the headword rules (3,661,082 hr occurrences).
    - **Words without a form-of row or entry** (`measure.py nogold`) whose
      first result a rule made: 919 hr words (2.86% of tokens) and 904 sr
      (2.78%). In a random sample of 60 of each, judged by hand, 2 and 7 are
@@ -345,9 +394,10 @@ and keep their conditions for chaining. Both values are reported below;
 
    | First result | Pass | Filter |
    | --- | ---: | ---: |
-   | the hovered word, a lemma its form-of rows name | 42,347 | 42,356 |
-   | the hovered word's own entry, while its form-of rows name another lemma (judged in items 2 and 4) | 106,060 | 106,097 |
-   | the hovered word, another lemma | 65 | 1 |
+   | the hovered word, a lemma its form-of rows name | 42,348 | 42,356 |
+   | the hovered word's own entry, while its form-of rows name another lemma (judged in items 2 and 4) | 105,985 | 106,022 |
+   | the hovered word, a letter of the alphabet (`А`, `У` at a sentence start) | 75 | 75 |
+   | the hovered word, another lemma | 64 | 1 |
    | the hovered word without form-of rows or an entry (not judged) | 3,175 | 27 |
    | a longer text, a lemma its form-of rows name (`vidio sam` → `vidjeti`, `radit ću` → `raditi`) | 4,236 | 4,236 |
    | a longer text without form-of rows (not judged) | 42 | 12 |
@@ -358,18 +408,18 @@ and keep their conditions for chaining. Both values are reported below;
      `pošao je` (`poći`) through Yomitan's diacritics processor; most others
      are `X ću` read through the future pattern with the right lemma
      (`učiniti ću` → `učiniti`, `put će` → `put`).
-   - The 65 hovered words with another lemma are capitalised sentence
+   - The 64 hovered words with another lemma are capitalised sentence
      starts read as a proper noun through a noun rule (`Boli` → `Bol` 15
      times, `Vlada` → `Vlado` 7, `Engleski` → `Engleska` 5; Known gaps).
 4. **Real text** (`measure.py text`): every word of the text, looked up with
    the rest of its sentence.
 
-   | Text | Lookups | First result right by script | Own entry (judged by sample) | Wrong by script | Not judged by script | Nothing |
-   | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | *Zlatarevo zlato* | 79,137 | 45,045 | 22,584 | 102 (0.13%) | 3,221 | 8,185 |
-   | Gutenberg sr | 70,938 | 33,239 | 27,132 | 23 (0.03%) | 3,875 | 6,669 |
-   | *Zlatarevo zlato*, filter | 79,137 | 45,041 | 22,596 | 14 | 126 | 11,360 |
-   | Gutenberg sr, filter | 70,938 | 33,150 | 27,133 | 5 | 486 | 10,164 |
+   | Text | Lookups | First result right by script | Own entry (judged by sample) | A letter | Wrong by script | Not judged by script | Nothing |
+   | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+   | *Zlatarevo zlato* | 79,137 | 45,041 | 22,126 | 462 | 102 (0.13%) | 3,221 | 8,185 |
+   | Gutenberg sr | 70,938 | 33,205 | 26,346 | 820 | 23 (0.03%) | 3,875 | 6,669 |
+   | *Zlatarevo zlato*, filter | 79,137 | 45,037 | 22,138 | 462 | 14 | 126 | 11,360 |
+   | Gutenberg sr, filter | 70,938 | 33,116 | 26,347 | 820 | 5 | 486 | 10,164 |
 
    - A result is judged by script when the matched text has form-of rows or
      an entry. A random sample of 60 of the others per text (seed 1) was
@@ -377,28 +427,42 @@ and keep their conditions for chaining. Both values are reported below;
      names (`Matom` → `mati`, `Gašu`, `Mokrice`; the speaker name `ТОМА` →
      `taj` 7 times in Nušić's play, `Paris` → `pariti`).
    - **Ties.** A result right by script can be a homograph's rarer lemma
-     when another lemma the form-of rows name comes later: 5,544 such
-     positions in *Zlatarevo zlato* and 374 in the Gutenberg texts. A
-     random sample of 60 of each (`measure.py tiesample`, seed 1), judged in
-     context, had 8 and 5 wrong at fa0068c. The `PREFER` entries for
-     `teče`, `stupi` and the forms of `jezero` were taken from them; at
-     7f0f80e they have 6 and 3: `Zebe` → `zeba` (for `zepsti`), `vodi` →
-     `voda`, `mjeri` → `mjera`, `šiju` → `šiti` (for `šija`), `Mare` →
-     `mar` (the name `Mara`, which the dictionary lacks), `Plemići` →
-     `Plemić` (a surname, for `plemić`); `шила` → `šiti` (for `šilo`),
-     `Стани` → `Stana` (for `stati`), `Српске` → `Srpska` (for `srpski`).
-     The lemma-frequency judge of item 2 calls 322 of the 5,544 and 25 of
-     the 374 wrong.
+     when another lemma the form-of rows name comes later: 7,991 such
+     positions in *Zlatarevo zlato* (many of them the conjunction `i`, whose
+     headword rule ties with the letter `И`: 22 of the 60 sampled) and 832 in
+     the Gutenberg
+     texts. A random sample of 60 of each (`measure.py tiesample`, seed 1),
+     judged in context, has 4 and 6 wrong: `rastave` → `rastava` (for
+     `rastaviti`), `Dragi` → `Draga` (for `drag`), `banu` → `banuti` (for
+     `ban`), `skupim` → `skup` (for `skupiti`); `другом` → `други` (for
+     `друг`, "with his friend"), `шила` → `šiti`, `Тому` → `Tomo`, `Српске`
+     → `Srpska`, `Стани` → `Stana`, `погледа` → `погледати` (for
+     `поглед`). The lemma-frequency judge of item 2 calls 291 of the 7,991
+     and 32 of the 832 wrong. (The earlier samples, of the positions before
+     the headword rules and the Cyrillic twins, had 8 and 5 wrong; the
+     `PREFER` entries for `teče`, `stupi` and the forms of `jezero` were
+     taken from them.)
    - **Own entries** (item 2): a random sample of 60 of each text's
      own-entry positions (`--own-out`, seed 1; the second audit drew and
-     judged the same rows), judged in context, has 3 and 3 wrong: `gori`
+     judged the same rows), judged in context, has 3 and 5 wrong: `gori`
      (for `gora`, "k Okićkoj gori"), `sina` (for `sin`), `Velika` (for
-     `velik`); `видео` (for `videti`), `биле` (for `biti`) and the speaker
-     name `НАДА` read as `нада` "hope".
-   - Counting the samples' shares, about 2,220 first results of *Zlatarevo
-     zlato* are wrong (2.8%: 102 by script, about 430 not judged by script,
-     550 ties and 1,130 own entries) and about 2,240 of the Gutenberg texts
-     (3.2%: 23, 840, 19 and 1,360; most of the second and fourth are names).
+     `velik`); `видео` (for `videti`), `биле` (for `biti`), the speaker
+     name `НАДА` read as `нада` "hope", and two sentence-initial `У` that
+     show the letter (counted under "A letter" above).
+   - **Cyrillic against Latin** (`measure.py cyrlatin`): at 1,330 of the
+     Gutenberg lookups (1.9%) the first result differs from that of the
+     same text transliterated to Latin. In a random sample of 60 (seed 1),
+     judged in context, the Cyrillic one is wrong at 27 (21 of them right
+     in Latin: `била` → `било` 5 times, `води` → `водити`, `костима` →
+     `костим`, `Марка` → `марка`), right only in Cyrillic at 8 (`коси` →
+     `коса` before `kos`) and right both ways at 25: about 600 Cyrillic
+     lookups (0.85%) are wrong, about 470 of them only in Cyrillic.
+   - Counting the samples' shares, about 2,630 first results of *Zlatarevo
+     zlato* are wrong (3.3%: 102 by script, about 430 not judged by script,
+     530 ties, 1,110 own entries and 462 letters) and about 3,700 of the
+     Gutenberg texts (5.2%: 23, 840, 83, 1,360, 820 and about 580 Cyrillic
+     ties of the references; most of the not judged, own-entry and letter
+     ones are names and sentence starts).
    - The largest groups of wrong results by script are capitalised words
      read as a proper noun through a noun rule, which rank first because the
      as-written text needs no processor step: in *Zlatarevo zlato* `Marka` →
@@ -417,33 +481,35 @@ and keep their conditions for chaining. Both values are reported below;
 6. **Performance** (section 13), the 70 texts of
    `sources/benchmark-words.txt`, 6 passes with the first dropped:
    - native `benchmark-lookup --languages languages --language sh`,
-     wty-sh-en mapped, three runs at machine load 43-50: p50 86-90 µs,
-     p95 137-153 µs (with the filter: p50 76-82 µs, p95 127-136 µs). The
+     wty-sh-en mapped, three runs at machine load about 31: p50 80-82 µs,
+     p95 129-131 µs (with the filter: p50 71-79 µs, p95 118-134 µs). The
      budget is 1 ms p50;
    - WebAssembly (`sources/wasm-measure.mjs`, Node 22): Hachidori
      feat/multi-language 803f7b6's three engines rebuilt from this branch
-     (fa0068c, whose engine sources are main 1fed676's) with emsdk, because
+     (at `sh: lookup.untaggedTerms pass …`, whose engine sources are main
+     1fed676's and unchanged since) with emsdk, because
      the prebuilt ones come from hoshidicts b145feb, before #58, and refuse
      the `untaggedTerms` key. `hdw_language_load` median 7.4 ms
-     single-thread and 8.1 ms threaded over 10 fresh engines, live heap
-     +831,688 and +832,872 bytes; `hdw_lookup` p50 0.193 ms and p95
-     0.336 ms single-thread, 0.199 ms and 0.360 ms threaded, with wty-sh-en
+     single-thread and 7.5 ms threaded over 10 fresh engines, live heap
+     +882,440 and +883,120 bytes; `hdw_lookup` p50 0.167 ms and p95
+     0.298 ms single-thread, 0.189 ms and 0.331 ms threaded, with wty-sh-en
      paged; all 70 texts find something. Budgets 50 ms and 20 MB. The pack
      has 10 `pattern` rules, the future written apart.
 7. **Tests.** `language-conformance-test languages/sh`: corpus.tsv 982 / 982,
-   cases.tsv 1,073 / 1,073, text.tsv 39 / 39, lookup.tsv 269 / 269 (11
-   `order` rows, with both lemmas of each tie in the test dictionary, and
-   the 207 `prefer` rows), gaps.tsv 0 / 19 (18 UniMorph
+   cases.tsv 1,076 / 1,076, text.tsv 41 / 41, lookup.tsv 387 / 387 (12
+   `order` rows, with both lemmas of each tie in the test dictionary, 2
+   `headword` rows and the 322 `prefer` rows), gaps.tsv 0 / 19 (18 UniMorph
    rows and `Marijo`); classes.json agrees (14 classes, 438 fields, 3
    steps). `node tools/check-yomitan.mjs` compares the four Yomitan
-   processors on 2,203 to 3,059 inputs each: 0 differences.
+   processors on 2,324 to 3,180 inputs each: 0 differences.
    `sources/mutate.py` removes each stem constraint, exclusion, word list
-   and the `untaggedTerms` field in a scratch copy (50 mutations, among them
-   one `PREFER` rule and the -ad list widened back to suffix rules); every
-   one makes the conformance test fail, and without the `PREFER` rules all
-   207 `prefer` rows fail. `tests/` and `sources/` hold 829,469
+   and the `untaggedTerms` field in a scratch copy (56 mutations, among them
+   one `PREFER` rule, the Cyrillic twins, the headword rules and the -ad
+   list widened back to suffix rules); every one makes the conformance
+   test fail, and without the `PREFER` rules and the twins all 322
+   `prefer` rows fail. `tests/` and `sources/` hold 901,188
    bytes (`git ls-tree -r -l HEAD -- languages/sh/tests languages/sh/sources`).
-8. **Hachidori** (feat/multi-language 803f7b6 with this branch at 7f0f80e in
+8. **Hachidori** (feat/multi-language 803f7b6 with this branch's head in
    `third_party/hoshidicts` and the engines of item 6,
    `test/chrome-language-pack.mjs`, Chrome 152, wty-sh-en): 14 / 14 checks
    pass. Settings adds Serbo-Croatian beside Japanese and imports the
@@ -465,21 +531,41 @@ and keep their conditions for chaining. Both values are reported below;
 - **A word's own entry with another meaning comes first** (section 9.6:
   its empty trace outranks the reference to the lemma its form-of rows
   name, and no rule or field of a pack can change that). Of the 10,000 most
-  frequent words, 27 hr and 27 sr show such an entry first in the judged
-  list (1.25% and 1.31% of the tokens; strictly 22 and 23, 0.99% and
-  1.07%): `bilo` (478,606 hr occurrences), `može`, `kada`, `imam`, `toga`,
-  `radi`, `jeste`, `mora`, `tim`, `radio`, `žele`, `sina`, `bile`, `nova`,
-  `stara`, `luda`, `rata`, `živa`, `mlada`, `pita`, `pali`, `duga`, `smio`,
-  `jela`, `puca`, `kuca`, and `video` (137,826 sr). In the text samples,
-  3 and 3 of 60 own-entry positions are wrong, about 1,130 and 1,360
-  lookups. Reported to the framework (`reports/hachi-lang-questions.md`,
+  frequent words, 33 hr and 33 sr show such an entry first in the judged
+  list (2.22% and 2.29% of the tokens; strictly 26 and 27, 1.91% and
+  2.02%): `si` (1,614,317 hr occurrences), `bilo` (478,606), `može`,
+  `kada`, `imam`, `toga`, `radi`, `jeste`, `mora`, `tim`, `radio`, `žele`,
+  `sina`, `bile`, `nova`, `stara`, `luda`, `rata`, `živa`, `mlada`, `pita`,
+  `pali`, `duga`, `smio`, `jela`, `puca`, `kuca`, `ovoga`, `ovoj`, `tiče`,
+  `tih`, `stari`, and `video` (137,826 sr). The Cyrillic `сам` has only
+  "alone", so `Мислио сам` shows it first. In the text samples, 3 and 3 of
+  60 own-entry positions are wrong, about 1,110 and 1,360 lookups.
+  Reported to the framework (`reports/hachi-lang-questions.md`,
   2026-11-03, hachi-lang-sh), with the option of ranking the referenced
   lemma with the own entry.
+- **Cyrillic words whose rows do not name the dominant lemma.** A Cyrillic
+  twin can only put first a lemma the word's Cyrillic form-of rows name;
+  wty-sh-en's Cyrillic rows often name fewer lemmas than the Latin ones
+  (`била` names only `било` "pulse", not `бити`). 17 of the 311 judged and
+  `PREFER` words stay wrong in Cyrillic (683,401 hr tokens of their Latin
+  spellings, 0.37%): `била`, `постоји`, `постоје`, `посла`, `ноћи`, `чула`,
+  `воде`, `воду`, `водом`, `крви`, `вечери`, `пете`, `душу`, `расте`,
+  `точку`, `тече`, `смела`. In the Gutenberg texts about 470 lookups
+  (0.66%) are wrong in Cyrillic and right in Latin.
+- **A one-letter word at a sentence start shows the letter.** `A`, `А`,
+  `И`, `У`, `О`, `С`, `К` and `Е` are headwords whose only entry is the
+  letter, so `А онда` and `У граду` show "the first letter of the
+  alphabet" first and the conjunction or preposition second: 462 lookups
+  of *Zlatarevo zlato* (0.58%) and 820 of the Gutenberg texts (1.16%). It
+  is the sentence-start own entry that the lead's answer to hachi-lang-de
+  (2026-11-03T09:45:10Z) leaves as a known gap.
 - **Ties that remain** (section 9.6). Readings that tie on every ranking
   key come in discovery order, and `PREFER` covers only the frequent words
-  it lists. What remains (Measurements 2 and 4): 5 wrong of the 29 hr
-  frequent-word ties the frequency judge flags, `leni` → `leniti`, and 6
-  and 3 of the 60 sampled tie positions of the two texts. `ulazi`, `ulaze`
+  it lists. What remains (Measurements 2 and 4): 5 wrong of the 26 hr
+  frequent-word ties the frequency judge flags, `leni` → `leniti`, and 4
+  and 6 of the 60 sampled tie positions of the two texts (`другом` →
+  `други` for "with his friend" and `погледа` → `погледати` for "the
+  views" are `PREFER` readings that context reverses). `ulazi`, `ulaze`
   and `prelazi` (13,774, 2,043 and 1,463 hr occurrences) show the noun
   because their verbs (`ulaziti`, `prelaziti`) are only references to
   `ući` and `preći`, a longer chain than the noun rule's, which `PREFER`
