@@ -4,7 +4,9 @@ Deinflection rules, text processors and scanning settings for Georgian in the
 Mkhedruli script. Lookups start at the hovered word and try only prefixes that
 end at a word boundary (`word` / `word` / `spaces`, docs/languages.md 14.1).
 Hyphens and spaces separate words, so a phrase the dictionary has is found
-over two words (დაბადების დღეზე → დაბადების დღე). The rules reach a noun or
+over two words (დაბადების დღეზე → დაბადების დღე), and a hover on a case
+ending written after a hyphen (Apple-ის) reads the ending alone (Known
+gaps). The rules reach a noun or
 adjective in the nominative singular and a verb in the third person singular
 of the present (წერს) or, for a perfective verb, of the future (დაწერს), the
 forms English Wiktionary lists them under.
@@ -100,7 +102,7 @@ intermediate states that no dictionary term matches.
 ## Rule provenance
 
 - **Final set**: `transforms.json` is `sources/own.json`: 56 transforms and
-  1,185 rules (552 `suffix`, 301 `prefix`, 88 `circumfix` rows, 244
+  1,194 rules (552 `suffix`, 301 `prefix`, 88 `circumfix` rows, 253
   `wholeWord`), all `own`. No rule is `both`: Yomitan's rules strip an
   ending to the bare stem (სახლში → სახლ), which no own rule does.
 - **Own rules** (commit `Georgian (ka): own rules`, written before Yomitan's
@@ -296,6 +298,28 @@ intermediate states that no dictionary term matches.
   - labels: W for მანამ, შენზე, ხდის and the names of the audit's lists,
     which no rule can fix (Known gaps), A for რუს, and W for the wrong
     suspects.
+- **Fixes from the fifth audit** (audit-hachi-lang-ka-e on d75017fa):
+  - whole-word rules for the endings a hover after a hyphen reads alone
+    and that found nothing: ში, ით, დან, იან → -ში, -ით, -დან, -იანი
+    (2010-ში, 50-ით, 1990-დან, 1990-იან წლებში), as the audit tested. 303
+    of the 568,593 first results of the eleven sets change, all from
+    nothing to the suffix entry;
+  - whole-word rules for the perfect of მუშაობს "to work" (უმუშავია,
+    უმუშავიათ, მიმუშავია, გიმუშავია, გვიმუშავია), which the perf rule read
+    as ამუშავებს "to make work" with one step fewer. Five UniMorph rows now
+    show the step `word` instead of `perf` (trace quality below);
+  - the whole-word rules დაწვა → წევს and ელი → ელის, added after the
+    fourth audit, are right in the literary texts and wrong in most of
+    Wikipedia (დაწვა "burned", 1-ელი "first"); the labels make them A;
+  - tests: rows for these rules, ერთ and სამ with the noun condition, and
+    a `lookup.tsv` row გამოსვლა → გამოდის that fails with `formOfIgnore:
+    ["perfective noun-from-verb"]`;
+  - the judge counts case endings written after a hyphen and the ordinal
+    მე- apart (Measurements 2 to 4), in the frequency list from the counts
+    of `wiki-text.py hyphen`;
+  - labels: ხევა → ხევი and ბატონებში → ბატონები W, the suffix readings R;
+    the 25 W labels of words the rules now read right, which no measured
+    lookup uses any more, are gone.
 - **Tried and not kept**:
   - a passive-to-active rule (შეიქმნება → შექმნის, as Wiktionary's tables
     list the ი- passive under the active verb). It changed 1,548 first
@@ -341,15 +365,15 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
    | Rules | untaggedTerms | File | Rows | Recall | Negatives passed | False candidates | First rank |
    | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
    | own | pass | corpus + gaps | 1,050 | 90.48% | - | 0.3495 | 69.62% |
-   | own | pass | cases | 705 | 100.00% | 100.00% | 1.5302 | 70.96% |
+   | own | pass | cases | 711 | 100.00% | 100.00% | 1.5299 | 71.29% |
    | Yomitan | pass | corpus + gaps | 1,050 | 6.57% | - | 0.0543 | 48.86% |
-   | Yomitan | pass | cases | 705 | 0.19% | 96.35% | 0.6569 | 35.28% |
+   | Yomitan | pass | cases | 711 | 0.19% | 96.35% | 0.6493 | 34.87% |
    | union | pass | corpus + gaps | 1,050 | 90.48% | - | 0.3752 | 69.62% |
-   | union | pass | cases | 705 | 100.00% | 95.83% | 1.5809 | 70.96% |
+   | union | pass | cases | 711 | 100.00% | 95.83% | 1.5800 | 71.29% |
    | **final** | pass | corpus + gaps | 1,050 | **90.48%** | - | 0.3495 | 69.62% |
-   | **final** | pass | cases | 705 | 100.00% | 100.00% | 1.5302 | 70.96% |
+   | **final** | pass | cases | 711 | 100.00% | 100.00% | 1.5299 | 71.29% |
    | final | filter | corpus + gaps | 1,050 | 90.48% | - | 0.0276 | 48.38% |
-   | final | filter | cases | 705 | 100.00% | 100.00% | 0.5634 | 39.96% |
+   | final | filter | cases | 711 | 100.00% | 100.00% | 0.5568 | 40.27% |
 
    - `pass` against `filter`: with `filter` no deinflection with conditions
      finds a term (wty-ka-en tags none of its 526,311 rows: 503,397
@@ -369,10 +393,10 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
    - **Trace quality** (`sources/trace-quality.mjs`): of the UniMorph rows
      a set reaches, the share whose shown trace (fewest steps) names the
      row's case or tense: final 99.74% of 67,160 noun and adjective rows
-     and 92.86% of 15,698 verb rows; union 94.42% and 92.86%; Yomitan 0% of
+     and 92.83% of 15,698 verb rows; union 94.42% and 92.83%; Yomitan 0% of
      6,844 (its traces only say "noun-adj-suffix-stripping").
    - **Search size**: გვ repeated 8, 10, 12 or 40 times before -ოდა gives
-     152 deinflections each time, in 0.20 s (the first audit's head gave
+     152 deinflections each time, in 0.24 to 0.31 s (the first audit's head gave
      1,662,421 for 12 times, in 219 s). The 31,848 distinct words of the
      measured books, Tatoeba and frequent words give 29.7 deinflections on
      average, 92 at the 95th percentile and at most 543 (მიგვიკარებია).
@@ -384,17 +408,18 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
    whether the first result is wrong in the usual reading (W), ambiguous
    (A, context decides, counted apart) or right (R), and a label decides
    wherever it exists. It labels these first results: one of several
-   lemmas the word's rows name (672 pairs: 38 W, 48 A, 586 R); the word's
+   lemmas the word's rows name (647 pairs: 14 W, 48 A, 585 R); the word's
    own entry while its rows name another lemma (559 pairs: 29 W, 13 A, 517
    R; წელს "this year" where the text has the dative of წელი "year"),
    which the script also counts apart (`ownEntryWrong`); the only lemma the
-   word's rows name where the text has another word (24 pairs: 17 W, 6 A,
+   word's rows name where the text has another word (25 pairs: 18 W, 6 A,
    1 X; მანამ → მანა "spoke" for "until"); the output of a whole-word rule
-   where the rows name another lemma (9 R: ერთ → ერთი); and the 100 most
-   frequent words that wty-ka-en does not know (8 W, 91 R and one X, a text
-   that is not a word), with გაუგია → იგებს. `sources/tatoeba-labels.tsv`
-   adds the 19 forms of the name Tom for Tatoeba. No pair of the nine text
-   sets below is unlabelled; an unlabelled pair would be reported.
+   where the rows name another lemma (7 R, ერთ → ერთი, and 2 A, დაწვა →
+   წევს and ელი → ელის); and the 100 most frequent words that wty-ka-en
+   does not know (7 W, 92 R and one X, a text that is not a word), with 5
+   more such words. `sources/tatoeba-labels.tsv` adds the 19 forms of the
+   name Tom for Tatoeba. No pair of the eleven text sets below is
+   unlabelled; an unlabelled pair would be reported.
 
    **Suspects** (`--suspects <freq.tsv>`). The script counts a first result
    right when it is the only lemma the word's rows name, and such a row
@@ -403,18 +428,18 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
    own rows reach (no step of the trace is a transform of the pack) where
    the next result is a rule reading of a lemma at least three times as
    frequent in the Wikipedia list (the fourth auditor's list of this kind,
-   `hidden-rows-only.txt`, goes down to 3.1 times). In the eight text sets
-   and the frequency list it finds 208 pairs (703 positions and 15
+   `hidden-rows-only.txt`, goes down to 3.1 times). In the ten text sets
+   and the frequency list it finds 228 pairs (870 positions and 15
    frequent words). I judged all of them by hand
-   (`reports/hachi-lang-ka-evidence/suspects-judged.tsv`): 8 are wrong and
-   labelled W (ბატონებზე and ბატონებიდან → ბატონები "contagious diseases"
-   for "the masters", ნაკლებს → ნაკლი "fault" for "less", მანაზე and
+   (`reports/hachi-lang-ka-evidence/suspects-judged.tsv`): 9 are wrong and
+   labelled W (ბატონებზე, ბატონებში and ბატონებიდან → ბატონები "contagious
+   diseases" for "the masters", ნაკლებს → ნაკლი "fault" for "less", მანაზე and
    მანასთან → მანა "spoke" for the name Mana, კელი → კევრი "threshing
    board" for the name Kelly, თვისგან and თვისკენ, archaic "from, towards
-   oneself", → თვე "month"; 12 positions and 574 tokens), 7 are ambiguous
+   oneself", → თვე "month"; 17 positions and 574 tokens), 7 are ambiguous
    (16 positions: მსახურების "of the servants" or "of the service",
    რიგისა, the თვლ- forms of თვალი "wheel; gem; eye"), one is X (a piece
-   of a word broken over a line), and 192 are right: verb forms the rows
+   of a word broken over a line), and 211 are right: verb forms the rows
    name (ვნახე → ნახავს before ხედავს, მოვედი → მოდის before და), case
    forms (ძვლის → ძვალი before ძველი "old", ვალში → ვალი before ალი
    "flame"), spellings (ეხლავე → ახლავე) and names wty-ka-en has (მარი →
@@ -442,38 +467,48 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
    - 3 are names wty-ka-en lacks (1,814 tokens): მალის → მალი "fast" for
      the country Mali, მადამ → მადა "appetite" for Madame, კელი → კევრი for
      Kelly;
-   - 37 more (128,339 tokens) are ambiguous, 9 of them own entries (დღეს
+   - 38 more (128,887 tokens) are ambiguous, 9 of them own entries (დღეს
      "today" or "on the day"; დე, the particle "let" or the de of French
-     names), ხანის → ხანი or ხანა, and რუს, რიგის, რიგისა and რობერტო,
-     whose rows name one lemma (Known gaps).
+     names), ხანის → ხანი or ხანა, რუს, რიგის, რიგისა and რობერტო, whose
+     rows name one lemma, and ელი (Known gaps).
+
+   **Case endings after a hyphen** (`--hyphen`, the counts of `python3
+   languages/ka/sources/wiki-text.py hyphen <dump> <out>`): 391,392 of the
+   list's tokens are one of the judge's endings written right after a
+   hyphen, or მე before "-" and a digit (28 words). 86,199 show a suffix
+   entry (-ში, -იანი, -მდე, -დან, -ით), 7,912 nothing, 40,857 the related
+   adverbs ზე and თან, 92,459 a letter (ს, ე, მ, ი, ა) and 163,965 another
+   word: ის "he" for the genitive -ის (124,293), მე "I" for the ordinal
+   prefix (22,271), მა "dad" for the ergative -მა (12,544), სა "where"
+   (3,667). Counted wrong, the wrong share is 1.79% with the other words
+   and 2.14% with the letters too (Known gaps).
 
    The suspects of the frequency list are 15 words (43,882 tokens): კელი
    is wrong, რიგისა ambiguous and the other 13 right.
 
-   1,514 more of the 10,000 words (2,566,319 tokens) are not wty-ka-en
+   1,518 more of the 10,000 words (2,630,786 tokens) are not wty-ka-en
    headwords and still get a result. Of the 100 most frequent of them
-   (985,044 tokens), 8 show a wrong first result (80,258 tokens, 0.30%):
+   (1,031,487 tokens), 7 show a wrong first result (75,754 tokens, 0.28%):
    შეადგენდა, შეადგენს "amounts to" → ადგენს "establishes"; მოიცავს
    "includes", შეიცავს "contains" and გამოიცა "was published" → იცავს
-   "protects"; მიენიჭა "was awarded" → ნიჭი "talent"; ვიცე → იცავს (the
-   list splits ვიცე-პრეზიდენტი and other compounds at the hyphen); and
-   დაყოფა "division" → ყოფა "being". One is not a word of running text:
-   მინი (36,457 tokens), the image-link keyword "thumb" that
-   `wiki-text.py` keeps from the dump's markup. The other 91 are right. Of
-   the other 1,414 such words (1,581,275 tokens), a seeded sample of 50
-   (`reports/hachi-lang-ka-evidence/unjudged-sample-judged.tsv`) has 8
-   wrong (11,220 of its 65,927 tokens, 17%) and 1 ambiguous: verbs and
-   derived words that wty-ka-en lacks, read as another word (გადაეცემა
-   "is passed on" → ცემს "beats", შეეძინათ "was born to them" → იძინებს
-   "sleeps", მოძრავი "moving" → ძრავა "engine", მოჭადრაკე "chess player" →
-   ჭადრაკი "chess"). The fourth auditor's sample of 50 had 7 wrong and 1
-   ambiguous.
-   The third auditor counted 12 wrong of these 100 on the previous head
-   (169,280 tokens); the fixes above took სამხრეთ, ჩრდილო, იანი and მდე
-   (89,022 tokens) off the list.
+   "protects"; მიენიჭა "was awarded" → ნიჭი "talent"; and ვიცე → იცავს
+   (the list splits ვიცე-პრეზიდენტი and other compounds at the hyphen).
+   One is not a word of running text: მინი (36,457 tokens), the image-link
+   keyword "thumb" that `wiki-text.py` keeps from the dump's markup. The
+   other 92 are right, among them the four endings above that now show
+   their suffix entry. Of the other 1,418 such words (1,599,299 tokens),
+   a seeded sample of 50 (seed 31,
+   `reports/hachi-lang-ka-evidence/unjudged-sample-judged.tsv`) has 11
+   wrong (13,340 of its 61,219 tokens, 22%): verbs and derived words that
+   wty-ka-en lacks, read as another word (გადარჩა "survived" → რჩება
+   "remains", დაევალა "was assigned" → ვალი "debt", მოვლა "care" → ავლებს
+   "rinses"), names and titles (სერ "Sir" → სერი "hill", მოსე "Moses",
+   ალენ "Alain") and იანები after a hyphen. The same seed on the previous
+   head's list gave another 50 with 8 wrong and 1 ambiguous, and the
+   fourth auditor's 50 had 7 wrong and 1 ambiguous.
 3. **Sentences** (every word position of Tatoeba's 7,699 sentences, the text
    from the word to the end of its sentence, as a host passes it; 29,725
-   lookups, 27,796 find something). Of the 24,009 positions whose word the
+   lookups, 27,799 find something). Of the 24,009 positions whose word the
    dictionary has, 886 show a wrong first result (3.69%):
    - 828 are forms of the name Tom (ტომი 369, ტომს 196, ტომმა 195, ტომის
      27, ტომთან 23, ...), which show ტომი "tribe; volume": wty-ka-en has no
@@ -490,9 +525,10 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
    at 19 positions (15 სამი, 4 სამის) it shows სამი "three", which the
    judge counts right because it cannot tell the name from the numeral; the
    6 ergatives სამიმ find nothing (the fourth auditor's reading of all 63
-   positions of the three forms, Known gaps). 165 are ambiguous, 119 of
+   positions of the three forms, Known gaps). 167 are ambiguous, 119 of
    them own entries (დღეს 66, მოდი 31, რამ 12) and 36 თავის (the possessive
-   თავისი or the genitive of თავი). Georgian has no articles, and its
+   თავისი or the genitive of თავი). Case endings after a hyphen are rare
+   here: 6 positions, 3 of which show another word. Georgian has no articles, and its
    postpositions, clitics and copula are written onto the word, so the
    phrases to check are the ones the rules build over two words. In Tatoeba
    and the books, 77 first results (57 distinct) match two or more words
@@ -507,21 +543,39 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
 
    | Texts | Lookups | Find something | Judged | Wrong | of which own entries | Ambiguous |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | the two books | 66,752 | 50,413 | 40,043 | 63 (0.16%) | 46 | 585 |
-   | the first auditor's two texts | 32,753 | 25,087 | 20,223 | 35 (0.17%) | 29 | 240 |
-   | the second auditor's two texts | 84,661 | 65,348 | 52,694 | 259 (0.49%) | 197 | 645 |
-   | the third auditor's two texts | 52,371 | 41,220 | 32,975 | 75 (0.23%) | 52 | 407 |
-   | the third auditor's Wikipedia sample | 51,120 | 39,644 | 33,358 | 439 (1.32%) | 412 | 246 |
-   | the fourth auditor's two texts | 62,221 | 47,994 | 38,160 | 74 (0.19%) | 40 | 431 |
-   | the fourth auditor's Wikipedia sample | 55,230 | 44,552 | 37,986 | 471 (1.24%) | 417 | 170 |
+   | the two books | 66,752 | 50,419 | 40,043 | 63 (0.16%) | 46 | 588 |
+   | the first auditor's two texts | 32,753 | 25,088 | 20,223 | 36 (0.18%) | 29 | 240 |
+   | the second auditor's two texts | 84,661 | 65,352 | 52,694 | 259 (0.49%) | 197 | 649 |
+   | the third auditor's two texts | 52,371 | 41,220 | 32,975 | 75 (0.23%) | 52 | 410 |
+   | the third auditor's Wikipedia sample | 51,120 | 39,710 | 33,358 | 439 (1.32%) | 412 | 247 |
+   | the fourth auditor's two texts | 62,221 | 47,996 | 38,160 | 74 (0.19%) | 40 | 432 |
+   | the fourth auditor's Wikipedia sample | 55,230 | 44,660 | 37,986 | 471 (1.24%) | 417 | 170 |
+   | the fifth auditor's two texts | 73,600 | 60,060 | 46,344 | 114 (0.25%) | 57 | 633 |
+   | the fifth auditor's Wikipedia sample | 50,160 | 40,783 | 34,776 | 411 (1.18%) | 390 | 174 |
 
-   The rows of the third and fourth auditors' sets add their labels
-   (`reports/audit-hachi-lang-ka-c-evidence/inputs/my-labels-mine-wiki.tsv`,
-   `reports/audit-hachi-lang-ka-d-evidence/inputs/my-labels-d1-d2.tsv`) for
-   the pairs of their sets that the pack's labels do not cover. The fourth
-   auditor's texts are Lavrenti Ardaziani's *სოლომონ ისაკიჩ
-   მეჯღანუაშვილი* and Vasil Barnovi's *მიმქრალი შარავანდედი* from
-   Wikisource; the sample is every 101st Wikipedia article from the 50th.
+   The rows of the third, fourth and fifth auditors' sets add their labels
+   (`reports/audit-hachi-lang-ka-{c,d,e}-evidence/inputs/my-labels-*.tsv`)
+   for the pairs of their sets that the pack's labels do not cover. The
+   fourth auditor's texts are Lavrenti Ardaziani's *სოლომონ ისაკიჩ
+   მეჯღანუაშვილი* and Vasil Barnovi's *მიმქრალი შარავანდედი*, the fifth's
+   Shio Aragvispireli's *გაბზარული გული* and Zakaria Chichinadze's
+   *ქართველთ ებრაელნი საქართველოში* (Wikisource); their samples are every
+   101st Wikipedia article from the 50th and every 89th from the 7th.
+
+   **Case endings after a hyphen** (and the ordinal მე-), counted apart:
+   the positions, what they show first, and the wrong count with them.
+
+   | Texts | Positions | Suffix entry | Nothing | ზე, თან | A letter | Another word | Wrong with another word | With the letters too |
+   | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+   | Tatoeba | 6 | 2 | 0 | 1 | 0 | 3 | 889 (3.70%) | 889 |
+   | the second auditor's texts | 144 | 4 | 2 | 9 | 47 | 82 | 341 (0.65%) | 388 (0.74%) |
+   | the third auditor's Wikipedia sample | 416 | 70 | 16 | 41 | 121 | 168 | 607 (1.82%) | 728 (2.18%) |
+   | the fourth auditor's Wikipedia sample | 589 | 123 | 7 | 51 | 126 | 282 | 753 (1.98%) | 879 (2.31%) |
+   | the fifth auditor's Wikipedia sample | 425 | 115 | 3 | 33 | 146 | 128 | 539 (1.55%) | 685 (1.97%) |
+
+   The other sets have 0 to 6 such positions (the books and the third
+   auditor's texts none); in the second auditor's texts they follow the
+   anonymised names № and №№ (თავადმა №№-მა).
    - the books: the own entries are led by მთაში "uphill" for "in the
      mountains" (16), შიშით "shyly" for "with fear" (8), ამება "amoeba"
      (3) and თავით "head-on" (3). The other 17 are ხდის → ხდა (5, the
@@ -555,27 +609,29 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
    - the fourth auditor's Wikipedia sample: own entries წელს (386),
      წყლები (6); the others are led by ეწოდა (11), შესწავლა (9) and
      დაშლის (7), lemmas without a definition;
+   - the fifth auditor's texts: own entries არაფერს, ღიმი "smile" for the
+     smile (ღიმილი) and წელს (7 each), შიშით (6); the others are led by
+     ბაგის, ბაგისა → ბაგა "nursery" for "of the lips" (ბაგე; 19), შენზე
+     and მალვით (9 each); its Wikipedia sample: წელს (370) and ზრდის (8),
+     then დაშლის (3);
    - the 26,708 book lookups of words the dictionary does not have (names,
      old spellings, verbs without an entry), of which 10,436 get a result:
      a random sample of 60 judged by hand (`measure-lookups.mjs --sample 60
-     --seed 3`) has 42 right and 18 wrong. The wrong ones are verbs read as
-     another word (დაქორწილდა "got married" → ქორწილი "wedding", ახარებდა
-     "gladdened" → ხარი "ox", მოგყვათ → ყვავი "crow", გამოიარა → იარა
-     "wound", გაშრა, მოგივიდათ, გამოეთხოვა, გვიდგია, ჩამოგკიდე), old
-     spellings and dialect (თითონ, თითონაც → თითი "finger", აგრე → გრამი,
-     საცა → საცავი, მეწამლება → წამალი), names (ფარჩო, დათია) and the
-     right lemma with a wrong trace (დაგვწვათ, მცვრიანი). The same sample
-     of Tatoeba's 3,814 such lookups: 56 right, 4 wrong (დამრთეთ → რთავს
-     "decorates", დამტენი "charger" → ტენი "moisture", მივწერე → სწერს,
-     გამოწერა "subscription" → წერს);
-   - **changes since the previous head** (cf01dbad): this round's rules
-     change 632 of the 444,833 first results of the nine sets (19 words):
-     ერთ → ერთი (402), სამ → სამი (66), არას → არა (56), შინა → შინ (49),
-     რაოდენობით (16), რიგით (13), დაწვა → წევს (10), ელი → ელის (5),
-     ბატონებთან (3), 7 forms of დანიშვნა, and ფენებისა, ფენებსა, მალებს,
-     დინებებზე and ვანის once each. Each goes from a wrong lemma to the
-     right one except one position of დაწვა in the books, the verbal noun
-     "burning", where წვავს was right;
+     --seed 3`; the endings that now find their suffix entry changed the
+     sample, which is new) has 45 right and 15 wrong. The wrong ones are
+     verbs read as another word (ციოდა "it was cold" → ცა "sky", უჩვენეს
+     "showed" → ჩვენი "our", გაიგონე "you heard" → იგონებს "remembers",
+     მესხმის → მესხი "Meskhian", მოარიდა, მიყავით → არის, გაშრა,
+     დაგეკვირვებინათ, მიწუნებთ, წამოჭარხლება), the name გირგოლა, archaic
+     words (თანა, ადე, ფხანაც) and a piece of a word (სავ). The same sample
+     of Tatoeba's 3,817 such lookups: 50 right, 10 wrong (გასცემს "gives
+     away" → სცემს "beats", დავკიდო → კიდე "edge", გინახავთ "have you
+     seen" → ინახავს "keeps", ცდება "is mistaken" → ცდა "attempt", the
+     names Laurie and Toma, დართო, გაიქნია, მეძინა, მიგვეტანა);
+   - **changes since the previous head** (d75017fa): this round's rules
+     change 304 of the 568,593 first results of the eleven sets: ში (135),
+     იან (82), დან (53), ით (32) and შიც (1) from nothing to the suffix
+     entry, and მიმუშავია from ამუშავებს to მუშაობს;
    - **real use** (`sources/sentences.tsv`, 48 sentences written for the pack,
      66 inflected words looked up from the word to the end of the sentence):
      the expected lemma is among the results for all 66 and the first entry
@@ -589,7 +645,7 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
      `untaggedTerms`; `test/chrome-language-pack.mjs`, Chrome 152,
      wty-ka-en): with 20 cases from `sources/sentences.tsv`, 24 checks
      pass and 0 fail. Settings adds Georgian beside Japanese and imports
-     the dictionary (1.1 s at machine load about 50); every case's popup
+     the dictionary (1.3 to 3.8 s at machine load about 65); every case's popup
      shows the expected headword (ვკითხულობ → კითხულობს, ქვეყნის →
      ქვეყანა, ითამაშეს → თამაშობს, მეც → მე); the Anki button and the
      language switch work. With the third auditor's 12 cases, 16 checks
@@ -604,23 +660,29 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
      gaps), and მკლავ-მაგარი "strong-armed" shows კლავს "kills" with
      მკლავი "arm" second. wty-ka-en has no row for მკლავ, and the rules'
      first reading, "you kill me", is the right one in the books (ვაიმე,
-     რათა მკლავ?..), so the pack adds no rule for it.
+     რათა მკლავ?..), so the pack adds no rule for it. With the fifth
+     auditor's 12 cases, 10 pass and 6 checks fail: ის, მა and მე of
+     Apple-ის, Microsoft-მა and მე-19 (Known gaps), 1-ელი → ელის and
+     მტერმა ქალაქი დაწვა → წევს (the two A labels above), and the language
+     switch, which looks up the first case again. აშშ-ში → -ში, უმუშავია →
+     მუშაობს, ფარგლებში → ფარგალი (whose gloss is "pair of compasses",
+     Known gaps) and the other five pass.
 5. **Performance** (section 13):
    - native `benchmark-lookup --languages languages --language ka --term
      <wty-ka-en>`, the 66 texts of `sources/benchmark-words.txt`, 6 passes
-     with the first dropped, 3 runs at machine load about 50: p50
-     68.4-69.8 µs, p95 116.6-123.1 µs (budget 1 ms p50). The previous
-     head's pack measures the same back to back at this load (p50 69.5 and
-     73.3 µs, against 70.1 and 73.2 µs), so the rise from the 53-54 µs of
-     the last round is the load;
+     with the first dropped, 3 runs at machine load about 70: p50
+     64.8-67.9 µs, p95 113.0-121.0 µs (budget 1 ms p50). At load 33 to 35
+     the pack measured 53-54 µs, and cf01dbad's pack and this one's rules
+     of the fourth audit measured the same back to back at load 48
+     (`bench-ab-cf01dbad.txt`), so the difference is the load;
    - WebAssembly (the rebuilt runtimes, Node 22): `hdw_lookup` through
      Hachidori's `benchmark/node-lookup.mjs` with
      `HACHIDORI_LOOKUP_LANGUAGE=ka` on the 163 word hovers of the 48
-     sentences, 6 passes, load about 50: p50 125.1 µs and p95 275.7 µs
-     threaded, p50 115.5 µs and p95 263.7 µs single-thread;
+     sentences, 6 passes, load about 65: p50 127.5 µs and p95 293.7 µs
+     threaded, p50 117.2 µs and p95 287.1 µs single-thread;
    - pack load (`sources/wasm-load.mjs`, 10 fresh engines each):
-     `hdw_language_load` median 9.80 ms single-thread and 11.31 ms
-     threaded (budget 50 ms); live heap +1,218,304 and +1,218,288 bytes
+     `hdw_language_load` median 10.60 ms single-thread and 12.00 ms
+     threaded (budget 50 ms); live heap +1,221,816 and +1,222,048 bytes
      (budget 20 MB). The pack has no `pattern` rule.
 6. **Lookup fields of main 487a6fc** (section 14 step 5: set only with
    measurements with and without). The pack keeps every default; each
@@ -637,16 +699,18 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
      totals, because 152 to 306 of the new pairs per set have no label;
    - `confirmedOrder: "references"` changes 2,293 first results. Wrong
      first results go from 886 to 1,126 in Tatoeba, from 63 to 121 in the
-     books and from 35 and 259 to 161 and 461 in the first two auditors'
+     books and from 36 and 259 to 162 and 461 in the first two auditors'
      texts, and four ranking rows of `tests/lookup.tsv` fail: wty-ka-en
      lists the rarer lemma first for ქალის (ქალა "skull"), მერის, ყურით and
      სასოებით;
    - `formOfIgnore`: wty-ka-en's references carry 609 rule names. Ignoring
-     the variant labels (alternative, alt-of, misspelling, nonstandard,
-     informal, dialectal, colloquial) changes 1,041 first results and
+     the ten variant labels (alternative, alt-of, misspelling, nonstandard,
+     alternative nonstandard, alternative misspelling, informal, dialectal,
+     colloquial, alternative dialectal) changes 1,041 first results and
      raises the books' wrong count from 63 to 90; ignoring the verbal-noun
      labels (verbal noun, noun-from-verb and its aspects) changes 1,123 and
-     raises it to 150;
+     raises it to 150, and "perfective noun-from-verb" alone changes 229
+     and raises it to 70 (a `lookup.tsv` row pins each of these settings);
    - `formOfNormalizer`: none is needed. No reference target carries a
      combining mark, and the 1,202 targets that are not headwords are
      missing lemmas, not other spellings;
@@ -670,7 +734,8 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
      out.jsonl words.txt --labels languages/ka/sources/multi-lemma-labels.tsv
      [--labels languages/ka/sources/tatoeba-labels.tsv] [--counts
      <freq.tsv>] [--deinflections <file>] [--top 100] [--suspects
-     <freq.tsv>] [--sample 60 --seed 3]`;
+     <freq.tsv>] [--hyphen <wiki-text.py hyphen output>] [--sample 60
+     --seed 3]`;
    - constraints (section 14 step 7): `node languages/ka/sources/mutations.mjs
      <scratch dir>` deletes each stem constraint kind from each transform
      in a copy and runs the conformance test; all 160 deletions (and
@@ -678,33 +743,33 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
      test. `constraint-rows.mjs` proposed the `constraint` rows of
      `tests/cases.tsv` that made them fail; I checked each before adding
      it;
-   - other breakages: the four auditors' mutation tools
-     (`reports/audit-hachi-lang-ka*-evidence/tools/`) make 571 mutants of
+   - other breakages: the five auditors' mutation tools
+     (`reports/audit-hachi-lang-ka*-evidence/tools/`) make 624 mutants of
      the pack: each transform, rule group, syncope pair, preverb, pronoun
      form and small transform's rule dropped, conditions changed,
      transforms and rules reordered, the third verb state and the -ლ
      guards removed, phrase and hyphen stems disabled, the lookup settings,
-     the word class and the host fields changed. 542 fail a test, 5 no
-     longer change anything (they drop rules that are gone) and 24 pass.
+     the word class and the host fields changed. 594 fail a test, 5 no
+     longer change anything (they drop rules that are gone) and 25 pass.
      The fourth auditor's 7 change only host fields that no pack test
      reads (the sentence terminators and quote pairs a host cuts sentences
-     with, `text.pattern` and `host.sample`). Of the other 17, measured on
-     the 434,833 first results of the eight text sets: 15 change none
-     (other swaps of transforms, the -ება rules or the `word` transform
-     moved, `vq` or `nom` with another dictionary-form flag, the rules of
-     `dat` or `pres-2` reversed, `lookup.formOf` removed, which leaves the
-     default, and `segmentation`, a host setting). Swapping `aor` and `opt`
-     changes 35 and reversing `pv`'s rules 2, where two readings of the same
-     length tie (section 9.6) and the transform or rule order decides. Of
-     the 35, 4 get the right lemma (შეკრა → შეკრავს "tied, put together"
-     instead of შეკრებს "gathers"), 1 loses it (იმა-მი, "imam" broken over
-     a line, from იმამი to მე) and 30 are wrong both ways (გამოიცა → იცავს
-     or იცის, for the passive "was published" that wty-ka-en lacks; ცნო →
-     ცნობა or ცნება); of the 2, მეპოვნოს gets იპოვის instead of პოვნა and
-     იწონებენ is wrong both ways. A test that catches either would pin a
-     wrong lemma or a broken word, so none does
-     (`reports/hachi-lang-ka-evidence/survivors-effect.txt`);
-   - the conformance test exercises 659 of the 2,767 rules that the
+     with, `text.pattern` and `host.sample`). Of the other 18, measured on
+     the 558,593 first results of the ten text sets
+     (`reports/hachi-lang-ka-evidence/survivors-effect.txt`): 15 change
+     none (other swaps of transforms, the -ება rules or the `word`
+     transform moved, `vq` or `nom` with another dictionary-form flag, the
+     rules of `dat` reversed, `lookup.formOf` removed twice, which leaves
+     the default, and `segmentation`, a host setting). Three change a few,
+     where two readings of the same length tie (section 9.6) and the
+     transform or rule order decides: swapping `aor` and `opt` changes 46,
+     of which 5 get the right lemma (შეკრა → შეკრავს "tied, put together"
+     instead of შეკრებს "gathers", გასწავლა → ასწავლის), 1 loses it
+     (იმა-მი, "imam" broken over a line) and 40 are wrong both ways
+     (გამოიცა → იცავს or იცის, for the passive that wty-ka-en lacks);
+     reversing `pv`'s rules changes 2 (მეპოვნოს gets იპოვის) and reversing
+     `pres-2`'s 1 (აგდევნებია gets ადევნებს). A test that catches them
+     would pin a wrong lemma or a broken word, so none does;
+   - the conformance test exercises 668 of the 2,776 rules that the
      transforms' cross-product rows expand to, and every transform;
    - WebAssembly load: `node languages/ka/sources/wasm-load.mjs <hachidori
      checkout> 10`.
@@ -765,9 +830,10 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
   - ხარო, ხარ "you are" with the quotative -ო, an entry "deep pit" whose
     row names ხარი "ox" (1, 4 and 1 positions in the first three
     auditors' texts), counted with the own entries;
-  - ბატონებზე and ბატონებიდან → ბატონები "contagious diseases" for "the
-    masters" (3 positions in the second and third auditors' texts),
-    ნაკლებს → ნაკლი "fault" for "less" (2), and თვისგან, თვისკენ, archaic
+  - ბატონებზე, ბატონებიდან and ბატონებში → ბატონები "contagious diseases"
+    for "the masters" (4 positions in the second, third and fifth
+    auditors' texts), ნაკლებს → ნაკლი "fault" for "less" (2), and
+    თვისგან, თვისკენ, archaic
     "from, towards oneself", → თვე "month" (3 in the fourth auditor's
     texts), found by `--suspects` (Measurements 2);
   - სამე, the Old Georgian particle "therefore", shown as სადმე
@@ -799,31 +865,59 @@ without `# options: default` (`sources/measure-eval.mjs` runs both).
   and 9 in the first two auditors' texts, and most of the others of the
   two Wikipedia samples (ეწოდა 6 and 11, შესწავლა 2 and 9, დაშლის 3 and
   7).
-- **"To win" has no gloss.** The forms of მოიგებს "will win" (მოიგო,
-  მოიგეს, მოვიგე, მოიგოს, ...) show იგებს, the right lemma, which
-  wty-ka-en glosses only "to understand, to hear": 96 positions in the
-  eight text sets (52 in the third auditor's Wikipedia sample, 18 in the
-  fourth auditor's texts, 8 in Tatoeba) and მოიგეს (568 tokens) in the
-  frequency list. The judge counts them right; the sense is missing from
-  the dictionary.
+- **Senses the dictionary lacks.** The judge counts these right, since
+  the lemma is right, but the gloss misleads:
+  - the forms of მოიგებს "will win" (მოიგო, მოიგეს, მოვიგე, მოიგოს, ...)
+    show იგებს, which wty-ka-en glosses only "to understand, to hear": 96
+    positions in the eight text sets of the fourth audit (52 in the third
+    auditor's Wikipedia sample, 18 in the fourth auditor's texts, 8 in
+    Tatoeba) and მოიგეს (568 tokens) in the frequency list;
+  - ფარგლებში "within (the framework of)" (rank 654, 6,466 tokens;
+    ფარგლებს 1,044, ფარგლებშიც 300, ფარგლებშია 234) shows ფარგალი, glossed
+    only "pair of compasses": 13, 23 and 15 positions in the three
+    Wikipedia samples.
+- **Case endings after a hyphen and the ordinal მე-.** Georgian writes
+  case endings and postpositions after a hyphen on Latin names, numbers,
+  Roman numerals and abbreviations (Apple-ის, Microsoft-მა, აშშ-ს,
+  1990-ში, II-მ), and the ordinal as მე-19. Hyphens separate words, so a
+  hover on the ending looks up the ending alone. Where the bare ending is
+  spelled like another headword, that entry comes first, and no rule can
+  put a suffix entry before it (9.6): ის "he, she, it" for -ის, მა "dad"
+  for -მა, სა "where" for -სა, მე "I, me" for მე-, and the letters ს, ე,
+  მ, ი, ა for -ს, -ე, -მ, -ი, -ა; ზე and თან show their related adverbs.
+  Whole-word rules show the suffix entry where the ending finds nothing
+  else (-ში, -ით, -დან, -იანი, -მდე). Counts (Measurements 2 to 4; the
+  judge counts the class apart): in the frequency list, 163,965 tokens
+  show another word and 92,459 a letter (1.79% and 2.14% of the list's
+  tokens wrong with them, against 1.18%); in the three Wikipedia samples
+  168, 282 and 128 positions show another word and 121, 126 and 146 a
+  letter; the second auditor's texts 82 and 47 (after №); Tatoeba and the
+  other texts 0 to 3. In Chrome, «Apple-ის პირველი კომპიუტერი.» shows ის
+  first. A host could look up "-" with the word when the hovered word
+  follows a hyphen after a non-space; the questions file has it as a host
+  question. Treating the hyphen as a word character would find Apple-ის
+  as one word but would stop compounds and phrases over a hyphen
+  (ერთ-ერთი from ერთ) from matching their first word, so the pack does
+  not.
 - **Verbal nouns in a case form** (გაშვებით, დავიწყებით, მალვისა, მალვით
   in the books; წვებით in Tatoeba; სმით, სმის and მალვით in the auditors'
   texts): the word's row names the verbal noun, whose own rows name the
   verb, two steps away, and a rule reading of the same length comes first.
-- **Frequent words the measurement does not judge.** 1,514 of the 10,000
-  frequent words (2,566,319 tokens) are not wty-ka-en headwords and still
-  get a result. Of the 100 most frequent, 8 are wrong (80,258 tokens,
-  0.30%; Measurements 2): verbs with a lexical preverb or in the passive
+- **Frequent words the measurement does not judge.** 1,518 of the 10,000
+  frequent words (2,630,786 tokens) are not wty-ka-en headwords and still
+  get a result. Of the 100 most frequent, 7 are wrong (75,754 tokens,
+  0.28%; Measurements 2): verbs with a lexical preverb or in the passive
   whose own entry wty-ka-en lacks (შეადგენს, შეადგენდა → ადგენს
   "establishes"; მოიცავს, შეიცავს, გამოიცა → იცავს "protects"; მიენიჭა →
-  ნიჭი "talent"), the verbal noun დაყოფა → ყოფა "being" and ვიცე, a part
-  of compounds such as ვიცე-მერი that wty-ka-en lacks → იცავს. In the text
+  ნიჭი "talent") and ვიცე, a part of compounds such as ვიცე-მერი that
+  wty-ka-en lacks → იცავს; the verbal noun დაყოფა → ყოფა "being" is now
+  the 101st. In the text
   sets they occur at 3 positions of the books, 1 of each of the first two
   auditors' texts, 1 of the third's and 58 of the Wikipedia sample. Of
-  the other 1,414 (1,581,275 tokens), 8 of a seeded sample of 50 are wrong
-  and 1 is ambiguous, and the fourth auditor's sample of 50 had 7 wrong
-  and 1 ambiguous (Measurements 2). At those rates about 200 to 230 of the
-  1,414 words, about 1% of the list's tokens, show a wrong first result.
+  the other 1,418 (1,599,299 tokens), three seeded samples of 50 have 11,
+  8 and 7 wrong (Measurements 2). At 14% to 22%, about 200 to 310 of the
+  1,418 words, 1.0% to 1.3% of the list's tokens, show a wrong first
+  result.
 - **Other words the dictionary does not have.** wty-ka-en has 22,914
   entries; 40% of the book lookups and 19% of the Tatoeba ones are of
   words it does not list, and for those the rules often reach a wrong word
