@@ -61,14 +61,7 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[0].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 191],
-      [215, 215],
-      [223, 55295],
-      [57344, 1114111]
-    ],
+    "transforms[0].rules[1].stemCharacters": [],
     "transforms[0].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -77,7 +70,15 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[0].rules[2].stemEndsWith": [
+    "transforms[0].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 191],
+      [215, 215],
+      [223, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[3].stemEndsWith": [
       [98, 100],
       [102, 103],
       [107, 108],
@@ -88,7 +89,7 @@
       [119, 119],
       [121, 121]
     ],
-    "transforms[0].rules[3].stemCharacters": [
+    "transforms[0].rules[4].stemCharacters": [
       [65, 90]
     ],
     "transforms[1].rules[0].stemCharacters": [
@@ -8871,6 +8872,9 @@
         ["blogues pessoais", "blogues pessoais"],
         ["postos de saúde", "postos de saúde"],
         ["ótima ideia", "ótima ideia"],
+        ["todas as casas", "todas as casas"],
+        ["vimos o filme", "vimos o filme"],
+        ["não pode vir", "não pode vir"],
         ["chama-se João", "chama-se joão"],
         ["deixa-me ir", "deixa-me ir"],
         ["fazê-lo agora", "fazê-lo agora"],
@@ -11137,6 +11141,9 @@
         ["blogues pessoais", "Blogues pessoais"],
         ["postos de saúde", "Postos de saúde"],
         ["ótima ideia", "Ótima ideia"],
+        ["todas as casas", "Todas as casas"],
+        ["vimos o filme", "Vimos o filme"],
+        ["não pode vir", "Não pode vir"],
         ["chama-se João", "Chama-se João"],
         ["deixa-me ir", "Deixa-me ir"],
         ["fazê-lo agora", "Fazê-lo agora"],

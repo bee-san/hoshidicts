@@ -843,6 +843,159 @@ for (const [inflected, deinflected] of [
 ]) {
     nominal('plural', inflected, deinflected, [], NA, {stemMinLength: 1});
 }
+// The nouns and adjectives in -r whose plural the tu personal infinitive's
+// -ares, -eres and -ires match first (mulheres, lugares, dólares, altares).
+// The lemma is the same either way, but a lookup keeps the trace of the
+// reading it finds first, so they were traced as personal infinitives. One
+// cross-product row (an empty prefix, the words as suffixes, an empty stem,
+// as for the irregular verbs) gives the plural first for the words whose
+// rows name only the plural and that occur in the lists, Tatoeba or the
+// texts, and for 20 whose rows also name the verb but whose plural is the
+// common use (poderes, deveres, andares); verbs such as precisares keep the
+// verb's trace (fifth to seventh audits, m11, m13, m18).
+const RES_NOUNS = [
+    ["afazeres", "afazer"],
+    ["alimentares", "alimentar"],
+    ["altares", "altar"],
+    ["alugueres", "aluguer"],
+    ["andares", "andar"],
+    ["auriculares", "auricular"],
+    ["auxiliares", "auxiliar"],
+    ["avatares", "avatar"],
+    ["azares", "azar"],
+    ["açúcares", "açúcar"],
+    ["balneares", "balnear"],
+    ["bares", "bar"],
+    ["bilhares", "bilhar"],
+    ["biliares", "biliar"],
+    ["bipolares", "bipolar"],
+    ["cadáveres", "cadáver"],
+    ["calcanhares", "calcanhar"],
+    ["capilares", "capilar"],
+    ["cardiovasculares", "cardiovascular"],
+    ["cateteres", "cateter"],
+    ["celulares", "celular"],
+    ["circulares", "circular"],
+    ["cocleares", "coclear"],
+    ["colares", "colar"],
+    ["colheres", "colher"],
+    ["complementares", "complementar"],
+    ["contêineres", "contêiner"],
+    ["coplanares", "coplanar"],
+    ["crepusculares", "crepuscular"],
+    ["curriculares", "curricular"],
+    ["czares", "czar"],
+    ["cânceres", "câncer"],
+    ["césares", "césar"],
+    ["deveres", "dever"],
+    ["dinares", "dinar"],
+    ["domiciliares", "domiciliar"],
+    ["díspares", "díspar"],
+    ["dólares", "dólar"],
+    ["elementares", "elementar"],
+    ["elixires", "elixir"],
+    ["emires", "emir"],
+    ["escolares", "escolar"],
+    ["esgares", "esgar"],
+    ["espectaculares", "espectacular"],
+    ["espetaculares", "espetacular"],
+    ["estelares", "estelar"],
+    ["exemplares", "exemplar"],
+    ["familiares", "familiar"],
+    ["funiculares", "funicular"],
+    ["glaciares", "glaciar"],
+    ["gângsteres", "gângster"],
+    ["géiseres", "géiser"],
+    ["hambúrgueres", "hambúrguer"],
+    ["hospitalares", "hospitalar"],
+    ["impopulares", "impopular"],
+    ["interdisciplinares", "interdisciplinar"],
+    ["interestelares", "interestelar"],
+    ["invulgares", "invulgar"],
+    ["irregulares", "irregular"],
+    ["jaguares", "jaguar"],
+    ["jantares", "jantar"],
+    ["lares", "lar"],
+    ["lazeres", "lazer"],
+    ["limiares", "limiar"],
+    ["lineares", "linear"],
+    ["luares", "luar"],
+    ["lugares", "lugar"],
+    ["lunares", "lunar"],
+    ["lupanares", "lupanar"],
+    ["líderes", "líder"],
+    ["magiares", "magiar"],
+    ["malmequeres", "malmequer"],
+    ["mares", "mar"],
+    ["maxilares", "maxilar"],
+    ["menires", "menir"],
+    ["milenares", "milenar"],
+    ["milhares", "milhar"],
+    ["militares", "militar"],
+    ["misteres", "mister"],
+    ["molares", "molar"],
+    ["moleculares", "molecular"],
+    ["muares", "muar"],
+    ["mulheres", "mulher"],
+    ["musculares", "muscular"],
+    ["mártires", "mártir"],
+    ["nenúfares", "nenúfar"],
+    ["nucleares", "nuclear"],
+    ["oculares", "ocular"],
+    ["olhares", "olhar"],
+    ["oraculares", "oracular"],
+    ["paramilitares", "paramilitar"],
+    ["pares", "par"],
+    ["parlamentares", "parlamentar"],
+    ["particulares", "particular"],
+    ["patamares", "patamar"],
+    ["peculiares", "peculiar"],
+    ["peninsulares", "peninsular"],
+    ["perpendiculares", "perpendicular"],
+    ["pilares", "pilar"],
+    ["pluricelulares", "pluricelular"],
+    ["poderes", "poder"],
+    ["polares", "polar"],
+    ["polegares", "polegar"],
+    ["pomares", "pomar"],
+    ["populares", "popular"],
+    ["prazeres", "prazer"],
+    ["preliminares", "preliminar"],
+    ["pulmonares", "pulmonar"],
+    ["pulôveres", "pulôver"],
+    ["pósteres", "póster"],
+    ["pôsteres", "pôster"],
+    ["radares", "radar"],
+    ["regulares", "regular"],
+    ["repórteres", "repórter"],
+    ["retangulares", "retangular"],
+    ["revólveres", "revólver"],
+    ["rudimentares", "rudimentar"],
+    ["saberes", "saber"],
+    ["salutares", "salutar"],
+    ["scâneres", "scâner"],
+    ["seculares", "secular"],
+    ["seres", "ser"],
+    ["similares", "similar"],
+    ["singulares", "singular"],
+    ["solares", "solar"],
+    ["superpoderes", "superpoder"],
+    ["suvenires", "suvenir"],
+    ["suéteres", "suéter"],
+    ["talheres", "talher"],
+    ["tapires", "tapir"],
+    ["teares", "tear"],
+    ["testiculares", "testicular"],
+    ["unicelulares", "unicelular"],
+    ["vasculares", "vascular"],
+    ["vestibulares", "vestibular"],
+    ["vulgares", "vulgar"],
+    ["ésteres", "éster"],
+    ["êideres", "êider"],
+    ["ímpares", "ímpar"],
+    ["óscares", "óscar"],
+];
+add('plural', {type: 'circumfix', prefixes: [['', '']], suffixes: RES_NOUNS, conditionsIn: [], conditionsOut: NA, stemCharacters: '[]'});
 for (const vowel of ['a', 'e', 'i', 'o', 'u', 'á', 'é', 'ê', 'í', 'ó', 'ô', 'ú', 'ã']) {
     nominal('plural', `${vowel}s`, vowel, [], NA, {stemMinLength: 1});
 }
@@ -1071,28 +1224,25 @@ for (const [slot, form, lemma] of [
     ['feminine', 'ultima', 'ultimo'],
     // and the reverse: caminha is caminhar, not cama's diminutive.
     ['present-ele', 'caminha', 'caminhar'],
+    // A feminine plural whose -a form is also a noun of another meaning
+    // (toda, nova, pequena, velha, alta): the plural's one step reaches that
+    // noun during the scan, before the reference the word's rows give for the
+    // -o adjective or determiner, so todas showed toda. Where the sentences
+    // mean the adjective (the seventh audit's verdicts, 159 of 160, and
+    // samples read for traseiras, feias, curtas, secas and grávidas), the
+    // adjective comes first; nouns such as filhas, meninas, tortas and vagas
+    // keep the noun.
+    ['feminine', 'todas', 'todo'], ['feminine', 'novas', 'novo'], ['feminine', 'últimas', 'último'], ['feminine', 'pequenas', 'pequeno'],
+    ['feminine', 'lindas', 'lindo'], ['feminine', 'falsas', 'falso'], ['feminine', 'altas', 'alto'], ['feminine', 'brancas', 'branco'],
+    ['feminine', 'baixas', 'baixo'], ['feminine', 'vivas', 'vivo'], ['feminine', 'cheias', 'cheio'], ['feminine', 'negras', 'negro'],
+    ['feminine', 'longas', 'longo'], ['feminine', 'vazias', 'vazio'], ['feminine', 'claras', 'claro'], ['feminine', 'velhas', 'velho'],
+    ['feminine', 'traseiras', 'traseiro'], ['feminine', 'feias', 'feio'], ['feminine', 'curtas', 'curto'], ['feminine', 'secas', 'seco'],
+    ['feminine', 'grávidas', 'grávido'],
     // ótimo and péssimo, the superlatives of bom and mau, are adjectives of
     // their own: their feminine and plural give them, as their rows do,
     // before the superlative's whole-word rule gives bom and mau.
     ['feminine', 'ótima', 'ótimo'], ['feminine', 'ótimas', 'ótimo'], ['plural', 'ótimos', 'ótimo'],
     ['feminine', 'péssima', 'péssimo'], ['feminine', 'péssimas', 'péssimo'], ['plural', 'péssimos', 'péssimo'],
-    // A noun or adjective in -r whose plural the tu personal infinitive's
-    // -ares, -eres, -ires matches first: the lemma is the same, but a lookup
-    // keeps the trace of the reading it finds first, so mulheres was traced
-    // as a personal infinitive (fifth and sixth audits, m11 and m13). The
-    // words of the two lists' 20,000 whose rows give the plural and whose
-    // plural is the noun's in use; verbs only (precisares, falares) keep the
-    // verb's trace.
-    ['plural', 'mulheres', 'mulher'], ['plural', 'dólares', 'dólar'], ['plural', 'lugares', 'lugar'], ['plural', 'milhares', 'milhar'],
-    ['plural', 'poderes', 'poder'], ['plural', 'seres', 'ser'], ['plural', 'militares', 'militar'], ['plural', 'líderes', 'líder'],
-    ['plural', 'familiares', 'familiar'], ['plural', 'cadáveres', 'cadáver'], ['plural', 'andares', 'andar'], ['plural', 'nucleares', 'nuclear'],
-    ['plural', 'deveres', 'dever'], ['plural', 'celulares', 'celular'], ['plural', 'olhares', 'olhar'], ['plural', 'repórteres', 'repórter'],
-    ['plural', 'hambúrgueres', 'hambúrguer'], ['plural', 'prazeres', 'prazer'], ['plural', 'populares', 'popular'],
-    ['plural', 'particulares', 'particular'], ['plural', 'jantares', 'jantar'], ['plural', 'similares', 'similar'], ['plural', 'solares', 'solar'],
-    ['plural', 'colheres', 'colher'], ['plural', 'regulares', 'regular'], ['plural', 'saberes', 'saber'], ['plural', 'escolares', 'escolar'],
-    ['plural', 'pilares', 'pilar'], ['plural', 'polegares', 'polegar'], ['plural', 'talheres', 'talher'],
-    ['plural', 'espectaculares', 'espectacular'], ['plural', 'calcanhares', 'calcanhar'], ['plural', 'alimentares', 'alimentar'],
-    ['plural', 'oculares', 'ocular'], ['plural', 'vulgares', 'vulgar'],
     // A plural read as an irregular verb form (pedir's peças, ver's verdes,
     // cear's ceias), and tais, whose -ais needs a longer stem (mais is not a
     // plural of mal).
@@ -1113,6 +1263,8 @@ for (const [slot, form, lemma] of [
     ['present-eu', 'prendo', 'prender'], ['subjunctive-eles', 'prendam', 'prender'],
     ['present-eu', 'rendo', 'render'], ['subjunctive-eles', 'rendam', 'render'],
     ['present-eu', 'tremo', 'tremer'], ['subjunctive-eles', 'vendam', 'vender'],
+    // and ver's preterite read as vir's present (vimos: 48 of 50 sentences mean ver).
+    ['preterite-nos', 'vimos', 'ver'],
     // and criar and desviar read as the imperfect of crer and desver (-ia is
     // longer than -a).
     ['present-ele', 'cria', 'criar'], ['present-eles', 'criam', 'criar'],

@@ -124,6 +124,12 @@ ranking	1	postos de saúde	posto	postos
 ranking	0	postos de saúde	pôr	postos
 ranking	1	ótima ideia	ótimo	ótima
 ranking	0	ótima ideia	bom	ótima
+ranking	1	todas as casas	todo	todas
+ranking	0	todas as casas	toda	todas
+ranking	1	vimos o filme	ver	vimos
+ranking	0	vimos o filme	vir	vimos
+phrases	1	não pode vir	não	não
+phrases	0	não pode vir	podar	não pode
 pronouns	1	chama-se João	chamar	chama-se
 pronouns	0	chama-se João	chama	chama
 pronouns	1	deixa-me ir	deixar	deixa-me

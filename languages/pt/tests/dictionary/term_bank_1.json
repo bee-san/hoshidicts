@@ -282,5 +282,14 @@
   ["postos", "", "non-lemma", "", 0, [["pôr", ["plural masculine past participle"]]], 281, ""],
   ["ótimo", "", "adj", "", 0, ["excellent"], 282, ""],
   ["bom", "", "adj", "", 0, ["good"], 283, ""],
-  ["ótima", "", "non-lemma", "", 0, [["ótimo", ["singular feminine"]]], 284, ""]
+  ["ótima", "", "non-lemma", "", 0, [["ótimo", ["singular feminine"]]], 284, ""],
+  ["todo", "", "det", "", 0, ["all; every"], 285, ""],
+  ["toda", "", "n fem", "", 0, ["a member of the Toda people"], 286, ""],
+  ["todas", "", "non-lemma", "", 0, [["todo", ["plural feminine"]]], 287, ""],
+  ["todas", "", "non-lemma", "", 0, [["toda", ["plural"]]], 288, ""],
+  ["vir", "", "v", "", 0, ["to come"], 289, ""],
+  ["vimos", "", "non-lemma", "", 0, [["ver", ["first-person plural preterite"]]], 290, ""],
+  ["vimos", "", "non-lemma", "", 0, [["vir", ["first-person plural present indicative"]]], 291, ""],
+  ["não", "", "adv", "", 0, ["not; no"], 292, ""],
+  ["não pode", "", "non-lemma", "", 0, [["podar", ["third-person singular imperative negative"]]], 293, ""]
 ]
