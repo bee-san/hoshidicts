@@ -237,7 +237,15 @@
         {"type": "wholeWord", "inflected": "السابقة", "deinflected": "سابق", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "التالية", "deinflected": "تال", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "السوداء", "deinflected": "أسود", "conditionsIn": [], "conditionsOut": []},
-        {"type": "wholeWord", "inflected": "الكلاب", "deinflected": "كلب", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "الكلاب", "deinflected": "كلب", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "جيدة", "deinflected": "جيد", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "جيدا", "deinflected": "جيد", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "جيدًا", "deinflected": "جيد", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "الجيد", "deinflected": "جيد", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "الجيدة", "deinflected": "جيد", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "جيدين", "deinflected": "جيد", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "جيدون", "deinflected": "جيد", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "جيدان", "deinflected": "جيد", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {

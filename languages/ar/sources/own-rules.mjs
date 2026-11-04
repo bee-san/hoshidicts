@@ -808,6 +808,9 @@ for (const [id, words] of Object.entries(LISTED)) {
     transforms.find((t) => t.id === id).rules.push(...words.map(([i, d]) => (verb ? whole(i, d, {into: V_IN, out: V_OUT}) : whole(i, d))));
 }
 transforms.find((t) => t.id === 'listedNoun').rules.push(...LISTED_NOUNS.map(([i, d]) => whole(i, d)));
+// جيد (good) is untagged, so the noun endings, which give a noun, reach only
+// جِيد (neck): its feminine and accusative are written out without conditions.
+transforms.find((t) => t.id === 'definiteAdjective').rules.push(...['جيدة', 'جيدا', 'جيدًا', 'الجيد', 'الجيدة', 'جيدين', 'جيدون', 'جيدان'].map((i) => whole(i, 'جيد')));
 
 // ـي (my) after the verb transforms: lookups break a tie between two lemmas
 // the dictionary names by the order the rules found them (docs/languages.md

@@ -1,5 +1,5 @@
-# Written for this pack (GPL-3.0-or-later): hand decisions for measure.py's judge (--homographs), 608 words. For each, the lemmas a reader of ordinary prose needs.
-# Round 1: the most frequent words whose wty-ar-en rows or clitic splits name several lemmas (top 250 of the subtitle frequency list and of the three texts). Round 2: the most frequent words wty-ar-en lists whose clitic splits name other lemmas (فلا, لك, به). Round 3: the words of the three texts that rule-made wrong results showed the judge got wrong (وعلى, فرأى, الان), and صوت with its pronouns, where صوة is also a word. README.md, Measurements. Round 4: the frequent words whose first result changes with the rules, where the right lemmas are not just the first result (which their own rows name).
+# Written for this pack (GPL-3.0-or-later): hand decisions for measure.py's judge (--homographs), 616 words: the lemmas a reader of ordinary prose needs, a lemma=reading where wty-ar-en has other words of the same spelling (لم=لَمْ, not لَمَّ), and - where no entry is right (a name it lacks).
+# Round 1: the most frequent words whose wty-ar-en rows or clitic splits name several lemmas (top 250 of the subtitle frequency list and of the three texts). Round 2: the most frequent words wty-ar-en lists whose clitic splits name other lemmas (فلا, لك, به). Round 3: the words of the three texts that rule-made wrong results showed the judge got wrong (وعلى, فرأى, الان), and صوت with its pronouns, where صوة is also a word. README.md, Measurements. Round 4: the frequent words whose first result changes with the rules, where the right lemmas are not just the first result (which their own rows name). Round 5: the first cards that are another word of the same spelling (لم, نفس, مثل), and the corrections of the second audit (الكتاب, الملك, علي, فلم, بن, names).
 # word	right lemmas
 لا	لا
 من	من
@@ -8,12 +8,12 @@
 على	على
 أنا	أنا
 هل	هل
-لم	لم
+لم	لم=لَمْ,لم=لِمَ
 كان	كان
 هنا	هنا
 أنت	أنت
 هو	هو
-نعم	نعم
+نعم	نعم=نَعَمْ
 كل	كل
 ليس	ليس
 كنت	كان
@@ -33,13 +33,13 @@
 إذا	إذا
 عندما	عندما
 أي	أي
-قد	قد
+قد	قد=قَدْ
 هي	هي
 أنه	أن
 فى	في
-بعد	بعد
+بعد	بعد=بَعْدَ,بعد=بَعْدُ
 أو	أو
-قبل	قبل
+قبل	قبل=قَبْلَ Audio:,قبل=قَبْلُ
 إنها	إن
 أين	أين
 هيا	هيا
@@ -49,25 +49,25 @@
 إن	إن
 يكون	كان
 انت	أنت
-مثل	مثل
+مثل	مثل=مِثْل,مثل=مَثَل
 أعلم	علم,أعلم
 أحد	أحد
-رجل	رجل
+رجل	رجل=رَجُل
 لذا	لهذا
 يمكن	أمكن
 كما	كما
 كلا	كلا
 أكثر	أكثر
 تكون	كان
-علي	على,علي
+علي	على,علي=عَلِيّ
 اليوم	اليوم,يوم
 يمكنك	أمكن
 أليس	ليس
 غير	غير
 أيها	أيها
 لديك	لدى
-الرجل	رجل
-تعرف	عرف,تعرف
+الرجل	رجل=رَجُل
+تعرف	عرف
 له	ل
 مرة	مرة
 أنها	أن
@@ -78,7 +78,7 @@
 أوه	أوه,آه
 سيكون	كان
 الناس	ناس
-بها	ب
+بها	ب=بِـ
 أفضل	أفضل
 علينا	على
 وقت	وقت
@@ -86,7 +86,7 @@
 وأنا	أنا
 اذا	إذا
 جدا	جدا
-بي	ب
+بي	ب=بِـ
 آسف	آسف,أسف
 رائع	رائع
 بذلك	ذلك
@@ -105,13 +105,13 @@
 أمي	أم
 ألا	ألا
 لـ	ل
-حول	حول
+حول	حول=حَوْلَ
 حقا	حقا
 الحقيقة	حقيقة
 لديه	لدى
 لنا	ل,لنا
 خلال	خلال
-بشكل	شكل
+بشكل	شكل=شَكْل
 فحسب	حسب
 حال	حال
 قال	قال
@@ -137,7 +137,7 @@
 لما	لما
 أشعر	شعر
 أني	أن
-نفس	نفس
+نفس	نفس=نَفْس,نفس=نَفَس
 معه	مع
 بحاجة	حاجة
 الذين	الذي
@@ -146,12 +146,12 @@
 بدون	بدون
 أرى	رأى
 تكن	كان
-عند	عند
+عند	عند=عِنْدَ
 وأنت	أنت
-تعال	تعال,تعالى
+تعال	تعال=تَعَالَ,تعالى
 بل	بل
-فضلك	فضل
-نفسك	نفس
+فضلك	فضل=فَضْل
+نفسك	نفس=نَفْس
 وهو	هو
 بحق	حق
 مشكلة	مشكلة
@@ -164,10 +164,10 @@
 الشرطة	شرطة
 أحب	أحب
 أيضا	أيضا
-بنا	ب
+بنا	ب=بِـ
 أردت	أراد
 أكن	كان
-النار	النار,نار
+النار	نار
 اجل	أجل
 بأنه	أن
 والآن	الآن
@@ -176,7 +176,7 @@
 كبير	كبير
 او	أو
 فيها	في
-الرجال	رجل
+الرجال	رجل=رَجُل
 لأنه	لأن
 نذهب	ذهب
 دون	دون
@@ -199,9 +199,9 @@
 دائما	دائما
 الامر	أمر
 اين	أين
-جون	جون
+جون	-
 دعنا	ودع
-المدينة	مدينة,المدينة
+المدينة	مدينة
 تعلمين	علم
 جميل	جميل
 بسرعة	سرعة
@@ -213,11 +213,11 @@
 ثانية	ثانية,ثان
 دعني	ودع
 لكنني	لكن
-ولم	لم
+ولم	لم=لَمْ,لم=لِمَ
 أنتم	أنتم
 عظيم	عظيم
 اوه	أوه,آه
-نفسي	نفس,نفسي
+نفسي	نفس=نَفْس,نفسي
 قام	قام
 لديها	لدى
 عام	عام
@@ -254,13 +254,13 @@
 سامي	سامي
 الجزائر	الجزائر
 فاضل	فاضل
-نفسه	نفس
+نفسه	نفس=نَفْس
 يحب	أحب
-الملك	ملك,الملك
+الملك	ملك=مَلِك
 الأمازيغية	أمازيغية,أمازيغي
 كثيرا	كثيرا,كثير
 أبدا	أبدا
-الكتاب	كتاب,الكتاب
+الكتاب	كتاب
 كي	كي
 فإن	إن
 يعلم	علم
@@ -272,14 +272,14 @@
 حياة	حياة
 غدا	غدا,غد
 تحب	أحب
-الأسد	أسد,الأسد
+الأسد	أسد
 عنده	عند
 أصبح	أصبح
 حياته	حياة
 يعيش	عاش
-عندي	عند
+عندي	عند=عِنْدَ
 علم	علم
-فلم	فيلم,فلم,لم
+فلم	لم=لَمْ,فيلم
 وكان	كان
 الإنسان	إنسان
 العربية	عربية,عربي
@@ -299,7 +299,7 @@
 دمنة	دمنة
 شعر	شعر
 الفرنسية	فرنسية,فرنسي
-دان	دان
+دان	-
 الإنجليزية	إنجليزية,إنجليزي
 بإمكان	إمكان
 هن	هن
@@ -320,7 +320,7 @@
 وصل	وصل
 بد	بد
 أما	أما
-ملك	ملك
+ملك	ملك=مَلِك,ملك=مُلْك,ملك=مِلْك
 الحق	حق
 القاهرة	القاهرة
 وفي	في
@@ -329,7 +329,7 @@
 أهل	أهل
 عشر	عشر,عشرة
 أيام	يوم,أيام
-بن	ابن,بن
+بن	ابن
 كثير	كثير
 يدي	يد
 كتاب	كتاب
@@ -373,7 +373,7 @@
 أعني	عنى
 فعلت	فعل
 للغاية	للغاية,غاية
-الأمور	أمر
+الأمور	أمر=أَمْر
 فكرة	فكرة
 المال	مال
 منه	من
@@ -418,7 +418,7 @@
 أيتها	أيتها,أيها
 أحبك	أحب,أحبك
 وضع	وضع
-سام	سام
+سام	-
 عليهم	على
 فريق	فريق
 منا	من
@@ -480,7 +480,7 @@
 السلام	سلام
 لطفي	لطف,لطفي
 سعيدا	سعيد
-كليلة	كليل
+كليلة	-
 الأيام	يوم,أيام
 السباحة	سباحة
 ترك	ترك
@@ -496,7 +496,7 @@
 السمك	سمك
 النهر	نهر
 المطر	مطر
-فهم	فهم
+فهم	هم
 لمن	لمن,من
 سبق	سبق
 التين	تين
@@ -609,3 +609,11 @@
 لاي	لاي
 اموت	مات
 ابننا	ابن
+شخص	شخص=شَخْص
+جيدا	جيد=جَيِّد
+جيدة	جيد=جَيِّد
+جيد	جيد=جَيِّد
+الأمر	أمر=أَمْر
+و	و=وَ
+ان	أن,إن
+انها	أن,إن

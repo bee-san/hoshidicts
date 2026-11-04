@@ -71,14 +71,23 @@ def load_parts_of_speech(path):
 
 def load_homographs(path):
     """sources/homographs.tsv: word, then the comma-separated lemmas a reader
-    of ordinary prose needs for it, decided by hand."""
+    of ordinary prose needs for it, decided by hand. A lemma may name its
+    reading (لم=لَمْ: the particle, not لَمَّ "to gather"), which the first
+    card's reading must then be; `-` means no entry of wty-ar-en is right
+    (a name it lacks)."""
     out = {}
     for line in open(path, encoding='utf-8'):
         if line.startswith('#') or not line.strip():
             continue
         word, lemmas = line.rstrip('\n').split('\t')[:2]
-        out[word] = set(lemmas.split(','))
+        out[word] = set() if lemmas == '-' else set(lemmas.split(','))
     return out
+
+
+def is_right(first, right):
+    """Whether a first card (its expression and reading) is one of the right
+    lemmas, which are expressions or expression=reading."""
+    return first['expression'] in right or first['expression'] + '=' + first.get('reading', '') in right
 
 
 def own_lemmas(word, targets, lemma):
@@ -139,7 +148,9 @@ def frequent(args):
         right, kind = judge(w, targets, lemma, variants, None, homographs)
         kind = kind_of(right, kind)
         counts[kind] += 1
-        if first is None or first['expression'] not in right:
+        if kind == 'ambiguous':
+            continue
+        if first is None or not is_right(first, right):
             counts[kind + ' wrong'] += 1
             wrong.append((w, c, first, right))
     measured_tokens = sum(c for _, c in measured)
@@ -148,8 +159,9 @@ def frequent(args):
     print('Arabic words in the top 10,000: %d' % len(words))
     print('words whose lemma a rule reaches: %d (%.1f%% of the list\'s tokens)' % (len(measured), 100 * measured_tokens / all_tokens))
     print('first result wrong: %d words, %.2f%% of the list\'s tokens' % (len(wrong), 100 * wrong_tokens / all_tokens))
-    for k, label in KINDS[:3]:
+    for k, label in KINDS[:2]:
         print('  %s: %d words, wrong %d' % (label, counts[k], counts[k + ' wrong']))
+    print('  %s: %d words' % (AMBIGUOUS, counts['ambiguous']))
     made = {}
     if '--split' in args:
         for (w, c, first, right), cause in zip(wrong, causes([(w, right, 'listed', first) for w, _, first, right in wrong], imported, languages)):
@@ -179,14 +191,15 @@ PROCLITICS = ['', 'و', 'ف', 'ب', 'ك', 'ل', 'س', 'وب', 'وك', 'ول', '�
 PRONOUNS = ['', 'ي', 'ني', 'نا', 'ك', 'كما', 'كم', 'كن', 'ه', 'ها', 'هما', 'هم', 'هن']
 
 
-def bases(stem, pronoun, lemma=()):
+def bases(stem, pronoun, lemma=(), targets=None, pos=None):
     """The spellings a word may have without its pronoun: ة written ت (قوته,
     أمته; where both are words, homographs.tsv decides: صوته is صوت, not
     صوة), ى written ا or ي (معناه, عليه) or merged with the pronoun ي (إليّ),
     and a verb's ـوا without its alif (كتبوه)."""
     out = [stem]
     if pronoun:
-        if stem.endswith('ت'):
+        # Not after a verb in ـت (كسرته is كسرت + ـه, not كسرة).
+        if stem.endswith('ت') and not (pos is not None and stem in targets and all(pos.get(x) == {'v'} for x in own_lemmas(stem, targets, lemma))):
             out.append(stem[:-1] + 'ة')
         if stem.endswith('ا') or stem.endswith('ي'):
             out.append(stem[:-1] + 'ى')
@@ -236,7 +249,7 @@ def split_lemmas(word, targets, lemma, pos, homographs):
             stem = word[len(prefix):len(word) - len(pronoun)]
             if prefix.endswith('لل'):
                 stem = 'ال' + stem
-            for base in bases(stem, pronoun, lemma):
+            for base in bases(stem, pronoun, lemma, targets or {}, pos):
                 candidates = [base]
                 if prefix.endswith('ال') or prefix.endswith('لل'):
                     candidates.append(base[2:] if base.startswith('ال') else base)
@@ -277,9 +290,8 @@ def judge(word, targets, lemma, variants=None, pos=None, homographs=None):
 
 
 KINDS = [('homograph', 'decided by hand (homographs.tsv)'), ('listed', 'listed, one lemma'),
-         ('listed, several', 'listed, several lemmas not decided by hand (any counts)'),
-         ('clitic', 'not listed, one lemma by its clitic splits'),
-         ('clitic, several', 'not listed, several lemmas by its clitic splits (any counts)')]
+         ('clitic', 'not listed, one lemma by its clitic splits')]
+AMBIGUOUS = 'several lemmas, not decided by hand (not judged; sampled by hand)'
 
 
 def norules_languages(languages):
@@ -318,12 +330,12 @@ def causes(items, imported, languages):
             steps = [t for t in first['trace'] if t not in CLITIC_IDS]
             out.append('rules' if steps and all(step in ids for step in steps) else 'dictionary')
         else:
-            out.append('rules' if r['results'] and r['results'][0]['expression'] in right else 'dictionary')
+            out.append('rules' if r['results'] and is_right(r['results'][0], right) else 'dictionary')
     return out
 
 
 def kind_of(right, kind):
-    return kind + ', several' if kind in ('listed', 'clitic') and len(right) > 1 else kind
+    return 'ambiguous' if kind in ('listed', 'clitic') and len(right) > 1 else kind
 
 
 def text_measure(args):
@@ -340,7 +352,7 @@ def text_measure(args):
     variants = variants_of(sorted({word for word, _ in pos}), languages)
     counts = collections.Counter()
     wrong = collections.Counter()
-    judged, unjudged, judged_right = [], [], []
+    judged, unjudged, judged_right, ambiguous = [], [], [], []
     for (word, hover), res in zip(pos, results):
         first = res['results'][0] if res['results'] else None
         if first is None:
@@ -351,8 +363,12 @@ def text_measure(args):
             unjudged.append((word, hover, first, None))
             continue
         kind = kind_of(right, kind)
+        if kind == 'ambiguous':
+            counts['ambiguous'] += 1
+            ambiguous.append((word, hover, first, None))
+            continue
         counts[kind] += 1
-        ok = first['expression'] in right
+        ok = is_right(first, right)
         judged.append((word, hover, first, ok))
         judged_right.append((right, kind))
         if not ok:
@@ -360,7 +376,7 @@ def text_measure(args):
             wrong[(word, first['expression'], '>'.join(reversed(first['trace'])))] += 1
     total = sum(counts[k] for k, _ in KINDS)
     bad = sum(counts[k + ' wrong'] for k, _ in KINDS)
-    print('positions %d, without a result %d, not judged by script %d' % (len(pos), counts['no result'], len(unjudged)))
+    print('positions %d, without a result %d, not judged by script %d, %s %d' % (len(pos), counts['no result'], len(unjudged), AMBIGUOUS, counts['ambiguous']))
     print('judged by script %d (first result matching the whole word): wrong %d (%.2f%%)' % (total, bad, 100 * bad / max(total, 1)))
     for k, label in KINDS:
         print('  %s: %d, wrong %d (%.2f%%)' % (label, counts[k], counts[k + ' wrong'], 100 * counts[k + ' wrong'] / max(counts[k], 1)))
@@ -383,15 +399,18 @@ def text_measure(args):
             if made[(word, got, trace)] == 'rules':
                 print('  %4d  %s -> %s {%s}' % (n, word, got, trace))
     if '--sample-out' in args:
+        # --sample-sizes j,a,u: how many judged, ambiguous and unjudged positions.
+        sizes = [int(x) for x in option(args, '--sample-sizes', '%d,%d,%d' % (sample_size,) * 3).split(',')]
         rng = random.Random(seed)
+        groups = (('judged', judged), ('ambiguous', ambiguous), ('unjudged', unjudged))
         with open(option(args, '--sample-out', ''), 'w', encoding='utf-8') as out:
-            out.write('# %s: %d judged and %d unjudged positions drawn with seed %d by measure.py text --sample-out.\n' % (
-                text_path.split('/')[-1], min(sample_size, len(judged)), min(sample_size, len(unjudged)), seed))
-            out.write('# set\tword\ttext\tfirst result\tmatched\ttrace\tscript\thand\n')
-            for label, group in (('judged', judged), ('unjudged', unjudged)):
-                for word, hover, first, ok in rng.sample(group, min(sample_size, len(group))):
-                    out.write('\t'.join([label, word, hover[:40], first['expression'], first['matched'],
-                                         '>'.join(reversed(first['trace'])), '-' if ok is None else ('right' if ok else 'wrong'), '']) + '\n')
+            out.write('# %s: %s positions drawn with seed %d by measure.py text --sample-out (judged, ambiguous, unjudged), with the first card, the script\'s verdict and mine.\n' % (
+                text_path.split('/')[-1], ', '.join('%d %s' % (min(n, len(g)), label) for n, (label, g) in zip(sizes, groups)), seed))
+            out.write('# set\tword\tfirst card (expression=reading)\tscript\thand\n')
+            for n, (label, group) in zip(sizes, groups):
+                for word, hover, first, ok in rng.sample(group, min(n, len(group))):
+                    out.write('\t'.join([label, word, first['expression'] + '=' + first.get('reading', ''),
+                                         '-' if ok is None else ('right' if ok else 'wrong'), '']) + '\n')
 
 
 def scratch_pack(languages, transforms_path, out_dir):
@@ -512,6 +531,57 @@ def untagged(args):
         rows, empty, 100 * empty / rows, form_of, ', '.join('%s %d' % kv for kv in tags.most_common(12))))
 
 
+def changes(args):
+    """Every frequent word (as `frequent` measures them) and every position of
+    the texts looked up with the pack and with a copy that has no rules; the
+    groups whose first card (expression and reading) differs, with how the
+    judge rates each card (right, wrong, or - when it cannot judge):
+        measure.py changes <wty-ar-en.zip> <imported> <ar_50k.txt> <text>... --out <tsv> [--homographs tsv]"""
+    zip_path, imported, freq_path = args[:3]
+    texts = [a for a in args[3:] if not a.startswith('--') and a != option(args, '--out', '') and a != option(args, '--homographs', '')]
+    languages = option(args, '--languages', 'languages')
+    homographs = load_homographs(option(args, '--homographs', '')) if '--homographs' in args else {}
+    targets, lemma = load_dictionary(zip_path)
+    pos_ = load_parts_of_speech(zip_path)
+    norules = norules_languages(languages)
+    card = lambda r: r['expression'] + '=' + r.get('reading', '') if r else '-'  # noqa: E731
+    groups = collections.Counter()
+    def verdict(word, first, variants):
+        right, kind = judge(word, targets, lemma, variants, pos_, homographs)
+        if right is None or first is None or strip(first['matched']) != word or kind_of(right, kind) == 'ambiguous':
+            return '-'
+        return 'right' if is_right(first, right) else 'wrong'
+    entries = [line.split() for line in open(freq_path, encoding='utf-8') if line.strip()][:10000]
+    words = [(w, int(c)) for w, c in entries if LETTERS.match(w)]
+    reached = deinflections([w for w, _ in words if targets.get(w)], languages)
+    measured = [(w, c) for w, c in words if own_lemmas(w, targets, lemma) & reached.get(w, set()) - {w}]
+    sources = [('frequent', [(w, w, c) for w, c in measured])]
+    for t in texts:
+        sources.append((t.split('/')[-1], [(w, h, 1) for w, h in positions(open(t, encoding='utf-8').read())]))
+    totals = collections.Counter()
+    for name, items in sources:
+        hovers = [h for _, h, _ in items]
+        a, b = lookup(hovers, imported, languages), lookup(hovers, imported, norules)
+        variants = variants_of(sorted({w for w, _, _ in items}), languages)
+        for (w, h, c), ra, rb in zip(items, a, b):
+            fa = ra['results'][0] if ra['results'] else None
+            fb = rb['results'][0] if rb['results'] else None
+            if card(fa) == card(fb) or (fa and strip(fa['matched']) != w) or (fb and strip(fb['matched']) != w):
+                continue
+            groups[(name, w, card(fa), card(fb), verdict(w, fa, variants), verdict(w, fb, variants))] += c
+            totals[name] += c
+    with open(option(args, '--out', '/dev/stdout'), 'w', encoding='utf-8') as out:
+        out.write('# source\tcount\tword\tfirst card with the rules\tfirst card with no rules\tjudge (rules)\tjudge (no rules)\n')
+        for (name, w, x, y, va, vb), c in sorted(groups.items(), key=lambda kv: (kv[0][0], -kv[1])):
+            out.write('%s\t%d\t%s\t%s\t%s\t%s\t%s\n' % (name, c, w, x, y, va, vb))
+    for name, _ in sources:
+        g = {k: v for k, v in groups.items() if k[0] == name}
+        by = collections.Counter()
+        for k, v in g.items():
+            by[(k[4], k[5])] += v
+        print('%s: %d changed (%d groups); judge rules/no rules: %s' % (name, totals[name], len(g), ', '.join('%s/%s %d' % (x, y, v) for (x, y), v in by.most_common())))
+
+
 if __name__ == '__main__':
     command, rest = sys.argv[1], sys.argv[2:]
-    {'frequent': frequent, 'text': text_measure, 'sets': sets, 'untagged': untagged}[command](rest)
+    {'frequent': frequent, 'text': text_measure, 'sets': sets, 'untagged': untagged, 'changes': changes}[command](rest)
