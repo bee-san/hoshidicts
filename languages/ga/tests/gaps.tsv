@@ -1,0 +1,24 @@
+# Known gaps: run by the conformance test and counted, not enforced.
+# Hand-written rows (categories without ";"): written for this pack, no third-party data.
+# Source: UniMorph gle (https://github.com/unimorph/gle/blob/efdca3ead351c804224b97336c3bcef8c78b6015/gle, sha256 88b9c0dee797fc16), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary.
+# 1000 rows sampled with seed 1 by sources/build-corpus.mjs (420 verb, finite, 60 verb, verbal noun or adjective, 130 noun, genitive singular, 150 noun, plural, 90 noun, mutated singular, 150 adjective); the source is the inflected word of UniMorph's form, without the article, particle, preposition or subject pronoun the form writes with it. The rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+V;3;PL;FUT;IND	1	sílfidh	sílim	v	*
+V;AUTO;SBJV;PST	1	síltí	sílim	v	*
+N;GEN;SG;DEF	1	cúlach	cúil	n	*
+N;GEN;SG;DEF	1	taghaid	taghd	n	*
+N;GEN;SG;DEF	1	tseeadta	seadadh	n	*
+N;GEN;SG;DEF	1	mór-ranna	mór-roinn	n	*
+N;GEN;SG;DEF	1	réamhshúgartha	réamhshúgradh	n	*
+N;VOC;PL	1	fhoithreacha	fothair	n	*
+N;VOC;PL	1	mhórleaganacha	mórleagan	n	*
+N;GEN;PL	1	d'éagtá	éag	n	*
+N;VOC;PL	1	mhéaracha	méir	n	*
+N;VOC;PL	1	thtríochaidí	tríocha	n	*
+N;GEN;PL	1	aercheall	aerchill	n	*
+N;VOC;PL	1	láithreacha	láthair	n	*
+N;VOC;PL	1	adamaintí	adamant	n	*
+ADJ;SPRL	1	foilse	follas	adj	*
+ADJ;VOC;PL	1	aonada	aonadach	adj	*
+ADJ;SPRL	1	aipche	aibidh	adj	*
+ADJ;VOC;PL	1	ddaingne	daingean	adj	*

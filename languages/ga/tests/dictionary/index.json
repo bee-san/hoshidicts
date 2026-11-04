@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts ga test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Irish dictionary for languages/ga/tests/lookup.tsv, written for the pack. fuil, dearna and rinn stand for nouns that an irregular verb form looks like once its mutation or ending is removed; beartas and beart for an -as noun beside a shorter word; caolas and turas for -as nouns whose lenited genitive the Munster -ais past would read as the adjectives caol and tur without the lenited condition; páirtí and páirtigh for a plural that a verbal adjective could read; at and the row atá for a form whose own rows name two verbs.",
+  "sourceLanguage": "ga",
+  "targetLanguage": "en"
+}

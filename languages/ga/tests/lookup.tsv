@@ -1,0 +1,67 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. Every optional processor is on.
+# category	valid	text	expression	matched
+lenition	1	Bhris sé an fhuinneog	bris	Bhris
+lenition	1	Cheannaigh sí bróga nua	ceannaigh	Cheannaigh
+lenition	1	fhuinneog mhór	fuinneog	fhuinneog
+lenition	1	bhean óg	bean	bhean
+elision	1	d'ól sí an t-uisce	ól	d'ól
+elision	1	d’fhág siad an chathair	fág	d’fhág
+elision	1	b’fhéidir go bhfuil	féidir	b’fhéidir
+elision	1	m'athair agus mo mháthair	athair	m'athair
+eclipsis	1	bhfuil tú ann	bí	bhfuil
+eclipsis	0	bhfuil tú ann	fuil	bhfuil
+eclipsis	1	ndearna sé é	déan	ndearna
+eclipsis	0	ndearna sé é	dearna	ndearna
+eclipsis	1	nGaillimh inné	Gaillimh	nGaillimh
+eclipsis	1	mbád beag	bád	mbád
+eclipsis	1	n-oíche	oíche	n-oíche
+t-prefix	1	t-uisce fuar	uisce	t-uisce
+t-prefix	1	tsráid sin	sráid	tsráid
+h-prefix	1	hoíche aréir	oíche	hoíche
+h-prefix	1	hÉireann	Éire	hÉireann
+irregular	1	rinne sé é	déan	rinne
+irregular	0	rinne sé é	rinn	rinne
+irregular	1	Chonaic mé iad	feic	Chonaic
+irregular	1	chuaigh siad abhaile	téigh	chuaigh
+irregular	1	Tá sé fuar	bí	Tá
+verb	1	osclaíonn an siopa	oscail	osclaíonn
+verb	1	d’imríomar peil	imir	d’imríomar
+noun	1	mná na hÉireann	bean	mná
+noun	1	fir agus mná	fear	fir
+noun	1	báid seoil	bád	báid
+noun	1	teangacha eile	teanga	teangacha
+noun	1	cathrach mhóir	cathair	cathrach
+noun	1	bróige	bróg	bróige
+noun	1	beartas nua	beartas	beartas
+noun	1	beartais an Rialtais	beartas	beartais
+noun	0	beartais an Rialtais	beart	beartais
+adjective	1	óige na hÉireann	óg	óige
+adjective	1	fearr	maith	fearr
+adjective	1	neamhchoinníollacha uile	neamhchoinníollach	neamhchoinníollacha
+prepositional	1	agamsa atá sé	ag	agamsa
+prepositional	1	liom féin	le	liom
+hyphen	1	mór-roinn na hEorpa	mór-roinn	mór-roinn
+hyphen	1	mór agus beag	mór	mór
+gaelic type	1	Ḃris sé é	bris	Ḃris
+soft hyphen	1	cean­naigh	ceannaigh	cean­naigh
+ranking	1	sheirbhísí poiblí	seirbhís	sheirbhísí
+ranking	0	sheirbhísí poiblí	seirbhíseach	sheirbhísí
+ranking	1	thábhachtaí fós	tábhachtach	thábhachtaí
+ranking	0	thábhachtaí fós	tábhacht	thábhachtaí
+order	1	daltaí scoile	dalta	daltaí
+order	0	daltaí scoile	daltach	daltaí
+order	1	gealaí ghlé	gealach	gealaí
+order	0	gealaí ghlé	gealaigh	gealaí
+munster	1	chlós ar scoil	clós	chlós
+munster	0	chlós ar scoil	clóigh	chlós
+order	1	bhailte tuaithe	baile	bhailte
+order	0	bhailte tuaithe	bail	bhailte
+munster	1	chaolais an locha	caolas	chaolais
+munster	0	chaolais an locha	caol	chaolais
+munster	1	thurais fhada	turas	thurais
+munster	0	thurais fhada	tur	thurais
+order	1	páirtithe polaitiúla	páirtí	páirtithe
+order	0	páirtithe polaitiúla	páirtigh	páirtithe
+irregular	1	atá sé	bí	atá
+irregular	0	atá sé	at	atá
+untagged	0	aga	ag	aga
