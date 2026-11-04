@@ -223,13 +223,17 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["turam", "tura"], ["suram", "sura"], ["turae", "tura"], ["surae", "sura"], ["turis", "tura"], ["suris", "sura"], ["turas", "tura"], ["suras", "sura"], ["turarum", "tura"], ["surarum", "sura"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemMinLength": 3, "stemNotStartsWithText": "fac"},
-        {"type": "circumfix", "prefixes": [["tect", "tect"], ["dict", "dict"], ["peccat", "peccat"], ["fat", "fat"], ["arv", "arv"], ["vot", "vot"], ["bell", "bell"], ["mandat", "mandat"], ["promiss", "promiss"], ["praecept", "praecept"], ["punct", "punct"], ["institut", "institut"], ["iacul", "iacul"]], "suffixes": [["a", "um"], ["i", "um"], ["o", "um"], ["is", "um"], ["orum", "um"]], "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[]"},
-        {"type": "circumfix", "prefixes": [["pluvi", "pluvi"], ["music", "music"], ["iniuri", "iniuri"], ["aquil", "aquil"], ["penn", "penn"], ["vine", "vine"], ["vesper", "vesper"], ["mathematic", "mathematic"], ["ros", "ros"]], "suffixes": [["ae", "a"], ["am", "a"], ["as", "a"], ["is", "a"], ["arum", "a"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemCharacters": "[]"},
+        {"type": "circumfix", "prefixes": [["tect", "tect"], ["dict", "dict"], ["peccat", "peccat"], ["fat", "fat"], ["arv", "arv"], ["vot", "vot"], ["bell", "bell"], ["mandat", "mandat"], ["promiss", "promiss"], ["praecept", "praecept"], ["punct", "punct"], ["institut", "institut"], ["iacul", "iacul"], ["argent", "argent"]], "suffixes": [["a", "um"], ["i", "um"], ["o", "um"], ["is", "um"], ["orum", "um"]], "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[]"},
+        {"type": "circumfix", "prefixes": [["pluvi", "pluvi"], ["music", "music"], ["iniuri", "iniuri"], ["aquil", "aquil"], ["penn", "penn"], ["vine", "vine"], ["vesper", "vesper"], ["mathematic", "mathematic"], ["ros", "ros"], ["rut", "rut"]], "suffixes": [["ae", "a"], ["am", "a"], ["as", "a"], ["is", "a"], ["arum", "a"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemCharacters": "[]"},
         {"type": "wholeWord", "inflected": "loca", "deinflected": "locus", "conditionsIn": [], "conditionsOut": ["n2s"]},
         {"type": "wholeWord", "inflected": "viris", "deinflected": "vir", "conditionsIn": [], "conditionsOut": ["n2s"]},
         {"type": "wholeWord", "inflected": "animalia", "deinflected": "animal", "conditionsIn": [], "conditionsOut": ["n3s"]},
         {"type": "wholeWord", "inflected": "exercitum", "deinflected": "exercitus", "conditionsIn": [], "conditionsOut": ["n4s"]},
-        {"type": "wholeWord", "inflected": "exercitu", "deinflected": "exercitus", "conditionsIn": [], "conditionsOut": ["n4s"]}
+        {"type": "wholeWord", "inflected": "exercitu", "deinflected": "exercitus", "conditionsIn": [], "conditionsOut": ["n4s"]},
+        {"type": "wholeWord", "inflected": "nate", "deinflected": "natus", "conditionsIn": [], "conditionsOut": ["n2s"]},
+        {"type": "wholeWord", "inflected": "nāvem", "deinflected": "nāvis", "conditionsIn": [], "conditionsOut": ["n3s"]},
+        {"type": "wholeWord", "inflected": "navem", "deinflected": "navis", "conditionsIn": [], "conditionsOut": ["n3s"]},
+        {"type": "wholeWord", "inflected": "que", "deinflected": "qui", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -2942,7 +2946,7 @@
     {
       "id": "pres-2s",
       "name": "present, 2nd sg",
-      "description": "Present indicative, second person singular: amas, mones, regis, capis, audis.",
+      "description": "Present indicative, second person singular: amas, mones, regis.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "as", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -2963,7 +2967,7 @@
     {
       "id": "pres-3s",
       "name": "present, 3rd sg",
-      "description": "Present indicative, third person singular: amat, monet, regit, capit, audit.",
+      "description": "Present indicative, third person singular: amat, monet, regit.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "at", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -2987,7 +2991,7 @@
     {
       "id": "pres-1p",
       "name": "present, 1st pl",
-      "description": "Present indicative, first person plural: amamus, monemus, regimus, capimus, audimus.",
+      "description": "Present indicative, first person plural: amamus, monemus, regimus.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "amus", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3008,7 +3012,7 @@
     {
       "id": "pres-2p",
       "name": "present, 2nd pl",
-      "description": "Present indicative, second person plural: amatis, monetis, regitis, capitis, auditis.",
+      "description": "Present indicative, second person plural: amatis, monetis, regitis.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "atis", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3030,7 +3034,7 @@
     {
       "id": "pres-3p",
       "name": "present, 3rd pl",
-      "description": "Present indicative, third person plural: amant, monent, regunt, capiunt, audiunt.",
+      "description": "Present indicative, third person plural: amant, monent, regunt.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ant", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3049,7 +3053,7 @@
     {
       "id": "impf-1s",
       "name": "imperfect, 1st sg",
-      "description": "Imperfect indicative, first person singular: amabam, monebam, regebam, capiebam, audiebam.",
+      "description": "Imperfect indicative, first person singular: amabam, monebam, regebam.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abam", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3067,7 +3071,7 @@
     {
       "id": "impf-2s",
       "name": "imperfect, 2nd sg",
-      "description": "Imperfect indicative, second person singular: amabas, monebas, regebas, capiebas, audiebas.",
+      "description": "Imperfect indicative, second person singular: amabas, monebas, regebas.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abas", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3085,7 +3089,7 @@
     {
       "id": "impf-3s",
       "name": "imperfect, 3rd sg",
-      "description": "Imperfect indicative, third person singular: amabat, monebat, regebat, capiebat, audiebat.",
+      "description": "Imperfect indicative, third person singular: amabat, monebat, regebat.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abat", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3106,7 +3110,7 @@
     {
       "id": "impf-1p",
       "name": "imperfect, 1st pl",
-      "description": "Imperfect indicative, first person plural: amabamus, monebamus, regebamus, capiebamus, audiebamus.",
+      "description": "Imperfect indicative, first person plural: amabamus, monebamus, regebamus.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abamus", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3124,7 +3128,7 @@
     {
       "id": "impf-2p",
       "name": "imperfect, 2nd pl",
-      "description": "Imperfect indicative, second person plural: amabatis, monebatis, regebatis, capiebatis, audiebatis.",
+      "description": "Imperfect indicative, second person plural: amabatis, monebatis, regebatis.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abatis", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3142,7 +3146,7 @@
     {
       "id": "impf-3p",
       "name": "imperfect, 3rd pl",
-      "description": "Imperfect indicative, third person plural: amabant, monebant, regebant, capiebant, audiebant.",
+      "description": "Imperfect indicative, third person plural: amabant, monebant, regebant.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abant", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3161,7 +3165,7 @@
     {
       "id": "fut-1s",
       "name": "future, 1st sg",
-      "description": "Future indicative, first person singular: amabo, monebo, regam, capiam, audiam.",
+      "description": "Future indicative, first person singular: amabo, monebo, regam.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abo", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3176,7 +3180,7 @@
     {
       "id": "fut-1s+subj-1s",
       "name": "future, 1st sg / present subjunctive, 1st sg",
-      "description": "Future indicative, first person singular: amabo, monebo, regam, capiam, audiam. Also: present subjunctive, 1st sg.",
+      "description": "Future indicative, first person singular: amabo, monebo, regam. Also: present subjunctive, 1st sg.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "am", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]"},
@@ -3187,7 +3191,7 @@
     {
       "id": "fut-2s",
       "name": "future, 2nd sg",
-      "description": "Future indicative, second person singular: amabis, monebis, reges, capies, audies.",
+      "description": "Future indicative, second person singular: amabis, monebis, reges.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abis", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3205,7 +3209,7 @@
     {
       "id": "fut-3s",
       "name": "future, 3rd sg",
-      "description": "Future indicative, third person singular: amabit, monebit, reget, capiet, audiet.",
+      "description": "Future indicative, third person singular: amabit, monebit, reget.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abit", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3224,7 +3228,7 @@
     {
       "id": "fut-1p",
       "name": "future, 1st pl",
-      "description": "Future indicative, first person plural: amabimus, monebimus, regemus, capiemus, audiemus.",
+      "description": "Future indicative, first person plural: amabimus, monebimus, regemus.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abimus", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3241,7 +3245,7 @@
     {
       "id": "fut-2p",
       "name": "future, 2nd pl",
-      "description": "Future indicative, second person plural: amabitis, monebitis, regetis, capietis, audietis.",
+      "description": "Future indicative, second person plural: amabitis, monebitis, regetis.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abitis", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3258,7 +3262,7 @@
     {
       "id": "fut-3p",
       "name": "future, 3rd pl",
-      "description": "Future indicative, third person plural: amabunt, monebunt, regent, capient, audient.",
+      "description": "Future indicative, third person plural: amabunt, monebunt, regent.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abunt", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3275,7 +3279,7 @@
     {
       "id": "subj-1s",
       "name": "present subjunctive, 1st sg",
-      "description": "Present subjunctive, first person singular: amem, moneam, regam, capiam, audiam.",
+      "description": "Present subjunctive, first person singular: amem, moneam, regam.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "em", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3293,7 +3297,7 @@
     {
       "id": "subj-2s",
       "name": "present subjunctive, 2nd sg",
-      "description": "Present subjunctive, second person singular: ames, moneas, regas, capias, audias.",
+      "description": "Present subjunctive, second person singular: ames, moneas, regas.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "es", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3316,7 +3320,7 @@
     {
       "id": "subj-3s",
       "name": "present subjunctive, 3rd sg",
-      "description": "Present subjunctive, third person singular: amet, moneat, regat, capiat, audiat.",
+      "description": "Present subjunctive, third person singular: amet, moneat, regat.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "et", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3340,7 +3344,7 @@
     {
       "id": "subj-1p",
       "name": "present subjunctive, 1st pl",
-      "description": "Present subjunctive, first person plural: amemus, moneamus, regamus, capiamus, audiamus.",
+      "description": "Present subjunctive, first person plural: amemus, moneamus, regamus.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "emus", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3360,7 +3364,7 @@
     {
       "id": "subj-2p",
       "name": "present subjunctive, 2nd pl",
-      "description": "Present subjunctive, second person plural: ametis, moneatis, regatis, capiatis, audiatis.",
+      "description": "Present subjunctive, second person plural: ametis, moneatis, regatis.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etis", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3380,7 +3384,7 @@
     {
       "id": "subj-3p",
       "name": "present subjunctive, 3rd pl",
-      "description": "Present subjunctive, third person plural: ament, moneant, regant, capiant, audiant.",
+      "description": "Present subjunctive, third person plural: ament, moneant, regant.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ent", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3402,7 +3406,7 @@
     {
       "id": "impf-subj-1s",
       "name": "imperfect subjunctive, 1st sg",
-      "description": "Imperfect subjunctive, first person singular: amarem, monerem, regerem, caperem, audirem.",
+      "description": "Imperfect subjunctive, first person singular: amarem, monerem, regerem.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "arem", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3425,7 +3429,7 @@
     {
       "id": "impf-subj-2s",
       "name": "imperfect subjunctive, 2nd sg",
-      "description": "Imperfect subjunctive, second person singular: amares, moneres, regeres, caperes, audires.",
+      "description": "Imperfect subjunctive, second person singular: amares, moneres, regeres.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ares", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3448,7 +3452,7 @@
     {
       "id": "impf-subj-3s",
       "name": "imperfect subjunctive, 3rd sg",
-      "description": "Imperfect subjunctive, third person singular: amaret, moneret, regeret, caperet, audiret.",
+      "description": "Imperfect subjunctive, third person singular: amaret, moneret, regeret.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aret", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3472,7 +3476,7 @@
     {
       "id": "impf-subj-1p",
       "name": "imperfect subjunctive, 1st pl",
-      "description": "Imperfect subjunctive, first person plural: amaremus, moneremus, regeremus, caperemus, audiremus.",
+      "description": "Imperfect subjunctive, first person plural: amaremus, moneremus, regeremus.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aremus", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3495,7 +3499,7 @@
     {
       "id": "impf-subj-2p",
       "name": "imperfect subjunctive, 2nd pl",
-      "description": "Imperfect subjunctive, second person plural: amaretis, moneretis, regeretis, caperetis, audiretis.",
+      "description": "Imperfect subjunctive, second person plural: amaretis, moneretis, regeretis.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aretis", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3518,7 +3522,7 @@
     {
       "id": "impf-subj-3p",
       "name": "imperfect subjunctive, 3rd pl",
-      "description": "Imperfect subjunctive, third person plural: amarent, monerent, regerent, caperent, audirent.",
+      "description": "Imperfect subjunctive, third person plural: amarent, monerent, regerent.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "arent", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3541,7 +3545,7 @@
     {
       "id": "pres-pass-1s",
       "name": "present passive, 1st sg",
-      "description": "Present indicative passive, first person singular: amor, moneor, regor, capior, audior. Also deponents.",
+      "description": "Present indicative passive, first person singular: amor, moneor, regor. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "or", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3554,7 +3558,7 @@
     {
       "id": "pres-pass-2s",
       "name": "present passive, 2nd sg",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aris", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3576,7 +3580,7 @@
     {
       "id": "pres-pass-2s+imp-pass-2s+inf",
       "name": "present passive, 2nd sg / imperative passive, 2nd sg / infinitive",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents. Also: imperative passive, 2nd sg; infinitive.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris. Also deponents. Also: imperative passive, 2nd sg; infinitive.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "are", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3591,7 +3595,7 @@
     {
       "id": "pres-pass-2s+imp-pass-2s",
       "name": "present passive, 2nd sg / imperative passive, 2nd sg",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents. Also: imperative passive, 2nd sg.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris. Also deponents. Also: imperative passive, 2nd sg.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "are", "deinflected": "or", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3603,7 +3607,7 @@
     {
       "id": "pres-pass-2s+fut-pass-2s",
       "name": "present passive, 2nd sg / future passive, 2nd sg",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents. Also: future passive, 2nd sg.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris. Also deponents. Also: future passive, 2nd sg.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "eris", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotEndsWith": "[aeio]"},
@@ -3613,7 +3617,7 @@
     {
       "id": "pres-pass-2s+fut-pass-2s+imp-pass-2s+inf",
       "name": "present passive, 2nd sg / future passive, 2nd sg / imperative passive, 2nd sg / infinitive",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents. Also: future passive, 2nd sg; imperative passive, 2nd sg; infinitive.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris. Also deponents. Also: future passive, 2nd sg; imperative passive, 2nd sg; infinitive.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ere", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]"}
@@ -3622,7 +3626,7 @@
     {
       "id": "pres-pass-2s+fut-pass-2s+imp-pass-2s",
       "name": "present passive, 2nd sg / future passive, 2nd sg / imperative passive, 2nd sg",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents. Also: future passive, 2nd sg; imperative passive, 2nd sg.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris. Also deponents. Also: future passive, 2nd sg; imperative passive, 2nd sg.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ere", "deinflected": "or", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]"}
@@ -3631,7 +3635,7 @@
     {
       "id": "pres-pass-3s",
       "name": "present passive, 3rd sg",
-      "description": "Present indicative passive, third person singular: amatur, monetur, regitur, capitur, auditur. Also deponents.",
+      "description": "Present indicative passive, third person singular: amatur, monetur, regitur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "atur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3652,7 +3656,7 @@
     {
       "id": "pres-pass-1p",
       "name": "present passive, 1st pl",
-      "description": "Present indicative passive, first person plural: amamur, monemur, regimur, capimur, audimur. Also deponents.",
+      "description": "Present indicative passive, first person plural: amamur, monemur, regimur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "amur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3671,7 +3675,7 @@
     {
       "id": "pres-pass-2p+imp-pass-2p",
       "name": "present passive, 2nd pl / imperative passive, 2nd pl",
-      "description": "Present indicative passive, second person plural: amamini, monemini, regimini, capimini, audimini. Also deponents. Also: imperative passive, 2nd pl.",
+      "description": "Present indicative passive, second person plural: amamini, monemini, regimini. Also deponents. Also: imperative passive, 2nd pl.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "amini", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3688,7 +3692,7 @@
     {
       "id": "pres-pass-3p",
       "name": "present passive, 3rd pl",
-      "description": "Present indicative passive, third person plural: amantur, monentur, reguntur, capiuntur, audiuntur. Also deponents.",
+      "description": "Present indicative passive, third person plural: amantur, monentur, reguntur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "antur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3708,7 +3712,7 @@
     {
       "id": "impf-pass-1s",
       "name": "imperfect passive, 1st sg",
-      "description": "Imperfect indicative passive, first person singular: amabar, monebar, regebar, capiebar, audiebar. Also deponents.",
+      "description": "Imperfect indicative passive, first person singular: amabar, monebar, regebar. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abar", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3726,7 +3730,7 @@
     {
       "id": "impf-pass-2s",
       "name": "imperfect passive, 2nd sg",
-      "description": "Imperfect indicative passive, second person singular: amabaris, monebaris, regebaris, capiebaris, audiebaris. Also deponents.",
+      "description": "Imperfect indicative passive, second person singular: amabaris, monebaris, regebaris. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abaris", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3754,7 +3758,7 @@
     {
       "id": "impf-pass-3s",
       "name": "imperfect passive, 3rd sg",
-      "description": "Imperfect indicative passive, third person singular: amabatur, monebatur, regebatur, capiebatur, audiebatur. Also deponents.",
+      "description": "Imperfect indicative passive, third person singular: amabatur, monebatur, regebatur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abatur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3773,7 +3777,7 @@
     {
       "id": "impf-pass-1p",
       "name": "imperfect passive, 1st pl",
-      "description": "Imperfect indicative passive, first person plural: amabamur, monebamur, regebamur, capiebamur, audiebamur. Also deponents.",
+      "description": "Imperfect indicative passive, first person plural: amabamur, monebamur, regebamur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abamur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3791,7 +3795,7 @@
     {
       "id": "impf-pass-2p",
       "name": "imperfect passive, 2nd pl",
-      "description": "Imperfect indicative passive, second person plural: amabamini, monebamini, regebamini, capiebamini, audiebamini. Also deponents.",
+      "description": "Imperfect indicative passive, second person plural: amabamini, monebamini, regebamini. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abamini", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3809,7 +3813,7 @@
     {
       "id": "impf-pass-3p",
       "name": "imperfect passive, 3rd pl",
-      "description": "Imperfect indicative passive, third person plural: amabantur, monebantur, regebantur, capiebantur, audiebantur. Also deponents.",
+      "description": "Imperfect indicative passive, third person plural: amabantur, monebantur, regebantur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abantur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3828,7 +3832,7 @@
     {
       "id": "fut-pass-1s",
       "name": "future passive, 1st sg",
-      "description": "Future indicative passive, first person singular: amabor, monebor, regar, capiar, audiar. Also deponents.",
+      "description": "Future indicative passive, first person singular: amabor, monebor, regar. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abor", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3843,7 +3847,7 @@
     {
       "id": "fut-pass-1s+subj-pass-1s",
       "name": "future passive, 1st sg / present subjunctive passive, 1st sg",
-      "description": "Future indicative passive, first person singular: amabor, monebor, regar, capiar, audiar. Also deponents. Also: present subjunctive passive, 1st sg.",
+      "description": "Future indicative passive, first person singular: amabor, monebor, regar. Also deponents. Also: present subjunctive passive, 1st sg.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ar", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]"},
@@ -3855,7 +3859,7 @@
     {
       "id": "fut-pass-2s",
       "name": "future passive, 2nd sg",
-      "description": "Future indicative passive, second person singular: amaberis, moneberis, regeris, capieris, audieris. Also deponents.",
+      "description": "Future indicative passive, second person singular: amaberis, moneberis, regeris. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aberis", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3879,7 +3883,7 @@
     {
       "id": "fut-pass-3s",
       "name": "future passive, 3rd sg",
-      "description": "Future indicative passive, third person singular: amabitur, monebitur, regetur, capietur, audietur. Also deponents.",
+      "description": "Future indicative passive, third person singular: amabitur, monebitur, regetur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abitur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3899,7 +3903,7 @@
     {
       "id": "fut-pass-1p",
       "name": "future passive, 1st pl",
-      "description": "Future indicative passive, first person plural: amabimur, monebimur, regemur, capiemur, audiemur. Also deponents.",
+      "description": "Future indicative passive, first person plural: amabimur, monebimur, regemur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abimur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3918,7 +3922,7 @@
     {
       "id": "fut-pass-2p",
       "name": "future passive, 2nd pl",
-      "description": "Future indicative passive, second person plural: amabimini, monebimini, regemini, capiemini, audiemini. Also deponents.",
+      "description": "Future indicative passive, second person plural: amabimini, monebimini, regemini. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abimini", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3937,7 +3941,7 @@
     {
       "id": "fut-pass-3p",
       "name": "future passive, 3rd pl",
-      "description": "Future indicative passive, third person plural: amabuntur, monebuntur, regentur, capientur, audientur. Also deponents.",
+      "description": "Future indicative passive, third person plural: amabuntur, monebuntur, regentur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abuntur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3957,7 +3961,7 @@
     {
       "id": "subj-pass-1s",
       "name": "present subjunctive passive, 1st sg",
-      "description": "Present subjunctive passive, first person singular: amer, monear, regar, capiar, audiar. Also deponents.",
+      "description": "Present subjunctive passive, first person singular: amer, monear, regar. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "er", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3971,7 +3975,7 @@
     {
       "id": "subj-pass-2s",
       "name": "present subjunctive passive, 2nd sg",
-      "description": "Present subjunctive passive, second person singular: ameris, monearis, regaris, capiaris, audiaris. Also deponents.",
+      "description": "Present subjunctive passive, second person singular: ameris, monearis, regaris. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "eris", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3998,7 +4002,7 @@
     {
       "id": "subj-pass-3s",
       "name": "present subjunctive passive, 3rd sg",
-      "description": "Present subjunctive passive, third person singular: ametur, moneatur, regatur, capiatur, audiatur. Also deponents.",
+      "description": "Present subjunctive passive, third person singular: ametur, moneatur, regatur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4017,7 +4021,7 @@
     {
       "id": "subj-pass-1p",
       "name": "present subjunctive passive, 1st pl",
-      "description": "Present subjunctive passive, first person plural: amemur, moneamur, regamur, capiamur, audiamur. Also deponents.",
+      "description": "Present subjunctive passive, first person plural: amemur, moneamur, regamur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "emur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4035,7 +4039,7 @@
     {
       "id": "subj-pass-2p",
       "name": "present subjunctive passive, 2nd pl",
-      "description": "Present subjunctive passive, second person plural: amemini, moneamini, regamini, capiamini, audiamini. Also deponents.",
+      "description": "Present subjunctive passive, second person plural: amemini, moneamini, regamini. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "emini", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4053,7 +4057,7 @@
     {
       "id": "subj-pass-3p",
       "name": "present subjunctive passive, 3rd pl",
-      "description": "Present subjunctive passive, third person plural: amentur, moneantur, regantur, capiantur, audiantur. Also deponents.",
+      "description": "Present subjunctive passive, third person plural: amentur, moneantur, regantur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "entur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4072,7 +4076,7 @@
     {
       "id": "impf-subj-pass-1s",
       "name": "imperfect subjunctive passive, 1st sg",
-      "description": "Imperfect subjunctive passive, first person singular: amarer, monerer, regerer, caperer, audirer. Also deponents.",
+      "description": "Imperfect subjunctive passive, first person singular: amarer, monerer, regerer. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "arer", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4094,7 +4098,7 @@
     {
       "id": "impf-subj-pass-2s",
       "name": "imperfect subjunctive passive, 2nd sg",
-      "description": "Imperfect subjunctive passive, second person singular: amareris, monereris, regereris, capereris, audireris. Also deponents.",
+      "description": "Imperfect subjunctive passive, second person singular: amareris, monereris, regereris. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "areris", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4128,7 +4132,7 @@
     {
       "id": "impf-subj-pass-3s",
       "name": "imperfect subjunctive passive, 3rd sg",
-      "description": "Imperfect subjunctive passive, third person singular: amaretur, moneretur, regeretur, caperetur, audiretur. Also deponents.",
+      "description": "Imperfect subjunctive passive, third person singular: amaretur, moneretur, regeretur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aretur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4151,7 +4155,7 @@
     {
       "id": "impf-subj-pass-1p",
       "name": "imperfect subjunctive passive, 1st pl",
-      "description": "Imperfect subjunctive passive, first person plural: amaremur, moneremur, regeremur, caperemur, audiremur. Also deponents.",
+      "description": "Imperfect subjunctive passive, first person plural: amaremur, moneremur, regeremur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aremur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4173,7 +4177,7 @@
     {
       "id": "impf-subj-pass-2p",
       "name": "imperfect subjunctive passive, 2nd pl",
-      "description": "Imperfect subjunctive passive, second person plural: amaremini, moneremini, regeremini, caperemini, audiremini. Also deponents.",
+      "description": "Imperfect subjunctive passive, second person plural: amaremini, moneremini, regeremini. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aremini", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4195,7 +4199,7 @@
     {
       "id": "impf-subj-pass-3p",
       "name": "imperfect subjunctive passive, 3rd pl",
-      "description": "Imperfect subjunctive passive, third person plural: amarentur, monerentur, regerentur, caperentur, audirentur. Also deponents.",
+      "description": "Imperfect subjunctive passive, third person plural: amarentur, monerentur, regerentur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "arentur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4218,7 +4222,7 @@
     {
       "id": "imp-2s",
       "name": "imperative, 2nd sg",
-      "description": "Present imperative, second person singular: ama, mone, rege, cape, audi.",
+      "description": "Present imperative, second person singular: ama, mone, rege.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "a", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotStartsWithText": "jur"},
@@ -4239,7 +4243,7 @@
     {
       "id": "imp-2s+inf-pass",
       "name": "imperative, 2nd sg / passive infinitive",
-      "description": "Present imperative, second person singular: ama, mone, rege, cape, audi. Also: passive infinitive.",
+      "description": "Present imperative, second person singular: ama, mone, rege. Also: passive infinitive.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "i", "deinflected": "io", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2}
@@ -4248,7 +4252,7 @@
     {
       "id": "imp-2p",
       "name": "imperative, 2nd pl",
-      "description": "Present imperative, second person plural: amate, monete, regite, capite, audite.",
+      "description": "Present imperative, second person plural: amate, monete, regite.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ate", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -4266,7 +4270,7 @@
     {
       "id": "imp-fut-2s",
       "name": "future imperative, 2nd/3rd sg",
-      "description": "Future imperative, second and third person singular: amato, moneto, regito, capito, audito.",
+      "description": "Future imperative, second and third person singular: amato, moneto, regito.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ato", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -4286,7 +4290,7 @@
     {
       "id": "imp-fut-2p",
       "name": "future imperative, 2nd pl",
-      "description": "Future imperative, second person plural: amatote, monetote, regitote, capitote, auditote.",
+      "description": "Future imperative, second person plural: amatote, monetote, regitote.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "atote", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4304,7 +4308,7 @@
     {
       "id": "imp-fut-3p",
       "name": "future imperative, 3rd pl",
-      "description": "Future imperative, third person plural: amanto, monento, regunto, capiunto, audiunto.",
+      "description": "Future imperative, third person plural: amanto, monento, regunto.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "anto", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4320,7 +4324,7 @@
     {
       "id": "imp-fut-pass-2s",
       "name": "future imperative passive, 2nd/3rd sg",
-      "description": "Future imperative passive, second and third person singular: amator, monetor, regitor, capitor, auditor. Deponent verbs: hortator, veretor, sequitor, patitor, largitor.",
+      "description": "Future imperative passive, second and third person singular: amator, monetor, regitor. Deponent verbs: hortator, veretor, sequitor.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ator", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4338,7 +4342,7 @@
     {
       "id": "imp-fut-pass-3p",
       "name": "future imperative passive, 3rd pl",
-      "description": "Future imperative passive, third person plural: amantor, monentor, reguntor, capiuntor, audiuntor. Deponent verbs: hortantor, verentor, sequuntor, patiuntor, largiuntor.",
+      "description": "Future imperative passive, third person plural: amantor, monentor, reguntor. Deponent verbs: hortantor, verentor, sequuntor.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "antor", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4355,7 +4359,7 @@
     {
       "id": "inf-pass",
       "name": "passive infinitive",
-      "description": "Present passive infinitive (also the old forms in -ier): amari, moneri, regi, capi, audiri. Deponent verbs: hortari, vereri, sequi, pati, largiri.",
+      "description": "Present passive infinitive (also the old forms in -ier): amari, moneri, regi. Deponent verbs: hortari, vereri, sequi.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ari", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -4384,7 +4388,7 @@
     {
       "id": "gerund-gen",
       "name": "gerund, genitive",
-      "description": "Gerund, genitive: amandi, monendi, regendi, capiendi, audiendi. Deponent verbs: hortandi, verendi, sequendi, patiendi, largiendi.",
+      "description": "Gerund, genitive: amandi, monendi, regendi. Deponent verbs: hortandi, verendi, sequendi.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "andi", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4405,7 +4409,7 @@
     {
       "id": "gerund-dat",
       "name": "gerund, dative/ablative",
-      "description": "Gerund, dative and ablative: amando, monendo, regendo, capiendo, audiendo. Deponent verbs: hortando, verendo, sequendo, patiendo, largiendo.",
+      "description": "Gerund, dative and ablative: amando, monendo, regendo. Deponent verbs: hortando, verendo, sequendo.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ando", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4426,7 +4430,7 @@
     {
       "id": "gerund-acc",
       "name": "gerund, accusative",
-      "description": "Gerund, accusative (after ad and in): amandum, monendum, regendum, capiendum, audiendum. Deponent verbs: hortandum, verendum, sequendum, patiendum, largiendum.",
+      "description": "Gerund, accusative (after ad and in): amandum, monendum, regendum. Deponent verbs: hortandum, verendum, sequendum.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "andum", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4912,7 +4916,7 @@
     {
       "id": "pres-2s+imp-2s",
       "name": "present, 2nd sg / imperative, 2nd sg",
-      "description": "Present indicative, second person singular: amas, mones, regis, capis, audis. Also: imperative, 2nd sg.",
+      "description": "Present indicative, second person singular: amas, mones, regis. Also: imperative, 2nd sg.",
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""], ["ab", "ab"], ["ad", "ad"], ["ad", "as"], ["de", "de"], ["in", "in"], ["inter", "inter"], ["ob", "ob"], ["prae", "prae"], ["prod", "pro"], ["sub", "sub"], ["super", "super"]], "suffixes": [["es", "sum"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"}
@@ -4921,7 +4925,7 @@
     {
       "id": "inf",
       "name": "infinitive",
-      "description": "Present active infinitive: amare, monere, regere, capere, audire.",
+      "description": "Present active infinitive: amare, monere, regere.",
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""], ["ab", "ab"], ["ad", "ad"], ["ad", "as"], ["de", "de"], ["in", "in"], ["inter", "inter"], ["ob", "ob"], ["prae", "prae"], ["prod", "pro"], ["sub", "sub"], ["super", "super"]], "suffixes": [["esse", "sum"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -4947,7 +4951,7 @@
     {
       "id": "pres-1s",
       "name": "present, 1st sg",
-      "description": "Present indicative, first person singular: amo, moneo, rego, capio, audio.",
+      "description": "Present indicative, first person singular: amo, moneo, rego.",
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["as", "ad"]], "suffixes": [["sum", "sum"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"}
@@ -4956,7 +4960,7 @@
     {
       "id": "pres-3s+perf-3s",
       "name": "present, 3rd sg / perfect, 3rd sg",
-      "description": "Present indicative, third person singular: amat, monet, regit, capit, audit. Also: perfect, 3rd sg.",
+      "description": "Present indicative, third person singular: amat, monet, regit. Also: perfect, 3rd sg.",
       "source": "own",
       "rules": [
         {"type": "wholeWord", "inflected": "inquit", "deinflected": "inquam", "conditionsIn": [], "conditionsOut": ["v"]}
@@ -4965,7 +4969,7 @@
     {
       "id": "pres-pass-2p",
       "name": "present passive, 2nd pl",
-      "description": "Present indicative passive, second person plural: amamini, monemini, regimini, capimini, audimini. Also deponents.",
+      "description": "Present indicative passive, second person plural: amamini, monemini, regimini. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "wholeWord", "inflected": "famini", "deinflected": "for", "conditionsIn": [], "conditionsOut": ["v"]},

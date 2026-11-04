@@ -126,5 +126,10 @@
   ["manus", "manus", "n", "n", 0, ["hand"], 126, ""],
   ["manes", "mānēs", "n", "n", 0, ["shades"], 127, ""],
   ["musica", "mūsica", "n", "n", 0, ["music"], 128, ""],
-  ["musicus", "mūsicus", "adj", "adj", 0, ["musical"], 129, ""]
+  ["musicus", "mūsicus", "adj", "adj", 0, ["musical"], 129, ""],
+  ["argentum", "argentum", "n", "n", 0, ["silver"], 132, ""],
+  ["argentus", "argentus", "adj", "adj", 0, ["silvery"], 133, ""],
+  ["natus", "nātus", "n", "n", 0, ["son"], 134, ""],
+  ["natis", "natis", "n", "n", 0, ["buttock"], 135, ""],
+  ["queo", "queō", "v", "v", 0, ["to be able"], 136, ""]
 ]

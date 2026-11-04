@@ -5412,6 +5412,9 @@
         ["tertia", "tertia"],
         ["manibus", "manibus"],
         ["musicam", "musicam"],
+        ["argenti", "argenti"],
+        ["nate", "nate"],
+        ["que", "que"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "arma virumque canō, trōiae quī prīmus ab ōrīs ītaliam vēnit."]
       ]
     },
@@ -7296,6 +7299,9 @@
         ["tertia", "Tertia"],
         ["manibus", "Manibus"],
         ["musicam", "Musicam"],
+        ["argenti", "Argenti"],
+        ["nate", "Nate"],
+        ["que", "Que"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit."]
       ]
     }

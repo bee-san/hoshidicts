@@ -148,7 +148,7 @@ MUTANTS = {
     'no n-first -a nouns': drop_rules(lambda tr, r: tr['id'] == 'n-first' and r.get('prefixes', [[0]])[0][0] == 'pluvi'),
     'no n-first -sura': lambda t, l: sum(r.update(suffixes=[x for x in r['suffixes'] if 'sur' not in x[0]]) or 1 for tr, r in rules(t) if tr['id'] == 'n-first' and r.get('prefixes') == [['', '']]),
     'no ordinals': drop_rules(lambda tr, r: tr['id'] == 'ord'),
-    'no whole-word fixes': drop_rules(lambda tr, r: r['type'] == 'wholeWord' and r['inflected'] in ('loca', 'viris', 'animalia', 'exercitum', 'exercitu', 'oportere', 'dicam')),
+    'no whole-word fixes': drop_rules(lambda tr, r: r['type'] == 'wholeWord' and r['inflected'] in ('loca', 'viris', 'animalia', 'exercitum', 'exercitu', 'oportere', 'dicam', 'nate', 'navem', 'que')),
     '-sidi -> -sido again': lambda t, l: [tr['rules'].append(dict(r, inflected='sidi')) for tr, r in list(rules(t)) if tr['id'] == 'perf-stem' and r.get('inflected') == 'sedi' and r.get('deinflected') == 'sido'][:1] and 1,
     '-is -> -us before -is -> -a': swap('n-dat-pl', lambda r: r.get('deinflected') == 'a' and r.get('inflected') == 'is', lambda r: r.get('deinflected') == 'us' and r.get('inflected') == 'is'),
 }

@@ -233,7 +233,7 @@ const FINITE = [
 ];
 
 function examples(table, index, roots, lemmaOf) {
-    return CONJ.map((c) => {
+    return CONJ.slice(0, 3).map((c) => {
         const cell = Array.isArray(table[c]) ? table[c][index] : table[c];
         return cell === null ? roots[c] + lemmaOf[c] : roots[c] + alts(cell)[0];
     }).join(', ');
@@ -1553,9 +1553,9 @@ for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
 slot('n-first', 'noun', 'A noun form that is also a form of a participle headword: creātūram → creātūra, tēcta → tēctum.');
 add('n-first', {type: 'circumfix', prefixes: [['', '']], suffixes: ['am', 'ae', 'is', 'as', 'arum'].flatMap((e) => [['t', 's'].map((c) => [`${c}ur${e}`, `${c}ura`])].flat()),
     conditionsIn: [], conditionsOut: ['n1s'], stemMinLength: 3, stemNotStartsWithText: 'fac'}); // not futūrīs, saturae, factūram (esse)
-add('n-first', {type: 'circumfix', prefixes: ['tect', 'dict', 'peccat', 'fat', 'arv', 'vot', 'bell', 'mandat', 'promiss', 'praecept', 'punct', 'institut', 'iacul'].map((x) => [x, x]), suffixes: ['a', 'i', 'o', 'is', 'orum'].map((e) => [e, 'um']),
+add('n-first', {type: 'circumfix', prefixes: ['tect', 'dict', 'peccat', 'fat', 'arv', 'vot', 'bell', 'mandat', 'promiss', 'praecept', 'punct', 'institut', 'iacul', 'argent'].map((x) => [x, x]), suffixes: ['a', 'i', 'o', 'is', 'orum'].map((e) => [e, 'um']),
     conditionsIn: [], conditionsOut: ['n2s'], stemCharacters: '[]'});
-add('n-first', {type: 'circumfix', prefixes: ['pluvi', 'music', 'iniuri', 'aquil', 'penn', 'vine', 'vesper', 'mathematic', 'ros'].map((x) => [x, x]),
+add('n-first', {type: 'circumfix', prefixes: ['pluvi', 'music', 'iniuri', 'aquil', 'penn', 'vine', 'vesper', 'mathematic', 'ros', 'rut'].map((x) => [x, x]),
     suffixes: ['ae', 'am', 'as', 'is', 'arum'].map((e) => [e, 'a']), conditionsIn: [], conditionsOut: ['n1s'], stemCharacters: '[]'});
 // wty-la-en tags no ordinal, so only a rule with no conditions reaches one
 // before the noun of the same form (decimam: decimus, not decima "tithe").
@@ -1566,7 +1566,9 @@ add('ord', {type: 'circumfix', prefixes: ['decim', 'sext', 'proxim', 'terti'].ma
 // A whole-word rule's term ranks before one only references reach (9.6), and
 // the reading key no longer applies to this pack: these frequent words showed
 // a rule's rare lemma first (loca: locō, viris: vīs, exercitum: exerceō).
-for (const [a, b, c] of [['loca', 'locus', 'n2s'], ['viris', 'vir', 'n2s'], ['animalia', 'animal', 'n3s'], ['exercitum', 'exercitus', 'n4s'], ['exercitu', 'exercitus', 'n4s']]) { whole('n-first', a, b, [], [c]); }
+for (const [a, b, c] of [['loca', 'locus', 'n2s'], ['viris', 'vir', 'n2s'], ['animalia', 'animal', 'n3s'], ['exercitum', 'exercitus', 'n4s'], ['exercitu', 'exercitus', 'n4s'],
+    ['nate', 'natus', 'n2s'], ['nāvem', 'nāvis', 'n3s'], ['navem', 'navis', 'n3s']]) { whole('n-first', a, b, [], [c]); }
+whole('n-first', 'que', 'qui', [], []); // que for quae, not queō
 whole('inf', 'oportere', 'oportet', [], ['v']);
 whole('fut-1s', 'dicam', 'dico', [], ['v']);
 
