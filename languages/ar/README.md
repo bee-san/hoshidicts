@@ -482,24 +482,24 @@ in `sources/`, run from the repository root.
      and 11 (7), and Tatoeba 9, 7 and 31 (6; 22 of the unjudged are Tom). With the script's rate for the judged positions and the
      samples' rates for the rest, about 14.7%, 17.7% and 11.5% of the
      positions with a result show a wrong first card.
-5. **Performance** (host load 40-48 on 64 cores, so these are upper bounds).
+5. **Performance** (host load 35-40 on 64 cores, so these are upper bounds).
    - Native `benchmark-lookup --languages languages --language ar --term
      <imported wty-ar-en>` on the 135 texts of `sources/benchmark-words.txt`
      (each word of 20 sentences written for the pack, with the rest of its
-     sentence), 6 passes, the first dropped, three runs: p50 83.3-85.4 µs, p95
-     235.0-248.3 µs. The budget is 1 ms p50.
+     sentence), 6 passes, the first dropped, three runs: p50 89.8-93.1 µs, p95
+     260.0-278.5 µs. The budget is 1 ms p50.
    - Native pack load (`sources/pack-load.cpp`): `LanguageRegistry::add`
-     median 4.68-4.75 ms over 50 runs, three runs; the registry holds
-     6,962,272 bytes of heap. The 14,492 rules are mostly cross products,
+     median 4.84-4.98 ms over 50 runs, three runs; the registry holds
+     7,064,272 bytes of heap. The 14,530 rules are mostly cross products,
      indexed by their endings.
    - WebAssembly, Hachidori feat/multi-language 803f7b6 engines (built from
      hoshidicts b145feb), Node 22:
      - `sources/wasm-load.mjs`, 10 fresh engines each: `hdw_language_load`
-       median 13.02 ms single-thread and 14.26 ms threaded; live heap
-       +3,448,808 bytes. The budgets are 50 ms and 20 MB.
+       median 13.74 ms single-thread and 14.70 ms threaded; live heap
+       +3,497,528 bytes. The budgets are 50 ms and 20 MB.
      - `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=ar` on the
-       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 202 µs and
-       p95 514 µs single-thread, p50 216 µs and p95 547 µs threaded.
+       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 207 µs and
+       p95 533 µs single-thread, p50 230 µs and p95 584 µs threaded.
    - The pack has no `pattern` rule, so no pattern heap.
 6. **Hachidori** (feat/multi-language 803f7b6 with this branch in
    `third_party/hoshidicts` and `node scripts/sync-languages.mjs`;
@@ -512,9 +512,10 @@ in `sources/`, run from the repository root.
      Japanese and back work;
    - with the first audit's 30 cases, 31 / 34 checks pass; the three that
      fail are the dictionary's cards of Known gaps (لم يقل → قلا, أنه → نهى,
-     ابني → بنى). With the second audit's 33 cases (its 13 wrong cards among
-     them: يجدون, قولا, يبيع, يسبب, سنين, اثنين, صوتا, يغير, جوعا, هذين, دورا,
-     بيتي, تغلق), 37 / 37 checks pass;
+     ابني → بنى). With the second audit's 33 cases, 37 / 37. With the third
+     audit's 36 cases, 38 / 40: لم يقل → قلا (the reading key) and لا تنس →
+     تنس "tennis" (the word's own entry) fail; الطويلة, دعت and يدعون, which
+     failed at the audit, pass;
    - `test/node-smoke-languages.mjs`: the pack loads and deinflects its
      warm-up sample; 36 of its 40 checks pass, and the 4 that fail are the
      aii, el, tl and zh packs, whose `lookup.untaggedTerms` the vendored
