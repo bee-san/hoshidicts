@@ -109,5 +109,9 @@
   ["operaio", "", "n masc", "", 0, ["worker"], 108, ""],
   ["operare", "", "v", "", 0, ["to operate"], 109, ""],
   ["operai", "", "non-lemma", "", 0, [["operare", ["first-person singular past historic"]]], 110, ""],
-  ["operai", "", "non-lemma", "", 0, [["operaio", ["plural"]]], 111, ""]
+  ["operai", "", "non-lemma", "", 0, [["operaio", ["plural"]]], 111, ""],
+  ["ritornare", "", "v", "", 0, ["to return"], 112, ""],
+  ["ritorno", "", "n masc", "", 0, ["return"], 113, ""],
+  ["ritorni", "", "non-lemma", "", 0, [["ritornare", ["second-person singular present indicative"]]], 114, ""],
+  ["ritorni", "", "non-lemma", "", 0, [["ritorno", ["plural"]]], 115, ""]
 ]

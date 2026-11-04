@@ -253,6 +253,7 @@ def rarer_named(expression, word, rows):
     return None
 
 
+VERB_SLOT = r"(present|imperfect|preterite|future|conditional|subjunctive|imperative|participle|gerund)"
 TIE_CLASSES = ("feminine noun before the adjective", "-e noun before the -o adjective",
                "-rsi imperative before the participle", "verb before the -a noun", "-co adjective before the -io noun",
                "capital letter at a sentence start")
@@ -281,8 +282,8 @@ def tie_class(word, f, rows):
         return TIE_CLASSES[1]
     if re.search(r"[aiu]ti$", w) and e.endswith("rsi") and len(f["trace"]) == 1:
         return TIE_CLASSES[2]
-    if (w.endswith("e") and e.lower() != w and f["trace"] and f["trace"] != ["plural"] and re.search(r"[aei]r(e|si)$", e)
-            and w[:-1] + "a" in named):
+    if (w.endswith("e") and e.lower() != w and f["trace"] and re.match(VERB_SLOT, f["trace"][-1])
+            and re.search(r"[aei]r(e|si)$", e) and w[:-1] + "a" in named):
         return TIE_CLASSES[3]
     if re.search(r"[cg]h?i$", w) and f["trace"] == ["plural"] and e == re.sub(r"h?i$", "o", w) and w[:-1] + "io" in named:
         return TIE_CLASSES[4]

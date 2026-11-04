@@ -1205,11 +1205,8 @@ const ONE_WORD = {stemCharacters: '{lower}'};
 // reflexive imperative where a word's rows name both (condannati: condannato,
 // not condannarsi; informati, destinati); the frequent imperatives of
 // it_50k's top 10,000 are preferred readings below (alzati, fidati).
-// -ai is also read as the plural of -aio through an ending as long as the
-// past historic's -ai, and the plural comes first: operai is operaio, not
-// operare's past historic (macellai, ghiacciai).
 for (const [inflected, deinflected, out] of [
-    ['ati', 'ato', NOMINAL], ['ai', 'aio', NOMINAL], ['i', 'e', NOMINAL], ['i', 'o', NOMINAL], ['e', 'a', NOMINAL], ['i', 'a', NOMINAL],
+    ['ati', 'ato', NOMINAL], ['i', 'e', NOMINAL], ['i', 'o', NOMINAL], ['e', 'a', NOMINAL], ['i', 'a', NOMINAL],
     ['chi', 'co', NOMINAL], ['ghi', 'go', NOMINAL], ['che', 'ca', NOMINAL], ['ghe', 'ga', NOMINAL],
     ['chi', 'ca', ['n']], ['ghi', 'ga', ['n']], ['ci', 'co', NOMINAL], ['gi', 'go', NOMINAL],
     ['ce', 'cia', NOMINAL], ['ge', 'gia', NOMINAL], ['i', 'io', NOMINAL],
@@ -1283,7 +1280,10 @@ const PREFERRED = [
         ['stronzate', 'stronzata'], ['cazzate', 'cazzata'], ['discorsi', 'discorso'],
         ['vari', 'vario'], ['saluti', 'saluto'], ['temi', 'tema'], ['morti', 'morto'], ['lenti', 'lento'], ['corti', 'corto'],
         ['puntate', 'puntata'], ['coordinate', 'coordinata'], ['spese', 'spesa'], ['risorse', 'risorsa'],
-        ['benefici', 'beneficio'], ['prodotti', 'prodotto'],
+        ['benefici', 'beneficio'], ['prodotti', 'prodotto'], ['letti', 'letto'],
+        // operai, macellai and ghiacciai are operaio's, not operare's past
+        // historic (-ai), which a longer ending finds first.
+        ['operai', 'operaio'], ['macellai', 'macellaio'], ['ghiacciai', 'ghiacciaio'],
     ]],
     ['feminine-plural', ['adj'], [
         ['vere', 'vero'], ['private', 'privato'], ['armate', 'armato'], ['complicate', 'complicato'], ['sbagliate', 'sbagliato'],
@@ -1291,6 +1291,7 @@ const PREFERRED = [
         ['vecchie', 'vecchio'], ['prime', 'primo'], ['giuste', 'giusto'], ['lunghe', 'lungo'], ['piene', 'pieno'],
         ['grosse', 'grosso'], ['uniche', 'unico'], ['bianche', 'bianco'], ['scomparse', 'scomparso'], ['segrete', 'segreto'],
         ['americane', 'americano'], ['strette', 'stretto'], ['chiare', 'chiaro'], ['sicure', 'sicuro'], ['basse', 'basso'],
+        ['scritte', 'scritto'],
     ]],
     ['present-io', ['v'], [['domando', 'domandare']]],
     // Reflexive imperatives in -ati that the -ati plural rule above would put
@@ -1305,7 +1306,8 @@ const PREFERRED = [
         ['paghi', 'pagare'], ['perdoni', 'perdonare'], ['tocchi', 'toccare'], ['dimentichi', 'dimenticare'], ['osi', 'osare'],
         ['accetti', 'accettare'], ['compri', 'comprare'], ['accompagni', 'accompagnare'], ['vendi', 'vendere'],
         ['puzzi', 'puzzare'], ['figuri', 'figurare'], ['presti', 'prestare'], ['fumi', 'fumare'], ['sali', 'salire'],
-        ['vinci', 'vincere'],
+        ['vinci', 'vincere'], ['ritorni', 'ritornare'], ['cammini', 'camminare'], ['ritrovi', 'ritrovare'],
+        ['resti', 'restare'], ['tiri', 'tirare'],
     ]],
     ['present-lui', ['v'], [
         ['pare', 'parere'], ['accade', 'accadere'], ['indovina', 'indovinare'], ['supera', 'superare'], ['vende', 'vendere'],
@@ -1318,7 +1320,7 @@ const PREFERRED = [
         ['indica', 'indicare'],
     ]],
     ['present-loro', ['v'], [['indicano', 'indicare']]],
-    ['subjunctive-sg', ['v'], [['accada', 'accadere'], ['riposi', 'riposare']]],
+    ['subjunctive-sg', ['v'], [['accada', 'accadere'], ['riposi', 'riposare'], ['importi', 'importare']]],
     // comperò and comperai, the past historic of comperare, an older
     // spelling of comprare that wty-it-en gives only as a form-of row: read
     // as comprare's, they come before compare (godfather) through the future
