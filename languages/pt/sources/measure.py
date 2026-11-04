@@ -37,7 +37,13 @@ host's hover. A result is visible unless all its glossaries are form-of rows
   the plural or the feminine while the lookup also lists the participle's
   verb (criada as criado, a servant, before criar); and "nounOrTu", a word in
   -as/-es shown as a noun's plural while the lookup also lists a tu form
-  (falas as fala, a speech, before falar).
+  (falas as fala, a speech, before falar); and "verbOrNoun", the mirror of
+  both, a verb form shown first (any verb transform, the participle
+  included) while the lookup also lists, for the same matched text, a noun or
+  adjective headword (an `n` or `adj` entry) that the word's rows name,
+  reached by the plural, feminine, diminutive or superlative or as the
+  word's own entry (dados as dar before dado; morta as morrer before morto,
+  an adjectival participle).
 
 frequent: the list's first <top> words; a word counts as reached when a
 deinflection of it (hoshidicts-cli deinflect, next to lookup-batch) is in its
@@ -198,8 +204,17 @@ class Judge:
         return 'wrong' if self.l1(matched) else 'unjudged'
 
     def needs_context(self, result, answer):
-        """nounOrParticiple / nounOrTu (see the header) or None."""
+        """nounOrParticiple / nounOrTu / verbOrNoun (see the header) or None."""
         step = result['trace'][0] if result['trace'] else ''
+        nominal = ('plural', 'feminine', 'diminutive', 'superlative')
+        if step in self.transform_ids and step not in nominal and step not in ('adverb',) and not step.startswith('clitic-'):
+            named = self.l1(result['matched'])
+            for r in answer['results']:
+                if r is result or r['formOf'] or r['matched'] != result['matched'] or r['expression'] not in named:
+                    continue
+                if (not r['trace'] or r['trace'][0] in nominal) and {'n', 'adj'} & set(self.tags.get(r['expression'], ())):
+                    return 'verbOrNoun'
+            return None
         if 'adj' in self.tags.get(result['expression'], ()) or step not in ('plural', 'feminine'):
             return None
         later = [r['trace'][0] for r in answer['results'] if not r['formOf'] and r['trace'] and r is not result]
@@ -297,8 +312,8 @@ def frequent(args, judge):
     report = {
         'list': Path(args.inputs[0]).name, 'top': len(words), 'tokens': total_tokens,
         'reached': stats['reached'], 'reachedTokenShare': round(tokens['reached'] / total_tokens, 4),
-        'firstVisible': {k: stats[k] for k in ('own', 'right', 'nounOrParticiple', 'nounOrTu', 'rare', 'wrong', 'unjudged', 'nothing')},
-        'needsContextTokenShare': {k: round(tokens[k] / total_tokens, 5) for k in ('nounOrParticiple', 'nounOrTu')},
+        'firstVisible': {k: stats[k] for k in ('own', 'right', 'nounOrParticiple', 'nounOrTu', 'verbOrNoun', 'rare', 'wrong', 'unjudged', 'nothing')},
+        'needsContextTokenShare': {k: round(tokens[k] / total_tokens, 5) for k in ('nounOrParticiple', 'nounOrTu', 'verbOrNoun')},
         'wrongFirst': stats['wrong'] + stats['rare'], 'wrongFirstTokenShare': round((tokens['wrong'] + tokens['rare']) / total_tokens, 5),
         'wrongAboveRight': stats['above'], 'wrongAboveRightTokenShare': round(tokens['above'] / total_tokens, 5),
         'wrongExamples': sorted(wrong, reverse=True)[:60], 'aboveExamples': sorted(above, reverse=True)[:60],
@@ -346,7 +361,7 @@ def judge_hovers(args, judge, items, label):
                 wrong_examples[key].append(f"{first['matched']} → {first['expression']}")
         elif verdict == 'unjudged':
             unjudged.append({'hover': hover[:60], 'matched': first['matched'], 'expression': first['expression'], 'trace': first['trace']})
-        elif verdict in ('nounOrParticiple', 'nounOrTu'):
+        elif verdict in ('nounOrParticiple', 'nounOrTu', 'verbOrNoun'):
             context[verdict].append({'hover': hover[:60], 'matched': first['matched'], 'expression': first['expression'],
                                      'next': next((r['expression'] for r in answer['results'][1:] if not r['formOf']), None)})
     rng = random.Random(1)
