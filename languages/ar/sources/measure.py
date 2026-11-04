@@ -68,6 +68,7 @@ def load_parts_of_speech(path):
             for row in json.loads(archive.read(name)):
                 if any(not (isinstance(d, list) and len(d) == 2 and isinstance(d[0], str)) for d in row[5]):
                     pos[row[0]] |= set(row[3].split()) or {''}
+    NOT_VERB.update(e for e, p in pos.items() if p - {'v'})
     return pos
 
 
@@ -82,6 +83,7 @@ def load_homographs(path):
     return out
 
 
+NOT_VERB = set()  # spellings with a defined entry that is not a verb
 DEFINITE = re.compile('^(?:[وف]?[بكل]?ال|[وف]?لل)')
 
 
@@ -89,8 +91,10 @@ def is_right(first, right, word=None):
     """Whether a first card (its expression and reading) is one of the right
     lemmas, which are expressions or expression=reading."""
     # No verb follows الـ: a definite word (its trace removes الـ, or a row
-    # calls it definite) shown as a verb entry is wrong.
+    # calls it definite) shown as a verb entry, where the spelling has a
+    # defined noun or adjective, is wrong (الصعب -> صَعُبَ; not التحدث -> تَحَدَّثَ).
     if (word is not None and DEFINITE.match(word) and set(first.get('rules', '').split()) == {'v'}
+            and first['expression'] in NOT_VERB
             and any(step == 'al' or 'definite' in step for step in first.get('trace', []))):
         return False
     return first['expression'] in right or first['expression'] + '=' + first.get('reading', '') in right
@@ -143,6 +147,7 @@ def frequent(args):
     languages = option(args, '--languages', 'languages')
     homographs = load_homographs(option(args, '--homographs', '')) if '--homographs' in args else {}
     targets, lemma = load_dictionary(zip_path)
+    load_parts_of_speech(zip_path)  # NOT_VERB, for is_right
     entries = [line.split() for line in open(freq_path, encoding='utf-8') if line.strip()]
     top = entries[:10000]
     all_tokens = sum(int(c) for _, c in entries)
@@ -188,7 +193,7 @@ def frequent(args):
         n = int(option(args, '--sample', '50'))
         pick = sorted(ambiguous_words, key=lambda x: hashlib.sha256(('%d:%s' % (seed, x[0])).encode()).hexdigest())[:n]
         with open(option(args, '--sample-out', ''), 'w', encoding='utf-8') as out:
-            out.write('# %d of the %d ambiguous frequent words, drawn by a hash of seed %d and the word (measure.py frequent --sample-out).\n# word\ttokens\tfirst card\thand\n' % (len(pick), len(ambiguous_words), seed))
+            out.write('# %d of the %d ambiguous frequent words (%d tokens), drawn by a hash of seed %d and the word (measure.py frequent --sample-out).\n# word\ttokens\tfirst card\thand\n' % (len(pick), len(ambiguous_words), sum(c for _, c, _ in ambiguous_words), seed))
             for w, c, first in pick:
                 out.write('%s\t%d\t%s\t\n' % (w, c, '-' if first is None else first['expression'] + '=' + first.get('reading', '')))
     for w, c, first, right in sorted(wrong, key=lambda x: -x[1])[:int(option(args, "--show", "80"))]:

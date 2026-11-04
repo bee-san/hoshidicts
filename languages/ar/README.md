@@ -41,7 +41,7 @@ conjugate verbs of every root type. So وسيكتبونها gives كتب, بال
   2025-2026 Yomitan Authors). `sources/build-final.mjs` sets every row's
   reasons to `*`, since a negative that names Yomitan's transform ids could
   not fail against the final rules, and moves the 78 negatives the final rules
-  reach to `sources/yomitan-tests-not-kept.tsv` (Known gaps).
+  reach to `sources/yomitan-tests-not-kept.tsv`, generated, not committed (Known gaps).
 - `tests/corpus.tsv` and `tests/gaps.tsv`: 1,496 pairs sampled with seed 1 by
   `sources/sample-corpus.py` from
   [UniMorph ara](https://github.com/unimorph/ara) at e9b7521 (file `ara`,
@@ -176,10 +176,10 @@ conjugate verbs of every root type. So وسيكتبونها gives كتب, بال
 
 ## Rule provenance
 
-`transforms.json` has 72 transforms, 1,245 JSON rules and 14,530 rules once
-cross products expand: 13,972 `own` and 558 `both` (86 JSON rules), and no
+`transforms.json` has 72 transforms, 1,294 JSON rules and 14,579 rules once
+cross products expand: 14,021 `own` and 558 `both` (86 JSON rules), and no
 `yomitan` rule. By type, 13,509 are `circumfix` (cross products of person
-prefixes and endings, or of an empty prefix and a list of endings), 752
+prefixes and endings, or of an empty prefix and a list of endings), 801
 `wholeWord`, 257 `suffix` and 12 `prefix`; there is no `pattern` rule.
 `sources/build-final.mjs` writes it: `sources/own.json` with each own rule
 marked `both` when one of its affix pairs (prefix and suffix, inflected and
@@ -197,7 +197,7 @@ compatible part of speech.
   `tools/merge-transforms.mjs` makes, `--per-rule` with wty-ar-en):
   - they reach 1 more row of the sample (لبا, below), 2 more of the dev
     subset (93.66% → 93.71%), and none of `cases.tsv` or `yomitan.tsv`;
-  - they add false candidates per row: 1.725 → 1.758 on the sample, 1.614 →
+  - they add false candidates per row: 1.725 → 1.758 on the sample, 1.615 →
     1.653 on the dev subset, 3.446 → 3.660 on `cases.tsv` and 2.793 → 3.054
     on `yomitan.tsv`;
   - in the conformance test, 8 of the 64 negatives of `cases.tsv` fail with
@@ -205,11 +205,11 @@ compatible part of speech.
     `NSuff-An` reads ذهب الولدان as ذهب الولد and لكان as لك; `NSuff-h` هذا
     كتابه as هذا كتاب; `NSuff-ayn` وبين as وب; `PVSuff-n` فلن as فل;
   - looked up as a host does and judged as Measurements 2 describes, the
-    first result is wrong at 11.43% of the judged positions of *al-Nazarat*,
-    15.91% of *Kalila wa Dimna*'s and 10.18% of Tatoeba's, against 9.55%,
-    13.68% and 8.75% for the final rules; the rules make 950, 517 and 3,292
-    of those wrong results, against 133, 46 and 415. Of the frequent words,
-    126 show a wrong first result (23 made by the rules), against 115 (18).
+    first result is wrong at 11.99% of the judged positions of *al-Nazarat*,
+    16.11% of *Kalila wa Dimna*'s and 10.34% of Tatoeba's, against 10.41%,
+    13.98% and 9.10% for the final rules; the rules make 884, 487 and 3,018
+    of those wrong results, against 172, 58 and 372. Of the frequent words,
+    121 show a wrong first result (8 made by the rules), against 111 (3).
 
   One sample row, لبا → لب in `gaps.tsv`, is reached by the union and not
   by the final rules: Yomitan's `NSuff-AF` reads the accusative ـًا on any
@@ -338,7 +338,7 @@ compatible part of speech.
 
 ## Measurements
 
-All numbers use hoshidicts at this branch's head (on main 328447c; main's engine is as at 350d9e0, whose change since 5ac86a3 leaves the first three cards of the 10,000 frequent words as they were; GCC 14.3,
+All numbers use hoshidicts at this branch's head (on main 78f0cee; main's engine is as at 350d9e0, whose change since 5ac86a3 leaves the first three cards of the 10,000 frequent words as they were; GCC 14.3,
 Release) and wty-ar-en as published, form-of rows included. The scripts are
 in `sources/`, run from the repository root.
 
@@ -370,7 +370,7 @@ in `sources/`, run from the repository root.
      sample's broken plurals and derived forms are found in a lookup through
      wty-ar-en's form-of rows instead; this is why it falls to 87.37%. On the
      37,538-row dev pool, the final rules' recall is 93.84%, with 1.626 false
-     candidates per row and first rank 83.80%.
+     candidates per row and first rank 83.85%.
    - Yomitan's own negatives take reasons `*` (Sources), and Yomitan's rules
      then reach 16.28% of them through other chains.
    - False candidates are distinct deinflected texts per row that are
@@ -390,14 +390,17 @@ in `sources/`, run from the repository root.
    `--homographs sources/homographs.tsv`:
    - a word decided by hand counts as right only with the lemmas
      `homographs.tsv` gives it, and where a lemma names its reading (لم=لَمْ,
-     إن=إِنَّ for إنه), only with that entry. It holds 660 words, decided in
-     seven rounds: the most frequent words whose rows or clitic splits name
+     إن=إِنَّ for إنه), only with that entry. It holds 743 words, decided in
+     eight rounds: the most frequent words whose rows or clitic splits name
      several lemmas; listed words whose clitic splits name other lemmas (فلا,
      به, لك); words whose wrong results showed the judge wrong (وعلى, فرأى);
      the frequent words whose first card changes with the rules; first cards
      that are another word of the same spelling (لم, قد, نفس, مثل); and the
-     audits' corrections (الكتاب, الملك, علي, إنه, إذن, جميلة, نوع, فحسب; `-`
-     for names wty-ar-en lacks, as جون, دان and دمنة);
+     audits' corrections (الكتاب, الملك, علي, إنه, إذن, جميلة, نوع; فحسب as
+     حسب=حَسْب; the 38 forms of أن with a pronoun as أن=أَنَّ, since أَنْ takes
+     none; `-` for names wty-ar-en lacks, as جون, دان and دمنة); and nouns in ة
+     with a pronoun whose stem in ت is also a verb form (غرفته, خيمته, غايته:
+     49 words);
    - another word wty-ar-en lists, with one lemma, counts as right with that
      lemma: its form-of target, as the entry the row names when the target is
      written with its vowels (كافية: كَافٍ "enough", not كَاف the letter), and
@@ -409,12 +412,21 @@ in `sources/`, run from the repository root.
      fit the lemma's part of speech (no الـ, بـ or كـ before a verb, سـ only
      before one, no ـي after a verb, no ـني after a noun, no ة for ت after a
      verb in ـت: كسرته);
+   - a definite word (its trace removes الـ or a row calls it definite)
+     whose first card is a verb entry counts as wrong where the spelling also
+     has a noun or adjective entry with definitions (الصعب → صَعُبَ "to be
+     hard", الأشخاص → شَخَصَ); a verbal noun whose rows name only its verb
+     keeps the verb (التحدث → تَحَدَّثَ);
+   - where a form-of row names its target without vowels (most of
+     wty-ar-en's), any entry of that spelling counts as right: the uniform
+     hand samples of Measurements 4 measure what this misses;
    - a word with several lemmas and no hand decision is **ambiguous**: it is
-     not judged, and Measurements 4 samples it by hand;
+     not judged, and Measurements 3 and 4 sample it by hand;
    - with `--split`, a wrong result is the rules' when, looked up with no
      rules, a listed word's first card is right, or when the trace of one
-     not listed has a transform of the pack other than the clitics; else the
-     dictionary's;
+     not listed has a transform of the pack other than the clitics, or when a
+     pronoun rule wrote ة for ت and so reached another lemma (قلته → قِلَّة);
+     else the dictionary's;
    - `measure.py changes` compares the first card with the rules and with no
      rules for every measured frequent word and every text position.
 3. **Frequent forms** (`measure.py frequent <wty-ar-en.zip> <imported>
@@ -422,24 +434,32 @@ in `sources/`, run from the repository root.
    most frequent entries of the subtitle list, 9,215 are Arabic words; 4,265
    of them (34.8% of the list's tokens) are words whose own lemma a rule
    reaches. Looked up alone:
-   - 338 are decided by hand, 107 of them wrong; 2,410 have one lemma, 8
-     wrong; 1,517 are ambiguous. The 115 wrong words are 4.24% of the list's
+   - 340 are decided by hand, 93 of them wrong; 2,408 have one lemma, 18
+     wrong; 1,517 are ambiguous. The 111 wrong words are 4.29% of the list's
      tokens.
-   - The rules make 18 of them (58,674 tokens, 0.04%): انهض and انسي (the
-     hamza variant's reading is found before the listed whole word), and 16
-     words where the rules find an entry of the same spelling before the one
-     the word's own rows name (كافية → كَاف, حرة → حَرّ, المقبل → مُقَبَّل,
-     العلوي, خالية, عارية, اشهر → شَهَرَ; Known gaps). The dictionary makes the
-     other 97.
-   - Yomitan's rules: 128 of the 3,798 words they reach (3.93% of the
-     tokens), 38 made by the rules. The union: 126 of 4,275 (4.54%), 23.
+   - The rules make 3 of them (9,801 tokens, 0.01%): انهض → اِنْهَاضَ, انسي →
+     نَسَّى and اشهر → شَهَرَ, where an imperative rule reaches another verb (or
+     the verb entry of a noun's spelling) in one step and the tie goes by the
+     order the deinflections were found; listing انهض as a whole word does not
+     change it (Known gaps). The dictionary makes the other 108.
+   - Yomitan's rules: 138 of the 3,798 words they reach (3.96% of the
+     tokens), 38 made by the rules. The union: 121 of 4,275 (4.54%), 8.
+   - **The ambiguous words** (`sources/hand/frequent.tsv`: 50 of the 1,517,
+     drawn by a hash of seed 20261104 and the word, judged with the glosses
+     of both cards): 19 show a wrong card (38%, Wilson 95% 25.9-51.8%), with
+     34.8% of the sample's tokens: ماهي → the name Mahi for ما هي, خيارات →
+     خِيَار "cucumber", أسنان → سَنَّ "to sharpen", نساء → نَسَاء "longevity",
+     أعمل → أَعْمَلَ "to make work", عظيمة → "misfortune". With no rules, all
+     19 are wrong too. Scaled to the 1,517 (8,657,614 tokens), that is about
+     580 more words and 1.9% of the list's tokens; the fourth audit's sample
+     of 50 found 13.
    - With the rules and with no rules (`measure.py changes`), the first card
-     differs for words with 4,890,264 tokens: from wrong to right for
-     1,847,758 and from right to wrong for 58,674 (the 18 above). The judge
-     decides neither side for 269 groups (1,340,601 tokens); I judged all of
-     them with both cards' glosses: the rules' card is right or the change is
-     wrong both ways in all but three borderline ones, الخطب, الحجر and
-     السموم (13,409 tokens).
+     differs for 524 words with 4,834,679 tokens: the rules' card is right and
+     the other wrong for 2,826,324 tokens, the reverse for 9,801 (the 3
+     above). The judge decides neither side for 268 words (1,340,601
+     tokens); I judged all of them with both cards' glosses: the rules' card
+     is right or the change is wrong both ways in all but three borderline
+     ones, الخطب, الحجر and السموم (13,409 tokens).
 4. **Real text** (`measure.py text <wty-ar-en.zip> <imported> <text>
    --homographs sources/homographs.tsv --split`): every word looked up with
    the rest of its sentence. A position is judged by script when its first
@@ -448,40 +468,50 @@ in `sources/`, run from the repository root.
 
    | Text | Positions | Judged | Wrong | By the rules | By the dictionary | Ambiguous | Yomitan's rules | Union |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | *al-Nazarat* | 87,910 | 62,130 | 5,932 (9.55%) | 133 (0.21%) | 5,799 | 22,040 | 8,491 (13.83%), 1,213 | 7,102 (11.43%), 950 |
-   | *Kalila wa Dimna* | 43,622 | 32,063 | 4,386 (13.68%) | 46 (0.14%) | 4,340 | 10,174 | 6,025 (19.06%), 584 | 5,102 (15.91%), 517 |
-   | Tatoeba | 306,356 | 233,146 | 20,410 (8.75%) | 415 (0.18%) | 19,995 | 57,454 | 29,857 (12.94%), 5,304 | 23,740 (10.18%), 3,292 |
+   | *al-Nazarat* | 87,910 | 62,144 | 6,470 (10.41%) | 172 (0.28%) | 6,298 | 22,026 | 8,854 (14.42%), 1,158 | 7,450 (11.99%), 884 |
+   | *Kalila wa Dimna* | 43,622 | 32,064 | 4,483 (13.98%) | 58 (0.18%) | 4,425 | 10,173 | 6,106 (19.31%), 557 | 5,165 (16.11%), 487 |
+   | Tatoeba | 306,356 | 233,177 | 21,225 (9.10%) | 372 (0.16%) | 20,853 | 57,424 | 30,327 (13.14%), 5,168 | 24,099 (10.34%), 3,018 |
 
    The Yomitan and union columns give the wrong results and how many of them
    their rules make.
-   - By kind, for *al-Nazarat*, *Kalila* and Tatoeba: decided by hand 29,489,
-     16,744 and 118,612 positions, wrong 16.37%, 24.61% and 15.46%; listed
-     with one lemma 23,193, 10,212 and 97,328, wrong 1.17%, 0.45% and 0.88%;
-     not listed, one lemma by the clitic splits, 9,448, 5,107 and 17,206,
-     wrong 8.82%, 4.31% and 7.05%.
-   - The rules' wrong results are mostly the same-spelling ties of Known gaps
-     (العلوي 36, المقبل 22, كافية 11 in Tatoeba) and ties between one-step
-     readings of rare words (ويطفئ → طفئ, فيخيل → خال in *al-Nazarat*; كين →
-     كان, a name, 24 in Tatoeba).
+   - By kind, for *al-Nazarat*, *Kalila* and Tatoeba: decided by hand 29,630,
+     16,801 and 118,925 positions, wrong 16.93%, 24.75% and 15.79%; listed
+     with one lemma 23,190, 10,207 and 97,249, wrong 2.82%, 1.25% and 1.42%;
+     not listed, one lemma by the clitic splits, 9,324, 5,056 and 17,003,
+     wrong 8.57%, 3.90% and 6.23%.
+   - The rules' wrong results are mostly a pronoun rule that writes ة for ت
+     (54, 15 and 104 positions: دعوته → دَعْوَة for "I called him", صفعته,
+     خدعته, ترجمتها, منحته; the judge also counts some nouns here, as
+     وغبطتها), and ties between one-step readings of rare words (ويطفئ →
+     طفئ, فيخيل → خال in *al-Nazarat*; كين → كان, a name, 24 in Tatoeba;
+     بطلاقة → طَلَاق, 17).
    - **Rules against no rules** (`measure.py changes`): the first card
-     differs at 29,289, 15,170 and 60,743 positions. Where the judge decides
-     both, it goes from wrong to right at 958, 736 and 3,343 positions and
-     from right to wrong at 24, 2 and 194. Of the 32,795 groups it cannot
-     decide on one side (92,073 positions), I judged the 100 largest by hand
-     (19,918 positions; `sources/hand/changes.tsv`): the rules' card is right
-     in 86 groups (12,341 positions) and wrong in 14 (7,577): توم and ياني
-     (names; 4,758), إنه, إنها, إنك, فإنه, إنهم and فإن → إِن "if" for إِنَّ
-     (1,423), بها and بي (the letter ب; 717), بذلك → بذل (310), ولم → لَمَّ
-     (201), أمره → أَمَرَ (98) and ديما (70). In most of them a copy with no
-     rules has no card for the whole word.
+     differs at 29,275, 15,161 and 60,601 positions. Where the judge decides
+     both, it goes from wrong to right at 1,963, 1,128 and 5,572 positions and
+     from right to wrong at 10, 0 and 68. Of the 37,446 words and cards it
+     cannot decide on one side (92,070 positions), I judged the 100 largest
+     at e6ae266 by hand (19,918 positions; `sources/hand/changes.tsv`): the
+     rules' card is right in 82 (11,845 positions) and wrong in 18 (8,073):
+     توم and ياني (names; 4,758), أنها, أنني, أنهم and بأنه → أَنْ
+     (496; Known gaps), إنه, إنها, إنك, فإنه,
+     إنهم and فإن → إِن "if" for إِنَّ (1,423), بها and بي (the letter ب;
+     717), بذلك → بذل (310), ولم → لَمَّ (201), أمره → أَمَرَ (98) and ديما
+     (70). In most of them a copy with no rules has no card for the whole
+     word.
    - **Hand samples** (`sources/hand/`, seed 20261104; `measure.py text
-     --sample-out` draws each position by a hash of the seed and its index,
-     so a change elsewhere does not change the draw), judged with each card's
-     gloss: of 30 judged, 50 ambiguous and 50 unjudged positions,
-     *al-Nazarat* has 4, 14 and 16 wrong (the script finds 4), *Kalila* 7, 15
-     and 11 (7), and Tatoeba 9, 7 and 31 (6; 22 of the unjudged are Tom). With the script's rate for the judged positions and the
-     samples' rates for the rest, about 14.7%, 17.7% and 11.5% of the
-     positions with a result show a wrong first card.
+     --sample-out` draws each position by a hash of the seed and its index),
+     judged with each card's gloss in its sentence. Of 100, 60 and 60
+     positions drawn uniformly from those with a result, 16 (16.0%, Wilson
+     95% 10.1-24.4%), 13 (21.7%, 13.1-33.6%) and 12 (20.0%, 11.8-31.8%) show
+     a wrong first card. The fourth audit's uniform *al-Nazarat* samples at
+     e6ae266 found 29 of 120; with mine, 45 of 220 (20.5%, 15.7-26.3%).
+     - Of the sampled positions the script judges right, 7 of 137 are wrong
+       by hand (the audit's: 23 of 180; together 30 of 317, 9.5%, 6.7-13.2%),
+       so the script's rates are lower bounds: where a form-of target has no
+       vowels, it accepts every entry of the spelling.
+     - Of 50 more positions per text that the script does not judge (no card
+       for the whole word, or no lemma), 16, 11 and 31 are wrong (22 of
+       Tatoeba's are Tom).
 5. **Performance** (host load 35-40 on 64 cores, so these are upper bounds).
    - Native `benchmark-lookup --languages languages --language ar --term
      <imported wty-ar-en>` on the 135 texts of `sources/benchmark-words.txt`
@@ -514,8 +544,11 @@ in `sources/`, run from the repository root.
      fail are the dictionary's cards of Known gaps (لم يقل → قلا, أنه → نهى,
      ابني → بنى). With the second audit's 33 cases, 37 / 37. With the third
      audit's 36 cases, 38 / 40: لم يقل → قلا (the reading key) and لا تنس →
-     تنس "tennis" (the word's own entry) fail; الطويلة, دعت and يدعون, which
-     failed at the audit, pass;
+     تنس "tennis" (the word's own entry) fail. With the fourth audit's 40
+     cases, 44 / 44: تعطون, تدعون, تصلان, كبيرتان, يبدون, تصبحين, قلته,
+     قابلته, تعالوا and يمر, which failed at the audit, pass. The check
+     compares headwords only, so أنها passes as أن with the entry أَنْ, and
+     الأشخاص as شخص with the verb entry (Known gaps);
    - `test/node-smoke-languages.mjs`: the pack loads and deinflects its
      warm-up sample; 36 of its 40 checks pass, and the 4 that fail are the
      aii, el, tl and zh packs, whose `lookup.untaggedTerms` the vendored
@@ -523,7 +556,7 @@ in `sources/`, run from the repository root.
 7. **Conformance and checks**:
    - `language-conformance-test`: corpus.tsv 1,380 / 1,380, cases.tsv 517 /
      517, defaults.tsv 19 / 19 (with the pack's defaults), yomitan.tsv 304 /
-     304, text.tsv 43 / 43, lookup.tsv 64 / 64; gaps.tsv 0 / 116 (reported).
+     304, text.tsv 43 / 43, lookup.tsv 97 / 97; gaps.tsv 0 / 116 (reported).
    - `tests/classes.json` agrees with the engine (4 classes, 571 fields, 2
      steps).
    - `tools/check-yomitan.mjs`: 10,270 inputs, 155,534 Yomitan results, 0
@@ -533,10 +566,26 @@ in `sources/`, run from the repository root.
      the two listed differences.
    - `sources/ablate.py`: each of its 28 edits (a constraint, exclusion or
      condition removed, a listed word dropped, two processors swapped) makes
-     the conformance test fail. Two layouts are measured, not pinned by a
-     test: ـي (my) after the verb transforms, and صوت with a pronoun (the
-     test dictionary does not reproduce what makes صوة win in wty-ar-en).
-   - `tests/` and `sources/` hold 995,567 bytes.
+     the conformance test fail. Each of the 33 `lookup.tsv` rows added for
+     the fourth audit fails when its whole word is removed, checked one by
+     one (السرية, تعطين, يدعون, أعط, يعط, تعطون, نعط, دعتا, تدعون, تمدين,
+     تضع, يصل, يصلان, تصلان, يجدان, الباردة, الوطنية, الأنفاق, بطريقة, والتي,
+     سآتي, يبدون, قلته, قابلته, سمعته, يمر, مرت, الا, أخواتي, تعالوا and
+     others).
+   - Measured, not pinned by a test (no row fails without them):
+     - the 23 whole words that choose between entries of one spelling
+       (كافية, حرة, المقبل, …; Known gaps) and وقتي and صاحبي: `lookup.tsv`
+       compares the first result's expression and matched text (docs/
+       languages.md 12), and these entries share their expression;
+     - صوت with a pronoun (the test dictionary does not reproduce what makes
+       صوة win in wty-ar-en); the layout of ـي (my) after the verb
+       transforms; `convertAlifMaqsuraToYaa` before `addHamza` and
+       `removeQuranicMarks` first; the minimum stems of كـ and فـ; أقف, نصل,
+       يثقون and يمكنك, which the rules already read the same way without
+       their lists;
+     - the « » and ” “ quote pairs and `untaggedTerms: filter` (measured in
+       Text and scanning), which the conformance test does not exercise.
+   - `tests/` and `sources/` hold BYTES bytes.
 8. **Commands**:
 
    ```sh
@@ -600,6 +649,23 @@ in `sources/`, run from the repository root.
     338), شخص → شَخَصَ (219 in Tatoeba), الملك, الأسد and الكتاب → the
     entries for God, Leo and the Quran (388, 194 and 48 in *Kalila*; الكتاب
     247 in Tatoeba).
+  - **A definite word shown as a verb entry** of its spelling, which grammar
+    rules out after الـ: الأمور → أَمَرَ "to order", الرجال → رَجِلَ, الأشخاص →
+    شَخَصَ, الصعب → صَعُبَ "to be hard", الأخبار, الدماء, الأعمال, الأولاد
+    (64 of the 10,000 frequent entries, 393,806 tokens; 625, 189 and 895
+    positions: النفوس 35, الأمور 32 and 70). The form-of rows name the noun
+    or adjective without vowels, and the verb entry comes first in the bank;
+    a copy with no rules shows the same cards.
+  - **أن with a pronoun shown as أَنْ** "to" for أَنَّ "that", which alone
+    takes a pronoun: أنها, أنني, أننا, بأنه, أنهم, بأنك and the others (30
+    forms of the list, 585,363 tokens; 187, 39 and 500 positions). These
+    forms have no row (a copy with no rules has no card for them); the
+    pronoun rule reaches أن without conditions, and the bank lists أَنْ first.
+    A whole word to أن reaches both entries in the same order (the fourth
+    audit's copy). The same holds for إنه, إنها, إنهم, إنك and فإنه → إِن
+    "if" for إِنَّ (733,991 tokens; 193, 208 and 979 positions). Both are the
+    tie of one expression with two readings that the lead accepted for
+    hachi-lang-engine-l, counted here.
   - The word is a headword itself, so its own entry comes first: لك (لـ + ك,
     shown as "lacquer"; 404,720 tokens; 138, 111 and 472 positions), لي (190,
     102, 635), لها (153, 79, 173), لهم (83), فلا (182, 64), وقد (86, 137), وفي
@@ -616,37 +682,44 @@ in `sources/`, run from the repository root.
     قلا (100,043 tokens) to the reading key.
   - Names wty-ar-en lacks: كليلة → كليل "blunt" (50 in *Kalila*), دان (142
     in Tatoeba), جون.
-- **Wrong first results the rules make** (Measurements 3 and 4): 18
-  frequent words and 133, 46 and 415 text positions (0.21%, 0.14% and 0.18%
+- **Wrong first results the rules make** (Measurements 3 and 4): 3
+  frequent words and 172, 58 and 372 text positions (0.28%, 0.18% and 0.16%
   of those judged).
-  - **The same spelling, another entry.** A rule reaches a spelling that has
-    several entries, and the lookup lists them in the order it found them
-    (docs/languages.md 9.6), so an entry the rule reached first comes before
-    the one the word's own rows name: كافية → كَاف (the letter) for كَافٍ
-    "enough", حرة → حَرّ "heat" for حُرّ "free", المقبل → مُقَبَّل for مُقْبِل
-    "next", العلوي, خالية, عارية, مستقرة, منخفضة, جدية, عشرات, خفيفة, اشهر
-    (16 frequent words, 51,591 tokens; 36, 22 and 11 positions of العلوي,
-    المقبل and كافية in Tatoeba), and إنه, إنها, إنهم, إنك and فإنه → إِن "if"
-    for إِنَّ (733,991 tokens; 193, 208 and 979 positions). A whole word cannot
-    choose among entries of one spelling (it reaches all of them, in the same
-    order), and an untagged entry such as the adjective كَافٍ answers only a
-    deinflection without conditions, which reaches the noun as well. This is
-    the tie the lead accepted for hachi-lang-engine-l
-    (`lookup.confirmedOrder: "references"`, which orders confirmed entries by
-    the word's own references), counted here.
-  - انهض and انسي (7,083 tokens), and ties between one-step readings of rare
-    words: ويطفئ → طفئ, فيخيل → خال (4 each in *al-Nazarat*), كين → كان (24
-    in Tatoeba, a name), بطلاقة → طلاق.
-- **Ambiguous words** (several lemmas, no hand decision: 22,040, 10,174 and
-  57,454 positions) are not judged by script. In the hand samples, 14, 15
-  and 7 of 50 show a wrong card, mostly a verb entry of a noun's spelling
-  (مجد, مثلك, قومه) or a rare sense first (الميزان → Libra, عين → spring).
+  - **Imperatives** انهض → اِنْهَاضَ, انسي → نَسَّى and اشهر → شَهَرَ (9,801
+    tokens): an imperative rule reaches another verb, or the verb entry of a
+    noun's spelling (اشهر for أشهر "months"), in one step, as it reaches the
+    right one, and the tie goes by the order the deinflections were found. A
+    whole word انهض → نهض in the same transform does not change it.
+  - **ة for ت before a pronoun.** A pronoun rule writes ة back for ت in one
+    step, so a past verb with an object pronoun, which takes two steps, can
+    show a noun in ة first: دعوته and دعوتك → دَعْوَة for "I called him",
+    صفعته, خدعته, ترجمتها, منحته (54, 15 and 104 positions judged wrong; the
+    judge counts some nouns here too, as وغبطتها). Whole words fix the
+    frequent ones (قلته, قالته, قابلته, سمعته, كتبتها).
+  - **The same spelling, another entry**, fixed for the fourth audit: a rule
+    with conditions reaches only the entries that pass them, which then come
+    first. 23 whole words without conditions, first in `listedNoun`, reach
+    the bare spelling as the word's own form-of rows do, so its entries come
+    in the dictionary's order: كافية, كافي, الكافي and كافيا → كَافٍ
+    "enough", حرة → حُرّ "free", المقبل and المقبلة → مُقْبِل "next", العلوي,
+    عارية, خالية, مستقرة, منخفضة, جدية, عشرات, خفيفة, كريمة, ضيقة, مؤقتة,
+    مسرعة, طيبة, الطيب, كبيرتان and الكبيرات. `lookup.tsv` cannot pin them
+    (Measurements 7).
+  - Ties between one-step readings of rare words: ويطفئ → طفئ, فيخيل → خال
+    (4 each in *al-Nazarat*), كين → كان (24 in Tatoeba, a name), بطلاقة →
+    طَلَاق (17).
+- **Ambiguous words** (several lemmas, no hand decision: 22,026, 10,173 and
+  57,424 positions, and 1,517 frequent words) are not judged by script. The
+  uniform hand samples of Measurements 4 include them, and 19 of 50 sampled
+  ambiguous frequent words show a wrong card (Measurements 3), mostly a rare
+  sense or another word of the spelling first (خيارات → "cucumber", أسنان →
+  "to sharpen", نساء → "longevity", الثور → Taurus).
 - **Words the dictionary does not have** get the rules' or a shorter
   match's reading: names (Tom: توم → آم is 22 of the 50 unjudged positions of
   the Tatoeba hand sample, and توم is 3,057 of its 306,356 words; also Maria,
   Ziri, Bruno, Boris) and rare words read as a root (كنانة → كن, فولتير →
   تر).
-- **Yomitan's 78 negatives not kept** (`sources/yomitan-tests-not-kept.tsv`):
+- **Yomitan's 78 negatives not kept** (their reasons are `*` in `tests/yomitan.tsv`; `build-final.mjs` lists them in `sources/yomitan-tests-not-kept.tsv`, which is not committed):
   - 44 duals, plurals and singulars after بـ, كـ or لـ, or with a suffix
     Yomitan marks invalid (بالولدان, بمسلمون, الكتابه);
   - 25 verbs with a subject and an object pronoun of the same person

@@ -1,4 +1,4 @@
-# 50 of the 1517 ambiguous frequent words, drawn by a hash of seed 20261104 and the word (measure.py frequent --sample-out).
+# 50 of the 1517 ambiguous frequent words (8657614 tokens), drawn by a hash of seed 20261104 and the word (measure.py frequent --sample-out).
 # word	tokens	first card	hand
 ماهي	8567	ماهي=مَاهِي	wrong (ما هي)
 اعد	2627	عدا=عَدَا	wrong (أعاد)
@@ -22,7 +22,7 @@
 أسنان	3315	سن=سَنَّ	wrong (سِنّ)
 النساء	22749	امرأة=اِمْرَأَة	right
 نطلق	2032	طلق=طَلُقَ	right
-ر	8951	ر=ر	wrong (رأى)
+ر	8951	ر=ر	right (the letter)
 الشخصية	9227	شخصية=شَخْصِيَّة	right
 عادي	6298	عادي=عَادِيّ	right
 الحجر	3205	حجر=حِجْر	wrong (حَجَر)
