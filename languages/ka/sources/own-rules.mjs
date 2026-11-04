@@ -332,7 +332,7 @@ transform('word', 'word form', 'A frequent form whose lemma no regular rule reac
     wholeWord('მოიცა', 'მოიცდის', [], ['v']),
     // Verbal nouns whose rows name the verb only through a form without a
     // definition, so the rules reach a wrong verb first.
-    ...['დანიშვნა', 'დანიშვნის'].map((w) => wholeWord(w, 'დანიშნავს', [], ['v'])),
+    ...['დანიშვნა', 'დანიშვნის', 'დანიშვნას', 'დანიშვნასა', 'დანიშვნისა', 'დანიშვნაზე', 'დანიშვნაში'].map((w) => wholeWord(w, 'დანიშნავს', [], ['v'])),
     wholeWord('კვლას', 'კლავს', [], ['v']),
     ...['თქვი', 'თქვით', 'თქვეს'].map((w) => wholeWord(w, 'ამბობს', [], ['v'])),
     ...['უთხარი', 'უთხარით', 'მითხარი', 'მითხარით', 'მითხარ', 'გვითხარი', 'გვითხარით', 'უთხრეს'].map((w) => wholeWord(w, 'ეუბნება', [], ['v'])),
@@ -358,20 +358,35 @@ transform('word', 'word form', 'A frequent form whose lemma no regular rule reac
     // hyphen (80-იანი, 800-მდე), which a hover reads from the suffix.
     ...[['სამხრეთ', 'სამხრეთი'], ['ჩრდილო', 'ჩრდილოეთი']].map(([w, l]) => wholeWord(w, l, [], NOM)),
     ...[['იანი', '-იანი'], ['მდე', '-მდე']].map(([w, l]) => wholeWord(w, l, [], [])),
+    // Words whose only form-of row names a wrong lemma, which a whole-word
+    // rule outranks (docs/languages.md 9.6): ერთ, სამ, the forms of ერთი "one"
+    // and სამი "three" before a noun (ერთ დღეს, not ერი "nation"; სამ საათში,
+    // not სადმე "somewhere"), რიგით "in order" (not რიგა "Riga"), რაოდენობით
+    // "in number" (not the adjective რაოდენობითი), ვანის "of Vani" (not ვანა
+    // "bathtub"), ბატონებთან "with the masters" (not ბატონები "contagious
+    // diseases"), ელი "you wait" (not იელი "azalea") and დაწვა "lay down"
+    // (not წვავს "burns"; wty-ka-en lacks წვება, so its nearest entry წევს).
+    ...[['ერთ', 'ერთი'], ['სამ', 'სამი'], ['რიგით', 'რიგი'], ['რაოდენობით', 'რაოდენობა'], ['ვანის', 'ვანი'], ['ბატონებთან', 'ბატონი']]
+        .map(([w, l]) => wholeWord(w, l, [], NOM)),
+    ...[['ელი', 'ელის'], ['დაწვა', 'წევს']].map(([w, l]) => wholeWord(w, l, [], ['v'])),
+    // Archaic or emphatic forms that are not headwords: არას "nothing"
+    // (dative; not არის), შინა "at home" (not შენს "your").
+    ...[['არას', 'არა'], ['შინა', 'შინ']].map(([w, l]) => wholeWord(w, l, [], [])),
     // Nouns in -ა whose case forms are also those of a rarer noun in -ი
     // (ფენა "layer", ფენი "hairdryer"; ბაზა "base", ბაზი "bumblebee"; ფილა
     // "slab", ფილი "Phil"): the rows name both, and the rules reach the -ი
-    // noun first. The forms in the 10,000 most frequent words with at least
-    // 20 tokens are whole words of the -ა noun.
-    ...[['ფენ', 'ფენა', ['ები', 'ების', 'ებში', 'ით', 'ებს', 'ად', 'იდან', 'ებად', 'ისგან', 'ებიდან', 'ებით', 'ებზე', 'ისთვის', 'ისა']],
+    // noun first. Their forms with at least 20 tokens in the frequency list,
+    // and four rarer ones the measured texts have, are whole words of the -ა
+    // noun.
+    ...[['ფენ', 'ფენა', ['ები', 'ების', 'ებში', 'ით', 'ებს', 'ად', 'იდან', 'ებად', 'ისგან', 'ებიდან', 'ებით', 'ებზე', 'ისთვის', 'ისა', 'ებსა', 'ებისა']],
         ['ბაზ', 'ბაზა', ['ები', 'ების', 'ად', 'იდან', 'ებზე', 'ებს', 'ებში', 'ით', 'ებთან', 'ისა']],
         ['ფილ', 'ფილა', ['ების', 'ები', 'ის', 'ით', 'ებს', 'ებზე']],
         ['კერ', 'კერა', ['ები', 'ად', 'ების', 'ებში', 'ებს', 'იდან']],
         ['ფლორ', 'ფლორა', ['ის', 'ისა', 'ითა', 'ით']],
-        ['დინებ', 'დინება', ['ები', 'ების', 'ებს']],
+        ['დინებ', 'დინება', ['ები', 'ების', 'ებს', 'ებზე']],
         ['დინამიკ', 'დინამიკა', ['ის', 'ით', 'ისა']],
         ['სატირ', 'სატირა', ['ის', 'ისა']],
-        ['ჭ', 'ჭა', ['ები']], ['ჭალ', 'ჭალა', ['ები']], ['მალ', 'მალა', ['ები', 'ების']], ['ტონ', 'ტონა', ['ამდე']]]
+        ['ჭ', 'ჭა', ['ები']], ['ჭალ', 'ჭალა', ['ები']], ['მალ', 'მალა', ['ები', 'ების', 'ებს']], ['ტონ', 'ტონა', ['ამდე']]]
         .flatMap(([stem, l, endings]) => endings.map((e) => wholeWord(stem + e, l, [], NOM))),
 ]);
 

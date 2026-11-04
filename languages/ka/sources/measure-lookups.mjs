@@ -2,38 +2,35 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Lookup measurements of README.md (Measurements 2-4). Not run by any test.
 //
-//   node languages/ka/sources/measure-lookups.mjs <wty-ka-en term banks dir> <lookup-batch output> <words.txt> [--labels <file>]... [--counts <freq.tsv>] [--deinflections <file>] [--top N] [--sample N] [--seed S]
+//   node languages/ka/sources/measure-lookups.mjs <wty-ka-en term banks dir> <lookup-batch output> <words.txt> [--labels <file>]... [--counts <freq.tsv>] [--deinflections <file>] [--top N] [--suspects <freq.tsv>] [--sample N] [--seed S]
 //
-// <wty-ka-en term banks dir> is the unzipped dictionary (its term_bank_*.json).
-// <lookup-batch output> has one JSON line per hover (sources/lookup-batch.cpp),
-// and <words.txt> the hovered word on the same line (sources/make-hovers.py),
-// or, for a word list, the word itself. A hover is judged by script when the
-// dictionary knows the word: the first result with a definition (not a
-// form-of row) is right when it is a term one of the word's own form-of rows
-// names (or, when that term has no definition, a term its own form-of rows
-// name), or the word itself when the dictionary has it as a lemma; it is
-// wrong otherwise. A word whose rows name more than one lemma (იყო names იყი and
-// არის) is right only when the first result is its own lemma, as section 14
-// step 5 asks: --labels gives, for each such (word, first result) pair, W
-// (wrong), A (ambiguous: context decides; reported apart) or R (right), and
-// a pair with no label is reported as unlabelled. The same holds when the
-// first result is the word's own entry while the word's own rows name
-// another lemma (წელს "this year" first, where the text needs the dative of
-// წელი "year"): the label of the pair (word, word) decides, and these
-// results are also counted as a class of their own ("ownEntry"). A label
-// decides wherever it exists, also where the script would count the result
-// right (the name Tom, ტომი in Tatoeba, is not ტომი "tribe") or wrong; later
-// --labels files override earlier ones. A labelled word the dictionary does
-// not know is counted apart ("labelledUnknown"), and --top N lists the N most
-// frequent such words with a result (with --counts) and their labels, for
-// judging by hand; X labels a text that is not a word (the frequency list's
-// image keyword მინი). Hovers whose word the
-// dictionary does not know are counted, and
-// --sample N prints N of them (seeded) for judging by hand. --counts weighs
-// each word by its count in a frequency list (word<TAB>count) for the share
-// of tokens. --deinflections (hoshidicts-cli deinflect ka --stdin output for
-// the words) judges only the words whose own lemma a rule reaches: a term
-// one of the word's form-of rows names is among its deinflections.
+// <wty-ka-en term banks dir> is the unzipped dictionary; <lookup-batch output>
+// has one JSON line per hover (sources/lookup-batch.cpp), and <words.txt> the
+// hovered word on the same line (sources/make-hovers.py) or, for a word list,
+// the word. A hover whose word the dictionary knows is judged: the first
+// result with a definition is right when it is a term the word's own form-of
+// rows name (or, when that term has no definition, one its rows name), or the
+// word itself when it is a lemma. Where that leaves a choice (the rows name
+// several lemmas, or the first result is the word's own entry while its rows
+// name another lemma: the class "ownEntry"), the label of the pair (word, first
+// result) decides: W wrong, A ambiguous (counted apart), R right; a pair
+// without one is reported. A label decides wherever it exists (the name Tom,
+// ტომი in Tatoeba, is not ტომი "tribe"); later --labels files override earlier
+// ones; a first result written = is the word itself; X marks a text that is
+// not a word (not judged). Labelled words the dictionary does not know are
+// counted apart ("labelledUnknown"), and --top N lists the N most frequent
+// such words with a result. --sample N prints N hovers of unknown words
+// (seeded) for judging by hand. --counts weighs each word by its count in a
+// frequency list (word<TAB>count). --deinflections (hoshidicts-cli deinflect
+// ka --stdin output) judges only the words whose own lemma a rule reaches,
+// and the words with form-of rows whose pair has a label.
+//
+// --suspects <freq.tsv> lists first results the script would count right
+// that may be wrong: a lemma only the word's own form-of rows reach (no step
+// of its trace is a transform of the pack), where the next result is a rule
+// reading of a lemma at least three times as frequent in the list (ერთ → ერი
+// "nation", the row's "archaic plural", before the rules' ერთი "one"). The
+// pairs are counted by label, and the 60 largest without one are listed.
 import {readFileSync, readdirSync} from 'node:fs';
 import {join} from 'node:path';
 
@@ -45,12 +42,13 @@ const countsFile = opt('--counts');
 const deinflectionsFile = opt('--deinflections');
 const labelsFiles = rest.flatMap((a, i) => (a === '--labels' ? [rest[i + 1]] : []));
 const topN = +opt('--top', 0);
+const suspectsFile = opt('--suspects');
 const labels = new Map();
 for (const labelsFile of labelsFiles) {
     for (const line of readFileSync(labelsFile, 'utf8').split('\n')) {
         if (!line || line.startsWith('#')) { continue; }
         const [word, first, label] = line.split('\t');
-        labels.set(`${word}\t${first}`, label);
+        labels.set(`${word}\t${first === '=' ? word : first}`, label);
     }
 }
 const deinflections = new Map();
@@ -71,13 +69,18 @@ for (const f of readdirSync(dir).filter((name) => name.startsWith('term_bank_'))
         for (const [target] of refs) { (targets.get(row[0]) ?? targets.set(row[0], new Set()).get(row[0])).add(target); }
     }
 }
-const counts = new Map();
-if (countsFile) {
-    for (const line of readFileSync(countsFile, 'utf8').split('\n')) {
+const readCounts = (file) => {
+    const m = new Map();
+    for (const line of readFileSync(file, 'utf8').split('\n')) {
         const [word, count] = line.split('\t');
-        if (word) { counts.set(word, +count); }
+        if (word) { m.set(word, +count); }
     }
-}
+    return m;
+};
+const counts = countsFile ? readCounts(countsFile) : new Map();
+const lemmaCounts = suspectsFile ? (suspectsFile === countsFile ? counts : readCounts(suspectsFile)) : null;
+const packIds = new Set(JSON.parse(readFileSync(new URL('../transforms.json', import.meta.url), 'utf8')).transforms.map((t) => t.id));
+const suspects = new Map();
 
 const results = readFileSync(resultsFile, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
 const words = readFileSync(wordsFile, 'utf8').split('\n').slice(0, results.length);
@@ -104,7 +107,17 @@ for (let i = 0; i < results.length; i++) {
     const right = new Set(targets.get(word) ?? []);
     for (const t of [...right]) { if (!lemma.has(t)) { for (const u of targets.get(t) ?? []) { right.add(u); } } }
     if (lemma.has(word)) { right.add(word); }
-    if ((deinflectionsFile && ![...(targets.get(word) ?? [])].some((t) => deinflections.get(word)?.has(t))) || right.size === 0) {
+    const pairLabel = first ? labels.get(`${word}\t${first.expression}`) : undefined;
+    if (lemmaCounts && first && first.trace.length && !first.trace.some((id) => packIds.has(id)) && targets.get(word)?.has(first.expression)) {
+        const c = Math.max(1, lemmaCounts.get(first.expression) ?? 0);
+        const rule = res.filter((r) => !r.formOf)[1];
+        if (rule && rule.expression !== first.expression && rule.trace.some((id) => packIds.has(id)) && (lemmaCounts.get(rule.expression) ?? 0) >= 3 * c) {
+            const k = `${word}\t${first.expression}`;
+            const g = suspects.get(k) ?? suspects.set(k, {word, first: first.expression, trace: first.trace.join(' > '), rule: rule.expression, ruleTrace: rule.trace.join(' > '), c, rc: lemmaCounts.get(rule.expression), n: 0, weight: 0, label: pairLabel ?? '?'}).get(k);
+            g.n++; g.weight += weight;
+        }
+    }
+    if (((deinflectionsFile && ![...(targets.get(word) ?? [])].some((t) => deinflections.get(word)?.has(t))) && !(right.size > 0 && pairLabel && pairLabel !== 'X')) || right.size === 0) {
         unknown++;
         if (!first) { continue; }
         if (right.size > 0) { continue; }
@@ -119,15 +132,14 @@ for (let i = 0; i < results.length; i++) {
         }
         continue;
     }
+    if (pairLabel === 'X') { continue; }
     judged++;
     judgedTokens += weight;
     if (!first) { continue; }
     const ownEntry = first.expression === word && (targets.get(word)?.size ?? 0) > 0;
     const own = labels.get(`${word}\t${first.expression}`);
-    if (own === 'R' || (own === 'A' && !right.has(first.expression))) {
-        if (own === 'A') { ambiguous++; ambiguousTokens += weight; }
-        continue;
-    }
+    if (own === 'R') { continue; }
+    if (own === 'A') { ambiguous++; ambiguousTokens += weight; if (ownEntry) { ownEntryAmbiguous++; } continue; }
     if (own === 'W' && right.has(first.expression) && right.size < 2 && !ownEntry) {
         // fall through to wrong: a label decides (ტომს → ტომი for the name Tom)
     } else if (right.has(first.expression)) {
@@ -165,6 +177,15 @@ if (topN && countsFile) {
     });
     console.log(`the ${top.length} most frequent words the measurement does not judge, with a result: ${w} wrong (${wt} tokens, ${(100 * wt / allTokens).toFixed(2)}% of all), ${un} unlabelled`);
     for (const l of lines) { console.log(l); }
+}
+if (suspectsFile) {
+    const all = [...suspects.values()];
+    const sum = (f) => all.filter(f).reduce((a, g) => a + g.n, 0);
+    const by = (l) => `${all.filter((g) => g.label === l).length} (${sum((g) => g.label === l)})`;
+    console.log(`suspects (first result only the word's own rows reach, next a rule reading of a lemma at least 3 times as frequent): ${all.length} pairs (${sum(() => true)} ${countsFile ? 'words' : 'positions'}${countsFile ? `, ${all.reduce((a, g) => a + g.weight, 0)} tokens` : ''}); labelled W ${by('W')}, A ${by('A')}, X ${by('X')}, R ${by('R')}; without a label (right by the script) ${by('?')}`);
+    for (const g of all.filter((x) => x.label === '?').sort((a, b) => b.weight - a.weight).slice(0, 60)) {
+        console.log(`  ${g.weight}\t${g.word} → ${g.first} [${g.trace}] (${g.c})\trule reading ${g.rule} [${g.ruleTrace}] (${g.rc})`);
+    }
 }
 console.log('wrong first results by trace:', [...byRule].sort((a, b) => b[1] - a[1]).slice(0, 15).map(([k, v]) => `${k}: ${v}`).join('; '));
 const freq = new Map();

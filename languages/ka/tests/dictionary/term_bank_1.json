@@ -101,5 +101,16 @@
   ["ილაპარაკებს", "", "non-lemma", "", 0, [["ლაპარაკობს", ["third-person singular future"]]], 0, ""],
   ["ჩაი", "", "n", "", 0, ["tea"], 81, ""],
   ["ჩაის", "", "non-lemma", "", 0, [["ჩაი", ["dative/genitive singular"]]], 0, ""],
-  ["იმათ", "", "non-lemma", "", 0, [["მე", ["genitive/dative third-person plural"]], ["ის", ["genitive/dative third-person plural"]]], 0, ""]
+  ["იმათ", "", "non-lemma", "", 0, [["მე", ["genitive/dative third-person plural"]], ["ის", ["genitive/dative third-person plural"]]], 0, ""],
+  ["ერთი", "", "num", "", 0, ["one"], 82, ""],
+  ["სამი", "", "num", "", 0, ["three"], 83, ""],
+  ["სადმე", "", "adv", "", 0, ["somewhere"], 84, ""],
+  ["სამ", "", "non-lemma", "", 0, [["სადმე", ["alternative"]]], 0, ""],
+  ["ხდება", "", "v", "", 0, ["to happen"], 85, ""],
+  ["იხდის", "", "v", "", 0, ["to take off"], 86, ""],
+  ["მოხდა", "", "non-lemma", "", 0, [["იხდის", ["perfective noun-from-verb"]], ["ხდება", ["third-person singular aorist perfective indicative"]]], 0, ""],
+  ["შენ", "", "pron", "", 0, ["you"], 87, ""],
+  ["მე", "", "non-lemma", "", 0, [["შენ", ["first-person singular ergative"]]], 0, ""],
+  ["ეხლა", "", "non-lemma", "", 0, [["ახლა", ["alt-of"]]], 0, ""],
+  ["კეთება", "", "non-lemma", "", 0, [["აკეთებს", ["verbal noun"]]], 0, ""]
 ]

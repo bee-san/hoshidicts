@@ -1,13 +1,20 @@
-# Labels for sources/measure-lookups.mjs --labels. word<TAB>first result<TAB>label<TAB>note. W: wrong in the usual reading;
-# A: ambiguous, context decides (counted apart); R: right; X: not a word of running text (not judged). A label decides wherever it
-# exists. The pairs: first results that are one of several lemmas the word's own wty-ka-en rows name; first results that are the
-# word's own entry while its rows name another lemma (word<TAB>word); and the 100 most frequent of the 10,000 frequency-list words
-# that wty-ka-en does not know and that get a result. Judged by hand unless a section says otherwise, with the labels of
-# audit-hachi-lang-ka (reports/audit-hachi-lang-ka-evidence/inputs/tie-labels.tsv), audit-hachi-lang-ka-b (ownentry-labels.tsv,
-# my-labels-mytexts.tsv) and audit-hachi-lang-ka-c (my-freq-unknown-top100-judged.tsv) as the base. The file covers every such pair
-# of the books, Tatoeba, the 10,000 most frequent words and the two auditors' four texts for the pack as committed. Written for
-# the pack (GPL-3.0-or-later).
+# Labels for sources/measure-lookups.mjs --labels. word<TAB>first result<TAB>label<TAB>note; a first result written = is the word
+# itself. W: wrong in the usual reading; A: ambiguous, context decides (counted apart); R: right; X: not a word of running text (not
+# judged). A label decides wherever it exists. The pairs: first results that are one of several lemmas the word's own wty-ka-en rows
+# name; first results that are the word's own entry while its rows name another lemma; the 100 most frequent of the 10,000
+# frequency-list words that wty-ka-en does not know and that get a result; words whose only row names a wrong lemma, or that a
+# whole-word rule now reads, found in audit-hachi-lang-ka-d's lists or among the suspects of measure-lookups.mjs --suspects. Judged by hand unless a section says otherwise, with the four
+# audits' labels (reports/audit-hachi-lang-ka*-evidence/inputs/) as the base. The file covers every such pair of the books, Tatoeba,
+# the 10,000 most frequent words and the auditors' texts for the pack as committed. Written for the pack (GPL-3.0-or-later).
 # --- W (the note says why)
+მანამ	მანა	W	"until, before"; its only row names მანა "spoke" (no rule can fix it)
+შენზე	შენი	W	"about you, than you"; the rows of შენ also name შენი (no rule can fix it)
+შენში	შენი	W	as შენზე
+შენკენ	შენი	W	as შენზე
+შენამდე	შენი	W	as შენზე
+ხდის	ხდა	W	"makes" (the verb, which wty-ka-en lacks), shown as the noun ხდა "stripping"
+მადამ	მადა	W	"Madame", shown as მადა "appetite"
+კელი	კევრი	W	the name Kelly, shown as კევრი "threshing sledge"
 აღწერით	აღწერითი	W	"by the census/description" shown as "descriptive"
 ბაზის	ბაზი	W	"of the base" shown as "bumblebee"
 ბუნებით	ბუნი	W	"by nature" shown as "shaft, handle"
@@ -53,37 +60,43 @@
 ჩვენად	მე	W	adverbial of ჩვენ "we" shown as "I, me"
 ჩვენით	მე	W	instrumental of ჩვენ "we" shown as "I, me" (audit-hachi-lang-ka-b)
 ჭამ	ჭა	W	"you eat" (2nd person of ჭამს) shown as the ergative of ჭა "well"
-ამება	ამება	W	"pleasing, pleasure" (აამებს), shown as "amoeba" (audit-hachi-lang-ka-b)
-არაფერს	არაფერს	W	dative of არაფერი "nothing" (არაფერს ვამბობ), shown as "you're welcome"
-არაფრის	არაფრის	W	genitive of არაფერი "nothing" (არაფრის გამო, არაფრის მაქნისი), shown as "you're welcome"
-ბანს	ბანს	W	dative of ბანი "bass (part)", shown as "to wash" (audit-hachi-lang-ka-b)
-ბატონები	ბატონები	W	"masters, lords" (ბატონი), shown as "contagious diseases like measles" (audit-hachi-lang-ka-b)
-გაგება	გაგება	W	"understanding" (გაიგებს), shown as "a tool for fishing" (audit-hachi-lang-ka-b)
-გავა	გავა	W	"will go out" (გადის), shown as "breech, croup" (audit-hachi-lang-ka-b)
-გვერდზე	გვერდზე	W	"on (one's) side" (გვერდი with -ზე), shown as "by, past"
-დის	დის	W	"of the sister" (და), shown as "to flow" (audit-hachi-lang-ka-b)
-ზრდის	ზრდის	W	"of growth" (ზრდა; 10 of 10 sampled Wikipedia contexts), shown as the verb "to raise" (audit-hachi-lang-ka-b)
-თავით	თავით	W	instrumental of თავი "head, beginning" (თავით-ფეხებამდე, თავით ბოლომდე), shown as "head-on"
-თევზები	თევზები	W	"fish" (plural of თევზი), shown as "Pisces" (audit-hachi-lang-ka-b)
-კარმა	კარმა	W	ergative of კარი "door", shown as "karma" (audit-hachi-lang-ka-b)
-კვერცხები	კვერცხები	W	"eggs" (კვერცხი), shown as "balls" (audit-hachi-lang-ka-b)
-კიდე	კიდე	W	dialect კიდევ "again, also" in all 4 contexts, shown as "edge" (audit-hachi-lang-ka-b)
-მაშა	მაშა	W	the particle მაშა "well then" (მაშ) and the name Masha, shown as "pliers, tongs" (audit-hachi-lang-ka-b)
-მთაში	მთაში	W	"in the mountains" (მთა with -ში), shown as "uphill"
-მისაღებად	მისაღებად	W	"in order to receive" (adverbial of მისაღები), shown as "acceptably"
-ტირი	ტირი	W	"you cry" (ტირის), shown as "shooting range" (audit-hachi-lang-ka-b)
-ღიმი	ღიმი	W	"smile" (ღიმილი), shown as "turnip-root chervil"
-შეძვრა	შეძვრა	W	the aorist "stirred" (შეძრავს), shown as the noun "shaking"
-შიშით	შიშით	W	"with fear" (instrumental of შიში), shown as "shyly"
-ჩადი	ჩადი	W	"go down!" (ჩადის), shown as "Chad" (audit-hachi-lang-ka-b)
-ცეცხლში	ცეცხლში	W	"into the fire" (ცეცხლი with -ში), shown as "ablaze"
-წელს	წელს	W	"in (the year)", the dative of წელი, in 9,136 of 9,508 occurrences in the first 60 MB of the Wikipedia dump (after a year number) and in all 18 Tatoeba sentences (გასულ, მომავალ, იმავე წელს), shown as "this year" (audit-hachi-lang-ka-b)
-წონის	წონის	W	"of weight" (წონა; 10 of 10 sampled Wikipedia contexts), shown as "to weigh" (audit-hachi-lang-ka-b)
-წყლები	წყლები	W	"waters" (წყალი), shown as "amniotic fluid" (audit-hachi-lang-ka-b)
-ხარო	ხარო	W	ხარ "you are" with the quotative -ო, shown as "deep pit" (audit-hachi-lang-ka-b)
-ჯანმრთელად	ჯანმრთელად	W	"healthy, in good health" (ჯანმრთელი), shown as "strongly"
+ამება	=	W	"pleasing, pleasure" (აამებს), shown as "amoeba" (audit-hachi-lang-ka-b)
+არაფერს	=	W	dative of არაფერი "nothing" (არაფერს ვამბობ), shown as "you're welcome"
+არაფრის	=	W	genitive of არაფერი "nothing" (არაფრის გამო, არაფრის მაქნისი), shown as "you're welcome"
+ბანს	=	W	dative of ბანი "bass (part)", shown as "to wash" (audit-hachi-lang-ka-b)
+ბატონები	=	W	"masters, lords" (ბატონი), shown as "contagious diseases like measles" (audit-hachi-lang-ka-b)
+გაგება	=	W	"understanding" (გაიგებს), shown as "a tool for fishing" (audit-hachi-lang-ka-b)
+გავა	=	W	"will go out" (გადის), shown as "breech, croup" (audit-hachi-lang-ka-b)
+გვერდზე	=	W	"on (one's) side" (გვერდი with -ზე), shown as "by, past"
+დის	=	W	"of the sister" (და), shown as "to flow" (audit-hachi-lang-ka-b)
+ზრდის	=	W	"of growth" (ზრდა; 10 of 10 sampled Wikipedia contexts), shown as the verb "to raise" (audit-hachi-lang-ka-b)
+თავით	=	W	instrumental of თავი "head, beginning" (თავით-ფეხებამდე, თავით ბოლომდე), shown as "head-on"
+თევზები	=	W	"fish" (plural of თევზი), shown as "Pisces" (audit-hachi-lang-ka-b)
+კარმა	=	W	ergative of კარი "door", shown as "karma" (audit-hachi-lang-ka-b)
+კვერცხები	=	W	"eggs" (კვერცხი), shown as "balls" (audit-hachi-lang-ka-b)
+კიდე	=	W	dialect კიდევ "again, also" in all 4 contexts, shown as "edge" (audit-hachi-lang-ka-b)
+მაშა	=	W	the particle მაშა "well then" (მაშ) and the name Masha, shown as "pliers, tongs" (audit-hachi-lang-ka-b)
+მთაში	=	W	"in the mountains" (მთა with -ში), shown as "uphill"
+მისაღებად	=	W	"in order to receive" (adverbial of მისაღები), shown as "acceptably"
+ტირი	=	W	"you cry" (ტირის), shown as "shooting range" (audit-hachi-lang-ka-b)
+ღიმი	=	W	"smile" (ღიმილი), shown as "turnip-root chervil"
+შეძვრა	=	W	the aorist "stirred" (შეძრავს), shown as the noun "shaking"
+შიშით	=	W	"with fear" (instrumental of შიში), shown as "shyly"
+ჩადი	=	W	"go down!" (ჩადის), shown as "Chad" (audit-hachi-lang-ka-b)
+ცეცხლში	=	W	"into the fire" (ცეცხლი with -ში), shown as "ablaze"
+წელს	=	W	"in (the year)", the dative of წელი, in 9,136 of 9,508 occurrences in the first 60 MB of the Wikipedia dump (after a year number) and in all 18 Tatoeba sentences (გასულ, მომავალ, იმავე წელს), shown as "this year" (audit-hachi-lang-ka-b)
+წონის	=	W	"of weight" (წონა; 10 of 10 sampled Wikipedia contexts), shown as "to weigh" (audit-hachi-lang-ka-b)
+წყლები	=	W	"waters" (წყალი), shown as "amniotic fluid" (audit-hachi-lang-ka-b)
+ხარო	=	W	ხარ "you are" with the quotative -ო, shown as "deep pit" (audit-hachi-lang-ka-b)
+ჯანმრთელად	=	W	"healthy, in good health" (ჯანმრთელი), shown as "strongly"
 მალის	მალი	W	mostly the country Mali (მალის რესპუბლიკა), which wty-ka-en lacks; მალი is "fast" and მალა "vertebra"
+თვისგან	თვე	W	"from oneself" (archaic თვისგან = თავისგან) in both measured contexts, shown as "month"
+თვისკენ	თვე	W	as თვისგან ("towards himself")
 # --- A (the note gives the readings)
+რიგის	რიგა	A	"of the row, of order" (რიგი) or "of Riga"
+რიგისა	რიგა	A	as რიგის
+რუს	რუ	A	"Russian" (რუსი) in Wikipedia, "brook" (რუ) in the books
+რობერტო	რობერტი	A	the name Roberto, which the rows read as the vocative of Robert
 ალის	ალი	A	genitive of ალი "flame" or of ალა
 ალისა	ალი	A	as ალის
 არყით	არაყი	A	"with vodka" (არაყი) or "with birch" (არყი)
@@ -92,9 +105,7 @@
 დასთან	დასი	A	"with the sister" (და) or "with the troupe" (დასი)
 დაჭერით	დაჭრის	A	"by catching / catch! (pl.)" (დაიჭერს) or, as wty-ka-en lists it, the imperative of დაჭრის "cut"
 დებით	და	A	instrumental plural of და "sister" or of დება
-დებით	დება	A	as დების
 დების	და	A	genitive plural of და "sister" (დები) or of დება "laying"
-თავის	თავი	A	mostly the possessive "his own" (თავისი); the genitive of თავი "head" in other contexts
 თავის	თავისი	A	the possessive "his own" (7 of 8 contexts audit-hachi-lang-ka sampled) or the genitive of თავი "head"
 თემები	თემი	A	"communities" (თემი) or "themes" (თემა)
 თვლებზე	თვალი	A	"on wheels"; თვალი has no wheel sense in wty-ka-en (audit-hachi-lang-ka-b)
@@ -105,8 +116,6 @@
 მანქანებით	მანქანები	A	"with cars" (მანქანა) or "with machinery" (მანქანები)
 მანქანების	მანქანები	A	"of cars" (მანქანა) or "of machinery" (მანქანები)
 მეცნიერების	მეცნიერება	A	"of science" or "of scientists"
-მეცნიერების	მეცნიერი	A	"of science" or "of scientists"
-მეცნიერებისა	მეცნიერი	A	as მეცნიერების
 მეცნიერებისა	მეცნიერება	A	as მეცნიერების
 მოთხოვნით	თხოვნა	A	"by demand" (მოთხოვნა) shown as "request" (თხოვნა), the form-of target of მოთხოვნა
 მოთხოვნის	თხოვნა	A	as მოთხოვნით
@@ -123,7 +132,6 @@
 ტონის	ტონი	A	"of the tone" (ტონი) or "of a ton" (ტონა)
 ფერად	ფერი	A	adverbial of ფერი "colour" or the attributive of ფერადი "coloured"
 შეთქმულების	შეთქმულება	A	"of the conspiracy" or "of the conspirators"
-შეთქმულების	შეთქმულები	A	"of the conspiracy" or "of the conspirators"
 შენით	შენი	A	"by yourself" (შენ) or "with yours" (შენი)
 ცავ	ცა	A	vocative of ცა "sky" or the dialect word ციცავ
 წერით	წერა	A	fragments of hyphenated words; წერა is shown as "fate" (audit-hachi-lang-ka-b)
@@ -137,28 +145,56 @@
 ხანის	ხანი	A	genitive of ხანი "khan, time" or of ხანა "age, period"
 ხატების	ხატები	A	"of the icons" (ხატი) or ხატები "pictures"
 ხევის	ხევი	A	genitive of ხევი "gorge" or of ხევა
-ბოლოს	ბოლოს	A	"finally" or "at the end of" (ბოლო) (audit-hachi-lang-ka-b)
-დე	დე	A	"let" (დაე) or a hyphen fragment (audit-hachi-lang-ka-b)
-დებს	დებს	A	"puts" or "to the sisters" (audit-hachi-lang-ka-b)
-დღეს	დღეს	A	"today" or "on the day" (დღე) (audit-hachi-lang-ka-b)
-ველი	ველი	A	"field" or "I expect" (ელის) (audit-hachi-lang-ka-b)
-თქმით	თქმით	A	"according to" (instrumental of თქმა) or "tellingly" (audit-hachi-lang-ka-b)
-კილო	კილო	A	"kilo" or "tone, manner" (not in wty-ka-en) (audit-hachi-lang-ka-b)
-მოდი	მოდი	A	the particle "come on, let's" or the imperative "come!" (მოდის)
-რამ	რამ	A	"something", or the ergative of რა "what" in questions (რამ გაგიტეხა გული?)
-სიტყვაზე	სიტყვაზე	A	"for example" or "on the word" (audit-hachi-lang-ka-b)
-ქალა	ქალა	A	"skull" or part of the name ქალა-შავა (audit-hachi-lang-ka-b)
-წერა	წერა	A	"writing" (Wikipedia, Tatoeba) or "fate" (the books) (audit-hachi-lang-ka-b)
-წვერები	წვერები	A	"beards" or "tips, peaks" (წვერი) (audit-hachi-lang-ka-b)
+ბოლოს	=	A	"finally" or "at the end of" (ბოლო) (audit-hachi-lang-ka-b)
+დე	=	A	"let" (დაე) or a hyphen fragment (audit-hachi-lang-ka-b)
+დებს	=	A	"puts" or "to the sisters" (audit-hachi-lang-ka-b)
+დღეს	=	A	"today" or "on the day" (დღე) (audit-hachi-lang-ka-b)
+ველი	=	A	"field" or "I expect" (ელის) (audit-hachi-lang-ka-b)
+თქმით	=	A	"according to" (instrumental of თქმა) or "tellingly" (audit-hachi-lang-ka-b)
+კილო	=	A	"kilo" or "tone, manner" (not in wty-ka-en) (audit-hachi-lang-ka-b)
+მოდი	=	A	the particle "come on, let's" or the imperative "come!" (მოდის)
+რამ	=	A	"something", or the ergative of რა "what" in questions (რამ გაგიტეხა გული?)
+სიტყვაზე	=	A	"for example" or "on the word" (audit-hachi-lang-ka-b)
+ქალა	=	A	"skull" or part of the name ქალა-შავა (audit-hachi-lang-ka-b)
+წერა	=	A	"writing" (Wikipedia, Tatoeba) or "fate" (the books) (audit-hachi-lang-ka-b)
+წვერები	=	A	"beards" or "tips, peaks" (წვერი) (audit-hachi-lang-ka-b)
+ბატონებზე	ბატონები	W	"on the masters": the plural of ბატონი; the entry ბატონები is "contagious diseases"
+სამე	სადმე	W	the Old Georgian particle "therefore" (სამე ... იცნნეთ იგინი), not "somewhere"
+მანაზე	მანა	W	the name Mana in the second auditor's text; მანა is "spoke"
+მანასთან	მანა	W	as მანაზე
+ნაკლებს	ნაკლი	W	"less" (ნაკლები), not ნაკლი "fault"
+ბატონებიდან	ბატონები	W	as ბატონებზე ("left the masters")
+გავაში	გავა	W	the chess player Havasi in the Wikipedia sample, not "croup"
+მსახურების	მსახური	A	"of the servants" or "of the service" (მსახურება, a row naming ემსახურება)
+მსახურებიდან	მსახური	A	as მსახურების
 # --- X
 მინი	მინა	X	the image-link keyword "thumb" that wiki-text.py keeps; not a word of running text
+კებისა	კები	X	a piece of ფანა- ტიკებისა, a word the book breaks over a line
 # --- R, by hand, with a note
+დაწვა	წევს	R	"lay down" (წევს "to lie", the nearest entry) at 9 of its 10 measured positions; the tenth is the verbal noun "burning"
 მოიგო	იგებს	R	the lemma (present of მოიგებს "will win"); wty-ka-en glosses იგებს only "to understand, to hear"
 გახდა	ხდება	R	usual reading (the word rule; its rows name only იხდის)
 თვის	თვე	R	genitive of თვე; the 7 book positions are halves of words hyphenated at a line end (დღის-/თვის)
 მერის	მერი	R	"of the mayor" or "of Mary": both are მერი; მერე "then" has no genitive
 მოიცა	მოიცდის	R	usual reading ("wait": მოიცადე → მოიცდის)
 # --- R, by hand: the usual reading
+შენით	შენ	R
+ერთ	ერთი	R
+სამ	სამი	R
+რიგით	რიგი	R
+რაოდენობით	რაოდენობა	R
+ვანის	ვანი	R
+ბატონებთან	ბატონი	R
+ელი	ელის	R
+დანიშვნას	დანიშნავს	R
+დანიშვნასა	დანიშნავს	R
+დანიშვნისა	დანიშნავს	R
+დანიშვნაზე	დანიშნავს	R
+დანიშვნაში	დანიშნავს	R
+ფენებსა	ფენა	R
+ფენებისა	ფენა	R
+დინებებზე	დინება	R
+მალებს	მალა	R
 ბაზების	ბაზა	R
 ბაზით	ბაზა	R
 ფენების	ფენა	R
@@ -354,7 +390,6 @@
 შემოქმედებისა	შემოქმედება	R
 შემოქმედებისთვის	შემოქმედება	R
 შენა	შენ	R
-შენით	შენ	R
 შერიგება	შერიგდება	R
 შერიგების	შერიგდება	R
 შეფასებით	შეფასება	R
@@ -382,523 +417,523 @@
 ჯდებოდა	ჯდება	R
 ჰავას	ჰავა	R
 # --- R, by hand: the word's own entry is the word the text has (pronouns, adverbs, postpositional entries, verbal nouns, verb forms)
-ავადმყოფობა	ავადმყოფობა	R
-ავტობუსში	ავტობუსში	R
-ავტომატურად	ავტომატურად	R
-აივანზე	აივანზე	R
-ალა	ალა	R
-ალო	ალო	R
-ამერიკაში	ამერიკაში	R
-ამით	ამით	R
-ამჯერად	ამჯერად	R
-არა	არა	R
-არანაირად	არანაირად	R
-არასოდეს	არასოდეს	R
-არი	არი	R
-არის	არის	R
-არსად	არსად	R
-არსება	არსება	R
-არსებობა	არსებობა	R
-აფხაზეთში	აფხაზეთში	R
-აქ	აქ	R
-აღება	აღება	R
-აღმოსავლეთისკენ	აღმოსავლეთისკენ	R
-აღტაცებით	აღტაცებით	R
-აჩრდილი	აჩრდილი	R
-აწმყოში	აწმყოში	R
-ახსნა	ახსნა	R
-აჯანყება	აჯანყება	R
-ბაზართან	ბაზართან	R
-ბედნიერება	ბედნიერება	R
-ბიბლიოთეკაში	ბიბლიოთეკაში	R
-ბინაში	ბინაში	R
-ბიძია	ბიძია	R
-გადასახადი	გადასახადი	R
-გადაცემა	გადაცემა	R
-გადახდა	გადახდა	R
-გაერთიანება	გაერთიანება	R
-გაველურება	გაველურება	R
-გათხოვება	გათხოვება	R
-გათხოვილი	გათხოვილი	R
-გაკვეთილი	გაკვეთილი	R
-გამარჯვება	გამარჯვება	R
-გამგზავრება	გამგზავრება	R
-გამოთქმა	გამოთქმა	R
-გამოკითხვა	გამოკითხვა	R
-გამოკლება	გამოკლება	R
-გამოჩენილი	გამოჩენილი	R
-გამოცდა	გამოცდა	R
-გამოცემა	გამოცემა	R
-გამოცვლა	გამოცვლა	R
-გამოცვლის	გამოცვლის	R
-გამოცხადება	გამოცხადება	R
-გამოძიება	გამოძიება	R
-განათლება	განათლება	R
-განათლებული	განათლებული	R
-განვითარება	განვითარება	R
-განთავისუფლება	განთავისუფლება	R
-განკარგულებაში	განკარგულებაში	R
-განმარტება	განმარტება	R
-განსხვავებით	განსხვავებით	R
-განცხადება	განცხადება	R
-გარდაქმნა	გარდაქმნა	R
-გატაცება	გატაცება	R
-გაუქმება	გაუქმება	R
-გაფრთხილება	გაფრთხილება	R
-გაფუჭებული	გაფუჭებული	R
-გაღება	გაღება	R
-გაღვიძება	გაღვიძება	R
-გაჩერდება	გაჩერდება	R
-გაჩერება	გაჩერება	R
-გემო	გემო	R
-გემოვნებით	გემოვნებით	R
-გვერდით	გვერდით	R
-გვიან	გვიან	R
-გზად	გზად	R
-გზაზე	გზაზე	R
-გთხოვთ	გთხოვთ	R
-გილოცავთ	გილოცავთ	R
-გინება	გინება	R
-გიყვარვარ	გიყვარვარ	R
-გმადლობ	გმადლობ	R
-გმადლობთ	გმადლობთ	R
-გოგი	გოგი	R
-გოგო	გოგო	R
-გონება	გონება	R
-გონებით	გონებით	R
-გრძნობა	გრძნობა	R
-დაბადება	დაბადება	R
-დაბნელება	დაბნელება	R
-დაგვიანება	დაგვიანება	R
-დადასტურება	დადასტურება	R
-დავალება	დავალება	R
-დაკავებული	დაკავებული	R
-დაკარგული	დაკარგული	R
-დაკეტილი	დაკეტილი	R
-დალაგება	დალაგება	R
-დალოდება	დალოდება	R
-დამარცხებული	დამარცხებული	R
-დამატება	დამატება	R
-დამატებით	დამატებით	R
-დამოუკიდებლობისთვის	დამოუკიდებლობისთვის	R
-დამსახურება	დამსახურება	R
-დანახვა	დანახვა	R
-დანებდება	დანებდება	R
-დაპირება	დაპირება	R
-დარაჯი	დარაჯი	R
-დარღვევა	დარღვევა	R
-დარჩენა	დარჩენა	R
-დარწმუნებული	დარწმუნებული	R
-დასავლეთიდან	დასავლეთიდან	R
-დასავლეთით	დასავლეთით	R
-დასვენება	დასვენება	R
-დასრულებული	დასრულებული	R
-დატოვება	დატოვება	R
-დაფასება	დაფასება	R
-დაფიქრებული	დაფიქრებული	R
-დაქირავება	დაქირავება	R
-დაქორწინება	დაქორწინება	R
-დაცვა	დაცვა	R
-დაწერილი	დაწერილი	R
-დაწყება	დაწყება	R
-დახმარება	დახმარება	R
-დაჯდება	დაჯდება	R
-დედი	დედი	R
-დედიკო	დედიკო	R
-დედილო	დედილო	R
-დევნა	დევნა	R
-დევს	დევს	R
-დენა	დენა	R
-დიეტაზე	დიეტაზე	R
-დილას	დილას	R
-დილით	დილით	R
-დროებით	დროებით	R
-დროზე	დროზე	R
-დღემდე	დღემდე	R
-ეგენი	ეგენი	R
-ეზოში	ეზოში	R
-ელვა	ელვა	R
-ერთად	ერთად	R
-ერთგულად	ერთგულად	R
-ერი	ერი	R
-ესენი	ესენი	R
-ექიმთან	ექიმთან	R
-ეჭვი	ეჭვი	R
-ვარაუდით	ვარაუდით	R
-ვერ	ვერ	R
-ვერა	ვერა	R
-ვითარება	ვითარება	R
-ვის	ვის	R
-ვიცი	ვიცი	R
-ვლაპარაკობ	ვლაპარაკობ	R
-ვნახოთ	ვნახოთ	R
-ვსვამ	ვსვამ	R
-ზიდვა	ზიდვა	R
-ზიზღით	ზიზღით	R
-ზრდა	ზრდა	R
-ზურაბ	ზურაბ	R
-თავიდან	თავიდან	R
-თავისთვის	თავისთვის	R
-თავისუფლება	თავისუფლება	R
-თამაში	თამაში	R
-თანაგრძნობით	თანაგრძნობით	R
-თარგმანები	თარგმანები	R
-თბილისში	თბილისში	R
-თეატრში	თეატრში	R
-თვით	თვით	R
-თვლის	თვლის	R
-თითო	თითო	R
-თინა	თინა	R
-თოლი	თოლი	R
-თქვენ	თქვენ	R
-თხოვნა	თხოვნა	R
-თხრა	თხრა	R
-თხრობა	თხრობა	R
-იბადება	იბადება	R
-იგი	იგი	R
-იზრდება	იზრდება	R
-იმით	იმით	R
-ინგლისში	ინგლისში	R
-ინდოეთში	ინდოეთში	R
-ინებეთ	ინებეთ	R
-ის	ის	R
-ისინი	ისინი	R
-იტალიაში	იტალიაში	R
-იყიდის	იყიდის	R
-იყოს	იყოს	R
-იწერება	იწერება	R
-კაი	კაი	R
-კაკუნი	კაკუნი	R
-კარგ	კარგ	R
-კარგი	კარგი	R
-კარები	კარები	R
-კაცებთან	კაცებთან	R
-კაცისთვის	კაცისთვის	R
-კერძო	კერძო	R
-კვამლი	კვამლი	R
-კვება	კვება	R
-კვირას	კვირას	R
-კვლავ	კვლავ	R
-კიბესთან	კიბესთან	R
-კიბიდან	კიბიდან	R
-კიდევ	კიდევ	R
-კითხვა	კითხვა	R
-კლუბში	კლუბში	R
-კმაყოფილება	კმაყოფილება	R
-კოსმოსში	კოსმოსში	R
-კოცნა	კოცნა	R
-კოცნის	კოცნის	R
-კრება	კრება	R
-კუბო	კუბო	R
-კუდა	კუდა	R
-კურსდამთავრებულები	კურსდამთავრებულები	R
-ლამაზად	ლამაზად	R
-ლამის	ლამის	R
-ლაპარაკი	ლაპარაკი	R
-ლოგინში	ლოგინში	R
-ლოდინი	ლოდინი	R
-ლონდონში	ლონდონში	R
-ლოცვა	ლოცვა	R
-მა	მა	R
-მაგალითად	მაგალითად	R
-მათებურად	მათებურად	R
-მათი	მათი	R
-მაია	მაია	R
-მამი	მამი	R
-მანამდე	მანამდე	R
-მანქანები	მანქანები	R
-მართვა	მართვა	R
-მარიამ	მარიამ	R
-მას	მას	R
-მგზავრობა	მგზავრობა	R
-მგონი	მგონი	R
-მდინარე	მდინარე	R
-მე	მე	R
-მეგობართან	მეგობართან	R
-მეგობრებთან	მეგობრებთან	R
-მეგობრისგან	მეგობრისგან	R
-მეგობრისთვის	მეგობრისთვის	R
-მეგობრობა	მეგობრობა	R
-მეომარი	მეომარი	R
-მეჩეთში	მეჩეთში	R
-მზადება	მზადება	R
-მზერა	მზერა	R
-მთაზე	მთაზე	R
-მიახლოებით	მიახლოებით	R
-მიდის	მიდის	R
-მივდივარ	მივდივარ	R
-მივდივართ	მივდივართ	R
-მივდიოდი	მივდიოდი	R
-მინდვრად	მინდვრად	R
-მიხედვით	მიხედვით	R
-მოგება	მოგება	R
-მოგრძო	მოგრძო	R
-მოდით	მოდით	R
-მოდის	მოდის	R
-მოთეთრო	მოთეთრო	R
-მოთმინებით	მოთმინებით	R
-მოლაპარაკება	მოლაპარაკება	R
-მომავალ	მომავალ	R
-მომავალში	მომავალში	R
-მომაღლო	მომაღლო	R
-მონაცემები	მონაცემები	R
-მონაწილეობა	მონაწილეობა	R
-მოსმენა	მოსმენა	R
-მოტანა	მოტანა	R
-მოქმედება	მოქმედება	R
-მოქცევა	მოქცევა	R
-მოყვარე	მოყვარე	R
-მოყვითალო	მოყვითალო	R
-მოცურავე	მოცურავე	R
-მოძღვრები	მოძღვრები	R
-მოწითალო	მოწითალო	R
-მოწიწებით	მოწიწებით	R
-მოწოდება	მოწოდება	R
-მოხუცებული	მოხუცებული	R
-მოხუცი	მოხუცი	R
-მუდმივად	მუდმივად	R
-მუშაობა	მუშაობა	R
-მქონდა	მქონდა	R
-მღერა	მღერა	R
-მღერის	მღერის	R
-მყოფი	მყოფი	R
-მშვიდობით	მშვიდობით	R
-მცნება	მცნება	R
-მწკრივად	მწკრივად	R
-ნაკლებად	ნაკლებად	R
-ნაკლები	ნაკლები	R
-ნამდვილად	ნამდვილად	R
-ნამეტანი	ნამეტანი	R
-ნაპირზე	ნაპირზე	R
-ნატო	ნატო	R
-ნაძირალა	ნაძირალა	R
-ნაწილობრივ	ნაწილობრივ	R
-ნაჭერ	ნაჭერ	R
-ნაჭერი	ნაჭერი	R
-ნახევარზე	ნახევარზე	R
-ნახევრად	ნახევრად	R
-ნდობა	ნდობა	R
-ნება	ნება	R
-ნებაყოფლობით	ნებაყოფლობით	R
-ორშაბათს	ორშაბათს	R
-ოცნება	ოცნება	R
-ოჯახში	ოჯახში	R
-პატივისცემით	პატივისცემით	R
-პირდაპირ	პირდაპირ	R
-პირველად	პირველად	R
-პლატოზე	პლატოზე	R
-პოვნა	პოვნა	R
-პროექტში	პროექტში	R
-რად	რად	R
-რადგანაც	რადგანაც	R
-რაიონში	რაიონში	R
-რას	რას	R
-რატო	რატო	R
-რთმევა	რთმევა	R
-რო	რო	R
-რუსი	რუსი	R
-რჩევა	რჩევა	R
-საათამდე	საათამდე	R
-საათზე	საათზე	R
-სადილისთვის	სადილისთვის	R
-სალოცავი	სალოცავი	R
-სამსახურში	სამსახურში	R
-სამშაბათს	სამშაბათს	R
-სამხრეთით	სამხრეთით	R
-სარეცხი	სარეცხი	R
-სართულზე	სართულზე	R
-სასმელი	სასმელი	R
-სასურველი	სასურველი	R
-საუბარში	საუბარში	R
-საუკეთესო	საუკეთესო	R
-საფლავი	საფლავი	R
-საღამოზე	საღამოზე	R
-საღამომდე	საღამომდე	R
-საღამოს	საღამოს	R
-საყვედურით	საყვედურით	R
-საწყენი	საწყენი	R
-სახელო	სახელო	R
-სახლიდან	სახლიდან	R
-სახლისთვის	სახლისთვის	R
-სახლში	სახლში	R
-სახურავი	სახურავი	R
-სერგო	სერგო	R
-სთხოვს	სთხოვს	R
-სიამოვნებით	სიამოვნებით	R
-სიარული	სიარული	R
-სიბრალულით	სიბრალულით	R
-სინამდვილეში	სინამდვილეში	R
-სირმა	სირმა	R
-სიყვარული	სიყვარული	R
-სიყვარულით	სიყვარულით	R
-სიცილი	სიცილი	R
-სიცილით	სიცილით	R
-სიძულვილი	სიძულვილი	R
-სიხარული	სიხარული	R
-სკოლაში	სკოლაში	R
-სოფელში	სოფელში	R
-სრულდება	სრულდება	R
-სწავლა	სწავლა	R
-სხდომა	სხდომა	R
-სჯის	სჯის	R
-ტარება	ტარება	R
-ტაფაზე	ტაფაზე	R
-ტილო	ტილო	R
-ტირილი	ტირილი	R
-ტირის	ტირის	R
-ტრაბახით	ტრაბახით	R
-ტყუილად	ტყუილად	R
-უარესი	უარესი	R
-უდიდესი	უდიდესი	R
-უკეთესი	უკეთესი	R
-ულამაზესი	ულამაზესი	R
-უმაღლესი	უმაღლესი	R
-უფასოდ	უფასოდ	R
-უძველესი	უძველესი	R
-უწესრიგობაში	უწესრიგობაში	R
-ფანჯრიდან	ფანჯრიდან	R
-ფართე	ფართე	R
-ფერმა	ფერმა	R
-ფეხით	ფეხით	R
-ფირმა	ფირმა	R
-ფიქრი	ფიქრი	R
-ფოსტაში	ფოსტაში	R
-ფრენა	ფრენა	R
-ფრინველი	ფრინველი	R
-ქალებისადმი	ქალებისადმი	R
-ქალისთვის	ქალისთვის	R
-ქართულ	ქართულ	R
-ქმედება	ქმედება	R
-ქმნის	ქმნის	R
-ქურდობა	ქურდობა	R
-ქუჩაში	ქუჩაში	R
-ქცევა	ქცევა	R
-ღამეს	ღამეს	R
-ღვიძება	ღვიძება	R
-ღირს	ღირს	R
-ღრიალი	ღრიალი	R
-ყიდვა	ყიდვა	R
-ყიდის	ყიდის	R
-ყიდულობს	ყიდულობს	R
-ყინვა	ყინვა	R
-ყიყინებს	ყიყინებს	R
-ყიყინი	ყიყინი	R
-ყოფილი	ყოფილი	R
-ყურადღებით	ყურადღებით	R
-შაბათს	შაბათს	R
-შე	შე	R
-შედარება	შედარება	R
-შედარებით	შედარებით	R
-შედეგად	შედეგად	R
-შეიარაღება	შეიარაღება	R
-შეიარაღებული	შეიარაღებული	R
-შეკითხვა	შეკითხვა	R
-შემდგომ	შემდგომ	R
-შემდეგ	შემდეგ	R
-შემთხვევა	შემთხვევა	R
-შემთხვევაში	შემთხვევაში	R
-შემთხვევით	შემთხვევით	R
-შემოდგომა	შემოდგომა	R
-შემოსვლა	შემოსვლა	R
-შემცირება	შემცირება	R
-შემწვარი	შემწვარი	R
-შენ	შენ	R
-შენახვა	შენახვა	R
-შენგან	შენგან	R
-შენებურად	შენებურად	R
-შენთან	შენთან	R
-შენთვის	შენთვის	R
-შენიშვნა	შენიშვნა	R
-შენს	შენს	R
-შესრულება	შესრულება	R
-შეტყობინება	შეტყობინება	R
-შეურაცხყოფა	შეურაცხყოფა	R
-შექმნის	შექმნის	R
-შეყვარებული	შეყვარებული	R
-შეცდომა	შეცდომა	R
-შეცდომით	შეცდომით	R
-შეცვლა	შეცვლა	R
-შეწუხება	შეწუხება	R
-შეწუხებული	შეწუხებული	R
-შეწყვეტა	შეწყვეტა	R
-შეხედვა	შეხედვა	R
-შეხვედრა	შეხვედრა	R
-შვება	შვება	R
-შობა	შობა	R
-შორეულ	შორეულ	R
-შორის	შორის	R
-შორს	შორს	R
-შტატში	შტატში	R
-შუაგულში	შუაგულში	R
-შუადღეს	შუადღეს	R
-შუაღამემდე	შუაღამემდე	R
-ჩანს	ჩანს	R
-ჩაცმა	ჩაცმა	R
-ჩემებურად	ჩემებურად	R
-ჩვევა	ჩვევა	R
-ჩვენ	ჩვენ	R
-ჩვენება	ჩვენება	R
-ჩვენი	ჩვენი	R
-ჩვეულებრივ	ჩვეულებრივ	R
-ჩიკაგოდან	ჩიკაგოდან	R
-ჩრდილოეთით	ჩრდილოეთით	R
-ჩრდილოეთისკენ	ჩრდილოეთისკენ	R
-ჩუმად	ჩუმად	R
-ცა	ცა	R
-ცახცახით	ცახცახით	R
-ცდა	ცდა	R
-ცეკვა	ცეკვა	R
-ცენტრში	ცენტრში	R
-ცვლის	ცვლის	R
-ცივა	ცივა	R
-ცნობა	ცნობა	R
-ცოდნა	ცოდნა	R
-ცოტას	ცოტას	R
-ცხელა	ცხელა	R
-ცხენზე	ცხენზე	R
-ცხოვრება	ცხოვრება	R
-ძაან	ძაან	R
-ძალით	ძალით	R
-ძამია	ძამია	R
-ძე	ძე	R
-ძიება	ძიება	R
-ძირს	ძირს	R
-ძლიერ	ძლიერ	R
-ძლიერად	ძლიერად	R
-ძმა	ძმა	R
-ძმასთან	ძმასთან	R
-ძნელად	ძნელად	R
-წაგება	წაგება	R
-წავა	წავა	R
-წავალ	წავალ	R
-წავედი	წავედი	R
-წავიდეს	წავიდეს	R
-წარმავალი	წარმავალი	R
-წარმართები	წარმართები	R
-წარმატებით	წარმატებით	R
-წარმოდგენა	წარმოდგენა	R
-წარმოთქმა	წარმოთქმა	R
-წარმოსახვა	წარმოსახვა	R
-წარმოქმნა	წარმოქმნა	R
-წერილი	წერილი	R
-წერს	წერს	R
-წვიმა	წვიმა	R
-წინასწარ	წინასწარ	R
-წოლა	წოლა	R
-წონა	წონა	R
-წუთში	წუთში	R
-წყალში	წყალში	R
-წყენით	წყენით	R
-ჭექა	ჭექა	R
-ჭრიალით	ჭრიალით	R
-ხარხარი	ხარხარი	R
-ხატები	ხატები	R
-ხედვა	ხედვა	R
-ხილვა	ხილვა	R
-ხუმრობა	ხუმრობა	R
-ხუმრობით	ხუმრობით	R
-ჯინსი	ჯინსი	R
-ჰქვია	ჰქვია	R
+ავადმყოფობა	=	R
+ავტობუსში	=	R
+ავტომატურად	=	R
+აივანზე	=	R
+ალა	=	R
+ალო	=	R
+ამერიკაში	=	R
+ამით	=	R
+ამჯერად	=	R
+არა	=	R
+არანაირად	=	R
+არასოდეს	=	R
+არი	=	R
+არის	=	R
+არსად	=	R
+არსება	=	R
+არსებობა	=	R
+აფხაზეთში	=	R
+აქ	=	R
+აღება	=	R
+აღმოსავლეთისკენ	=	R
+აღტაცებით	=	R
+აჩრდილი	=	R
+აწმყოში	=	R
+ახსნა	=	R
+აჯანყება	=	R
+ბაზართან	=	R
+ბედნიერება	=	R
+ბიბლიოთეკაში	=	R
+ბინაში	=	R
+ბიძია	=	R
+გადასახადი	=	R
+გადაცემა	=	R
+გადახდა	=	R
+გაერთიანება	=	R
+გაველურება	=	R
+გათხოვება	=	R
+გათხოვილი	=	R
+გაკვეთილი	=	R
+გამარჯვება	=	R
+გამგზავრება	=	R
+გამოთქმა	=	R
+გამოკითხვა	=	R
+გამოკლება	=	R
+გამოჩენილი	=	R
+გამოცდა	=	R
+გამოცემა	=	R
+გამოცვლა	=	R
+გამოცვლის	=	R
+გამოცხადება	=	R
+გამოძიება	=	R
+განათლება	=	R
+განათლებული	=	R
+განვითარება	=	R
+განთავისუფლება	=	R
+განკარგულებაში	=	R
+განმარტება	=	R
+განსხვავებით	=	R
+განცხადება	=	R
+გარდაქმნა	=	R
+გატაცება	=	R
+გაუქმება	=	R
+გაფრთხილება	=	R
+გაფუჭებული	=	R
+გაღება	=	R
+გაღვიძება	=	R
+გაჩერდება	=	R
+გაჩერება	=	R
+გემო	=	R
+გემოვნებით	=	R
+გვერდით	=	R
+გვიან	=	R
+გზად	=	R
+გზაზე	=	R
+გთხოვთ	=	R
+გილოცავთ	=	R
+გინება	=	R
+გიყვარვარ	=	R
+გმადლობ	=	R
+გმადლობთ	=	R
+გოგი	=	R
+გოგო	=	R
+გონება	=	R
+გონებით	=	R
+გრძნობა	=	R
+დაბადება	=	R
+დაბნელება	=	R
+დაგვიანება	=	R
+დადასტურება	=	R
+დავალება	=	R
+დაკავებული	=	R
+დაკარგული	=	R
+დაკეტილი	=	R
+დალაგება	=	R
+დალოდება	=	R
+დამარცხებული	=	R
+დამატება	=	R
+დამატებით	=	R
+დამოუკიდებლობისთვის	=	R
+დამსახურება	=	R
+დანახვა	=	R
+დანებდება	=	R
+დაპირება	=	R
+დარაჯი	=	R
+დარღვევა	=	R
+დარჩენა	=	R
+დარწმუნებული	=	R
+დასავლეთიდან	=	R
+დასავლეთით	=	R
+დასვენება	=	R
+დასრულებული	=	R
+დატოვება	=	R
+დაფასება	=	R
+დაფიქრებული	=	R
+დაქირავება	=	R
+დაქორწინება	=	R
+დაცვა	=	R
+დაწერილი	=	R
+დაწყება	=	R
+დახმარება	=	R
+დაჯდება	=	R
+დედი	=	R
+დედიკო	=	R
+დედილო	=	R
+დევნა	=	R
+დევს	=	R
+დენა	=	R
+დიეტაზე	=	R
+დილას	=	R
+დილით	=	R
+დროებით	=	R
+დროზე	=	R
+დღემდე	=	R
+ეგენი	=	R
+ეზოში	=	R
+ელვა	=	R
+ერთად	=	R
+ერთგულად	=	R
+ერი	=	R
+ესენი	=	R
+ექიმთან	=	R
+ეჭვი	=	R
+ვარაუდით	=	R
+ვერ	=	R
+ვერა	=	R
+ვითარება	=	R
+ვის	=	R
+ვიცი	=	R
+ვლაპარაკობ	=	R
+ვნახოთ	=	R
+ვსვამ	=	R
+ზიდვა	=	R
+ზიზღით	=	R
+ზრდა	=	R
+ზურაბ	=	R
+თავიდან	=	R
+თავისთვის	=	R
+თავისუფლება	=	R
+თამაში	=	R
+თანაგრძნობით	=	R
+თარგმანები	=	R
+თბილისში	=	R
+თეატრში	=	R
+თვით	=	R
+თვლის	=	R
+თითო	=	R
+თინა	=	R
+თოლი	=	R
+თქვენ	=	R
+თხოვნა	=	R
+თხრა	=	R
+თხრობა	=	R
+იბადება	=	R
+იგი	=	R
+იზრდება	=	R
+იმით	=	R
+ინგლისში	=	R
+ინდოეთში	=	R
+ინებეთ	=	R
+ის	=	R
+ისინი	=	R
+იტალიაში	=	R
+იყიდის	=	R
+იყოს	=	R
+იწერება	=	R
+კაი	=	R
+კაკუნი	=	R
+კარგ	=	R
+კარგი	=	R
+კარები	=	R
+კაცებთან	=	R
+კაცისთვის	=	R
+კერძო	=	R
+კვამლი	=	R
+კვება	=	R
+კვირას	=	R
+კვლავ	=	R
+კიბესთან	=	R
+კიბიდან	=	R
+კიდევ	=	R
+კითხვა	=	R
+კლუბში	=	R
+კმაყოფილება	=	R
+კოსმოსში	=	R
+კოცნა	=	R
+კოცნის	=	R
+კრება	=	R
+კუბო	=	R
+კუდა	=	R
+კურსდამთავრებულები	=	R
+ლამაზად	=	R
+ლამის	=	R
+ლაპარაკი	=	R
+ლოგინში	=	R
+ლოდინი	=	R
+ლონდონში	=	R
+ლოცვა	=	R
+მა	=	R
+მაგალითად	=	R
+მათებურად	=	R
+მათი	=	R
+მაია	=	R
+მამი	=	R
+მანამდე	=	R
+მანქანები	=	R
+მართვა	=	R
+მარიამ	=	R
+მას	=	R
+მგზავრობა	=	R
+მგონი	=	R
+მდინარე	=	R
+მე	=	R
+მეგობართან	=	R
+მეგობრებთან	=	R
+მეგობრისგან	=	R
+მეგობრისთვის	=	R
+მეგობრობა	=	R
+მეომარი	=	R
+მეჩეთში	=	R
+მზადება	=	R
+მზერა	=	R
+მთაზე	=	R
+მიახლოებით	=	R
+მიდის	=	R
+მივდივარ	=	R
+მივდივართ	=	R
+მივდიოდი	=	R
+მინდვრად	=	R
+მიხედვით	=	R
+მოგება	=	R
+მოგრძო	=	R
+მოდით	=	R
+მოდის	=	R
+მოთეთრო	=	R
+მოთმინებით	=	R
+მოლაპარაკება	=	R
+მომავალ	=	R
+მომავალში	=	R
+მომაღლო	=	R
+მონაცემები	=	R
+მონაწილეობა	=	R
+მოსმენა	=	R
+მოტანა	=	R
+მოქმედება	=	R
+მოქცევა	=	R
+მოყვარე	=	R
+მოყვითალო	=	R
+მოცურავე	=	R
+მოძღვრები	=	R
+მოწითალო	=	R
+მოწიწებით	=	R
+მოწოდება	=	R
+მოხუცებული	=	R
+მოხუცი	=	R
+მუდმივად	=	R
+მუშაობა	=	R
+მქონდა	=	R
+მღერა	=	R
+მღერის	=	R
+მყოფი	=	R
+მშვიდობით	=	R
+მცნება	=	R
+მწკრივად	=	R
+ნაკლებად	=	R
+ნაკლები	=	R
+ნამდვილად	=	R
+ნამეტანი	=	R
+ნაპირზე	=	R
+ნატო	=	R
+ნაძირალა	=	R
+ნაწილობრივ	=	R
+ნაჭერ	=	R
+ნაჭერი	=	R
+ნახევარზე	=	R
+ნახევრად	=	R
+ნდობა	=	R
+ნება	=	R
+ნებაყოფლობით	=	R
+ორშაბათს	=	R
+ოცნება	=	R
+ოჯახში	=	R
+პატივისცემით	=	R
+პირდაპირ	=	R
+პირველად	=	R
+პლატოზე	=	R
+პოვნა	=	R
+პროექტში	=	R
+რად	=	R
+რადგანაც	=	R
+რაიონში	=	R
+რას	=	R
+რატო	=	R
+რთმევა	=	R
+რო	=	R
+რუსი	=	R
+რჩევა	=	R
+საათამდე	=	R
+საათზე	=	R
+სადილისთვის	=	R
+სალოცავი	=	R
+სამსახურში	=	R
+სამშაბათს	=	R
+სამხრეთით	=	R
+სარეცხი	=	R
+სართულზე	=	R
+სასმელი	=	R
+სასურველი	=	R
+საუბარში	=	R
+საუკეთესო	=	R
+საფლავი	=	R
+საღამოზე	=	R
+საღამომდე	=	R
+საღამოს	=	R
+საყვედურით	=	R
+საწყენი	=	R
+სახელო	=	R
+სახლიდან	=	R
+სახლისთვის	=	R
+სახლში	=	R
+სახურავი	=	R
+სერგო	=	R
+სთხოვს	=	R
+სიამოვნებით	=	R
+სიარული	=	R
+სიბრალულით	=	R
+სინამდვილეში	=	R
+სირმა	=	R
+სიყვარული	=	R
+სიყვარულით	=	R
+სიცილი	=	R
+სიცილით	=	R
+სიძულვილი	=	R
+სიხარული	=	R
+სკოლაში	=	R
+სოფელში	=	R
+სრულდება	=	R
+სწავლა	=	R
+სხდომა	=	R
+სჯის	=	R
+ტარება	=	R
+ტაფაზე	=	R
+ტილო	=	R
+ტირილი	=	R
+ტირის	=	R
+ტრაბახით	=	R
+ტყუილად	=	R
+უარესი	=	R
+უდიდესი	=	R
+უკეთესი	=	R
+ულამაზესი	=	R
+უმაღლესი	=	R
+უფასოდ	=	R
+უძველესი	=	R
+უწესრიგობაში	=	R
+ფანჯრიდან	=	R
+ფართე	=	R
+ფერმა	=	R
+ფეხით	=	R
+ფირმა	=	R
+ფიქრი	=	R
+ფოსტაში	=	R
+ფრენა	=	R
+ფრინველი	=	R
+ქალებისადმი	=	R
+ქალისთვის	=	R
+ქართულ	=	R
+ქმედება	=	R
+ქმნის	=	R
+ქურდობა	=	R
+ქუჩაში	=	R
+ქცევა	=	R
+ღამეს	=	R
+ღვიძება	=	R
+ღირს	=	R
+ღრიალი	=	R
+ყიდვა	=	R
+ყიდის	=	R
+ყიდულობს	=	R
+ყინვა	=	R
+ყიყინებს	=	R
+ყიყინი	=	R
+ყოფილი	=	R
+ყურადღებით	=	R
+შაბათს	=	R
+შე	=	R
+შედარება	=	R
+შედარებით	=	R
+შედეგად	=	R
+შეიარაღება	=	R
+შეიარაღებული	=	R
+შეკითხვა	=	R
+შემდგომ	=	R
+შემდეგ	=	R
+შემთხვევა	=	R
+შემთხვევაში	=	R
+შემთხვევით	=	R
+შემოდგომა	=	R
+შემოსვლა	=	R
+შემცირება	=	R
+შემწვარი	=	R
+შენ	=	R
+შენახვა	=	R
+შენგან	=	R
+შენებურად	=	R
+შენთან	=	R
+შენთვის	=	R
+შენიშვნა	=	R
+შენს	=	R
+შესრულება	=	R
+შეტყობინება	=	R
+შეურაცხყოფა	=	R
+შექმნის	=	R
+შეყვარებული	=	R
+შეცდომა	=	R
+შეცდომით	=	R
+შეცვლა	=	R
+შეწუხება	=	R
+შეწუხებული	=	R
+შეწყვეტა	=	R
+შეხედვა	=	R
+შეხვედრა	=	R
+შვება	=	R
+შობა	=	R
+შორეულ	=	R
+შორის	=	R
+შორს	=	R
+შტატში	=	R
+შუაგულში	=	R
+შუადღეს	=	R
+შუაღამემდე	=	R
+ჩანს	=	R
+ჩაცმა	=	R
+ჩემებურად	=	R
+ჩვევა	=	R
+ჩვენ	=	R
+ჩვენება	=	R
+ჩვენი	=	R
+ჩვეულებრივ	=	R
+ჩიკაგოდან	=	R
+ჩრდილოეთით	=	R
+ჩრდილოეთისკენ	=	R
+ჩუმად	=	R
+ცა	=	R
+ცახცახით	=	R
+ცდა	=	R
+ცეკვა	=	R
+ცენტრში	=	R
+ცვლის	=	R
+ცივა	=	R
+ცნობა	=	R
+ცოდნა	=	R
+ცოტას	=	R
+ცხელა	=	R
+ცხენზე	=	R
+ცხოვრება	=	R
+ძაან	=	R
+ძალით	=	R
+ძამია	=	R
+ძე	=	R
+ძიება	=	R
+ძირს	=	R
+ძლიერ	=	R
+ძლიერად	=	R
+ძმა	=	R
+ძმასთან	=	R
+ძნელად	=	R
+წაგება	=	R
+წავა	=	R
+წავალ	=	R
+წავედი	=	R
+წავიდეს	=	R
+წარმავალი	=	R
+წარმართები	=	R
+წარმატებით	=	R
+წარმოდგენა	=	R
+წარმოთქმა	=	R
+წარმოსახვა	=	R
+წარმოქმნა	=	R
+წერილი	=	R
+წერს	=	R
+წვიმა	=	R
+წინასწარ	=	R
+წოლა	=	R
+წონა	=	R
+წუთში	=	R
+წყალში	=	R
+წყენით	=	R
+ჭექა	=	R
+ჭრიალით	=	R
+ხარხარი	=	R
+ხატები	=	R
+ხედვა	=	R
+ხილვა	=	R
+ხუმრობა	=	R
+ხუმრობით	=	R
+ჯინსი	=	R
+ჰქვია	=	R
 # --- R, by hand: frequent words wty-ka-en does not know
 ავსტრალიის	ავსტრალია	R
 აზერბაიჯანის	აზერბაიჯანი	R
