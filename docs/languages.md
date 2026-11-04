@@ -197,7 +197,7 @@ An abridged English example (section 4.8 has Arabic and Japanese excerpts):
   "host": {
     "ttsLanguage": "en-US",
     "audioLanguage": "en",
-    "anki": {"noteTypeFamilies": [], "fieldAliases": {"pronunciation": ["IPA"]}, "partOfSpeechLabels": {"v": "Verb", "n": "Noun", "adj": "Adjective", "adv": "Adverb"}},
+    "anki": {"noteTypeFamilies": [], "fieldAliases": {"phonetic-transcriptions": ["IPA"]}, "partOfSpeechLabels": {"v": "Verb", "n": "Noun", "adj": "Adjective", "adv": "Adverb"}},
     "frequencySamples": null,
     "recommendedDictionaries": [
       {"name": "Kaikki English-English (kaikki-to-yomitan)", "url": "https://github.com/yomidevs/kaikki-to-yomitan", "description": "Wiktionary-based English definitions with inflection forms.", "licence": "CC BY-SA 4.0"}
@@ -381,7 +381,7 @@ describes a language completely. The engine checks only its shape.
 | `ttsLanguage` | BCP 47 tag for speech synthesis (`ja-JP`, `en-US`, `ar-SA`). |
 | `audioLanguage` | The value of `{language}` in audio-source URL templates. Yomitan passes ISO 639-1 codes. |
 | `anki.noteTypeFamilies` | Note-type families a host can detect and map automatically. Hachidori knows `kiku`, `lapis` and `senren`; only Japanese lists them. |
-| `anki.fieldAliases` | Extra Anki field names that suggest a marker, for example `{"pronunciation": ["IPA"]}`. |
+| `anki.fieldAliases` | Extra Anki field names that suggest a marker, for example `{"phonetic-transcriptions": ["IPA"]}`. Keys are the host's Anki marker names (Hachidori's `{phonetic-transcriptions}`, `{reading}`, …); a key that names no marker suggests nothing. |
 | `anki.partOfSpeechLabels` | Readable names for the part-of-speech tags this language's dictionaries use. |
 | `frequencySamples` | `{"common": [10 words], "rare": [10 words]}` a host uses to tell whether a frequency dictionary lists ranks or counts, or null. |
 | `recommendedDictionaries` | Links to dictionaries for the language: `name`, `url` (a download or release page), `description`, `licence`. Hosts link to them; they are not installed automatically. |

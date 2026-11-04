@@ -100,7 +100,7 @@
     "audioLanguage": "sga",
     "anki": {
       "noteTypeFamilies": [],
-      "fieldAliases": {"pronunciation": ["IPA"]},
+      "fieldAliases": {"phonetic-transcriptions": ["IPA"]},
       "partOfSpeechLabels": {
         "n": "Noun",
         "v": "Verb",
