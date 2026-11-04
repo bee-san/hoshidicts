@@ -166,5 +166,6 @@
   ["lej", "", "v", "v", 0, ["to give birth"], 165, ""],
   ["shes", "", "v", "v", 0, ["to sell"], 166, ""],
   ["she", "", "n", "n", 0, ["torrent"], 167, ""],
-  ["lë", "", "v", "v", 0, ["to leave, to let"], 168, ""]
+  ["lë", "", "v", "v", 0, ["to leave, to let"], 168, ""],
+  ["mijë", "", "num", "", 0, ["thousand"], 169, ""]
 ]

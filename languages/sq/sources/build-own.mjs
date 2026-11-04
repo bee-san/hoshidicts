@@ -310,7 +310,12 @@ suffix('n-indef-obl-f', 're', 'ër', [], N, {stemMinLength: 1, stemEndsWith: CON
 suffix('n-indef-obl-f', 'rre', 'ërr', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-indef-obl-f', 'le', 'ël', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-indef-obl-f', 'e', '', [], N, {stemMinLength: 2, stemEndsWith: '[i]'});
-suffix('n-indef-obl-f', 'je', '', [], N, {stemMinLength: 2, stemEndsWith: '[aeouyë]'});
+suffix('n-indef-obl-f', 'je', '', [], N, {stemMinLength: 2, stemEndsWith: VOWEL});
+// mije (of a thousand; also mijë written without ë) is mijë, which wty-sq-en
+// lists without a part-of-speech tag: only a rule with empty conditions
+// reaches an untagged row (docs/languages.md 9.4), and this one comes before
+// the -je and plural readings mi (mouse) and mill.
+whole('n-indef-obl-f', 'mije', 'mijë', [], []);
 suffix('n-indef-obl-f', 'ke', 'kë', [], N, {stemMinLength: 1});
 
 // Plural case endings leave the indefinite plural (n_pl): -t after a vowel, r

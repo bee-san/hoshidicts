@@ -274,7 +274,8 @@
         {"type": "suffix", "inflected": "rre", "deinflected": "ërr", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "le", "deinflected": "ël", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[i]"},
-        {"type": "suffix", "inflected": "je", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[aeouyë]"},
+        {"type": "suffix", "inflected": "je", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{vowel}"},
+        {"type": "wholeWord", "inflected": "mije", "deinflected": "mijë", "conditionsIn": [], "conditionsOut": []},
         {"type": "suffix", "inflected": "ke", "deinflected": "kë", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1}
       ]
     },

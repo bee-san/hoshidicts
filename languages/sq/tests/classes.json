@@ -1130,12 +1130,13 @@
     "transforms[8].rules[5].stemEndsWith": [
       [97, 97],
       [101, 101],
+      [105, 105],
       [111, 111],
       [117, 117],
       [121, 121],
       [235, 235]
     ],
-    "transforms[8].rules[6].stemCharacters": [
+    "transforms[8].rules[7].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -7197,6 +7198,7 @@
         ["vritesh në luftë", "vritesh në luftë"],
         ["leja e qëndrimit", "leja e qëndrimit"],
         ["shesë shtëpinë", "shesë shtëpinë"],
+        ["mije banorë", "mije banorë"],
         ["Fëmijët lexonin libra në bibliotekën e qytetit.", "fëmijët lexonin libra në bibliotekën e qytetit."],
         ["lexoj", "lexoj"]
       ]
@@ -9087,6 +9089,7 @@
         ["vritesh në luftë", "Vritesh në luftë"],
         ["leja e qëndrimit", "Leja e qëndrimit"],
         ["shesë shtëpinë", "Shesë shtëpinë"],
+        ["mije banorë", "Mije banorë"],
         ["Fëmijët lexonin libra në bibliotekën e qytetit.", "Fëmijët lexonin libra në bibliotekën e qytetit."],
         ["lexoj", "Lexoj"]
       ]
