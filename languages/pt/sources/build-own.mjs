@@ -1067,6 +1067,8 @@ for (const [slot, form, lemma] of [
     ['feminine', 'segura', 'seguro'], ['feminine', 'completa', 'completo'], ['feminine', 'suja', 'sujo'], ['feminine', 'ativa', 'ativo'],
     ['feminine', 'activa', 'activo'], ['feminine', 'larga', 'largo'], ['feminine', 'checa', 'checo'], ['feminine', 'fixa', 'fixo'],
     ['feminine', 'oculta', 'oculto'], ['feminine', 'suma', 'sumo'],
+    // ultima, última without its accent: the rows name ultimo, último's old spelling.
+    ['feminine', 'ultima', 'ultimo'],
     // and the reverse: caminha is caminhar, not cama's diminutive.
     ['present-ele', 'caminha', 'caminhar'],
     // A plural read as an irregular verb form (pedir's peças, ver's verdes,

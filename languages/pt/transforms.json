@@ -1514,7 +1514,8 @@
         {"type": "wholeWord", "inflected": "checa", "deinflected": "checo", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
         {"type": "wholeWord", "inflected": "fixa", "deinflected": "fixo", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
         {"type": "wholeWord", "inflected": "oculta", "deinflected": "oculto", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "suma", "deinflected": "sumo", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]}
+        {"type": "wholeWord", "inflected": "suma", "deinflected": "sumo", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "ultima", "deinflected": "ultimo", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]}
       ]
     },
     {
