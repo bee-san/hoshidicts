@@ -28,6 +28,18 @@ enum class FormOf : unsigned char { Follow, AsTerm };
 // tags matches only a form without conditions, as in Yomitan (Filter), or
 // carries every dictionary-form condition (Pass).
 enum class UntaggedTerms : unsigned char { Filter, Pass };
+// lookup.confirmedOrder (section 9.6): how two dictionary-confirmed terms that
+// tie on every other key are ordered: when the lookup found them (Discovery),
+// or by the bank order of the references that confirm them (References).
+enum class ConfirmedOrder : unsigned char { Discovery, References };
+// lookup.ownEntry (section 9.6): the matched text's own entry ranks before
+// the terms its own form-of references name (First), or after them
+// (AfterReferences).
+enum class OwnEntry : unsigned char { First, AfterReferences };
+// capabilities.readings (section 4.5). The lookup reads it for one key of
+// section 9.6: "written form equals reading" applies only when readings are
+// required.
+enum class Readings : unsigned char { Required, Optional, None };
 
 // Whether a row's `rules` name no part-of-speech tag: empty, or only the
 // whitespace that separates tags.
@@ -49,8 +61,9 @@ struct VariantPass {
 };
 
 // A list of steps by the name tests/classes.json gives it (section 12.1): a
-// processor id, `lookup.readingNormalizer`, `presentation.displayTransforms.<name>`
-// or `transforms[i].rules[j].then`; a processor's steps across its variants.
+// processor id, `lookup.readingNormalizer`, `lookup.formOfNormalizer`,
+// `presentation.displayTransforms.<name>` or `transforms[i].rules[j].then`; a
+// processor's steps across its variants.
 struct NamedSteps {
   std::string name;
   std::vector<const Step*> steps;
@@ -77,6 +90,15 @@ struct PackData {
   TraceSelection trace_selection = TraceSelection::Shortest;
   FormOf form_of = FormOf::Follow;
   UntaggedTerms untagged_terms = UntaggedTerms::Filter;
+  // lookup.formOfIgnore (section 9.10): reference rule names; a row any of
+  // whose references carries one contributes no reference. Empty with asTerm.
+  std::vector<std::string> form_of_ignore;
+  // lookup.formOfNormalizer (section 9.10): applied to a reference's text
+  // when no row of the selection has that text. Absent with asTerm.
+  std::optional<StepList> form_of_normalizer;
+  ConfirmedOrder confirmed_order = ConfirmedOrder::Discovery;
+  OwnEntry own_entry = OwnEntry::First;
+  Readings readings = Readings::Required;
   std::vector<std::string> function_words;
   std::vector<VariantPass> variant_passes;
   std::unique_ptr<TransformSet> transforms;  // null when lookup.transforms is null
@@ -101,11 +123,11 @@ struct PackData {
 // `trusted` is for the packs built into the library, whose bytes the
 // language conformance test checks against the full schema (they must equal
 // languages/<code>/): it skips the shape checks of the host-only blocks
-// (text's sentence, highlight and line-joining members, capabilities,
-// presentation, settings and host) and leaves PackData's fields that only
-// tests/classes.json reads (display transforms, sample texts, the
+// (text's sentence, highlight and line-joining members, capabilities but
+// `readings`, presentation, settings and host) and leaves PackData's fields
+// that only tests/classes.json reads (display transforms, sample texts, the
 // characterView class field) empty. Everything a lookup uses is parsed and
-// checked as always.
+// checked as always, capabilities.readings included.
 std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string_view transforms_json,
                                      std::string* error, bool trusted = false);
 

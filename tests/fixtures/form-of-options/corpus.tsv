@@ -1,0 +1,6 @@
+# Hand-written for the form-of options probe pack and its dictionary (README.md).
+# category	valid	source	term	rule	reasons
+formOfNormalizer	1	davati	dati	*	*
+formOfIgnore	1	cái	cái	*	*
+formOfIgnore	1	chiếc	chiếc	*	*
+formOfIgnore	1	xe	xe	*	*

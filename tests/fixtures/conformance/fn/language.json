@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "code": "fn",
+  "iso639_3": "zzz",
+  "name": "Form-of options",
+  "nativeName": "Form-of options",
+  "bcp47": "zz",
+  "scripts": ["Latn"],
+  "direction": "ltr",
+  "classes": {
+    "letter": "[A-Za-z\\u00C0-\\u024F\\u1E00-\\u1EFF\\u0590-\\u05FF\\uAC00-\\uD7A3]"
+  },
+  "text": {
+    "pattern": "{letter}",
+    "scanStart": "word",
+    "segmentation": "spaces",
+    "wordCharacters": "{letter}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": ["."],
+      "quotePairs": []
+    },
+    "highlightBreaks": null,
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "word",
+    "preprocessors": [],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": null,
+    "traceSelection": "shortest",
+    "formOf": "follow",
+    "formOfIgnore": ["eumhun"],
+    "formOfNormalizer": [
+      {"normalize": "NFD"},
+      {"strip": "[\\u030F\\u0311]"},
+      {"pattern": "([aeiourAEIOUR])[\\u0300-\\u036F]+", "replace": "$1", "global": true},
+      {"normalize": "NFC"}
+    ],
+    "confirmedOrder": "references",
+    "ownEntry": "afterReferences",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "none",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {
+      "fontFamily": null,
+      "wordBreak": null,
+      "lineBreak": null,
+      "joinedScript": false
+    },
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [],
+  "host": {
+    "ttsLanguage": "zz",
+    "audioLanguage": "zz",
+    "anki": {
+      "noteTypeFamilies": [],
+      "fieldAliases": {},
+      "partOfSpeechLabels": {}
+    },
+    "frequencySamples": null,
+    "recommendedDictionaries": [],
+    "sample": {
+      "warmup": "davati",
+      "practice": {
+        "text": "Ne mogu davati.",
+        "lookup": "davati"
+      },
+      "entry": {
+        "expression": "dati",
+        "reading": "dati",
+        "glossary": ["to give"],
+        "definitionTags": "v",
+        "matched": "davati",
+        "trace": ["imperfective form"]
+      },
+      "character": null
+    }
+  }
+}

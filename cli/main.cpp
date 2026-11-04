@@ -582,7 +582,9 @@ int cmd_lookup(Context& context, const Arguments& args, int max_results = 8, int
 // term for. A deinflected text counts when a row with definitions passes the
 // filter for one of the deinflections that reach it, and the text a form-of
 // reference names counts when the row naming it passes the filter for the
-// deinflection that found it and the text has a row with definitions. For
+// deinflection that found it, none of the row's references carries a rule
+// of lookup.formOfIgnore, and the text has a row with definitions (a text
+// without any row: its lookup.formOfNormalizer form, which then counts). For
 // --per-rule, a text's rules are those every path to it uses; the path to a
 // reference's text is the path of the deinflection that found its row.
 template <typename Intersect>
@@ -628,15 +630,37 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
         if (!any && !passes(row.rules)) continue;
         references.clear();
         QueryAccess::read_form_of(row, pins, references);
+        // lookup.formOfIgnore: such a row contributes no reference.
+        if (std::ranges::any_of(references, [&](const FormOfReference& reference) {
+              return std::ranges::any_of(reference.rules, [&](const std::string& rule) {
+                return std::ranges::find(pack.form_of_ignore, rule) != pack.form_of_ignore.end();
+              });
+            })) {
+          continue;
+        }
         for (const auto& reference : references) referenced[reference.form_of].push_back(i);
       }
     }
   }
   for (const auto& [text, which] : referenced) {
-    // Read with the form-of rows aside, so a row that is only references is no term.
+    // Read with the form-of rows aside, so a row that is only references is no
+    // term; a text without any row is read again after lookup.formOfNormalizer.
     std::vector<RawFormOfRow> target_rows;
-    if (QueryAccess::query_raw(query, text, pins, &target_rows).terms.empty()) continue;
-    auto& paths = candidates[text];
+    std::string found = text;
+    RawTerms target = QueryAccess::query_raw(query, text, pins, &target_rows);
+    if (pack.form_of_normalizer && target.terms.empty() && target_rows.empty()) {
+      std::u32string in;
+      std::u32string out;
+      if (hoshidicts::lang::decode_utf8(text, in)) {
+        hoshidicts::lang::apply_single(*pack.form_of_normalizer, in, out);
+        if (std::string normalized = hoshidicts::lang::to_utf8(out); !normalized.empty() && normalized != text) {
+          target = QueryAccess::query_raw(query, normalized, pins, &target_rows);
+          found = std::move(normalized);
+        }
+      }
+    }
+    if (target.terms.empty()) continue;
+    auto& paths = candidates[found];
     paths.insert(paths.end(), which.begin(), which.end());
   }
   for (auto& [text, which] : candidates) {
