@@ -1,4 +1,4 @@
-# Written for this pack (GPL-3.0-or-later): hand decisions for measure.py --homographs (README.md, Measurements 2), 691 words: the lemmas a reader of ordinary prose needs; lemma=reading where another word has the same spelling (لم=لَمْ); - where no entry is right (a name).
+# Written for this pack (GPL-3.0-or-later): hand decisions for measure.py --homographs (README.md, Measurements 2), 694 words: the lemmas a reader of ordinary prose needs; lemma=reading where another word has the same spelling (لم=لَمْ); - where no entry is right (a name).
 # word	right lemmas
 لا	لا
 من	من
@@ -691,3 +691,6 @@
 ولأنني	أن=أَنَّ
 ولأنه	أن=أَنَّ
 ولأنهم	أن=أَنَّ
+حذرتك	حذر=حَذَّرَ
+حذرته	حذر=حَذَّرَ
+حذرتها	حذر=حَذَّرَ

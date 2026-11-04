@@ -1,19 +1,27 @@
-# kalila-wa-dimna.clean.txt: 30 judged, 50 ambiguous, 50 unjudged positions, drawn by a hash of seed 20261104 and the position (measure.py text --sample-out).
-# word	first card	hand; one section per set (judged by script, ambiguous, not judged)
-# judged
+# kalila-wa-dimna.clean.txt: 60 uniform, 0 judged, 0 ambiguous, 50 unjudged positions, drawn by a hash of seed 20261104 and the position (measure.py text --sample-out).
+# word	first card	hand; one section per set (all positions with a result, uniform; not judged by script)
+# uniform
+يدع	ودع=وَدَعَ	right
 ولا	ولا=وَلَا	right
 حين	حين=حِين	right
+قالا	قالا=قَالَا	wrong (قال)
 كثيرة	كثير=كَثِير	right
 يعمل	عمل=عَمِلَ	right
+إياها	إيا=إِيَّا	right
 ورأى	رأى=رَأَى	right
+وغلبهم	غلب=غَلَبَ	right
 النجار	نجار=نَجَّار	right
 فأقبلن	أقبل=أَقْبَلَ	right
 كل	كل=كُلّ	right
+أجمع	أجمع=أَجْمَعَ	wrong (أَجْمَع)
 من	من=مِنْ	right
+الشكر	شكر=شُكْر	right
 فقد	فقد=فَقَدَ	right
 هذا	هذا=هٰذَا	right
 أنه	نهى=نَهَى	wrong (أن + ه)
+قطع	قطع=قَطَعَ	right
 أعرف	أعرف=أَعْرَف	wrong (عرف)
+نحو	نحو=نَحْو	right
 يده	دهي=دَهِيَ	wrong (يد + ه)
 إذا	إذا=إِذَا	right
 لي	لي=لِي	wrong (لـ + ي)
@@ -22,7 +30,10 @@
 الغرض	غرض=غَرَض	right
 دمنة	دمنة=دِمْنَة	wrong (name)
 تأخذ	أخذ=أَخَذَ	right
+نحوه	نحو=نَحْو	right
 عرفت	عرف=عَرَفَ	right
+يكونوا	كان=كَانَ	right
+ليبين	أبان=أَبَانَ	right
 على	على=عَلَى	right
 أن	أن=أَنْ	right
 ولم	لم=لَمَّ	wrong (لَمْ)
@@ -30,58 +41,26 @@
 شأني	شأن=شَأْن	right
 أنا	أنا=أَنَا	right
 بغير	بغير=بِغَيْرِ	right
-إذا	إذا=إِذَا	right
-# ambiguous
-يدع	ودع=وَدَعَ	right
-قالا	قالا=قَالَا	wrong (قال)
-إياها	إيا=إِيَّا	right
-وغلبهم	غلب=غَلَبَ	right
-أجمع	أجمع=أَجْمَعَ	wrong (أَجْمَع)
-الشكر	شكر=شُكْر	right
-قطع	قطع=قَطَعَ	right
-نحو	نحو=نَحْو	right
-نحوه	نحو=نَحْو	right
-يكونوا	كان=كَانَ	right
-ليبين	أبان=أَبَانَ	right
 ويفرغ	فرغ=فَرَغَ	right
 قعدا	قعد=قَعَدَ	right
+إذا	إذا=إِذَا	right
 اهتمامك	اهتمام=اِهْتِمَام	right
+يوافق	وافق=وَافَقَ	right
+ذنبك	ذنب=ذَنَب	wrong (ذَنْب)
+إلا	إلا=إِلَّا	right
+ابن	ابن=اِبْن	right
+الأمور	أمر=أَمَرَ	wrong (أَمْر)
+أنه	نهى=نَهَى	wrong (أن + ه)
+ابن	ابن=اِبْن	right
 ظلما	ظلم=ظُلْم	right
+من	من=مِنْ	right
+حال	حال=حَالَ	wrong (حَال)
+أن	أن=أَنْ	right
+من	من=مِنْ	right
+بين	بين=بَيْنَ	right
+عنا	عن=عَنْ	right
+لن	لن=لَنْ	right
 وأنسب	أنسب=أَنْسَب	right
-الشراب	شراب=شَرَاب	right
-ظاهر	ظاهر=ظَاهَرَ	wrong (ظاهِر)
-شدته	شدة=شِدَّة	right
-إياها	إيا=إِيَّا	right
-وبينك	بين=بَيْنَ	right
-ففر	فر=فَرَّ	right
-فإني	إن=إِن	wrong (إنّ)
-ولكنا	لك=لَكّ	wrong (لكن)
-نحو	نحو=نَحْو	right
-فأشرف	أشرف=أَشْرَف	wrong (أشرف, v)
-للغني	غني=غَنِيَ	wrong (غَنِيّ)
-لمثل	مثل=مَثَلَ	wrong (مِثْل)
-الأولين	أول=أَوَّل	right
-ودمنة	دمنة=دِمْنَة	wrong (name)
-جوف	جوف=جَوْف	right
-سرا	سرا=سِرًّا	right
-أصل	أصل=أَصْل	right
-يحزنون	حزن=حَزَنَ	right
-بيانات	بيانات=بَيَانَات	right
-للحم	حم=حَم	wrong (لحم)
-ملكها	ملك=مَلَك	wrong (مَلِك)
-وإحسانه	إحسان=إِحْسَان	right
-فأسلمتها	أسلمة=أَسْلَمَة	wrong (أسلم)
-وأضرب	أضرب=أَضْرَبَ	wrong (ضرب)
-وأعجز	أعجز=أَعْجَزَ	right
-مخافة	مخافة=مَخَافَة	right
-شيبه	شيب=شَيْب	right
-السرطان	السرطان=السَرَطَان	wrong (crab)
-نقل	نقل=نَقَلَ	right
-أيدي	يد=يَد	right
-وأمورك	مار=مَارَ	wrong (أمر)
-النوم	نوم=نَوْم	right
-تخاف	خاف=خَافَ	right
-الهلاك	هلاك=هَلَاك	right
 # unjudged
 مغتما	اغتم=اِغْتَمَّ	right
 وتصافيا	صاف=صَافٍ	wrong (تصافى)

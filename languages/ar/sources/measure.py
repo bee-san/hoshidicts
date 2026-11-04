@@ -88,8 +88,10 @@ DEFINITE = re.compile('^(?:[وف]?[بكل]?ال|[وف]?لل)')
 def is_right(first, right, word=None):
     """Whether a first card (its expression and reading) is one of the right
     lemmas, which are expressions or expression=reading."""
-    # No verb follows الـ: a definite word shown as a verb entry is wrong.
-    if word is not None and DEFINITE.match(word) and first.get('rules', '') == 'v':
+    # No verb follows الـ: a definite word (its trace removes الـ, or a row
+    # calls it definite) shown as a verb entry is wrong.
+    if (word is not None and DEFINITE.match(word) and set(first.get('rules', '').split()) == {'v'}
+            and any(step == 'al' or 'definite' in step for step in first.get('trace', []))):
         return False
     return first['expression'] in right or first['expression'] + '=' + first.get('reading', '') in right
 
@@ -335,7 +337,11 @@ def causes(items, imported, languages):
             # or names a form-of target (وأرى -> أرى, سأذهب -> أذهب), as
             # looked up alone; the dictionary's rows choose the lemma.
             steps = [t for t in first['trace'] if t not in CLITIC_IDS]
-            out.append('rules' if steps and all(step in ids for step in steps) else 'dictionary')
+            # A pronoun rule that writes ة back for ت (قلته -> قلة) made the
+            # stem: the card is the rules'.
+            restored = (first['expression'].endswith('ة') and 'ة' not in strip(first['matched'])
+                        and not any(r.split('=')[0] == first['expression'] for r in right))
+            out.append('rules' if restored or (steps and all(step in ids for step in steps)) else 'dictionary')
         else:
             out.append('rules' if r['results'] and is_right(r['results'][0], right, strip(r['results'][0]['matched'])) else 'dictionary')
     return out
