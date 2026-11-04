@@ -332,7 +332,7 @@ compatible part of speech.
 
 ## Measurements
 
-All numbers use hoshidicts at this branch's head (on main 5ac86a3; GCC 14.3,
+All numbers use hoshidicts at this branch's head (on main 350d9e0, whose engine change since 5ac86a3 leaves the first three cards of the 10,000 frequent words as they were; GCC 14.3,
 Release) and wty-ar-en as published, form-of rows included. The scripts are
 in `sources/`, run from the repository root.
 
