@@ -279,6 +279,12 @@ transform('accusative', 'accusative (ـًا)', 'The indefinite accusative ending
     // read first: شيئا is شيء (not the passive of شاء), وقتا is وقت (not وقى).
     suffix('يئا', 'يء', {min: 1, out: ['n', 'nd'], extra: NOT_AL}),
     suffix('تا', 'ت', {out: ['n', 'nd'], extra: NOT_AL}),
+    // A noun with و or ي before its last letter (صوتا, قولا, دورا, جوعا),
+    // found at the same ending as the hollow dual imperative and past (صات,
+    // قال, دار), and read first: the accusative noun is the more frequent.
+    // Not ينا, the defective past "we" (تلقينا, جرينا); دينا and حينا are listed.
+    suffixes(['و', 'ي'].flatMap((w) => RADICALS.filter((c) => w + c !== 'ين').map((c) => [w + c + 'ا', w + c])), {min: 1, out: ['n', 'nd'], extra: NOT_AL}),
+    ...[['دينا', 'دين'], ['حينا', 'حين']].map(([i, d]) => whole(i, d, {out: ['n', 'nd']})),
 ]);
 transform('dual', 'dual (ـان)', 'The dual ending ـان (nominative), and ـتا of a word in ة before the word it belongs to: كتابان is two of كتاب, مدرستان and مدرستا of مدرسة, مستشفيان of مستشفى, عصوان of عصا, صحراوان of صحراء.', [
     ...SHORT('ان', '', {out: ['n', 'nd'], into: N_IN}),
@@ -389,8 +395,8 @@ function pastRules(ending, {defectiveA = [], defectiveY = [], defectiveI = [], h
     // A verb in ي (نسي: نسيت) before one in ى (رمى: رميت) at the same ending,
     // as the plain ending reads it: نسيت is نسي, not نسّى.
     for (const [i] of defectiveY) { if (i.startsWith('ي')) { rules.push(suffix(i, 'ي', {min: 2, into: V_IN, out: V_OUT})); } }
-    for (const [i, d] of defectiveY) { rules.push(suffix(i, d, {into: V_IN, out: V_OUT})); }
     for (const [i, d] of defectiveI) { rules.push(suffix(i, d, {into: V_IN, out: V_OUT})); }
+    for (const [i, d] of defectiveY) { rules.push(suffix(i, d, {into: V_IN, out: V_OUT})); }
     for (const [i, d, m = 1] of hamza) { rules.push(suffix(i, d, {min: m, into: V_IN, out: V_OUT})); }
     if (consonant) {
         // Hollow with a final hamza: أضأت -> أضاء, استأت -> استاء.
@@ -474,7 +480,7 @@ const PRESENT = {
 const ASSIMILATED_WITH_ENDING = new Set(['تجدي', 'يضعون', 'يجدوا', 'تثقي', 'تضعي', 'تثقين', 'تضعين', 'يسعون', 'تجدين', 'تصلي', 'يصلوا',
     'يجدون', 'يصلون', 'يقفون', 'تقفين', 'يثقون', 'تصلين', 'يضعوا', 'تقفي', 'تجدوا', 'تسعين', 'تسعون', 'يقعون', 'تضعوا', 'تقعي', 'تقعين',
     'تصلوا', 'تقفوا', 'تقفون', 'يثقوا', 'تثقوا', 'تجدون']);
-const ASSIMILATED_PRESENT = ['جد', 'ضع', 'صل', 'قف', 'قع', 'دع', 'جب', 'ثق', 'لد', 'رث', 'زن', 'سع', 'صف', 'هب', 'فد', 'قظ'];
+const ASSIMILATED_PRESENT = ['جد', 'ضع', 'صل', 'قف', 'قع', 'دع', 'جب', 'ثق', 'لد', 'رث', 'زن', 'سع', 'صف', 'هب', 'فد'];
 function hollowEndings(ending) { return hollow(ending); }
 function presentRules(prefixes, ending, {defective = [], hamza = [], hollow = true, short = false} = {}) {
     const rules = [cross(prefixes, [[ending, '']])];
@@ -581,11 +587,11 @@ for (const [id, name, p, gloss, example] of [
 }
 const BOTH = [...PRESENT['ي'], ...PRESENT['ت']];
 transform('presentTheyTwo', 'present (they two)', 'The present tense ending يـان "they (two) do": يكتبان; يقولان (قال), يدعوان (دعا), يرميان (رمى), ينسيان (نسي), يقرآن (قرأ).', [
-    ...presentRules(PRESENT['ي'], 'ان', {defective: [['وان', 'ا'], ['يان', 'ى'], ['يان', 'ي'], ['يان', 'ا']], hamza: [['آن', 'أ'], ['يئان', 'اء']]}),
+    ...presentRules(PRESENT['ي'], 'ان', {defective: [['وان', 'ا'], ['يان', 'ي'], ['يان', 'ى'], ['يان', 'ا']], hamza: [['آن', 'أ'], ['يئان', 'اء']]}),
     ...seeRules(PRESENT['ي'], ['ريان']),
 ]);
 transform('presentYouTwo', 'present (you two, they f. two)', 'The present tense ending تـان "you (two) do, they (two women) do": تكتبان; تقولان (قال), تدعوان (دعا), ترميان (رمى).', [
-    ...presentRules(PRESENT['ت'], 'ان', {defective: [['وان', 'ا'], ['يان', 'ى'], ['يان', 'ي'], ['يان', 'ا']], hamza: [['آن', 'أ'], ['يئان', 'اء']]}),
+    ...presentRules(PRESENT['ت'], 'ان', {defective: [['وان', 'ا'], ['يان', 'ي'], ['يان', 'ى'], ['يان', 'ا']], hamza: [['آن', 'أ'], ['يئان', 'اء']]}),
     ...seeRules(PRESENT['ت'], ['ريان']),
 ]);
 for (const [id, name, p, gloss, example] of [
@@ -593,7 +599,7 @@ for (const [id, name, p, gloss, example] of [
     ['presentYouPl', 'present (you pl.)', 'ت', 'you (plural) do', 'تكتبون'],
 ]) {
     transform(id, name, `The present tense ending ${p}ـون "${gloss}": ${example}; يقولون (قال), يدعون (دعا), يرمون (رمى), ينسون (نسي), يقرؤون (قرأ), يجيئون (جاء), يرون (رأى).`, [
-        ...presentRules(PRESENT[p], 'ون', {defective: [['ون', 'ا'], ['ون', 'ى'], ['ون', 'ي']], hamza: [['ؤون', 'أ'], ['ءون', 'أ'], ['يئون', 'اء']]}),
+        ...presentRules(PRESENT[p], 'ون', {defective: [['ون', 'ا'], ['ون', 'ي'], ['ون', 'ى']], hamza: [['ؤون', 'أ'], ['ءون', 'أ'], ['يئون', 'اء']]}),
         ...seeRules(PRESENT[p], ['رون']),
     ]);
 }
@@ -602,22 +608,22 @@ for (const [id, name, p, gloss, example] of [
     ['presentYouFPl', 'present (you f. pl.)', 'ت', 'you (women) do', 'تكتبن'],
 ]) {
     transform(id, name, `The present tense ending ${p}ـن "${gloss}": ${example}; يقلن (قال), يمددن (مد), يدعون (دعا), يرمين (رمى), ينسين (نسي), يرين (رأى).`, [
-        ...presentRules(PRESENT[p], 'ن', {defective: [['ون', 'ا'], ['ين', 'ى'], ['ين', 'ي'], ['ين', 'ا']], hamza: [['ئن', 'اء']], hollow: false, short: true}),
+        ...presentRules(PRESENT[p], 'ن', {defective: [['ون', 'ا'], ['ين', 'ي'], ['ين', 'ى'], ['ين', 'ا']], hamza: [['ئن', 'اء']], hollow: false, short: true}),
         ...seeRules(PRESENT[p], ['رين']),
     ]);
 }
 transform('presentYouF', 'present (you f.)', 'The present tense ending تـين "you (one woman) do": تكتبين; تقولين (قال), تدعين (دعا), ترمين (رمى), تنسين (نسي), تقرئين (قرأ), ترين (رأى).', [
-    ...presentRules(PRESENT['ت'], 'ين', {defective: [['ين', 'ا'], ['ين', 'ى'], ['ين', 'ي']], hamza: [['ئين', 'أ'], ['يئين', 'اء']]}),
+    ...presentRules(PRESENT['ت'], 'ين', {defective: [['ين', 'ا'], ['ين', 'ي'], ['ين', 'ى']], hamza: [['ئين', 'أ'], ['يئين', 'اء']]}),
     ...seeRules(PRESENT['ت'], ['رين']),
     // تحبين is أحب, before the defective حبا of presentYouFPl.
     whole('تحبين', 'أحب', {into: V_IN, out: V_OUT}),
 ]);
 transform('subjunctiveTheyTwo', 'subjunctive (they two)', 'The subjunctive and jussive ending يـا "they (two)": لن يكتبا; يقولا (قال), يدعوا (دعا), يرميا (رمى), يقرآ (قرأ).', [
-    ...presentRules(PRESENT['ي'], 'ا', {defective: [['وا', 'ا'], ['يا', 'ى'], ['يا', 'ي'], ['يا', 'ا']], hamza: [['آ', 'أ']]}),
+    ...presentRules(PRESENT['ي'], 'ا', {defective: [['وا', 'ا'], ['يا', 'ي'], ['يا', 'ى'], ['يا', 'ا']], hamza: [['آ', 'أ']]}),
     ...seeRules(PRESENT['ي'], ['ريا']),
 ]);
 transform('subjunctiveYouTwo', 'subjunctive (you two, they f. two)', 'The subjunctive and jussive ending تـا "you (two), they (two women)": لن تكتبا; تقولا (قال), تدعوا (دعا), ترميا (رمى).', [
-    ...presentRules(PRESENT['ت'], 'ا', {defective: [['وا', 'ا'], ['يا', 'ى'], ['يا', 'ي'], ['يا', 'ا']], hamza: [['آ', 'أ']]}),
+    ...presentRules(PRESENT['ت'], 'ا', {defective: [['وا', 'ا'], ['يا', 'ي'], ['يا', 'ى'], ['يا', 'ا']], hamza: [['آ', 'أ']]}),
     ...seeRules(PRESENT['ت'], ['ريا']),
 ]);
 for (const [id, name, p, gloss, example] of [
@@ -625,7 +631,7 @@ for (const [id, name, p, gloss, example] of [
     ['subjunctiveYouPl', 'subjunctive (you pl.)', 'ت', 'you (plural)', 'لن تكتبوا'],
 ]) {
     transform(id, name, `The subjunctive and jussive ending ${p}ـوا "${gloss}": ${example}; يقولوا (قال), يدعوا (دعا), يرموا (رمى), ينسوا (نسي), يقرؤوا (قرأ), يروا (رأى).`, [
-        ...presentRules(PRESENT[p], 'وا', {defective: [['وا', 'ا'], ['وا', 'ى'], ['وا', 'ي']], hamza: [['ؤوا', 'أ'], ['ءوا', 'أ'], ['يئوا', 'اء']]}),
+        ...presentRules(PRESENT[p], 'وا', {defective: [['وا', 'ا'], ['وا', 'ي'], ['وا', 'ى']], hamza: [['ؤوا', 'أ'], ['ءوا', 'أ'], ['يئوا', 'اء']]}),
         ...seeRules(PRESENT[p], ['روا']),
     ]);
 }
@@ -689,15 +695,15 @@ transform('imperativeYouF', 'imperative (you f.)', 'The imperative "do!" to one 
     ...[['تعالي', 'تعالى'], ['توقفي', 'توقف'], ['تفضلي', 'تفضل'], ['تحدثي', 'تحدث'], ['تمهلي', 'تمهل'], ['تحركي', 'تحرك'], ['تنفسي', 'تنفس'], ['تذكري', 'تذكر'], ['انسي', 'نسي']].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
 ]);
 transform('imperativeYouTwo', 'imperative (you two)', 'The imperative "do!" to two people, ending in ـا: اكتبا (كتب), قولا (قال), ادعوا (دعا), ارميا (رمى).', [
-    ...imperativeRules('ا', {defective: [['وا', 'ا'], ['يا', 'ى'], ['يا', 'ي']]}),
+    ...imperativeRules('ا', {defective: [['وا', 'ا'], ['يا', 'ي'], ['يا', 'ى']]}),
     ...[['كلا', 'أكل'], ['خذا', 'أخذ'], ['مرا', 'أمر'], ['ريا', SEE]].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
 ]);
 transform('imperativeYouPl', 'imperative (you pl.)', 'The imperative "do!" to several people, ending in ـوا: اكتبوا (كتب), قولوا (قال), ادعوا (دعا), ارموا (رمى), انسوا (نسي), قفوا (وقف), كلوا (أكل), روا (رأى).', [
-    ...imperativeRules('وا', {defective: [['وا', 'ا'], ['وا', 'ى'], ['وا', 'ي']]}),
+    ...imperativeRules('وا', {defective: [['وا', 'ا'], ['وا', 'ي'], ['وا', 'ى']]}),
     ...[['كلوا', 'أكل'], ['خذوا', 'أخذ'], ['مروا', 'أمر'], ['روا', SEE]].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
 ]);
 transform('imperativeYouFPl', 'imperative (you f. pl.)', 'The imperative "do!" to several women, ending in ـن: اكتبن (كتب), قلن (قال), ادعون (دعا), ارمين (رمى).', [
-    ...imperativeRules('ن', {defective: [['ون', 'ا'], ['ين', 'ى'], ['ين', 'ي']], hollowShort: true}),
+    ...imperativeRules('ن', {defective: [['ون', 'ا'], ['ين', 'ي'], ['ين', 'ى']], hollowShort: true}),
 ]);
 
 // Passive past tense, where it is spelled differently from the active. It
@@ -769,20 +775,28 @@ const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['�
 // sources/homographs.tsv (round 4; README.md, Rule provenance): each is a
 // whole word of the transform that reads it.
 const LISTED = {
-    presentHe: [['يبيع', 'باع'], ['يغير', 'غير'], ['يسبب', 'سبب'], ['يغلق', 'أغلق'], ['يفلح', 'أفلح'], ['يؤثر', 'أثر'], ['يخفي', 'أخفى'],
+    presentHe: [['يبيعان', 'باع'], ['يميل', 'مال'], ['يفيض', 'فاض'], ['يدخن', 'دخن'], ['يضر', 'ضر'], ['يحزن', 'حزن'], ['يتكون', 'تكون'], ['يبيع', 'باع'], ['يغير', 'غير'], ['يسبب', 'سبب'], ['يغلق', 'أغلق'], ['يفلح', 'أفلح'], ['يؤثر', 'أثر'], ['يخفي', 'أخفى'],
         ['يبقي', 'أبقى'], ['يحق', 'حق'], ['يصاب', 'أصاب']],
-    presentSheYou: [['تبيع', 'باع'], ['تغلق', 'أغلق'], ['تؤثر', 'أثر'], ['تنهي', 'أنهى'], ['تضيع', 'ضاع'], ['تتم', 'تم'], ['تنسي', 'نسي']],
+    presentSheYou: [['تميل', 'مال'], ['تفيض', 'فاض'], ['تدخن', 'دخن'], ['تحزن', 'حزن'], ['تبيع', 'باع'], ['تغلق', 'أغلق'], ['تؤثر', 'أثر'], ['تنهي', 'أنهى'], ['تضيع', 'ضاع'], ['تتم', 'تم'], ['تنسي', 'نسي']],
     presentI: [['أبيع', 'باع'], ['أكرر', 'كرر']],
     presentWe: [['نبقي', 'أبقى'], ['نبيع', 'باع']],
-    presentYouF: [['تأتين', 'أتى'], ['تدركين', 'أدرك'], ['تودين', 'ود']],
-    presentThey: [['يرتدون', 'ارتدى']],
-    subjunctiveThey: [['يجدوا', 'وجد']],
-    pastI: [['غيرت', 'غير'], ['عمت', 'عم']],
+    presentYouF: [['تبيعين', 'باع'], ['تأتين', 'أتى'], ['تدركين', 'أدرك'], ['تودين', 'ود'], ['تعنين', 'عنى']],
+    presentThey: [['يبيعون', 'باع'], ['يرتدون', 'ارتدى'], ['يبقون', 'بقي']],
+    presentYouPl: [['تبقون', 'بقي']],
+    subjunctiveThey: [['يجدوا', 'وجد'], ['يبيعوا', 'باع']],
+    subjunctiveYouF: [['تبيعي', 'باع']],
+    pastThey: [],
+    pastTheyF: [],
+    pastI: [['غيرت', 'غير'], ['عمت', 'عم'], ['ألقت', 'ألقى'], ['ارتدت', 'ارتدى'], ['فرت', 'فر'], ['ضيعت', 'ضيع'], ['غطت', 'غطى']],
+    imperativeYouF: [['دعى', 'دعا']],
     imperativeYou: [['انهض', 'نهض']],
 };
 const LISTED_NOUNS = [['السنين', 'سنة'], ['سنين', 'سنة'], ['الملفات', 'ملف'], ['ملفات', 'ملف'], ['النيران', 'نار'], ['الجدران', 'جدار'],
     ['الرفاق', 'رفيق'], ['الأخر', 'آخر'], ['الخضراء', 'أخضر'], ['الفرسان', 'فارس'], ['هذين', 'هذا'], ['كلتا', 'كلا'], ['قرون', 'قرن'],
-    ['موتي', 'موت'], ['فتي', 'فتى'], ['كيسي', 'كيس'], ['سيئا', 'سيئ']];
+    ['موتي', 'موت'], ['فتي', 'فتى'], ['كيسي', 'كيس'], ['سيئا', 'سيئ'], ['النساء', 'امرأة'], ['الأسباب', 'سبب'], ['العظيمة', 'عظيم'],
+    ['أصول', 'أصل'], ['أعين', 'عين'], ['توقيت', 'وقت'], ['رأيا', 'رأي'], ['حزنا', 'حزن'], ['كتبا', 'كتاب'], ['إنسانا', 'إنسان'],
+    ['راضيا', 'راض'], ['قاسيا', 'قاس'], ['عضوا', 'عضو'], ['عدوا', 'عدو'], ['أمينا', 'أمين'], ['يسيرا', 'يسير'], ['حلوا', 'حلو'],
+    ['صورا', 'صورة'], ['القصور', 'قصر'], ['الشجر', 'شجرة'], ['المشاهد', 'مشهد'], ['الحمر', 'حمار']];
 // And on the texts: بطريقة (52 in Tatoeba) and بطلاقة (17) are بـ + a noun
 // in ة, not a feminine of بطريق and طلاق; والتي is و + التي; سآتي is سـ +
 // آتي (I will come).

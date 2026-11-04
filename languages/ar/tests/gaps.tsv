@@ -3,119 +3,119 @@
 # 1496 rows sampled with seed 1 by sources/sample-corpus.py from the rows whose form wty-ar-en 2026.10.22 lists as a form of the lemma (README.md).
 # The rows of the sample the final rules do not reach (sources/split-corpus.py); reported, not enforced.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
-verb perfect passive	1	تحوشيتن	تحاشى	v	*
-verb perfect passive	1	نوديتن	نادى	v	*
-verb perfect passive	1	سوويت	ساوى	v	*
-verb perfect passive	1	حوققنا	حاق	v	*
-verb perfect passive	1	نودينا	نادى	v	*
-verb perfect passive	1	صفين	صفا	v	*
-verb imperfect indicative active	1	تضوئون	ضاء	v	*
-verb imperfect indicative active	1	يوقنون	أيقن	v	*
-verb imperfect indicative passive	1	تؤتم	ائتم	v	*
-verb imperfect indicative passive	1	تؤضن	آض	v	*
-verb imperfect indicative passive	1	يؤوون	أوى	v	*
-verb imperfect jussive passive	1	يوطآ	وطئ	v	*
-verb imperative	1	سائلا	ساءل	v	*
-verb imperative	1	سم	سمى	v	*
-verb imperative	1	نس	نسى	v	*
-verb participle	1	مسئم	أسأم	v	*
-verb participle	1	سائل	سأل	v	*
-verb participle	1	مملوء	ملأ	v	*
-verb participle	1	محيى	حيا	v	*
-verbal noun	1	دراية	درى	v	*
-verbal noun	1	اتساخ	اتسخ	v	*
-verbal noun	1	وسوسة	وسوس	v	*
-verbal noun	1	زحير	زحر	v	*
-verbal noun	1	استئمان	استأمن	v	*
-verbal noun	1	صغو	صغا	v	*
-verbal noun	1	استحمام	استحم	v	*
-noun singular indefinite	1	لبا	لب	n	*
-noun singular construct	1	ذا	ذو	n	*
-noun singular construct	1	ذي	ذو	n	*
-noun dual	1	كامرتان	كامرا	n	*
-noun dual	1	ذكريي	ذكرى	n	*
-noun plural definite	1	القضاة	قاض	n	*
-noun plural definite	1	الجيف	جيفة	n	*
-noun plural definite	1	المحاريب	محراب	n	*
-noun plural definite	1	المزامير	مزمار	n	*
-noun plural definite	1	الطقوس	طقس	n	*
-noun plural definite	1	الضباب	ضب	n	*
-noun plural definite	1	الرتب	رتبة	n	*
-noun plural definite	1	الطرق	طريق	n	*
-noun plural definite	1	اليموم	يم	n	*
-noun plural definite	1	الوشوم	وشم	n	*
-noun plural definite	1	السطوح	سطح	n	*
-noun plural definite	1	الأوردة	وريد	n	*
-noun plural definite	1	الصحف	صحيفة	n	*
-noun plural definite	1	القحاب	قحبة	n	*
-noun plural definite	1	الأئمة	إمام	n	*
-noun plural definite	1	القواد	قائد	n	*
-noun plural definite	1	الخيام	خيمة	n	*
-noun plural definite	1	الرشا	رشوة	n	*
-noun plural definite	1	النواب	نائب	n	*
-noun plural definite	1	الأجبن	جبين	n	*
-noun plural definite	1	النوق	ناقة	n	*
-noun plural definite	1	الأفئدة	فؤاد	n	*
-noun plural definite	1	السماحيق	سمحاق	n	*
-noun plural definite	1	الدكاكين	دكان	n	*
-noun plural definite	1	السقوف	سقف	n	*
-noun plural definite	1	المطاليب	مطلوب	n	*
-noun plural definite	1	الشراشف	شرشف	n	*
-noun plural definite	1	الخصور	خصر	n	*
-noun plural indefinite	1	قمصان	قميص	n	*
-noun plural indefinite	1	بنوك	بنك	n	*
-noun plural indefinite	1	ببورا	ببر	n	*
-noun plural indefinite	1	سجاجيد	سجادة	n	*
-noun plural indefinite	1	قلاع	قلعة	n	*
-noun plural indefinite	1	ذيول	ذيل	n	*
-noun plural indefinite	1	رهبانا	راهب	n	*
-noun plural indefinite	1	صيغا	صيغة	n	*
-noun plural indefinite	1	حموات	حماة	n	*
-noun plural indefinite	1	مشاة	ماش	n	*
-noun plural indefinite	1	بددة	بد	n	*
-noun plural indefinite	1	خصورا	خصر	n	*
-noun plural indefinite	1	دول	دولة	n	*
-noun plural indefinite	1	تجارب	تجربة	n	*
-noun plural indefinite	1	أيام	يوم	n	*
-noun plural indefinite	1	آراء	رأي	n	*
-noun plural indefinite	1	أناجر	أنجر	n	*
-noun plural indefinite	1	قيما	قيمة	n	*
-noun plural indefinite	1	أصحاب	صاحب	n	*
-noun plural indefinite	1	نماذج	نموذج	n	*
-noun plural indefinite	1	مواعز	معزة	n	*
-noun plural indefinite	1	أسسا	أساس	n	*
-noun plural indefinite	1	رخصا	رخصة	n	*
-noun plural indefinite	1	زلازل	زلزال	n	*
-noun plural indefinite	1	جباه	جبهة	n	*
-noun plural indefinite	1	حمق	حمقاء	n	*
-noun plural indefinite	1	أمعاء	معى	n	*
-noun plural indefinite	1	فروع	فرع	n	*
-noun plural indefinite	1	فكرا	فكرة	n	*
-noun plural indefinite	1	فراعنة	فرعون	n	*
-noun plural indefinite	1	قمما	قمة	n	*
-noun plural indefinite	1	سراديب	سرداب	n	*
-noun plural indefinite	1	حمقا	حمقاء	n	*
-noun plural indefinite	1	ضبابا	ضب	n	*
-noun plural indefinite	1	مزامير	مزمار	n	*
-noun plural indefinite	1	أيورا	أير	n	*
-adjective singular definite	1	الجفى	أجف	*	*
-adjective singular definite	1	المتوفاة	متوفى	*	*
-adjective singular indefinite	1	جرداء	أجرد	*	*
-adjective singular indefinite	1	دكناء	أدكن	*	*
-adjective singular indefinite	1	صماء	أصم	*	*
-adjective singular indefinite	1	طرشاء	أطرش	*	*
-adjective singular indefinite	1	متربيا	مترب	*	*
-adjective dual	1	الشفيين	أشف	*	*
-adjective dual	1	قصويين	أقصى	*	*
-adjective plural	1	شقر	أشقر	*	*
-adjective plural	1	المساويات	مساو	*	*
-adjective plural	1	الأشداء	شديد	*	*
-adjective plural	1	الجذبيات	أجذب	*	*
-adjective plural	1	الشذاذ	شاذ	*	*
-adjective plural	1	أقاصي	أقصى	*	*
-adjective plural	1	فرغيات	أفرغ	*	*
-adjective plural	1	جفيات	أجف	*	*
-adjective plural	1	عقال	عاقل	*	*
-adjective plural	1	الزوفيات	أزيف	*	*
-adjective plural	1	الدكن	أدكن	*	*
-adjective plural	1	صما	أصم	*	*
+v perf pass	1	تحوشيتن	تحاشى	v	*
+v perf pass	1	نوديتن	نادى	v	*
+v perf pass	1	سوويت	ساوى	v	*
+v perf pass	1	حوققنا	حاق	v	*
+v perf pass	1	نودينا	نادى	v	*
+v perf pass	1	صفين	صفا	v	*
+v impf ind act	1	تضوئون	ضاء	v	*
+v impf ind act	1	يوقنون	أيقن	v	*
+v impf ind pass	1	تؤتم	ائتم	v	*
+v impf ind pass	1	تؤضن	آض	v	*
+v impf ind pass	1	يؤوون	أوى	v	*
+v impf juss pass	1	يوطآ	وطئ	v	*
+v imp	1	سائلا	ساءل	v	*
+v imp	1	سم	سمى	v	*
+v imp	1	نس	نسى	v	*
+v ptcp	1	مسئم	أسأم	v	*
+v ptcp	1	سائل	سأل	v	*
+v ptcp	1	مملوء	ملأ	v	*
+v ptcp	1	محيى	حيا	v	*
+vn n	1	دراية	درى	v	*
+vn n	1	اتساخ	اتسخ	v	*
+vn n	1	وسوسة	وسوس	v	*
+vn n	1	زحير	زحر	v	*
+vn n	1	استئمان	استأمن	v	*
+vn n	1	صغو	صغا	v	*
+vn n	1	استحمام	استحم	v	*
+n sg indef	1	لبا	لب	n	*
+n sg cstr	1	ذا	ذو	n	*
+n sg cstr	1	ذي	ذو	n	*
+n du	1	كامرتان	كامرا	n	*
+n du	1	ذكريي	ذكرى	n	*
+n pl def	1	القضاة	قاض	n	*
+n pl def	1	الجيف	جيفة	n	*
+n pl def	1	المحاريب	محراب	n	*
+n pl def	1	المزامير	مزمار	n	*
+n pl def	1	الطقوس	طقس	n	*
+n pl def	1	الضباب	ضب	n	*
+n pl def	1	الرتب	رتبة	n	*
+n pl def	1	الطرق	طريق	n	*
+n pl def	1	اليموم	يم	n	*
+n pl def	1	الوشوم	وشم	n	*
+n pl def	1	السطوح	سطح	n	*
+n pl def	1	الأوردة	وريد	n	*
+n pl def	1	الصحف	صحيفة	n	*
+n pl def	1	القحاب	قحبة	n	*
+n pl def	1	الأئمة	إمام	n	*
+n pl def	1	القواد	قائد	n	*
+n pl def	1	الخيام	خيمة	n	*
+n pl def	1	الرشا	رشوة	n	*
+n pl def	1	النواب	نائب	n	*
+n pl def	1	الأجبن	جبين	n	*
+n pl def	1	النوق	ناقة	n	*
+n pl def	1	الأفئدة	فؤاد	n	*
+n pl def	1	السماحيق	سمحاق	n	*
+n pl def	1	الدكاكين	دكان	n	*
+n pl def	1	السقوف	سقف	n	*
+n pl def	1	المطاليب	مطلوب	n	*
+n pl def	1	الشراشف	شرشف	n	*
+n pl def	1	الخصور	خصر	n	*
+n pl indef	1	قمصان	قميص	n	*
+n pl indef	1	بنوك	بنك	n	*
+n pl indef	1	ببورا	ببر	n	*
+n pl indef	1	سجاجيد	سجادة	n	*
+n pl indef	1	قلاع	قلعة	n	*
+n pl indef	1	ذيول	ذيل	n	*
+n pl indef	1	رهبانا	راهب	n	*
+n pl indef	1	صيغا	صيغة	n	*
+n pl indef	1	حموات	حماة	n	*
+n pl indef	1	مشاة	ماش	n	*
+n pl indef	1	بددة	بد	n	*
+n pl indef	1	خصورا	خصر	n	*
+n pl indef	1	دول	دولة	n	*
+n pl indef	1	تجارب	تجربة	n	*
+n pl indef	1	أيام	يوم	n	*
+n pl indef	1	آراء	رأي	n	*
+n pl indef	1	أناجر	أنجر	n	*
+n pl indef	1	قيما	قيمة	n	*
+n pl indef	1	أصحاب	صاحب	n	*
+n pl indef	1	نماذج	نموذج	n	*
+n pl indef	1	مواعز	معزة	n	*
+n pl indef	1	أسسا	أساس	n	*
+n pl indef	1	رخصا	رخصة	n	*
+n pl indef	1	زلازل	زلزال	n	*
+n pl indef	1	جباه	جبهة	n	*
+n pl indef	1	حمق	حمقاء	n	*
+n pl indef	1	أمعاء	معى	n	*
+n pl indef	1	فروع	فرع	n	*
+n pl indef	1	فكرا	فكرة	n	*
+n pl indef	1	فراعنة	فرعون	n	*
+n pl indef	1	قمما	قمة	n	*
+n pl indef	1	سراديب	سرداب	n	*
+n pl indef	1	حمقا	حمقاء	n	*
+n pl indef	1	ضبابا	ضب	n	*
+n pl indef	1	مزامير	مزمار	n	*
+n pl indef	1	أيورا	أير	n	*
+adj sg def	1	الجفى	أجف	*	*
+adj sg def	1	المتوفاة	متوفى	*	*
+adj sg indef	1	جرداء	أجرد	*	*
+adj sg indef	1	دكناء	أدكن	*	*
+adj sg indef	1	صماء	أصم	*	*
+adj sg indef	1	طرشاء	أطرش	*	*
+adj sg indef	1	متربيا	مترب	*	*
+adj du	1	الشفيين	أشف	*	*
+adj du	1	قصويين	أقصى	*	*
+adj pl	1	شقر	أشقر	*	*
+adj pl	1	المساويات	مساو	*	*
+adj pl	1	الأشداء	شديد	*	*
+adj pl	1	الجذبيات	أجذب	*	*
+adj pl	1	الشذاذ	شاذ	*	*
+adj pl	1	أقاصي	أقصى	*	*
+adj pl	1	فرغيات	أفرغ	*	*
+adj pl	1	جفيات	أجف	*	*
+adj pl	1	عقال	عاقل	*	*
+adj pl	1	الزوفيات	أزيف	*	*
+adj pl	1	الدكن	أدكن	*	*
+adj pl	1	صما	أصم	*	*

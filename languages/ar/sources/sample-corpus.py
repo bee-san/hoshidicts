@@ -62,6 +62,16 @@ STRATA = {
 }
 
 RULE = {'N': 'n', 'V': 'v', 'ADJ': '*'}
+# The category written for a stratum (short, to keep tests/ small): verb
+# perfect active -> v perf act, adjective singular definite -> adj sg def.
+ABBREVIATIONS = {'verb': 'v', 'noun': 'n', 'adjective': 'adj', 'perfect': 'perf', 'imperfect': 'impf',
+                 'indicative': 'ind', 'jussive': 'juss', 'imperative': 'imp', 'participle': 'ptcp', 'active': 'act',
+                 'passive': 'pass', 'singular': 'sg', 'plural': 'pl', 'definite': 'def', 'indefinite': 'indef',
+                 'construct': 'cstr', 'dual': 'du'}
+
+
+def label(name):
+    return 'vn' if name == 'verbal noun' else ' '.join(ABBREVIATIONS.get(w, w) for w in name.split())
 
 
 def strip(text):
@@ -150,7 +160,7 @@ def main():
         with open(path, 'w', encoding='utf-8') as out:
             out.write(header + note + columns)
             for name, (form, lemma, pos) in rows:
-                out.write('%s\t1\t%s\t%s\t%s\t*\n' % (name, form, lemma, RULE[pos]))
+                out.write('%s\t1\t%s\t%s\t%s\t*\n' % (label(name), form, lemma, RULE[pos]))
 
     write(out_dir / 'sample.tsv', sample,
           '# %d rows sampled with seed 1 by sources/sample-corpus.py from the rows whose form wty-ar-en 2026.10.22 lists as a form of the lemma (README.md).\n' % len(sample))
