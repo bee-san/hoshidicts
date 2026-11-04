@@ -81,7 +81,7 @@ MUTATIONS = [
     ("preferred-present-io", OWN, "['present-io', ['v'], [['domando', 'domandare']]],", "['present-io', ['v'], []],"),
     ("preferred-present-tu", OWN, "    ['present-tu', ['v'], [\n", "    ['present-tu', ['v'], [], [\n"),
     ("preferred-present-lui", OWN, "    ['present-lui', ['v'], [\n", "    ['present-lui', ['v'], [], [\n"),
-    ("preferred-subjunctive", OWN, "['subjunctive-sg', ['v'], [['accada', 'accadere'], ['riposi', 'riposare']]],", "['subjunctive-sg', ['v'], []],"),
+    ("preferred-subjunctive", OWN, "['subjunctive-sg', ['v'], [['accada', 'accadere'], ['riposi', 'riposare'], ['importi', 'importare']]],", "['subjunctive-sg', ['v'], []],"),
     ("preferred-preterite-io", OWN, "['preterite-io', ['v'], [['comperai', 'comprare']]],", "['preterite-io', ['v'], []],"),
     ("preferred-preterite-lui", OWN, "['preterite-lui', ['v'], [['comperò', 'comprare']]],", "['preterite-lui', ['v'], []],"),
     ("plural-ati", OWN, "    ['ati', 'ato', NOMINAL], ['i', 'e', NOMINAL],", "    ['i', 'e', NOMINAL],"),
