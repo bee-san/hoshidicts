@@ -12,12 +12,7 @@
 //
 // --all writes every eligible form instead (no sampling, no split): the
 // measurement set of README.md, which is not committed.
-//
-// The file is https://kaikki.org/dictionary/Ukrainian/kaikki.org-dictionary-Ukrainian.jsonl.gz
-// as downloaded on 2026-11-03 (English Wiktionary dump of 2026-10-01; sha256
-// 2b8074025c192314a3906b6bb33587ff1c97f06b398f422308001561124b9586),
-// CC BY-SA 4.0 and GFDL, by the Wiktionary contributors, extracted by
-// wiktextract (Tatu Ylonen).
+// The file, its sha256 and licence: README.md, Sources.
 
 import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';

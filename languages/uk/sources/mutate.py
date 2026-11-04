@@ -6,10 +6,7 @@
 # catches is printed (README, Measurements 7).
 #
 #   python3 languages/uk/sources/mutate.py [--jobs 8] [--only <transform id prefix>] [--transforms <file>] > report
-#
-# One mutant per transform and constraint: the constraint deleted from every
-# rule of the transform that has it (stemMinLength lowered by one, the
-# others removed). Nothing is written outside a temporary directory.
+# Nothing is written outside a temporary directory.
 
 import concurrent.futures, copy, json, os, shutil, subprocess, sys, tempfile
 

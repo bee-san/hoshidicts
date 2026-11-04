@@ -1,5 +1,5 @@
 # Hand labels for sources/measure.py, written for this pack (GPL-3.0-or-later): the lemma or lemmas a reader most likely
-# means by a word whose wty-uk-en rows name two or more lemmas, several only when each is common in context. 603 words
+# means by a word whose wty-uk-en rows name two or more lemmas, several only when each is common in context. 619 words
 # were labelled; kept are those that change a verdict (README, Measure notes).
 # word	lemmas the word means (comma-separated)
 людей	люди,людина
@@ -189,3 +189,9 @@
 збірних	збірна,збірний
 шахів	шахи
 бобе	бобе
+численні	численний
+додаткові	додатковий
+початкові	початковий
+світові	світовий
+типові	типовий
+побутові	побутовий

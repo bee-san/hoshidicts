@@ -74,7 +74,7 @@
     "transforms": "transforms.json",
     "traceSelection": "shortest",
     "formOf": "follow",
-    "formOfNormalizer": [{"strip": "[\\u0300\\u0301]"}, {"map": {" impf": "", " pf": ""}}],
+    "formOfNormalizer": [{"strip": "[\\u0301]"}, {"map": {" impf": "", " pf": ""}}],
     "functionWords": [],
     "variantPasses": []
   },

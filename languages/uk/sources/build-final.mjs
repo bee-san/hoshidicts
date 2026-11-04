@@ -5,12 +5,7 @@
 //
 //   node languages/uk/sources/build-final.mjs [--removals <file>] [--out <file>]
 //
-// The union tools/merge-transforms.mjs makes of own.json and yomitan.json,
-// with the own transforms first (ties go to the own reading, 9.6), every
-// Yomitan rule limited to one word (stemCharacters {stem}), and the Yomitan
-// rules yomitan-removed.tsv lists left out. An own rule is `both` when
-// Yomitan makes the same replacement for an overlapping part of speech; a
-// cross product is `both` when all of its pairs are.
+// How the union is built and what `both` means: README.md, Rule provenance.
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join, resolve} from 'node:path';

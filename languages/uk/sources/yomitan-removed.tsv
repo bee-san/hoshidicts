@@ -37,21 +37,23 @@ genitive	ов	ва	min 1; in  out n	5	0	1	breaks
 genitive	ого	ий	min 1; in  out adj	0	0	2	breaks
 genitive	ою	ій	min 1; in  out n	4	16	1	breaks
 genitive	чу	еч	min 1; ends {consonant}; in  out n	0	1	0	fc only
-genitive	ю		min 2; in  out n	10	539	1	breaks
+genitive	ю		min 2; in  out n	10	540	1	breaks
 genitive	ю	ій	min 2; in  out n	0	11	0	fc only
 genitive	я		min 2; in  out n	0	26	1	breaks
 genitive	ів	е	min 1; in  out n	1	8	0	fc
-genitive	ів	я	min 1; in  out n	28	11	1	breaks
+genitive	ів	я	min 1; in  out n	28	13	1	breaks
 imperative	ви	ти	in  out v	0	16	0	fc only
 imperative	віть	ти	in  out v	0	2	0	fc only
 imperative	ж	зати	min 2; in  out v	0	2	0	fc only
-imperative	и	ати	min 2; in  out v	9	225	0	fc
-imperative	и	ти	min 2; in  out v	9	40	0	fc, round 2
+imperative	и	ати	min 2; in  out v	9	224	0	fc
+imperative	и	ти	min 2; in  out v	9	39	0	fc, round 2
 imperative	й	ти	min 2; in  out v	5	4	4	breaks
 imperative	те	ити	in  out v	0	13	1	breaks
 imperative	ім	ати	in  out v	11	91	2	breaks
 imperative	імо	ати	in  out v	9	66	0	fc
+imperative	імся	атися	in  out v	3	12	0	fc
 imperative	іть	ати	in  out v	9	73	0	fc
+imperative	іться	атися	in  out v	3	10	0	fc
 impersonal passive	дено	ти	in  out v	0	3	0	fc only
 impersonal passive	ено	ити	in  out v	0	2	1	breaks
 impersonal passive	лено	ити	in  out v	0	1	0	fc only
@@ -75,15 +77,18 @@ nominative plural	чи	еч	min 1; ends {consonant}; in  out n	0	1	0	fc only
 passive participle	ений	ити	in adj out v	0	34	1	breaks
 passive participle	лений	ити	in adj out v	0	1	0	fc only
 passive participle	ний	ти	in adj out v	16	447	0	fc
-passive participle	тий	ти	in adj out v	17	448	0	fc
+passive participle	тий	ти	in adj out v	17	447	0	fc
 past	ла	сти	in  out v	0	1	0	fc only
 past	ішли	іти	in  out v	0	2	0	fc only
 present	'ю	ити	in  out v	0	3	0	fc only
-present	ве	ти	in  out v	0	19	0	fc only
-present	ву	ти	in  out v	0	33	0	fc only
+present	ве	ти	in  out v	0	18	0	fc only
+present	ву	ти	in  out v	0	34	0	fc only
 present	де	дати	in  out v	2	34	0	fc
+present	деться	датися	in  out v	0	3	0	fc only
+present	дешся	датися	in  out v	0	3	0	fc only
 present	ду	дати	in  out v	2	31	0	fc, round 2
 present	дуть	дати	in  out v	2	14	0	fc
+present	дуться	датися	in  out v	0	3	0	fc only
 present	жать	гти	in  out v	0	3	0	fc only
 present	же	гти	in  out v	0	0	1	breaks
 present	жить	гти	in  out v	0	2	0	fc only
@@ -104,24 +109,24 @@ present	ишся	атися	in  out v	0	7	0	fc only
 present	не	ати	in  out v	2	95	0	fc
 present	не	нути	in  out v	0	0	1	breaks
 present	немо	ати	in  out v	2	28	0	fc
-present	немось	атися	in  out v	0	3	0	fc only
-present	немося	атися	in  out v	0	3	0	fc only
+present	немось	атися	in  out v	0	6	0	fc only
+present	немося	атися	in  out v	0	6	0	fc only
 present	нете	ати	in  out v	2	28	0	fc
-present	нетесь	атися	in  out v	0	3	0	fc only
-present	нетеся	атися	in  out v	0	3	0	fc only
-present	неться	атися	in  out v	0	3	0	fc only
+present	нетесь	атися	in  out v	0	6	0	fc only
+present	нетеся	атися	in  out v	0	6	0	fc only
+present	неться	атися	in  out v	0	6	0	fc only
 present	неш	ати	in  out v	2	29	0	fc
-present	нешся	атися	in  out v	0	3	0	fc only
+present	нешся	атися	in  out v	0	6	0	fc only
 present	ну	ати	in  out v	2	92	0	fc
 present	ну	нути	in  out v	0	0	1	breaks
-present	нусь	атися	in  out v	0	3	0	fc only
-present	нуся	атися	in  out v	0	3	0	fc only
+present	нусь	атися	in  out v	0	6	0	fc only
+present	нуся	атися	in  out v	0	6	0	fc only
 present	нуть	ати	in  out v	2	28	0	fc
-present	нуться	атися	in  out v	0	3	0	fc only
+present	нуться	атися	in  out v	0	6	0	fc only
 present	плять	пати	in  out v	0	6	0	fc only
-present	пляться	патися	in  out v	0	1	0	fc only
-present	у	ати	min 2; in  out v	8	214	3	breaks
-present	у	ити	min 2; in  out v	0	491	0	fc only
+present	пляться	патися	in  out v	0	2	0	fc only
+present	у	ати	min 2; in  out v	8	213	3	breaks
+present	у	ити	min 2; in  out v	0	489	0	fc only
 present	у	ти	min 2; in  out v	9	30	0	fc
 present	че	тіти	in  out v	0	6	0	fc only
 present	чемо	тіти	in  out v	0	6	0	fc only
@@ -129,8 +134,8 @@ present	чете	тіти	in  out v	0	6	0	fc only
 present	чеш	тіти	in  out v	0	6	0	fc only
 present	чуть	тіти	in  out v	0	7	0	fc only
 present	ю	яти	min 2; in  out v	2	22	0	fc
-present	юсь	ятися	in  out v	0	3	0	fc only
-present	юся	ятися	in  out v	0	3	0	fc only
+present	юсь	ятися	in  out v	0	13	0	fc only
+present	юся	ятися	in  out v	0	13	0	fc only
 present	ються	ятися	in  out v	0	3	0	fc only
 present	ємось	ятися	in  out v	0	1	0	fc only
 present	ємося	ятися	in  out v	0	1	0	fc only
@@ -154,5 +159,5 @@ substantivised neuter	іншому	інше	in  out adj	0	1	0	fc only
 substantivised neuter	іншім	інше	in  out adj	0	1	0	fc only
 superlative	най		in adj out adj	1	200	2	breaks
 superlative	най		in adv out adv	0	16	1	breaks
-truncated stem	а	ати	min 2; in  out v	2	100	0	fc
+truncated stem	а	ати	min 2; in  out v	2	99	0	fc
 verbal noun	ття	ти	in  out v	0	1	0	fc only

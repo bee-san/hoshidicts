@@ -6,14 +6,9 @@
 //   node tools/port-yomitan-transforms.mjs <yomitan> uk --force
 //   node languages/uk/sources/map-yomitan.mjs <yomitan>
 //
-// Each todo rule is read by calling its Yomitan rule's own deinflect on probe
-// texts, and becomes literal rules: the о/е → і alternation a `suffix` with
-// `stemChange`, the fleeting vowel one rule per last consonant (`stemEndsWith`
-// a consonant), the palatalised velars literal suffixes, the zero ending a
-// `suffix` with `stemContains` a vowel. Suffix rules and whole words that
-// differ only in their affixes are then written as one cross product
-// (section 7.3). No rule gets a constraint Yomitan's lacks, so
-// tools/check-yomitan.mjs compares them as Yomitan wrote them.
+// Each todo rule is read by calling its Yomitan rule's deinflect on probe
+// texts and becomes literal rules (README.md, Rule provenance); no rule gets
+// a constraint Yomitan's lacks.
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';

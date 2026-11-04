@@ -5,12 +5,7 @@
 #
 #   python3 languages/uk/sources/select-removals.py <measure.tsv> <wty-uk-en imported> [--rounds 3]
 #
-# `eval-language --per-rule` on the measurement set counts, for each Yomitan
-# rule as build-final.mjs writes it, the rows only it recovers, the false
-# candidates only it adds and the negatives it breaks. A rule is left out when
-# it breaks a negative, adds false candidates and recovers nothing, or adds at
-# least 5 and more than three per row it recovers; the selection then runs
-# again on the rules left, until no rule is removed (at most --rounds).
+# The criterion: README.md, Rule provenance.
 
 import json, os, subprocess, sys, tempfile
 

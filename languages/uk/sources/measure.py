@@ -6,14 +6,8 @@
 #   python3 languages/uk/sources/measure.py words|text|phrases <wty-uk-en json dir> <imported wty-uk-en> <file>...
 #       [--frequencies <list>]... [--languages <dir>] [--verdicts <file>]
 #
-# words: the 10,000 most frequent words of a frequency list, each looked up
-#   alone. text: every word of the texts with the rest of its sentence.
-#   phrases: every word of Tatoeba's sentences after a preposition, a
-#   particle, a conjunction, a pronoun or a form of бути.
-# --frequencies: lists for the frequency proxy, the first that knows a
-#   lemma deciding (in words mode the word list comes first). --verdicts:
-#   one line per lookup (word, verdict, first result, its rules, weight,
-#   what judged it). --languages: another copy of the pack.
+# --verdicts: one line per lookup (word, verdict, first result, its rules,
+# weight, what judged it).
 
 import collections, glob, json, os, re, subprocess, sys, unicodedata
 

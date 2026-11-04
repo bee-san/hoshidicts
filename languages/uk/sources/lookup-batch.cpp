@@ -8,11 +8,7 @@
 //     build/liblzokay.a build/libgumbo.a
 //
 //   build/lookup-batch <languages dir> <code> <imported dictionary> [max_results] [scan_length] < texts
-//
-// One Lookup::lookup per line (default 16 results, scan length 16, no
-// language options), one JSON line out: text, and per result expression,
-// matched, trace ids, formOf (every glossary is a form-of row) and dict (for
-// each trace step, whether a form-of reference named it).
+// One Lookup::lookup per line, one JSON line out.
 
 #include <fstream>
 #include <iostream>
