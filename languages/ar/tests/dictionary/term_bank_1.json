@@ -84,5 +84,7 @@
   ["عن", "عَنَّ", "v", "v", 0, ["to present itself"], 83, ""],
   ["عنى", "عَنَى", "v", "v", 0, ["to mean"], 84, ""],
   ["تعن", "", "non-lemma", "v", 0, [["عن", ["second-person singular masculine jussive"]]], 85, ""],
-  ["تعني", "", "non-lemma", "v", 0, [["عن", ["second-person singular feminine subjunctive"]], ["عنى", ["third-person singular feminine non-past"]]], 86, ""]
+  ["تعني", "", "non-lemma", "v", 0, [["عن", ["second-person singular feminine subjunctive"]], ["عنى", ["third-person singular feminine non-past"]]], 86, ""],
+  ["عط", "عَطَّ", "v", "v", 0, ["to tear"], 87, ""],
+  ["صوة", "", "non-lemma", "n", 0, [["صُوَّة", ["alternative form"]]], 88, ""]
 ]

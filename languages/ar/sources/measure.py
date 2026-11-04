@@ -400,7 +400,7 @@ def text_measure(args):
                 print('  %4d  %s -> %s {%s}' % (n, word, got, trace))
     if '--sample-out' in args:
         # --sample-sizes j,a,u: how many judged, ambiguous and unjudged positions.
-        sizes = [int(x) for x in option(args, '--sample-sizes', '%d,%d,%d' % (sample_size,) * 3).split(',')]
+        sizes = [int(x) for x in option(args, '--sample-sizes', ','.join([str(sample_size)] * 3)).split(',')]
         rng = random.Random(seed)
         groups = (('judged', judged), ('ambiguous', ambiguous), ('unjudged', unjudged))
         with open(option(args, '--sample-out', ''), 'w', encoding='utf-8') as out:

@@ -6,22 +6,12 @@
 //
 //   node languages/ar/sources/own-rules.mjs
 //
-// The rules read unvowelled Modern Standard Arabic as it is printed: the
-// pack's preprocessors remove vowel marks and tatweel first, so a rule sees
-// only the letters U+0621-U+064A (the `base` class of language.json).
-//
-// Conditions follow the dictionary tags of Yomitan-format Arabic dictionaries:
-// wiktionary-to-yomitan writes `v` and `n` in a term's rules and leaves them
-// empty for adjectives, names, pronouns and particles, and its form-of rows
-// of adjectives have empty rules too. A row with empty rules passes the
-// part-of-speech filter only for a deinflection without conditions
-// (docs/languages.md 9.4 and 9.10), so every rule whose output can be such a
-// word (the proclitics, the pronoun suffixes, the endings of nouns and
-// adjectives) gives no conditions. The rules that conjugate verbs give `v`,
-// so only verbs answer them, and nothing takes `v` in: a verb lemma is the end
-// of a chain. `vf` marks a verb form that still has its person affixes (the
-// output of the future prefix and of a pronoun rule that restores a verb
-// ending), which the conjugation rules take in.
+// The rules read unvowelled text (the preprocessors remove vowel marks
+// first): only the letters U+0621-U+064A, the `base` class. wiktionary-to-
+// yomitan tags verbs and nouns (v, n) and leaves adjectives, names and
+// particles untagged, which match only a deinflection without conditions, so
+// the clitics and the noun endings give none or n; the conjugations give v,
+// which nothing takes in. vf is a verb form that keeps its person affixes.
 
 import {writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
@@ -365,24 +355,12 @@ transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـا
 }
 
 // --------------------------------------------------------------------- verbs
-// A verb's dictionary form is its past tense "he" form (كتب, قال, رمى,
-// استخدم). Unvowelled, the persons of each tense are spelled by a few
-// endings, so each transform below is one tense and person, and holds the
-// rules for every kind of root:
-// - sound and hamzated verbs add the ending (كتبت, قرأت);
-// - doubled verbs write both consonants before an ending that starts with a
-//   consonant (مددت -> مد);
-// - hollow verbs (قال, باع, نام; أقام, اختار, استطاع) lose the ا of the
-//   dictionary form before such an ending (قلت -> قال) and in the short
-//   jussive and imperative (يقل, قل), and write و or ي in the present
-//   (يقول, يبيع, يستطيع);
-// - defective verbs end in ا (دعا: دعوت, يدعو), ى (رمى, أعطى, اشترى: رميت,
-//   يرمي) or ي (نسي: ينسى), and lose that letter in the jussive (يدع, يرم,
-//   ينس);
-// - in the present the person prefix replaces the أ of form IV (يكرم ->
-//   أكرم), the ا of forms VII-X (يستخدم -> استخدم) and the و of verbs like
-//   وصل (يصل).
-// The rules read one word: their stem is Arabic letters only.
+// A verb's dictionary form is its past "he" form (كتب, قال, رمى, استخدم).
+// Each transform below is one tense and person, with rules for every kind of
+// root: sound and hamzated (كتبت, قرأت), doubled (مددت -> مد), hollow (قلت,
+// يقول, قل -> قال), defective in ا, ى or ي (دعوت, يرمي, ينسى; يدع, يرم),
+// form IV and VII-X presents (يكرم -> أكرم, يستخدم -> استخدم) and verbs like
+// وصل (يصل).
 
 const CONSONANT_ENDINGS = ['ت', 'نا', 'تم', 'تما', 'تن', 'ن'];
 
@@ -808,6 +786,13 @@ for (const [id, words] of Object.entries(LISTED)) {
     transforms.find((t) => t.id === id).rules.push(...words.map(([i, d]) => (verb ? whole(i, d, {into: V_IN, out: V_OUT}) : whole(i, d))));
 }
 transforms.find((t) => t.id === 'listedNoun').rules.push(...LISTED_NOUNS.map(([i, d]) => whole(i, d)));
+// Words whose spelling is also a verb that the dictionary lists first: as
+// whole words that give a noun, only the noun entries answer (نفسه is نَفْس
+// "self", not نَفُسَ "to be precious"; بشكل, من فضلك, وجهه).
+transforms.find((t) => t.id === 'listedNoun').rules.push(...[['نفسه', 'نفس'], ['نفسك', 'نفس'], ['نفسها', 'نفس'], ['نفسي', 'نفس'],
+    ['بنفسه', 'نفس'], ['بنفسك', 'نفس'], ['بنفسي', 'نفس'], ['لنفسه', 'نفس'], ['لنفسي', 'نفس'], ['أنفسهم', 'نفس'], ['أنفسنا', 'نفس'],
+    ['بشكل', 'شكل'], ['فضلك', 'فضل'], ['فضلكم', 'فضل'], ['وجهه', 'وجه'], ['وجهها', 'وجه'], ['وجهي', 'وجه']].map(([i, d]) => whole(i, d, {out: ['n']})));
+transforms.find((t) => t.id === 'p1s').rules.push(whole('عندي', 'عند'));
 // جيد (good) is untagged, so the noun endings, which give a noun, reach only
 // جِيد (neck): its feminine and accusative are written out without conditions.
 transforms.find((t) => t.id === 'definiteAdjective').rules.push(...['جيدة', 'جيدا', 'جيدًا', 'الجيد', 'الجيدة', 'جيدين', 'جيدون', 'جيدان'].map((i) => whole(i, 'جيد')));

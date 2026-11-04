@@ -141,6 +141,23 @@ def letter_forms_late(d):
 
 
 @processor_edit
+def dagger_late(d):
+    p = d['lookup']['preprocessors']
+    x = p.pop([y['id'] for y in p].index('daggerAlif'))
+    p.insert([y['id'] for y in p].index('removeArabicScriptDiacritics') + 1, x)
+    return 1
+
+
+def first_person_object(t):
+    n = 0
+    for _, r in rules(t, {'presentI', 'presentWe'}):
+        if r.get('type') == 'circumfix' and r.get('stemCharacters') == STRONG and any(x[0] == 'ه' for x in r['suffixes']):
+            r['suffixes'] = r['suffixes'] + [['ني', ''], ['نا', '']]
+            n += 1
+    return n
+
+
+@processor_edit
 def maqsura_all(d):
     for x in d['lookup']['preprocessors']:
         if x['id'] == 'convertAlifMaqsuraToYaa':
@@ -163,7 +180,7 @@ ABLATIONS = [
     ('ت + pronoun -> ة gives no conditions', set_out(PRONOUNS, [], lambda r: r.get('deinflected') == 'ة')),
     ('construct ending gives no conditions', set_out({'construct'}, [])),
     ('sa: any next letter', drop_key('stemStartsWith', '[يتنأآ]', {'sa'})),
-    ('ي pronoun after ي', drop_key('stemNotEndsWith', '[ي]', {'p1s'})),
+    ('ي pronoun after ي or أ', drop_key('stemNotEndsWith', '[يأ]', {'p1s'})),
     ('accusative after ة ى ا', drop_key('stemNotEndsWith', '[اةى]', {'accusative'})),
     ('proclitics on one-letter stems', set_min({'wa', 'fa', 'bi', 'ka', 'li'}, 2, 1, ('prefix',))),
     ('الـ on a word of one letter', set_min({'al'}, 1, 0, ('circumfix',))),
@@ -180,6 +197,8 @@ ABLATIONS = [
     ('processors: addHamza before the diacritics', hamza_first),
     ('processors: arabicLetterForms after addHamza', letter_forms_late),
     ('processors: alif maqsura anywhere', maqsura_all),
+    ('processors: daggerAlif after the diacritics', dagger_late),
+    ('one-step present with a first-person object after أ and ن', first_person_object),
 ]
 
 

@@ -222,7 +222,24 @@
         {"type": "wholeWord", "inflected": "القصور", "deinflected": "قصر", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "الشجر", "deinflected": "شجرة", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "المشاهد", "deinflected": "مشهد", "conditionsIn": [], "conditionsOut": []},
-        {"type": "wholeWord", "inflected": "الحمر", "deinflected": "حمار", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "الحمر", "deinflected": "حمار", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "نفسه", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "نفسك", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "نفسها", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "نفسي", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "بنفسه", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "بنفسك", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "بنفسي", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "لنفسه", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "لنفسي", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "أنفسهم", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "أنفسنا", "deinflected": "نفس", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "بشكل", "deinflected": "شكل", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "فضلك", "deinflected": "فضل", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "فضلكم", "deinflected": "فضل", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "وجهه", "deinflected": "وجه", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "وجهها", "deinflected": "وجه", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "وجهي", "deinflected": "وجه", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1758,7 +1775,8 @@
         {"type": "wholeWord", "inflected": "علي", "deinflected": "على", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "إلي", "deinflected": "إلى", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "الي", "deinflected": "إلى", "conditionsIn": [], "conditionsOut": []},
-        {"type": "wholeWord", "inflected": "لدي", "deinflected": "لدى", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "لدي", "deinflected": "لدى", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "عندي", "deinflected": "عند", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {

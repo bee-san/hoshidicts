@@ -1,82 +1,132 @@
-# tatoeba-ara.txt: 40 judged and 40 unjudged positions drawn with seed 20261104 by measure.py text --sample-out.
-# set	word	text (20 characters)	first result	matched	script	hand (measure.py --sample-out also writes the trace)
-judged	تحلم	تحلم بالعربيّة، تفكّ	حلم	تحلم	right	right
-judged	لك	لك أن تقفز	لك	لك	wrong	wrong (لـ + ك)
-judged	الماء	الماء	ماء	الماء	right	right
-judged	لن	لن يدخل في سيارة أمي	لن	لن	right	right
-judged	اليوم	اليوم بعد	اليوم	اليوم	right	right
-judged	نشأ	نشأ إيلان بابيه في إ	نشأ	نشأ	right	right
-judged	أصيب	أصيب زيري بصدمة	أصاب	أصيب	right	right
-judged	الآخر	الآخر	آخر	الآخر	right	right
-judged	لدى	لدى توم حديقة جميلة 	لدى	لدى	right	right
-judged	أمامكم	أمامكم	أمام	أمامكم	right	right
-judged	لم	لم تفتح ماري كتابها 	لم	لم	right	right
-judged	الرشيد	الرشيد	رشيد	الرشيد	right	right
-judged	رأيتها	رأيتها تنظف الغرفة	رأى	رأيتها	right	right
-judged	رسالة	رسالة إلكترونية بعد 	رسالة	رسالة	right	right
-judged	لم	لم تكن ترغب في معرفة	لم	لم	right	right
-judged	ستأتي	ستأتي	أتى	ستأتي	right	right
-judged	البنك	البنك	بنك	البنك	right	right
-judged	بدأ	بدأ سامي يقضي وقتا أ	بدأ	بدأ	right	right
-judged	من	من الوقت معك, ولكن ع	من	من	right	right
-judged	لهم	لهم علاقة باللسانيات	لهم	لهم	wrong	wrong (لـ + هم)
-judged	الكردية	الكردية	كردي	الكردية	right	right
-judged	خيار	خيار كان لدي	خيار	خيار	right	right
-judged	مكتبي	مكتبي	مكتب	مكتبي	right	right
-judged	ثري	ثريْ	وثر	ثريْ	right	wrong (ثري, rich)
-judged	يريدون	يريدون السلام	أراد	يريدون	right	right
-judged	بدأ	بدأ زيري يواعد الفتي	بدأ	بدأ	right	right
-judged	باللغة	باللغة البرتغالية	لغة	باللغة	right	right
-judged	لم	لم يصطد	لم	لم	right	right
-judged	كان	كان ياني يريد المصال	كان	كان	right	right
-judged	الله	الله موجود دائما	الله	الله	right	right
-judged	المغرب	المغرب الحديث	المغرب	المغرب	right	right
-judged	أخبروني	أخبروني أنك مريض	أخبر	أخبروني	right	right
-judged	ما	مَا نَوَى	ما	مَا	right	right
-judged	ذلك	ذلك	ذلك	ذلك	right	right
-judged	قالت	قالت له	قال	قالت	right	right
-judged	ماذا	ماذا صنعت ليلى بشعره	ماذا	ماذا	right	right
-judged	في	في اليابان، ليس بحير	في	في	right	right
-judged	البروباغندا	البروباغندا في نشر ا	بروباغندا	البروباغندا	right	right
-judged	أي	أي لغة يتحدثون بها ف	أي	أي	right	right
-judged	جلوس	جلوس عند رسول الله ص	جلوس	جلوس	right	right
-unjudged	ماريا	ماريا توم شيئًا يأكل	مار	ماريا	-	wrong (Maria)
-unjudged	أليس	أليس كذلك	أليس كذلك	أليس كذلك	-	right
-unjudged	فلافيو	فلافيو يطبخ العشاء	فم	فلافيو	-	wrong (Flavio)
-unjudged	أحمرا	أحمراً	احمر	أحمراً	-	wrong (أحمر, red)
-unjudged	الغواصون	الغوّاصون قعر المحيط	غواص	الغوّاصون	-	right
-unjudged	توم	توم إلى قاعة السّينم	آم	توم	-	wrong (Tom)
-unjudged	توم	توم	آم	توم	-	wrong (Tom)
-unjudged	توم	توم بطلقة في البطن	آم	توم	-	wrong (Tom)
-unjudged	توم	توم ينشر المناديل	آم	توم	-	wrong (Tom)
-unjudged	بالمشي	بالمشي على العشب	مشى	بالمشي	-	right
-unjudged	تحصلت	تحصلت على تذاكر بالأ	حصل	تحصلت	-	right
-unjudged	من	من فضلك	من فضلك	من فضلك	-	right
-unjudged	آبائنا	آبائنا المؤسسين لا ي	أب	آبائنا	-	right
-unjudged	توم	توم	آم	توم	-	wrong (Tom)
-unjudged	جواز	جواز سفر دبلوماسي كي	جواز سفر	جواز سفر	-	right
-unjudged	ليندا	ليندا تذهب	ندا	ليندا	-	wrong (Linda)
-unjudged	توم	توم في مقهى	آم	توم	-	wrong (Tom)
-unjudged	المطرية	المطرية البيضاء لك	مطر	المطرية	-	wrong (مطرية, umbrella)
-unjudged	توم	توم وماري	آم	توم	-	wrong (Tom)
-unjudged	كرة	كرة القدم في الجزائر	كرة القدم	كرة القدم	-	right
-unjudged	المجموعة	المجموعة الشمسية	مجموعة شمسية	المجموعة الشمسية	-	right
-unjudged	رأس	رأس السنة الجديدة	رأس السنة الجديدة	رأس السنة الجديدة	-	right
-unjudged	بييترو	بييترو إلى منزل مسكو	وتر	بييترو	-	wrong (Pietro)
-unjudged	توم	توم بطرقة أو بأخرى	آم	توم	-	wrong (Tom)
-unjudged	توم	توم اشتكي من المغص ب	آم	توم	-	wrong (Tom)
-unjudged	توم	توم بحاجة للمال	آم	توم	-	wrong (Tom)
-unjudged	لوسيا	لوسيا	سي	لوسيا	-	wrong (Lucia)
-unjudged	أليس	أليس كذلك	أليس كذلك	أليس كذلك	-	right
-unjudged	مع	مع السلامة	مع السلامة	مع السلامة	-	right
-unjudged	توم	توم يحبك	آم	توم	-	wrong (Tom)
-unjudged	توم	توم يؤمن بالاستبصار	آم	توم	-	wrong (Tom)
-unjudged	على	على الأقل بالمجان، و	على الأقل	على الأقل	-	right
-unjudged	التذكارية	التذكارية من هذا الم	تذكار	التذكارية	-	right
-unjudged	لا	لا بد لي أن أطلب منك	لا بد	لا بد	-	right
-unjudged	بوش	بوش يريد حربا صليبية	وشى	بوش	-	wrong (Bush)
-unjudged	آلة	آلة حاسبة	آلة حاسبة	آلة حاسبة	-	right
-unjudged	شمال	شمال إفريقيا	شمال إفريقيا	شمال إفريقيا	-	right
-unjudged	بقائها	بقائها في اليابان	بقاء	بقائها	-	right
-unjudged	أقاليما	أقاليما في القارة ال	إقليم	أقاليما	-	right
-unjudged	توم	توم على الأرض	آم	توم	-	wrong (Tom)
+# tatoeba-ara.txt: 30 judged, 50 ambiguous, 50 unjudged positions, seed 20261104 (measure.py text --sample-out), judged by hand.
+# set	word	first card (expression=reading)	script	hand
+judged	في	في=فِي	right	right
+judged	بنا	ب=ب	wrong	wrong (the letter)
+judged	ماذا	ماذا=مَاذَا	right	right
+judged	و	و=و / و	wrong	wrong (the letter)
+judged	ليلى	ليلى=لَيْلَى	right	right
+judged	بشعر	شعر=شَعَرَ	right	wrong (شَعْر, hair)
+judged	يستعمل	استعمل=اِسْتَعْمَلَ	right	right
+judged	لم	لم=لَمَّ	wrong	wrong (لَمْ)
+judged	صعبة	صعب=صَعُبَ	right	right
+judged	أريده	أراد=أَرَادَ	right	right
+judged	الجو	جو=جَوّ	right	right
+judged	هل	هل=هَلْ	right	right
+judged	هي	هي=هِيَ	right	right
+judged	زيري	زير=زِير	right	wrong (name)
+judged	هذه	هذا=هٰذَا	right	right
+judged	أعرفك	أعرف=أَعْرَف	wrong	wrong (عرف)
+judged	أصدقاء	صديق=صَدِيق	right	right
+judged	لم	لم=لَمَّ	wrong	wrong (لَمْ)
+judged	الفيلم	فيلم=فِيلْم	right	right
+judged	الحذاء	حذاء=حِذَاء	right	right
+judged	ذلك	ذلك=ذٰلِكَ	right	right
+judged	يريد	أراد=أَرَادَ	right	right
+judged	بلدان	بلد=بَلَد	right	right
+judged	الآن	الآن=الْآنَ	right	right
+judged	يكن	كان=كَانَ	right	right
+judged	القبائل	قبيلة=قَبِيلَة	right	right
+judged	أني	أني=أَنِيَ	wrong	wrong (أن)
+judged	إذنك	إذن=إِذْن	right	right
+judged	وما	ما=مَا	right	right
+judged	عن	عن=عَنْ	right	right
+ambiguous	القبطان	قبطان=قُبْطان	-	right
+ambiguous	يلعب	لعب=لَعِبَ	-	right
+ambiguous	أقيم	أقام=أَقَامَ	-	right
+ambiguous	وعشرين	عشرون=عِشْرُونَ	-	right
+ambiguous	فضع	وضع=وَضَعَ	-	right
+ambiguous	بارد	بارد=بَارِد	-	right
+ambiguous	أمس	أمس=أَمْسِ	-	right
+ambiguous	ستتبع	تتبع=تَتَبَّعَ	-	right
+ambiguous	خصوصيتك	خصوصية=خُصُوصِيَّة	-	right
+ambiguous	كتبوه	كتب=كَتَبَ	-	right
+ambiguous	النساء	امرأة=اِمْرَأَة	-	right
+ambiguous	عدت	عاد=عَادَ	-	right
+ambiguous	تشبيك	شب=شَبَّ	-	wrong (تشبيك)
+ambiguous	أر	رأى=رَأَى	-	right
+ambiguous	مدفون	مدفون=مَدْفُون	-	right
+ambiguous	لقيادة	قيادة=قِيَادَة	-	right
+ambiguous	قرب	قرب=قَرُبَ	-	right
+ambiguous	الخيرية	خيرية=خَيْرِيَّة	-	right
+ambiguous	ستقرر	تقرر=تَقَرَّرَ	-	right
+ambiguous	يقفل	قفل=قَفَلَ	-	wrong (أقفل)
+ambiguous	أقيل	أقال=أَقَالَ	-	right
+ambiguous	تأكل	تأكل=تَأَكَّلَ	-	wrong (أكل)
+ambiguous	فرس	فرس=فَرَسَ	-	wrong (فَرَس, horse)
+ambiguous	يجيب	أجاب=أَجَابَ	-	right
+ambiguous	ناضج	ناضج=نَاضِج	-	right
+ambiguous	لإيجاد	إيجاد=إِيجَاد	-	right
+ambiguous	أقرأ	أقرأ=أَقْرَأَ	-	wrong (قرأ)
+ambiguous	مناسب	مناسب=مُنَاسِب	-	right
+ambiguous	يحك	حاك=حَاكَ	-	wrong (حكّ)
+ambiguous	تأكل	تأكل=تَأَكَّلَ	-	wrong (أكل)
+ambiguous	موقع	موقع=مَوْقِع	-	right
+ambiguous	آكل	آكل=آكَلَ	-	wrong (أكل)
+ambiguous	حقيقة	حقيقة=حَقِيقَة	-	right
+ambiguous	متسلط	متسلط=مُتَسَلِّط	-	right
+ambiguous	بالسعادة	سعادة=سَعَادَة	-	right
+ambiguous	أعجب	أعجب=أَعْجَبَ	-	right
+ambiguous	مالي	مالي=مَالِيّ	-	right
+ambiguous	المغرب	المغرب=الْمَغْرِب	-	right
+ambiguous	الداخلية	داخلية=دَاخِلِيَّة	-	right
+ambiguous	البرية	برية=بَرِيَّة	-	right
+ambiguous	تغني	أغنى=أَغْنَى	-	wrong (غنّى)
+ambiguous	مرت	مار=مَارَ	-	wrong (مرّ)
+ambiguous	تقل	قلا=قلا	-	wrong (قال)
+ambiguous	وتشكل	شكل=شَكَلَ	-	wrong (تشكّل)
+ambiguous	بألم	ألم=أَلِمَ	-	wrong (أَلَم)
+ambiguous	عفوا	عفوا=عَفْوًا	-	right
+ambiguous	ذر	ذر=ذَرَّ	-	wrong (ذَرّ)
+ambiguous	تضحك	ضحك=ضَحِكَ	-	right
+ambiguous	جوعوا	جاع=جَاعَ	-	right
+ambiguous	فنان	فنان=فَنَّان	-	right
+unjudged	ماريا	مار=مَار	-	wrong (name)
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	لا	لا يزال=لَا يَزَالُ	-	right
+unjudged	ييدير	دار=دَارّ	-	wrong (أدار)
+unjudged	لا	لا يزال=لَا يَزَالُ	-	right
+unjudged	على	على أي حال=عَلَى أَيِّ حَالٍ	-	right
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	منتصف	منتصف الليل=مُنْتَصَف اللَّيْل	-	right
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	يبذو	بذ=بَذَّ	-	wrong (بدا)
+unjudged	يوم	يوم الأحد=يَوْم الْأَحَد	-	right
+unjudged	عيد	عيد ميلاد سعيد=عِيد مِيلَاد سَعِيد !	-	right
+unjudged	لا	لا بد=لَا بُدَّ	-	right
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	ألاف	لف=لَفَّ	-	wrong (ألف)
+unjudged	من	من أجل=مِنْ أَجْلِ	-	right
+unjudged	برونو	برة=بُرَة	-	wrong (name)
+unjudged	مع	مع السلامة=مَعَ ٱلسَّلَامَةِ	-	right
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	أليس	أليس كذلك=أَلَيْسَ كَذٰلِكَ؟	-	right
+unjudged	الأمم	الأمم المتحدة=الْأُمَم الْمُتَّحِدَة	-	right
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	من	من غير=مِنْ غَيْرِ	-	right
+unjudged	أصدقائك	صديق=صَدِيق	-	right
+unjudged	من	من أجل=مِنْ أَجْلِ	-	right
+unjudged	أعطشان	عطش=عَطِشَ	-	right
+unjudged	اتريد	أراد=أَرَادَ	-	right
+unjudged	البيروقراطية	بيروقراطي=بِيرُوقْرَاطِيّ	-	right
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	من	من قبل=مِنْ قَبْلُ	-	right
+unjudged	لوذر	ذر=ذَرَّ	-	wrong (name)
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	جماعية	جماع=جِمَاع	-	wrong (جماعي)
+unjudged	طوابعا	طابع=طَابَع	-	right
+unjudged	ستيفان	وفى=وَفَى	-	wrong (name)
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	بوريس	رسا=رَسَا	-	wrong (name)
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	العالم	العالم العربي=اَلْعَالَم اَلْعَرَبِيّ	-	right
+unjudged	من	من فضلك=مِنْ فَضْلِكَ	-	right
+unjudged	ما	ما اسمك=مَا ٱسْمُ كَ؟	-	right
+unjudged	بتساقط	تساقط=تَسَاقَطَ	-	right
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	توم	آم=آمَ	-	wrong (name)
+unjudged	بالآلة	آلة حاسبة=آلَة حَاسِبَة	-	right
+unjudged	أصدقائك	صديق=صَدِيق	-	right

@@ -1,5 +1,4 @@
-# Written for this pack (GPL-3.0-or-later): hand decisions for measure.py's judge (--homographs), 616 words: the lemmas a reader of ordinary prose needs, a lemma=reading where wty-ar-en has other words of the same spelling (لم=لَمْ, not لَمَّ), and - where no entry is right (a name it lacks).
-# Round 1: the most frequent words whose wty-ar-en rows or clitic splits name several lemmas (top 250 of the subtitle frequency list and of the three texts). Round 2: the most frequent words wty-ar-en lists whose clitic splits name other lemmas (فلا, لك, به). Round 3: the words of the three texts that rule-made wrong results showed the judge got wrong (وعلى, فرأى, الان), and صوت with its pronouns, where صوة is also a word. README.md, Measurements. Round 4: the frequent words whose first result changes with the rules, where the right lemmas are not just the first result (which their own rows name). Round 5: the first cards that are another word of the same spelling (لم, نفس, مثل), and the corrections of the second audit (الكتاب, الملك, علي, فلم, بن, names).
+# Written for this pack (GPL-3.0-or-later): hand decisions for measure.py --homographs (README.md, Measurements 2), 616 words: the lemmas a reader of ordinary prose needs; lemma=reading where another word has the same spelling (لم=لَمْ); - where no entry is right (a name).
 # word	right lemmas
 لا	لا
 من	من
