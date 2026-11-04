@@ -25,14 +25,15 @@ What the rules read:
   the deponents, with the palatal stem of the third singular (`·berat` →
   ·beir → beirid);
 - the copula and the substantive verb (`níptar`, `bus` → is; `ní·fil`, `bái`
-  → attá);
+  → attá), and the verbal noun and passive of do·gní (`dēnam`, `dēntar` →
+  dogní);
 - noun and adjective endings with their palatal and u-infected stems (`fir`,
   `fiur` → fer), syncope (`bríathraib` → bríathar), the n-, dental and
   guttural stems, and a list of irregular nouns (`mná` → ben, `Dé` → día,
-  `maigi` → mag);
+  `maigi` → mag, `curaid` → caur);
 - the conjugated prepositions (`lim`, `leis` → la, `ūad` → ó, `chucu` → co)
   and function words in spellings the dictionary does not list (Middle Irish
-  `nocho` → nícon and `cena` → cene, `ossé` → os);
+  `nocho` → nícon, `cena` → cene and `misi` → messe, `ossé` → os, `nír` → ní);
 - comparison, emphasising suffixes (`labrad-sa`), and spelling variants (`cend`
   → cenn, `caraith` → caraid, `gabaal` → gabál, `ā` for á, `liaig` for
   líaig).
@@ -80,7 +81,7 @@ What the rules read:
   pack (GPL-3.0-or-later). `sources/benchmark-words.txt`: 80 short excerpts of
   *Táin Bó Cúailnge* (below, public domain). `sources/judged-tain.tsv`: the
   verdicts written for this pack, with the Táin word and up to 70 characters
-  of its text.
+  of its text (the 25 before it and those after it).
 - Not committed, used for the measurements below. Each is downloaded once into
   the work cache, and `sources/measure.py` checks its sha256:
   - the dictionary
@@ -109,9 +110,9 @@ the size section 14 assumes, so the measurements use the glosses (about
 
 ## Rule provenance
 
-`transforms.json` has 78 transforms and 1,277 rules: 1,217 `own`, 13 `both`
+`transforms.json` has 79 transforms and 1,291 rules: 1,231 `own`, 13 `both`
 and 47 `yomitan`. `sources/build-final.mjs` writes it from the union of
-`sources/own.json` (67 transforms, 1,230 rules) and `sources/yomitan.json` (15
+`sources/own.json` (68 transforms, 1,244 rules) and `sources/yomitan.json` (15
 transforms, 70 rules), and `sources/yomitan-provenance.tsv` lists what became
 of each of Yomitan's 70 rules:
 
@@ -135,15 +136,16 @@ of each of Yomitan's 70 rules:
   - `lenited` (`ch`, `th`, `ph` → `c`, `t`, `p` anywhere but at the start).
     On the sample it recovers no row and adds 37 false candidates; on
     `cases.tsv` it recovers no row (the own `lenitionInCompound` reads the
-    compounds: `focheird`, `dochuirethar`, `dothǽt`), adds 6 false candidates
+    compounds: `focheird`, `dochuirethar`, `dothǽt`), adds 5 false candidates
     and breaks 3 negatives (`dochí` → docí, `focheird in` → foceird in,
-    `in·samlathar` → samlaid). On the Táin, 111 first results of the union
-    come through it (85 readings, all judged by hand): 10 lookups right
-    (`cairpthib` → carpat, `adchī` → adcí, `brisfithir` → brisid), 82 wrong
-    (`ndechaid` → doéccai, `Rōich` → roicc for the name Róech, `cōich` →
-    cóic, `brath` → brat, `uilche` → olc for ulcha "beard") and 19 unsure.
-    On the gold tokens (Measurements 4), 12 first results of the union come
-    through it: 2 right, 10 wrong.
+    `in·samlathar` → samlaid). On the Táin, 124 first results of the union
+    come through it (89 readings, all judged by hand, homographs lookup by
+    lookup): 11 right (`cairpthib` → carpat, `adchī` → adcí, `brisfithir` →
+    brisid), 85 wrong (`Nīth` → is 7, `ndechaid` → doéccai 4, `nith` → net 4,
+    `Rōich` → roicc for the name Róech, `cōich` → cóic, `uilche` → olc for
+    ulcha "beard") and 28 unsure. On the gold tokens (Measurements 4), 12
+    first results of the union come through it: 2 right, 10 wrong; without it
+    2 are right, 2 wrong and 8 have nothing.
   - `ǽ/æ for é` (2 rules). On the sample it recovers no row and adds 2 false
     candidates; it breaks 3 negatives of `cases.tsv` (`ǣs` → és, `gǣ` → gé,
     `tǽt` → tétt). On the Táin, 41 first results of the union come through
@@ -158,9 +160,11 @@ of each of Yomitan's 70 rules:
     `cases.tsv` and `lookup.tsv`, and no Táin or gold word is read through
     it.
 
-  The union also breaks 2 negatives through Yomitan rules the final set keeps
-  as own rules with stem constraints: `[IM] nasalized` `nd` → d and
-  `[IM] lenited` `th` → t on a bare initial (`nd`, `th`).
+  The union also breaks 3 negatives through Yomitan rules the final set keeps
+  in another form: `[IM] nasalized` `nd` → d and `[IM] lenited` `th` → t on a
+  bare initial (`nd`, `th`; the final set has the own rules, with stem
+  constraints), and `doubled consonant` without the terminal condition, after
+  which the copula reads `ass` as is.
 - **Own rules**: written before Yomitan's file was read (commit "sga: own
   rules": 54 transforms, 1,043 rules, with the conditions `v_dict`, `n_dict`,
   `adj_dict`, `v_conj`, `v_conj3`, `nom_pal` and `nom_uinf`). The later
@@ -170,11 +174,16 @@ of each of Yomitan's 70 rules:
     palatal stem as a step of its own (`conj-palatal`, `abs-palatal`, with
     the states `v_conj3u` and `v_absu`) instead of a copy of every ending
     rule (`conj-pres` went from 67 to 23 rules); `conj-1sg`, `conj-spelling`,
-    `syncope` (108 rules), `emphaticAlone`; `mn-stem` and `aid-stem` split
-    out of the n- and guttural stems; the forms of `cara`, `fili` and `tene`
-    (14 rules) in `irregularNoun`; minimum and consonant-final stems for the
-    noun endings (`naib` is not `na` + `-ib`); `ṅ`/`ṁ` for the nasal; the
-    condition `spelt` for spelling variants;
+    `syncope` (108 rules), `emphaticAlone`; `mn-stem` split out of the
+    n-stems (men, mim, menaib, main, mon, me) and the new `aid-stem` (ada,
+    ado, adaib, adi); the forms of `cara`, `fili` and `tene` (14 rules) in
+    `irregularNoun`; minimum and consonant-final stems for the noun endings
+    (`naib` is not `na` + `-ib`), nom-pl a → ae, dental-stem taith → tu, and
+    `uInfection`'s minimum stem raised from 2 to 4; `ṅ`/`ṁ` for the nasal;
+    the condition `spelt` for spelling variants. Removed: the superlative
+    -am, `spelling` cc → c, tt → t and pp → p, pres-2pl -te, pass-pres -ir,
+    dat-pl ib → i, the zero-ending n-stem rules (ain, an, on), dental-stem
+    at, ed, aid, ait and guttural-stem g, ig, ech;
   - "sga: untaggedTerms pass, …" (64 transforms, 1,075 rules):
     `lenitionInCompound` (90 rules) and `tet` (the forms of téit compounds,
     `dothéit`, `dothǽt` → dotét), `ṅ`/`ṁb` after the dot, `níth` (thou art
@@ -186,29 +195,44 @@ of each of Yomitan's 70 rules:
     samlaid); redundant `stemEndsWith` constraints removed;
   - "sga: fixes from the first audit" (67 transforms, 1,230 rules):
     `prepositionalPronoun` (146 rules), `functionWord` and `unmarkedLength`,
-    with the condition `fw` (a dictionary form that takes no further rule);
-    `bus` (copula) and `bái`, `·bái` (substantive verb); a consonant-final
-    stem for `pres-1sg`, `pres-3pl` and the comparative (`dōit` is not a verb
-    in -id); the palatal route of the noun endings only after endings in e or
-    i; `gilla` is not a plural of gell, `con` not a form of cú; `mag` ←
-    maigi and `dead` ← díaid in `irregularNoun`; the -th spelling of -d only
-    after a second syllable. That last rule is the pack's one `pattern` rule
-    (anchored on `th`): as a suffix rule it read `tūaith` as túaid and
-    `sceith` as sceid, turning 7 right first results of the Táin wrong, and no
-    other rule type can ask for a second syllable.
+    with the condition `fw` (a dictionary form that takes no further rule),
+    which `fused` and `emphaticAlone` also give; `bus` in the copula, whose
+    rules now take any text (conditionsIn [], as no copula form is dotted),
+    and `bái`, `·bái` in the substantive verb; a consonant-final stem for `pres-1sg`, `pres-3pl`
+    and the comparative (`dōit` is not a verb in -id); the palatal route of
+    the noun endings only after endings in e or i; `gilla` is not a plural
+    of gell, `con` not a form of cú, `bai` not one of bó; `mag` ← maigi and
+    `dead` ← díaid in `irregularNoun`; `mn-stem`'s minimum stem raised from
+    2 to 3; the -th spelling of -d only after a second syllable. That last
+    rule is the pack's one `pattern` rule (anchored on `th`): as a suffix
+    rule it read `tūaith` as túaid and `sceith` as sceid, turning 7 right
+    first results of the Táin wrong, and no other rule type can ask for a
+    second syllable;
+  - "sga: fixes from the second audit" (68 transforms, 1,244 rules): `níth`
+    left the copula (its 7 first results on the Táin are all níth
+    "conflict" or the river Níth, and no measured text has the copula form)
+    and `nasalizationNoHyphen` no longer reads it as ith; `nāi` gives n-aí
+    "of them" before noí; `naib`, `misi`, `mise` and `nír` in
+    `functionWord`; `dune`, the cases of caur and the Táin's `leigi` (of
+    líaig) in `irregularNoun`; the new `irregularVerb` (dénum, dénam,
+    déntar → dogní); the hiatus verbs' absolute 1sg and 3pl (`gníu`, `gníit`
+    → gníid), which the consonant-final stems had cut off; `·bái`, which
+    the particle and `bái` rules already read, left the substantive list.
 
 ## Measurements
 
 All numbers with wty-sga-en as published, imported by `hoshidicts-cli
 import`, measured on this branch rebased on main 5ac86a3 (GCC 14.3, Release),
-unless a line says otherwise. The pack has no optional processor or
+unless a line says otherwise. Rebased on main 350d9e0, which changed only the
+lookups of metadata-only terms, every lookup file of `sources/measure.py` and
+every output of Measurements 1-4 is byte for byte the same. The pack has no optional processor or
 transform, so every file gives the same numbers with every option on and with
 the defaults (`sources/measure.py eval` runs both; all 16 pairs below are
 equal).
 
 1. **`eval-language --dictionary`** (`sources/measure.py eval`). The sample is
    the 1,500 rows of `corpus.tsv` and `gaps.tsv`; recall over it is the final
-   recall. `cases.tsv` has 213 positive rows and 169 negatives. Yomitan's
+   recall. `cases.tsv` has 224 positive rows and 172 negatives. Yomitan's
    rules give no conditions, so their run uses a copy of each file with `*`
    in the rule column, and both `untaggedTerms` values give the same numbers.
    `untaggedTerms` `"filter"` is Yomitan's behaviour with this dictionary:
@@ -216,27 +240,28 @@ equal).
 
    | Rule set | untaggedTerms | Sample recall | False cand. | First rank | cases.tsv recall | cases.tsv negatives | cases.tsv false cand. | cases.tsv first rank |
    | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own | pass | 52.00% | 0.374 | 62.47% | 94.37% | 100% | 0.695 | 84.51% |
-   | Yomitan | (no conditions) | 10.80% | 0.161 | 54.20% | 6.10% | 95.86% | 0.296 | 39.91% |
-   | Union | pass | 52.67% | 0.439 | 62.60% | 100% | 94.67% | 0.817 | 89.67% |
-   | **Final** | **pass** | **52.60%** | 0.413 | 62.47% | 100% | 100% | 0.793 | 89.67% |
-   | Own | filter | 52.00% | 0.131 | 54.13% | 94.37% | 100% | 0.268 | 34.74% |
-   | Union | filter | 52.67% | 0.162 | 54.20% | 100% | 94.67% | 0.362 | 40.85% |
-   | Final | filter | 52.60% | 0.133 | 54.13% | 100% | 100% | 0.272 | 37.09% |
+   | Own | pass | 52.00% | 0.374 | 62.47% | 94.64% | 100% | 0.741 | 84.82% |
+   | Yomitan | (no conditions) | 10.80% | 0.161 | 54.20% | 5.80% | 95.93% | 0.281 | 38.39% |
+   | Union | pass | 52.67% | 0.439 | 62.60% | 100% | 94.19% | 0.853 | 89.73% |
+   | **Final** | **pass** | **52.60%** | 0.413 | 62.47% | 100% | 100% | 0.835 | 89.73% |
+   | Own | filter | 52.00% | 0.131 | 54.13% | 94.64% | 100% | 0.259 | 33.48% |
+   | Union | filter | 52.67% | 0.162 | 54.20% | 100% | 94.19% | 0.344 | 39.29% |
+   | Final | filter | 52.60% | 0.133 | 54.13% | 100% | 100% | 0.263 | 35.71% |
 
    The sample's strata (reached / sampled): noun 285 / 450, adjective 153 /
    200, verb 112 / 450, mutation 225 / 250, UniMorph verb 14 / 150. The union
-   breaks 9 of the 169 negatives (Rule provenance). `--per-rule` on the final
-   set and the sample (`sources/measure.py perrule`): 164 rules recover a row
-   no other rule reaches, no rule breaks a negative, and the transforms that
-   add the most false candidates are `nasalization` (84; it recovers 95
-   rows), `depalatalization` (60; 106), `doubled consonant` (51; 6, Yomitan's),
-   `dat-pl` (47; 101), `lenition` (27; 58) and `spelling` (27; 6). They are
-   kept: among the Táin lookups judged by hand (Measurements 4) whose trace
-   has them, `nasalization` is right at 43 and wrong at none,
-   `depalatalization` 148 and 15, `doubled consonant` 82 and 4, `lenition`
-   199 and 2, `spelling` 29 and none; `dat-pl` is right at 3 and wrong at 4
-   there, and recovers 101 sample rows.
+   breaks 10 of the 172 negatives (Rule provenance). `--per-rule` on the
+   final set and the sample (`sources/measure.py perrule`): 164 rules
+   recover a row no other rule reaches, no rule breaks a negative, and the
+   transforms that add the most false candidates are `nasalization` (84; it
+   recovers 95 rows), `depalatalization` (60; 106), `doubled consonant` (51;
+   6, Yomitan's), `dat-pl` (47; 101), `lenition` (27; 58) and `spelling` (27;
+   6). They are kept: among the 1,503 Táin lookups judged by hand
+   (Measurements 4), those whose first result comes through `nasalization`
+   are right at 56 and wrong at 5, `depalatalization` 152 and 25,
+   `doubled consonant` 83 and 30, `lenition` 207 and 5, `spelling` 32 and 5;
+   `dat-pl` is right at 8 and wrong at 6 there, and recovers 101 sample
+   rows.
 2. **Frequent forms** (`sources/measure.py frequent`). With no frequency list
    for Old Irish, the list is the 2,187 Old Irish word forms of the Würzburg
    glosses ranked by their count (10,082 tokens), each with its most
@@ -247,10 +272,10 @@ equal).
    | Rule set | Words counted (tokens) | Wrong lemma first: words (tokens) |
    | --- | ---: | ---: |
    | No rules | 783 (7,569) | 82 (380) |
-   | Own | 951 (7,856) | 106 (394) |
+   | Own | 953 (7,862) | 106 (394) |
    | Yomitan | 832 (7,625) | 93 (392) |
-   | Union | 997 (7,909) | 117 (408) |
-   | Final | 989 (7,899) | 111 (400, 5.1%) |
+   | Union | 999 (7,915) | 118 (409) |
+   | Final | 991 (7,905) | 112 (401, 5.1%) |
 
    The most frequent wrong first results are words the dictionary lists as
    written with another sense, which no rule changes: `as` (50 tokens; the
@@ -265,61 +290,70 @@ equal).
    | Rule set | After an article (242): right / wrong / none | After a particle (591) | After a preposition (691) |
    | --- | ---: | ---: | ---: |
    | No rules | 162 / 27 / 53 | 98 / 113 / 380 | 401 / 91 / 199 |
-   | Own | 195 / 28 / 19 | 140 / 142 / 309 | 482 / 111 / 98 |
+   | Own | 195 / 29 / 18 | 141 / 141 / 309 | 487 / 106 / 98 |
    | Yomitan | 180 / 30 / 32 | 104 / 138 / 349 | 438 / 110 / 143 |
-   | Union | 199 / 28 / 15 | 143 / 148 / 300 | 490 / 127 / 74 |
-   | Final | 199 / 28 / 15 | 142 / 144 / 305 | 491 / 127 / 73 |
+   | Union | 198 / 29 / 15 | 144 / 147 / 300 | 495 / 122 / 74 |
+   | Final | 198 / 29 / 15 | 143 / 143 / 305 | 496 / 122 / 73 |
 
    The glosses' tokens split a verbal complex at the dot (`ní` + `carat`), so
    the forms after a particle are conjunct forms without their particle, which
    the dictionary lists less often than as complexes.
-4. **Real text** (`sources/measure.py text`, `judge` and `tally`).
+4. **Real text** (`sources/measure.py text`, `judge` and `tally`). A first
+   result comes through a rule when a rule made one of its trace steps
+   (`sources/lookup-batch.cpp` reports them apart from the form-of rows,
+   whose rule names can equal a transform id).
    - **Gold lemmas**: every Old Irish token of the Würzburg glosses and the
      two UD treebanks (10,910 tokens; for 9,920 the gold lemma is a
      headword), looked up from the token to the end of its gloss. First
      result right / wrong / nothing: no rules 3,356 / 1,006 / 5,558 (33.83%
-     right); own 3,812 / 1,058 / 5,050 (38.43%); Yomitan 3,501 / 1,078 /
-     5,341 (35.29%); union 3,850 / 1,092 / 4,978 (38.81%); **final 3,849 /
-     1,082 / 4,989 (38.80%)**; final with `untaggedTerms` `"filter"` 3,521 /
+     right); own 3,818 / 1,053 / 5,049 (38.49%); Yomitan 3,501 / 1,078 /
+     5,341 (35.29%); union 3,855 / 1,087 / 4,978 (38.86%); **final 3,854 /
+     1,077 / 4,989 (38.85%)**; final with `untaggedTerms` `"filter"` 3,521 /
      1,059 / 5,340 (35.49%). A first result counts as right when it equals
      the gold lemma without marks, dots and hyphens; the gold follows
      Kavanagh's and Bauer's lexicons, so some differences are names only (the
-     glosses' `so` for the dictionary's -su, `tre` for tri). 209 of the final
+     glosses' `so` for the dictionary's -su, `tre` for tri). 204 of the final
      set's wrong first results come through a rule, most through
-     `depalatalization` (31), `nasalization` (27), `nom-pl` (20), `copula`
+     `nasalization` (27), `depalatalization` (23), `nom-pl` (20), `copula`
      (18; `at` → is where the gloss splits `at·chiam`) and `emphaticAlone`
      (16; `su`, `sse`, `ssa` written apart).
    - ***Táin Bó Cúailnge***: 33,061 lookups, one per word, each first result
      classed against the first result of the dictionary alone (no rules).
-     Final set: nothing 11,368 (no rules: 14,443); the dictionary's own
-     reading (the text as written or a form-of row of it) 15,731; a rule's
-     reading the dictionary alone also puts first 2,488; a rule's reading
-     where the dictionary alone has nothing 3,075; a rule's reading in place
+     Final set: nothing 11,383 (no rules: 14,443); the dictionary's own
+     reading (the text as written or a form-of row of it) 15,745; a rule's
+     reading the dictionary alone also puts first 2,474; a rule's reading
+     where the dictionary alone has nothing 3,060; a rule's reading in place
      of the dictionary's own first result 399. These two last classes were
-     judged by hand, in `sources/judged-tain.tsv`, from the word and its
-     context:
+     judged by hand, in `sources/judged-tain.tsv`, from the word, the 25
+     characters before it and the text after it. A reading (a matched text
+     and a first result) whose lookups are not all one word is judged lookup
+     by lookup (`inn` is the article or the interrogative at 14 of its 36
+     lookups and i before a nasalised word at 18):
      - in place of the dictionary's first result: all 399 lookups (74
-       readings). The rules' reading is right at 340, wrong at 25 and unsure
-       at 34. Where the dictionary's own first result is wrong (314 lookups),
-       the rules' is right at 312 (`ba` → is for fa "or", `Atā` → attá for
-       the copula, `bāi` → attá for bó, `lim` → la). Where it is right (48),
-       the rules keep a right reading at 26 and show a wrong one at 22
-       (Known gaps);
+       readings). The rules' reading is right at 337, wrong at 44 and unsure
+       at 18. Where the dictionary's own first result is wrong (318
+       lookups), the rules' is right at 312 (`ba` → is for fa "or", `Atā` →
+       attá for the copula, `bāi` → attá for bó, `lim` → la). Where it is
+       right (60), the rules keep a right reading at 25 and show a wrong one
+       at 35 (Known gaps);
      - where the dictionary alone has nothing: the 70 most frequent
-       readings, 905 lookups (right 847, wrong 25, unsure 33), and a sample
-       of 100 of the other 2,170 lookups (seed 20261103, by position; right
-       59, wrong 14, unsure 27).
+       readings, 904 lookups (right 838, wrong 61, unsure 5), and a sample
+       of 200 of the other 2,156 lookups (seed 20261103, by position; right
+       116, wrong 55, unsure 29).
 
-     That makes about 350 lookups (1.1%) with a wrong first result through a
-     rule: 25 + 25 + 14% of 2,170, the sample's 95% interval giving 185 to
-     480 for the last part, and up to about 650 more (2.0%) if every unsure
-     one is wrong. The wrong ones are names read as words (`Fīacha` → fíach,
-     `Mand` → mann, `Serthe` → sirid), homographs (`gairit` "short" →
-     gairid, `luigi` "oath" → lugae, `formna` "shoulder" → for), and the
-     replacements of Known gaps. The rules behind the 3,474 rule readings of
-     the two judged classes, by the first deinflection step: `nom-pl` 543,
-     `depalatalization` 506, `doubled consonant` 287, `substantive` 208,
-     `copula` 178, `nasalizationNoHyphen` 173, `lenition` 173,
+     That makes about 700 lookups (2.1%) with a wrong first result through a
+     rule: 44 + 61 + 27.5% of 2,156 (593; the sample's 95% interval gives
+     470 to 735), so 575 to 840 in all, and up to about 340 more (1.0%) if
+     every unsure one is wrong. The wrong ones are names and places read as
+     words (`Fīacha` → fíach, `Mand` → mann, `nAirthir` of Cúil nAirthir →
+     airid),
+     homographs (`inn` → in for i n-, `bāi` → attá for bái "cows", `file` →
+     attá for file "poet", `poll` → Pól), and forms the dictionary does not
+     list read as other words (`lethiu`, the comparative of lethan, → leth;
+     `nderna`, of do·gní, → dern). The rules behind the 3,459 rule readings
+     of the two judged classes, by the first deinflection step: `nom-pl`
+     522, `depalatalization` 497, `doubled consonant` 288, `substantive`
+     208, `lenition` 173, `copula` 171, `nasalizationNoHyphen` 169,
      `prepositionalPronoun` 151, `spelling` 145, `nasalization` 138.
    - **Real use** (`sources/real-use.tsv`, sentences written for the pack,
      looked up with `sources/lookup-batch.cpp`): 29 of the 30 words show the
@@ -331,31 +365,33 @@ equal).
 5. **Performance**.
    - Native `benchmark-lookup --languages <copy> --language sga` with
      wty-sga-en mapped, the 80 texts of `sources/benchmark-words.txt`, 6
-     passes with the first dropped, three runs at machine load 57-60. The
+     passes with the first dropped, three runs at machine load 37. The
      budget is 1 ms p50.
 
      | Rule set | p50 | p95 |
      | --- | ---: | ---: |
-     | Final | 53-56 µs | 104-112 µs |
-     | Union | 71-77 µs | 173-185 µs |
-     | Own | 44-45 µs | 90-91 µs |
-     | Yomitan's rules | 26-28 µs | 55-58 µs |
+     | Final | 50.0-50.9 µs | 99.8-102.0 µs |
+     | Union | 64.6-65.4 µs | 134.9-137.8 µs |
+     | Own | 41.6-42.8 µs | 83.6-85.7 µs |
+     | Yomitan's rules | 25.6-26.1 µs | 54.4-54.6 µs |
 
-     The one `pattern` rule, in five runs of the final set with and without
-     it: p50 51.6-53.3 µs and 51.0-52.8 µs, p95 101.8-105.2 µs and
-     95.7-99.9 µs.
-   - WebAssembly (Node 22.23.1, machine load 46): Hachidori
+     The pack's one `pattern` rule, in five runs of the final set with and
+     without it: p50 49.8-51.1 µs and 49.3-50.6 µs, p95 99.9-101.0 µs and
+     94.0-95.9 µs.
+   - WebAssembly (Node 22.23.1, machine load 37): Hachidori
      feat/multi-language a2086ec2 with its three runtimes rebuilt by
      `wasm/build.sh` on this branch (the shipped ones predate
      `untaggedTerms`; Known gaps) and this pack copied by
      `scripts/sync-languages.mjs`. `sources/wasm-load.mjs`, median over 10
-     fresh engines: `hdw_language_load` 6.6 ms single-thread and 7.0 ms
-     threaded; live heap +661,032 and +660,168 bytes (`hdw_memory_stats`).
-     The budgets are 50 ms and 20 MB. Hachidori's
-     `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=sga` on the
-     26 sentences of `sources/real-use.tsv` (140 hover positions, 6 passes):
-     `hdw_lookup` p50 112 µs and p95 233 µs single-thread, p50 121 µs and p95
-     253 µs threaded.
+     fresh engines, two rounds: `hdw_language_load` 6.3-6.4 ms single-thread
+     and 6.8-6.9 ms threaded; live heap +663,784 and +663,320 bytes
+     (`hdw_memory_stats`), of which the `pattern` rule is 2,560 and 1,472
+     bytes (the same pack without it: +661,224 and +661,848). The budgets
+     are 50 ms and 20 MB. Hachidori's `benchmark/node-lookup.mjs` with
+     `HACHIDORI_LOOKUP_LANGUAGE=sga` on the 26 sentences of
+     `sources/real-use.tsv` (140 hover positions, 6 passes): `hdw_lookup`
+     p50 102 µs and p95 203 µs single-thread, p50 106 µs and p95 205 µs
+     threaded.
    - Hachidori in Chrome (`test/chrome-language-pack.mjs` with the same
      build, Chrome 152, wty-sga-en, the 30 cases of `sources/real-use.tsv`):
      33 checks pass and 1 fails, `maccu` (Measurements 4). Settings adds
@@ -368,14 +404,14 @@ equal).
    section 14 step 7), `sources/lookup-batch.cpp`, `sources/build-own.mjs`,
    `sources/build-final.mjs`, `sources/build-corpus.mjs` and
    `sources/wasm-load.mjs`; the hand judgments are `sources/judged-tain.tsv`
-   (`judge` lists the readings, `tally` counts the verdicts). Conformance:
-   corpus.tsv 789 / 789, cases.tsv 382 / 382, text.tsv 24 / 24, lookup.tsv
-   53 / 53; gaps.tsv 0 / 711 (reported). `tools/check-yomitan.mjs`: 2,296
-   inputs, 3,685 Yomitan results, one listed difference (a text that starts
-   with a tripled letter, `oook`), and the three processors agree on 1,935
-   to 2,721 inputs. `sources/mutate.py`: 240 mutations of stem constraints,
-   transforms and settings; 231 fail a test, and the 9 that do not are
-   listed under Known gaps.
+   (`judge` lists the readings and every lookup of them, `tally` counts the
+   verdicts). Conformance: corpus.tsv 789 / 789, cases.tsv 396 / 396,
+   text.tsv 24 / 24, lookup.tsv 55 / 55; gaps.tsv 0 / 711 (reported).
+   `tools/check-yomitan.mjs`: 2,314 inputs, 3,704 Yomitan results, one
+   listed difference (a text that starts with a tripled letter, `oook`), and
+   the three processors agree on 1,947 to 2,733 inputs. `sources/mutate.py`:
+   242 mutations of stem constraints, transforms and settings; 233 fail a
+   test, and the 9 that do not are listed under Known gaps.
 
 ## Known gaps
 
@@ -393,46 +429,59 @@ equal).
   stem (`lia`, `lïac`), irregular and consonant stems outside the list
   (`athair`, `bráthair` have a rule; others do not), and spelling of the
   tables (`*bindem`).
-- **Wrong first results on the Táin** (Measurements 4), about 350 lookups:
-  - where the dictionary alone has nothing: `Fīacha` → fíach (12, the name
-    Fíacha), `leigi` → líach (7, léici of léicid), `anair` → anaid (6, anair
-    "from the east"; the passive rule that reads it also reads `agair` →
-    aigid in `corpus.tsv`), and about 14% of the rarer readings;
-  - in place of a right first result of the dictionary, 22 lookups. 9 are
-    ties between two terms the dictionary names (below): `claidib` → claide
-    for claideb (4), `broit` → brot for brat (2), `gin` → gen for giun,
-    `hūa` → úa for ó, `lugu` → lugae for bec. The other 13 come first because
-    the dictionary's reading needs one more text processor step (case,
-    marks), and processor steps rank before trace length (docs/languages.md
-    9.6): `cāine`, `cāinem` → cáin for caín (4), `Cēin`, `Cēine` → Cían for
-    céin (4), `ánd` → aigid for and (2), `cōicait` → cóiced, `sāiri` → sár,
-    `Ēirgid` → atreig.
+- **Wrong first results on the Táin**, about 700 lookups (Measurements 4):
+  - among the 70 most frequent readings where the dictionary alone has
+    nothing, 61 lookups: `inn` → in for i before a nasalised word (18),
+    `Fīacha` → fíach for the name Fíacha (12, and `Fiacha` once), `anair`
+    "from the east" → anaid (6; the passive rule that reads it also reads
+    `agair` → aigid in `corpus.tsv`), `fēne` → fén for Féne (6), `lis` →
+    liid for les "enclosure" and la (6), `nāi` → aí where it is nine (5),
+    `Ann` → and for the interrogative and a n- (4), `mbāi` → attá for bái
+    "cows" (2), `focheird` → foceird for the place Focherd (2);
+  - in the rest of that class, about 27.5% of the lookups (the sample's 55
+    of 200): names, homographs and Middle Irish forms (Measurements 4).
+    `nasalizationNoHyphen` takes a real initial n off a word the dictionary
+    lacks: `nūa` (núa "new") → úa, `Nōis` → úas, `Nāthō` → ith;
+  - in place of a right first result of the dictionary, 35 lookups. 14 are
+    ties between two terms the dictionary names (below): `duib` → do for dub
+    "black" (4), `claidib` → claide for claideb (4), `broit` → brot for brat
+    (2), `gin` → gen for giun, `hūa` → úa for ó, `lugu` → lugae for bec,
+    `dāil` → dál for the verbal noun of dáilid. The other 21 come first
+    because the dictionary's reading needs one more text processor step
+    (case, marks), and processor steps rank before trace length
+    (docs/languages.md 9.6): `bāi` → attá for bái "cows" (4), `cāine`,
+    `cāinem` → cáin for caín (4), `Cēin`, `Cēine` → Cían for céin (4),
+    `ánd` → aigid for and (2), `māile` → mál for máel (2), `cōicait` →
+    cóiced, `sāiri` → sár, `Ēirgid` → atreig, `níath` → íath, `loga` → lóg;
+  - 9 more where the dictionary's first result is wrong or unsure as well
+    (`rig` → rí for rig "forearm", `mēide` → míad for méide "neck").
 - **Discovery-order ties (framework).** At 221 Táin lookups (31 readings) a
   form-of row of the text names the rules' first result as well as the
   dictionary's own, so both terms are confirmed by the dictionary and their
   order is the order the lookup finds them. Ordering such ties is the lead's
   framework change (`lookup.confirmedOrder: "references"`, hachi-lang-engine-l),
   not on main when this was measured; the pack does not set it. Judged by
-  hand, the rules' first result is right at 192 of these lookups and wrong
-  at 10; the dictionary's own first result is right at 9 and wrong at 190
-  (`ba` → fa 108, `lim` → lem 26, `aili` → ail 11). The field will be set
-  only if a measurement shows it helps.
+  hand, the rules' first result is right at 192 of these lookups, wrong at
+  17 and unsure at 12; the dictionary's own first result is right at 14,
+  wrong at 195 and unsure at 12 (`ba` → fa 108, `lim` → lem 26, `aili` →
+  ail 11). The field will be set only if a measurement shows it helps.
 - **Function words as written.** `as`, `sa`, `ind`, `tre`, `dom`, `dún` and
   `inna` show the dictionary's entry for the written form first
   (Measurements 2); no rule changes a word the dictionary lists.
 - **Yomitan's rules left out** (Rule provenance): the right readings
-  `lenited` gave on the Táin are lost (10 lookups: `cairpthib` 2,
-  `Gaisched`, `cōectha`, `agathar`, `nīchon`, `tara chend`, `adchī`,
-  `thothim`, `brisfithir`), and so are those of `ǽ/æ for é` (`ǣn` → én,
-  `fǣr` → fér, `nǣl` → nél on the Táin; `pæna` → pén, `ætach` → étach,
-  `sǽt` → sét in the glosses).
-- **The dictionary.** The preposition i is keyed `i/languages M to Z`. Some
-  form-of rows name a row that is itself only references (`fo·daimid` →
-  fodaimid → fo·daim, `ad·cigestar` → adcigestar → ad·cí), which one hop
-  (docs/languages.md 16) does not follow.
+  `lenited` gave on the Táin are lost (11 lookups: `cairpthib` 2,
+  `Gaisched`, `cōectha`, `agathar`, `nīchon`, `tara chend`, `imbērtha`,
+  `adchī`, `thothim`, `brisfithir`), and so are those of `ǽ/æ for é` (`ǣn`
+  → én, `fǣr` → fér, `nǣl` → nél on the Táin; `pæna` → pén, `ætach` →
+  étach, `sǽt` → sét in the glosses).
+- **The dictionary.** The preposition i is keyed `i/languages M to Z`, so
+  `inn` before a nasalised word cannot show it. Some form-of rows name a row
+  that is itself only references (`fo·daimid` → fodaimid → fo·daim,
+  `ad·cigestar` → adcigestar → ad·cí), which one hop (docs/languages.md 16)
+  does not follow.
 - **Mutation check survivors** (`sources/mutate.py`). For each, the words of
-  the Táin, the glosses, the treebanks and Wiktionary's tables were
-  deinflected with and without the constraint:
+  the Táin, the glosses, the treebanks, Wiktionary's tables and the
+  dictionary's keys were deinflected with and without the constraint:
   - `notAtStart` on Yomitan's doubled vowel rules: without it, nine words
     get a reading at their start, none judged wrong (`ii` → í, `hée` → é,
     `eigis` → éigid; `níi` and `aa` unsure). The constraint is Yomitan's and
@@ -442,6 +491,14 @@ equal).
     `conj-palatal`, `abs-palatal` and `emphatic`, and `conj-1sg`'s
     `stemEndsWith`: no word gives a different deinflection, and no
     constructed text was found.
+  - Out-conditions, which `mutate.py` does not change, checked the same way:
+    without `spelt` on Yomitan's replace rules, `fw` on `functionWord` or
+    `conj-pres`'s `v_conj3`, a negative row fails (`ass` → is, `nōi` → oí,
+    `rom·bet` → baid). Without `fw` on `prepositionalPronoun` the only new
+    deinflections are spelling variants of the same preposition (`impu` →
+    imm), and without `particle`'s `v_conj`, or with `dat-pl`'s ib → e at a
+    minimum stem of 2, only texts that are no words (`ro·finnatar` →
+    ·finatar, `frib` → fre).
 - **Hachidori.** Hachidori's shipped runtimes predate `untaggedTerms` and
   refuse the pack ("lookup.untaggedTerms: unknown key"); shipping the pack
   needs the submodule bump to a hoshidicts main with #58 and the runtime
