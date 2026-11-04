@@ -1,5 +1,7 @@
-# The 10,000 frequent words (as frequent.tsv writes them) whose first result with a definition is another lemma with transforms.json than with no transforms (measure.mjs diff frequent none.json final.json),
-# judged by the pack author: right (the rule gives the lemma the word nearly always is), wrong, mixed (both readings are common) or name (an English name or word of the subtitles, wrong either way).
+# The 10,000 frequent words (as frequent.tsv writes them) whose first result with a definition, through a rule of the pack (its trace has one), is another lemma
+# or the same lemma matched through more letters with transforms.json than with no transforms (measure.mjs diff frequent none.json final.json --dump),
+# judged by the pack author: right (the rule gives the lemma the word nearly always is), wrong, mixed (both readings are common), name (an English name or word
+# of the subtitles, wrong either way) or either (a German word the list writes in small letters, wrong either way).
 # tokens	word	no rules	transforms.json	trace	verdict
 511491	hast	hasten	haben	present-du	right
 99301	liebe	lieb	lieben	present-ich	mixed
@@ -28,7 +30,6 @@
 3622	Freundinnen	Freund	Freund	plural,female equivalent	right
 3577	superman	super	super	declined	name
 3392	Willie	Willi	Willi	plural	name
-3182	heut	heute	heuen	present-er	wrong
 3148	jess	je	Jot	plural,alternative Austria	name
 3053	Angeles	angeln	Angel	genitive	name
 2940	barney	bar	Bar	plural	name
@@ -37,10 +38,8 @@
 2806	one	on	on	declined	name
 2482	legende	Legende	legen	declined,present-participle	wrong
 2461	pierre	Pier	Pi	plural	name
-2386	grade	gerade	Grad	plural	wrong
 2031	Harris	Harri	Harri	genitive	name
 1894	benny	Ben	Be	plural	name
-1881	draus	daraus	Drau	genitive	wrong
 1862	nützt	n	nutzen	present-er,alt-of	right
 1811	russell	Russe	rußen	present-ich,alt-of	name
 1714	ward	war	werden	past	right
@@ -74,11 +73,10 @@
 1133	rausgeworfen	raus	herauswerfen	past-participle,alt-of	right
 1104	phoenix	Pho	Pho	plural	name
 1100	juliette	Juli	Juli	plural	name
-1086	oberste	oberer	Oberst	plural	wrong
 1069	heller	helle	hell	declined	right
 1063	versprech	Vers	versprechen	imperative	right
-1057	grosse	groß	Gros	plural	wrong
 970	joshua	jo	Jo	genitive	name
+967	gelangt	gelingen	gelangen	present-er	right
 961	abe	ab	ab	declined	name
 959	erklärte	erklärt	erklären	past	right
 952	jessie	je	Jot	plural,alternative Austria	name
@@ -86,23 +84,22 @@
 932	vertraute	vertraut	vertrauen	past	right
 925	ellis	Elli	Elli	genitive	name
 924	leide	leid	leiden	present-ich	mixed
-924	obersten	oberer	Oberst	plural	wrong
 908	erwartete	erwartet	erwarten	past	right
 892	potter	Pott	Pott	plural	name
 891	Jenkins	Jot	Jot	plural,alternative Austria	name
-885	sternzeit	Stern	Ster	plural	name
+885	sternzeit	Stern	Ster	plural	either
 876	georges	Georg	Georg	genitive	name
 872	peterson	Peters	Peter	genitive	name
 848	verliebte	verliebt	verlieben	past	mixed
 825	ernie	Ern	Er	plural	name
 822	brenda	Bre	Bre	plural	name
-821	dreier	drei	Drei	plural	wrong
 803	scheiss	scheiß	scheißen	imperative,alt-of	right
 802	entwickelte	entwickelt	entwickeln	past	right
 799	richards	Richard	Richard	genitive	name
+766	drängt	dringen	drängen	present-er	right
 766	maureen	mauern	Maure	plural	name
 759	gestohlenen	stehlen	stehlen	declined,past-participle	right
-756	haushälterin	haushalten	Haushalt	plural	name
+756	haushälterin	haushalten	Haushalt	plural	either
 737	brendan	Bre	Bre	plural	name
 734	sasha	Sa	Sa	plural	name
 717	bennet	Ben	Be	plural	name

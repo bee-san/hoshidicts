@@ -56,9 +56,9 @@ end of its clause (`kommt morgen an.` → ankommen).
   two or three words of Kafka's *Der Prozess* (`FRAU GRUBACH`, `KÜNDIGUNG
   DES ADVOKATEN`, `höhern Beamten`, `der Hand hin.`; Project Gutenberg
   #69327, public domain). Each row of `changed-judged.tsv` quotes the
-  sentence it judges, from the hovered word, in at most 99 characters: 57
+  sentence it judges, from the hovered word, in at most 99 characters: 58
   from Tatoeba (CC BY 2.0 FR, by the Tatoeba contributors,
-  https://tatoeba.org) and 23 from the three Project Gutenberg books below
+  https://tatoeba.org) and 22 from the three Project Gutenberg books below
   (public domain). `hand-judged.tsv` gives the text each of its 60 lookups
   matched (23 in Tatoeba, 37 in the books). `sources/lookup-batch.cpp` is adapted
   from `languages/en/sources/lookup-batch.cpp`.
@@ -85,8 +85,8 @@ end of its clause (`kommt morgen an.` → ankommen).
 
 ## Rule provenance
 
-`transforms.json` has 34 transforms and 231 rules, 4,922 with cross products
-expanded: 28 transforms and 214 rules (4,624 expanded) `own`, one transform
+`transforms.json` has 34 transforms and 247 rules, 4,944 with cross products
+expanded: 28 transforms and 230 rules (4,646 expanded) `own`, one transform
 and 5 rules (156) `both`, and 5 transforms and 12 rules (142) `yomitan`.
 `sources/build-final.mjs` writes it: `sources/own.json` followed by five of
 Yomitan's seven transforms. Yomitan's transforms come after the own ones, so
@@ -231,7 +231,9 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
   - the listed verb forms not after c, since no prefix ends in c (`schießt`
     is not sc + hießt → scheißen, `schiebt` not schauen); no short
     subjunctive II form that is the present of another verb (`führt` is not
-    fahren: ten stems found in wty-de-en, listed in `build-own.mjs`); the
+    fahren: ten stems found in wty-de-en, listed in `build-own.mjs`; `drängt`
+    is also ringen's listed `rängt` after d, so drängen's present is listed,
+    Homographs); the
     listed adjective forms only as one word (`sehr best…`, the start of `sehr
     bestimmt`, is not sehr gut);
   - plural -n and the dative plural only after e, l or r (`Lohn` is not Loh,
@@ -280,8 +282,28 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     schalten's present is listed before schelten's past (`schaltet`);
   - participles that are spelled like the present of a verb in ge- are
     listed (`gewartet` is warten, not the archaic gewarten; `gelobt`,
-    `geleitet`, `angehört`, `zugehört`), and schalten's imperative `schalt`
+    `geleitet`, `angehört`, `zugehört`, `getraut` (trauen, not getrauen),
+    `geduldet` (dulden, not gedulden)), and schalten's imperative `schalt`
     before schelten's past;
+  - the present of gelangen and drängen is listed (`gelangt`, `gelangst`,
+    `drängt`, `drängst`): the same words are the past of gelingen and,
+    through ringen's listed `rängt` after d, the subjunctive II of dringen,
+    whose listed forms are longer endings than the present's -t and -st;
+  - `heut` is heute and `draus` daraus, as the words' own rows say, not heuen
+    (to make hay) and the genitive of the river Drau: the present (er, ihr)
+    -t and the bare imperative leave out the stem heu, and the genitive -s
+    the stem drau, each in a rule of their own for stems in u, so `heult`,
+    `freut` and `baut` keep their readings;
+  - lowercase numerals, adjectives and adverbs spelled like a noun's plural
+    or genitive keep the reading their own rows give: `grade` is gerade, not
+    the plural of Grad; `oberste` and `obersten` oberer, not Oberst;
+    `zehnten` zehnte; `zweier`, `zweien`, `dreier` and `dreien` zwei and
+    drei; `grosse` (Swiss) groß, not Gros; `seins` the possessive seiner, not
+    Sein. Their stems are left out of the plural, plural-s and genitive
+    rules, which are split by the stem's last and first letter, since a rule
+    takes one exclusion; the nouns themselves (`Grade`, `Oberste`, `Zehnten`,
+    `Zweien`, `Seins`) have form-of rows of their own, which still give
+    them;
   - the plural -n of a noun in -e is written with the e (`Stunden` is
     Stunde, not Stund; `Katzen`, `Reisen`, `Akten`, `Kohlen`, `Tabletten`
     likewise).
@@ -308,15 +330,19 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
   - after the first audit (audit-hachi-lang-de, MAJOR 1): the order of
     homographs above (the adjective transforms had come after the verb
     transforms and before the nouns), `meine`, and the rule `nisse` → `nis`,
-    which `isse` → `is` covers, removed.
+    which `isse` → `is` covers, removed;
+  - after the second audit (audit-hachi-lang-de-b, MAJOR-A and MINOR-B):
+    `heut`, `draus`, `gelangt`, `drängt`, `getraut` and `geduldet`, and the
+    lowercase words above that it left to the framework (`grade`,
+    `oberste`, `zehnten`, `zweier`, `dreien`, `grosse`, `seins`), since an
+    exclusion breaks their ties too.
 
 ## Measurements
 
 Every number is with wty-de-en as its release publishes it, form-of rows
-included, imported by `hoshidicts-cli import`, at hoshidicts 1fed676 with
-this pack (GCC 14.3, Release); main 39cebbe adds only other packs. Items 2
-to 4 were measured at 6a65eac and again after the rebase on 1fed676 (#58
-adds `lookup.untaggedTerms`), with identical output. The union is
+included, imported by `hoshidicts-cli import`, with hoshidicts 1fed676's
+library and this pack's rules (GCC 14.3, Release); the commits on main since
+add only other packs. The union is
 `tools/merge-transforms.mjs de --out`, which puts Yomitan's transforms
 first. The pack has no optional processor, transform or variant pass, so it
 has no `defaults.tsv`, and every number is the same with every option on and
@@ -330,12 +356,16 @@ with the defaults; copies of the sample and `cases.tsv` with the line
    and with any trace (`*`). False candidates are per row, first rank is the
    share of rows whose full lookup shows the lemma first.
 
-   | Rule set | Sample recall | False candidates | First rank | cases.tsv: 277 positives | 50 negatives | Yomitan's test, its traces / any trace |
+   | Rule set | Sample recall | False candidates | First rank | cases.tsv: 278 positives | 52 negatives | Yomitan's test, its traces / any trace |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own (`sources/own.json`) | 98.00% (1,764) | 0.144 | 94.39% | 97.11% | 100% | 1 / 4 |
-   | Yomitan (`sources/yomitan.json`) | 5.00% (90) | 0.074 | 94.00% | 5.42% | 92.0% | 14 / 14 |
-   | Union | 98.00% (1,764) | 0.158 | 94.39% | 100% | 92.0% | 14 / 14 |
+   | Own (`sources/own.json`) | 98.00% (1,764) | 0.144 | 94.39% | 97.12% | 100% | 1 / 4 |
+   | Yomitan (`sources/yomitan.json`) | 5.00% (90) | 0.074 | 94.00% | 5.40% | 92.3% | 14 / 14 |
+   | Union | 98.00% (1,764) | 0.158 | 94.39% | 100% | 92.3% | 14 / 14 |
    | Final (`transforms.json`) | **98.00% (1,764)** | 0.158 | 94.39% | 100% | 100% | 13 / 13 |
+
+   First rank on `cases.tsv`: own 84.89%, Yomitan 82.73%, union and final
+   85.61%; its false candidates per row: own, union and final 0.417, Yomitan
+   0.237.
 
    - Yomitan's rules reach only participles and zu-infinitives; first rank is
      high for every set because wty-de-en has a form-of row for nearly every
@@ -357,20 +387,18 @@ with the defaults; copies of the sample and `cases.tsv` with the line
      adjective row is untagged, so the pack keeps `lookup.untaggedTerms` at
      the default `filter` (language.json leaves the field out).
      - `eval-language` with `pass` (`untagged-terms.py copies`): the final
-       rules rank the same number of lemmas first on the sample,
-       `corpus.tsv`, `gaps.tsv` and `yomitan.tsv`, and one more on
-       `cases.tsv` (237 against 236 of 277: `zehnten` → zehnte, whose
-       numeral row is untagged). The false candidates per row rise from
-       0.158 to 0.170 on the sample and from 0.419 to 1.134 on `cases.tsv`;
-       recall and the negatives are unchanged.
+       rules rank the same number of lemmas first on every test file (238 of
+       278 on `cases.tsv`). The false candidates per row rise from 0.158 to
+       0.170 on the sample and from 0.417 to 1.129 on `cases.tsv`; recall
+       and the negatives are unchanged.
      - Real text (`untagged-terms.py compare`): of the 626,124 lookups of the
        frequent words and the four texts, `pass` changes the first result at
-       1,212 and its lemma at 824. 662 are wrong: `Innstetten` → in (404;
+       1,199 and its lemma at 811. 662 are wrong: `Innstetten` → in (404;
        `filter` gives Inn) and `dies` read as the imperative of diesen (258;
-       `filter` gives der). 21 numerals become right (`zweier` → zwei,
-       `zehnten` → zehnte, `dreien` → drei). The other 141 are mostly names
-       and particles read as other words (`Joe` → jo, `Nebraska` → neben,
-       `wißt` → wessen).
+       `filter` gives der). The other 149 are mostly names, particles and
+       adjectives read as other words (`Joe` → jo, `draus` → Drau, `grosse`
+       → Gross, `Nebraska` → neben, `wißt` → wessen); none is a lemma
+       `filter` misses.
    - The final set reaches 13 of Yomitan's 14 test rows; the one it lacks is
      `räum den Tisch auf` → `räum auf`, the two-word output of Yomitan's
      separated-prefix rule (the own rule gives aufräumen for `räum den Tisch
@@ -388,38 +416,43 @@ with the defaults; copies of the sample and `cases.tsv` with the line
 
      | Rule set | Words a rule reaches (share of tokens) | Wrong first entry with a definition | A wrong rule reading before the lemma |
      | --- | ---: | ---: | ---: |
-     | Own | 3,488 (26.63%) | 1 (0.00%) | 0 |
+     | Own | 3,487 (26.63%) | 1 (0.00%) | 0 |
      | Yomitan | 281 (0.71%) | 0 | 0 |
-     | Union | 3,488 (26.63%) | 1 (0.00%) | 0 |
-     | Final | 3,488 (26.63%) | 1 (0.00%) | 0 |
+     | Union | 3,487 (26.63%) | 1 (0.00%) | 0 |
+     | Final | 3,487 (26.63%) | 1 (0.00%) | 0 |
 
      The one word is `ass` (800 tokens): its first entry is the noun Ass
      (ace), before essen, whose past it is in Swiss spelling.
    - **Against the dictionary alone, by hand** (`measure.mjs diff frequent
-     none.json final.json`, `none.json` from `sources/variants.mjs`; verdicts
-     in `sources/frequent-judged.tsv`): 110 words show another first lemma
-     through a rule of the pack than with no rules at all. 26 are right where
-     the dictionary alone is wrong (590,812 tokens: `hast` → haben, not
-     hasten; `führt` → führen, not fahren; `muß` → müssen; `passierte` →
-     passieren), 9 are mixed, with both readings common (`liebe` lieben or
-     lieb, `heiße`, `lasse`, `verletzte`; 149,274 tokens), 67 are English
-     names and words of the subtitles, wrong either way (`eddie` → Eddi;
-     153,781 tokens), and **8 are wrong** (13,819 tokens, 0.01% of the
-     list's): `legende` → legen (the list writes Legende in small letters),
-     `heut` → heuen, `grade` → Grad, `draus` →
-     Drau, `oberste` and `obersten` → Oberst, `grosse` → Gros, `dreier` →
-     Drei (Known gaps). At 1bf5ea1 the first audit judged 66 of 103 such
-     words wrong (684,537 tokens, 0.48%), among them `meine` → meinen,
-     `letzten` → letzen, `schöne` → schönen, `kostet` → kosen and
-     `gewartet` → gewarten; Rule provenance says how they were fixed.
-   - **Rare homographs** (`measure.mjs rare`): 18 words show a rule's reading
-     first whose lemma is at least 20 times rarer, as a word of the list,
-     than another of the word's lemmas among its results (Yomitan's rules:
-     0). 14 of them show an equivalent lemma (`anderen` → ander before
-     anderer, `meisten` → meist before viel, the participle adjectives
-     `folgende`, `lebenden`, `Laufenden` before their verbs), `loser` shows
-     lose before los, both possible, and 3 are wrong: `heut`, `draus` and
-     `grosse`.
+     none.json final.json --dump`, `none.json` from `sources/variants.mjs`;
+     verdicts in `sources/frequent-judged.tsv`): for 105 words the first
+     result with a definition, reached through a rule of the pack, differs
+     from the dictionary alone's: 67 show another lemma, 38 the same lemma
+     matched through more letters (`eddie` → Eddi, matched whole). 28 are
+     right where the dictionary alone is wrong (592,545 tokens: `hast` →
+     haben, not hasten; `führt` → führen, not fahren; `muß` → müssen;
+     `gelangt` → gelangen, not gelingen), 9 are mixed, with both readings
+     common (`liebe` lieben or lieb, `heiße`, `lasse`, `verletzte`; 149,274
+     tokens), 65 are English names and words of the subtitles, wrong either
+     way (152,140 tokens), 2 are German nouns the list writes in small
+     letters, wrong either way (`haushälterin`, `sternzeit`), and **1 is
+     wrong**: `legende` → legen (2,482 tokens; the list's Legende; Known
+     gaps). At 1bf5ea1 the first audit judged 66 of 103 such words wrong
+     (684,537 tokens, 0.48%), among them `meine` → meinen, `letzten` →
+     letzen, `schöne` → schönen, `kostet` → kosen and `gewartet` →
+     gewarten; at 22ce13e 8 were wrong (`heut` → heuen, `draus` → Drau,
+     `grade` → Grad, `oberste` and `obersten` → Oberst, `grosse` → Gros,
+     `dreier` → Drei and `legende`), and the second audit found `gelangt`
+     and `drängt`, which the dictionary alone also gives wrong. Rule
+     provenance says how they were fixed.
+   - **Rare homographs** (`measure.mjs rare`, lemma frequencies from the
+     whole list, `frequency-full.tsv`): 15 words show a rule's reading first
+     whose lemma is at least 20 times rarer, as a word of the list, than
+     another of the word's lemmas among its results (Yomitan's rules: 0). 14
+     of them show an equivalent lemma (`anderen` → ander before anderer,
+     `meisten` → meist before viel, the participle adjectives `folgende`,
+     `lebenden`, `Laufenden` before their verbs), and `loser` shows lose
+     before los, both possible.
 
    **At the start of a sentence** (`measure.mjs start`): the 5,954 of those
    words that German writes in small letters, looked up with a capital first
@@ -459,25 +492,28 @@ with the defaults; copies of the sample and `cases.tsv` with the line
 
    | Text (lookups) | Rule set | Wrong, one word | Particle verb from a dictionary row | Wrong rule reading, several words | Unjudged |
    | --- | --- | ---: | ---: | ---: | ---: |
-   | Tatoeba (427,819) | Final | 35 | 2,832 (0.66%) | 1 | 881 |
-   | | Own | 35 | 2,832 | 1 | 825 |
+   | Tatoeba (427,819) | Final | 3 | 2,832 (0.66%) | 1 | 881 |
+   | | Own | 3 | 2,832 | 1 | 825 |
    | | Yomitan | 18 | 2,357 | 4,824 (1.13%) | 2,307 |
-   | | Union | 35 | 2,342 | 4,818 (1.13%) | 1,902 |
-   | *Der Prozess* (73,823) | Final | 8 | 381 (0.52%) | 0 | 332 |
+   | | Union | 3 | 2,342 | 4,818 (1.13%) | 1,902 |
+   | *Der Prozess* (73,823) | Final | 1 | 381 (0.52%) | 0 | 332 |
    | | Yomitan | 71 | 315 | 684 (0.93%) | 459 |
-   | | Union | 8 | 315 | 683 | 504 |
+   | | Union | 1 | 315 | 683 | 504 |
    | *Die Verwandlung* (19,230) | Final | 0 | 116 (0.60%) | 3 | 146 |
    | | Yomitan | 16 | 106 | 175 (0.91%) | 91 |
    | | Union | 0 | 106 | 178 | 179 |
-   | *Effi Briest* (95,252) | Final | 12 | 382 (0.40%) | 1 | 467 |
+   | *Effi Briest* (95,252) | Final | 2 | 382 (0.40%) | 1 | 467 |
    | | Yomitan | 146 | 324 | 746 (0.78%) | 574 |
-   | | Union | 12 | 323 | 746 | 747 |
+   | | Union | 2 | 323 | 746 | 747 |
 
    The own rules give the final set's numbers but for a few unjudged
    positions (Rule provenance has the 184 positions where they differ).
-   - The final set's largest groups of wrong single words are noun readings
-     of words in small letters (`zehnten` → Zehnt, `zweier` → Zwei, `oberste`
-     → Oberst, `grade` → Grad; 28 in Tatoeba) and `seins` → Sein (5).
+   - The final set's 6 wrong single words: `spielenden` → the noun
+     Spielende (2), `vermißte` → the adjective vermisst, `knicks` → Knick,
+     `hatt` → haten and the English `that` → Tat. At 22ce13e there were 55,
+     52 of them lowercase words read as nouns; the 49 of `grade`, `zweier`,
+     `oberste`, `zehnten`, `seins`, `draus` and the like are now right (Rule
+     provenance, Homographs).
    - The particle verbs come from wty-de-en's form-of rows of
      separated forms (`hat da` → dahaben, `ging zu` → zugehen, `zeigte auf` →
      aufzeigen), which match the verb and a following preposition or adverb
@@ -504,26 +540,26 @@ with the defaults; copies of the sample and `cases.tsv` with the line
    `sources/changed-judged.tsv`): the script above counts a homograph's other
    lemma as right, so the positions where a rule of the pack makes the first
    result of the hovered word another lemma than the dictionary alone gives
-   are judged by hand. There are 2,134 of them in the 616,124 lookups. Of a
-   random sample of 80 (seed 4), 12 are wrong (15%, so about 320 positions,
-   0.05% of the lookups):
-   - 5 participle adjectives after a determiner read as the past of their
-     verb (`die entfernten Dinge` → entfernen, `der erwähnten Dame`, `den
-     Besiegten`, `bedeckte Dach`, `verspäteten Teilnahme`); for these verbs
-     the past is the more frequent use (Rule provenance, Homographs);
-   - 4 uses of `liebe` and `heiße` as the adjective (`liebe Mama`, `das
-     heiße Bad`), whose verb reading the pack lists first;
-   - 2 noun readings of a lowercase word (`zweier Herren` → Zwei, `seins` →
-     Sein) and one made-up word (`nachen`).
+   are judged by hand. There are 2,079 of them in the 616,124 lookups. Of a
+   random sample of 80 (seed 4), 14 are wrong (18%, so about 360 positions,
+   0.06% of the lookups):
+   - 8 participle adjectives before a noun or after a determiner read as the
+     past of their verb (`verletzten Spieler` → verletzen, `eine
+     verheiratete Frau`, `das bewegte Meer`, `die Bevorzugten`); for these
+     verbs the past is the more frequent use (Rule provenance, Homographs);
+   - 6 adjectives whose 1sg verb reading the pack lists first: `liebe` as
+     the adjective 5 times (`liebe Effi`, `liebe Johanna`) and `heiße
+     Sonne`.
 
-   The 68 right ones are mostly `hast` → haben (the dictionary alone gives
-   hasten), `muß` → müssen and verbs in the past (`erklärte`, `verletzte
-   sich`, `passierte`). At 1bf5ea1 the first audit counted 5,062 such
-   positions and judged 43 of 80 wrong (about 2,700, 0.44%).
+   The 66 right ones are mostly `hast` → haben (the dictionary alone gives
+   hasten), `muß` → müssen, `liebe` and `lasse` as the verb, and verbs in
+   the past (`verkaufte das Patent`, `versteckte sich`, `erklärte mir`). At 1bf5ea1 the first audit counted 5,062 such
+   positions and judged 43 of 80 wrong (about 2,700, 0.44%); at 22ce13e the
+   second counted 2,134 and judged 13 of its own 80 wrong.
 
    With the script's counts, about 490 of the final set's 616,124 lookups
-   (0.08%) are wrong and unjudged, besides the 55 wrong single words, the
-   rule-changed ones above (about 320) and the 3,711 particle verbs the
+   (0.08%) are wrong and unjudged, besides the 6 wrong single words, the
+   rule-changed ones above (about 360) and the 3,711 particle verbs the
    dictionary's rows make (0.60%). An earlier sample of 60 (seed 2, with the
    rules of d5d36de) found 14 wrong; its rule-made errors that a constraint
    could stop (`führt` → fahren, `sehr best…` → sehr gut, `Elektrotechniker`
@@ -537,16 +573,16 @@ with the defaults; copies of the sample and `cases.tsv` with the line
    (33), participles without ge- (`verkauft`, `studiert`) as the present
    (er, ihr) (28).
 6. **Per rule** (`eval-language --per-rule` on the sample and `cases.tsv`,
-   2,127 rows): 162 of the 231 rules recover a row no other rule reaches,
+   2,130 rows): 166 of the 247 rules recover a row no other rule reaches,
    none breaks a negative, and none adds false candidates without recovering
    a row. With the rules of d5d36de five did: the äu umlaut before -er (since
    removed), ä and ö before -er and the Latin -en for -us and -os, which now
    have rows (`Väter`, `Töchter`, `Rhythmen`, `Mythen`).
 7. **Checks**:
    - conformance (`language-conformance-test`): corpus.tsv 1,764 / 1,764,
-     cases.tsv 327 / 327, yomitan.tsv 13 / 13, text.tsv 21 / 21, lookup.tsv
-     50 / 50; gaps.tsv 0 / 37 (reported); `classes.json` agrees with the
-     engine (8 classes, 365 fields, 4 steps); 605 of the 4,922 rules (cross
+     cases.tsv 330 / 330, yomitan.tsv 13 / 13, text.tsv 21 / 21, lookup.tsv
+     96 / 96; gaps.tsv 0 / 37 (reported); `classes.json` agrees with the
+     engine (8 classes, 419 fields, 4 steps); 612 of the 4,944 rules (cross
      products expanded) are exercised by a passing row; the committed files
      of `tests/` and `sources/` hold 943,966 bytes
      (`git ls-tree -r -l HEAD -- languages/de/tests languages/de/sources`);
@@ -558,20 +594,37 @@ with the defaults; copies of the sample and `cases.tsv` with the line
    - `ctest` (52 tests), `tools/check-classes.mjs --all` and `node --test
      tools/test/` (115 tests here; CI runs more with the hangul-js bundle)
      pass;
-   - mutations (`sources/mutations.mjs`): each of 57 changes to a scratch
-     copy of the pack removes one stem constraint, exclusion, listed form,
-     word list, processor or ordering above, writes the copy's
-     `classes.json` and runs the conformance test on it. Every one makes a
-     test fail. Of the first audit's 104 further mutations
-     (`reports/audit-hachi-lang-de-evidence/tools/my-mutations.mjs`), 10
-     survive: one moves the adjective transforms first, where they now are;
-     removing verstehen's listed participle leaves `er` + `standen`, which
-     still reaches it; the others are choices no test can observe: `sep` as a
-     dictionary form, the order of transforms whose readings never compete
-     (separated prefix last, contraction first, Yomitan's negative and past
-     participle before the own ones), `traceSelection: "first"`, swapped
-     trace names of two past transforms, and `eszettPreprocessor` before the
-     case processors, whose variants are the same in either order.
+   - mutations (`sources/mutations.mjs`): each of 108 changes to a scratch
+     copy of the pack removes one stem constraint, exclusion (one per stem
+     and ending), listed form (one per entry of the homograph lists, and all
+     forms of each of four table verbs), word list, processor or ordering
+     above, or sets
+     `traceSelection` to `first`, writes the copy's `classes.json` and runs
+     the conformance test on it. Every one makes a test fail. Of the two
+     audits' further mutations, which survive:
+     - the first audit's 104
+       (`reports/audit-hachi-lang-de-evidence/tools/my-mutations.mjs`): 9.
+       One moves the adjective transforms first, where they now are;
+       removing verstehen's listed participle leaves `er` + `standen`, which
+       still reaches it; the others change no test and no first lemma: `sep`
+       as a dictionary form, separated prefix last, contraction first,
+       Yomitan's negative and past participle before the own ones, two
+       swapped trace names, and `eszettPreprocessor` before the case
+       processors, whose variants are the same in either order;
+     - the second audit's 85
+       (`reports/audit-hachi-lang-de-b-evidence/tools/my-mutations-b.mjs`):
+       16. By that audit's measurement on the 626,124 lookups, 13 change no
+       first lemma: adding back 7 of the short subjunctive II forms the pack
+       leaves out (`drängt` now has its own listed present), and orders and
+       conditions that change only traces (genitive before plural,
+       imperative before present (ich), subjunctive II before the past,
+       present (wir) before present (er), the zu-infinitive's and the
+       contraction's conditions). The other 3 change a few: the own
+       participle with no conditions out (32 first lemmas, none of a
+       frequent word: `Verglichen` at a sentence start → vergleichen), the
+       plural after the dative plural (`Gräbern` → Grab instead of Gräber,
+       3) and comparative and superlative after the verbs
+       (`Lichtstümpfe`, `Lichtstreifen` → lichten, 2).
 8. **Lookup speed** (`benchmark-lookup --languages <copy> --language de`,
    wty-de-en mapped, hoshidicts 1fed676): the 80 texts of
    `sources/benchmark-words.txt`, each the rest of a sentence from an
@@ -676,7 +729,11 @@ with the defaults; copies of the sample and `cases.tsv` with the line
   first entry at the start of a sentence is the capitalized word's own row
   (Ich, Es, Haben) or form-of row (`Danke` → Dank), with every rule set. Such
   a row needs no processor step, and a lookup does not know where a sentence
-  starts.
+  starts. In the four texts, 26,711 of the 70,579 sentence-initial words
+  (4.3% of the 616,124 lookups) show such a row first: Ich 9,965, Er 5,823,
+  Es 2,330, Du 1,410, Wenn 864, Aber 608 (audit-hachi-lang-de-b's count).
+  hachi-lang-lead (2026-11-03 09:45Z): this needs the host to say where a
+  sentence starts, which goes into the Hachidori pull request.
 - **Separated particles beyond the scan**: the particle is joined only within
   the scan length a host passes (16 code points by default, as in Yomitan).
   Of the clauses in the four texts that end with the particle of a separated
@@ -691,32 +748,51 @@ with the defaults; copies of the sample and `cases.tsv` with the line
   on matched length, steps and trace length, the one the lookup finds first
   comes first. The rules decide that order (Rule provenance, Homographs)
   except here:
-  - noun readings of a lowercase word whose noun is confirmed through the
-    capitalized spelling's own row (`zehnten` → Zehnt, `zweier` and `dreier`
-    → Zwei and Drei, `oberste` → Oberst, `grade` → Grad, `seins` → Sein,
-    `draus` → Drau, `grosse` → Gros; 34 first results in Tatoeba and 18 in
-    the books, and 6 of the 8 wrong frequent words of Measurements 2). The
-    planned `lookup.confirmedOrder: "references"` orders such ties by the
-    matched text's own references, which name the adjective, numeral or
-    adverb;
-  - `heut` → heuen (to make hay) before heute: the rules reach heuen and its
-    row is confirmed; excluding the stem would also lose `heult` (heulen).
+  - two lowercase words still read as nouns, `spielenden` → Spielende (the
+    end of a game; 2 first results in the four texts) and `knicks` → Knick
+    (1): the stem of the first is a present participle in d, which the
+    split by last letter cannot keep apart from nouns (Stunden → Stunde).
+    The planned `lookup.confirmedOrder: "references"` orders such ties by
+    the matched text's own references;
+  - nominalized infinitives: a capitalized plural or dative such as `Tagen`
+    has a row naming the noun (Tag) and one naming the verb (tagen,
+    `gerund`), and the verb, found first, comes first (`in ein paar Tagen`,
+    `voller Tränen`, `aus persönlichen Gründen`): 834 positions of the four
+    texts show the verb first while the word's rows also name a noun, about
+    480 of them wrong; 19 frequent words with 77,839 tokens (`Tagen`
+    18,366). The dictionary alone gives the same. `confirmedOrder:
+    "references"` would put the noun first (audit-hachi-lang-de-b's counts).
+- **Adjectives spelled like a verb's infinitive**: a declined adjective such
+  as `schönen`, `gleichen`, `langen` or `jungen` is also its own verb row (to
+  embellish, to resemble, to reach), which needs no trace step, while the
+  adjective that the word's form-of rows name needs one: `einen schönen Tag`,
+  `zur gleichen Zeit`, `die jungen Leute` show the verb first. 653 positions
+  of the four texts stand before a noun, 29 of a sample of 30 wrong; 23
+  frequent words are used before a noun in at least 60% of their
+  occurrences (89,913 tokens; `schönen` 12,585, `gleichen` 7,932); the
+  dictionary alone and Yomitan's rules give the same (audit-hachi-lang-de-b's
+  counts). No rule can change it. hachi-lang-lead accepted
+  `lookup.ownEntry: "afterReferences"` for a later framework pull request
+  (2026-11-03 21:50Z, for the same case in Korean), which ranks what the
+  word's own form-of rows name before its own entry.
 - **Homographs of common verbs and adjectives**: where the pack orders a
   homograph by the more frequent reading, the other reading is second:
   `liebe Mama` and `das heiße Bad` show lieben and heißen, and participle
-  adjectives after a determiner show the past of their verb (`die entfernten
-  Dinge` → entfernen, `den Besiegten`); 9 of the 12 wrong positions of the
-  rule-changed sample (Measurements 4). `gehört` shows gehören before hören
-  (in Tatoeba 124 of its 236 occurrences follow an auxiliary, where it is
-  hören's), and `Zwecken` shows Zwecke (tacks) before Zweck, since the plural
-  -en of nouns in -e comes first.
+  adjectives before a noun or after a determiner show the past of their verb
+  (`verletzten Spieler` → verletzen, `eine verheiratete Frau`, `die
+  Bevorzugten`): all 14 wrong positions of the rule-changed sample
+  (Measurements 4), so about 360 in the four texts. `gehört` shows gehören before hören (in Tatoeba 124 of
+  its 236 occurrences follow an auxiliary, where it is hören's), and
+  `Zwecken` shows Zwecke (tacks) before Zweck, since the plural -en of nouns
+  in -e comes first.
 - **Names**: the plural and genitive rules read names the dictionary lacks
   (`Eddie` → Eddi, `Janes` → Jan, `Angeles` → Angel), mostly English names
-  in subtitles and Tatoeba: 67 of the 110 frequent words whose first lemma a
-  rule changes (153,781 tokens, `frequent-judged.tsv`).
+  in subtitles and Tatoeba: 65 of the 110 frequent words whose first result
+  a rule changes (152,140 tokens, `frequent-judged.tsv`).
 - **Nouns the subtitle list writes in small letters**: `legende` (Legende)
   gives the present participle of legen, since the word as written needs
-  no processor step (2,482 tokens).
+  no processor step (2,482 tokens); `haushälterin` and `sternzeit` are wrong
+  with and without rules (1,641 tokens).
 - **Idioms through the listed verb forms**: `Auto fuhr gegen …` → the idiom
   Auto fahren, `… haben könnte.` → haben können (Rule provenance, Stem
   constraints).
