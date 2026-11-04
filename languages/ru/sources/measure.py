@@ -350,6 +350,7 @@ def frequent(a):
         'wrongShareOfReachedTokens': wrong_tokens / reached_tokens if reached_tokens else 0,
         'wrongShareOfListTokens': wrong_tokens / total_tokens,
         'ownLemmaWrong': len(strict_wrong), 'ownLemmaWrongTokens': sum(c for _, c, *_ in strict_wrong),
+        'ownEntryWrong': sum(1 for w, _, f, _ in strict_wrong if f.lower() == w), 'ownEntryWrongTokens': sum(c for w, c, f, _ in strict_wrong if f.lower() == w),
         'ownLemmaWrongShareOfReachedTokens': sum(c for _, c, *_ in strict_wrong) / reached_tokens if reached_tokens else 0,
         'yoHeadwordWords': len(yo_only), 'yoHeadwordTokens': sum(counts[w] for w in yo_only),
         'yoHeadwordWrong': len(yo_wrong), 'yoHeadwordWrongTokens': sum(c for _, c, *_ in yo_wrong),
@@ -458,6 +459,7 @@ def text(a):
                       'ownLemmaWrong': sum(strict.values()) if a.freq else None,
                       'ownLemmaWrongRate': sum(strict.values()) / judged if a.freq and judged else None,
                       'capitalEntryFirst': sum(capitals.values()),
+                      'ownEntryWrong': sum(n for (w, e), n in strict.items() if e.lower() == w) if a.freq else None,
                       'ownLemmaWrongWithCapitals': sum(strict.values()) + capital_strict if a.freq else None,
                       'ownLemmaWrongRateWithCapitals': (sum(strict.values()) + capital_strict) / judged if a.freq and judged else None,
                       'exempt': a.exempt}, ensure_ascii=False))
@@ -491,6 +493,17 @@ def text(a):
     print(f'sample of {a.sample} positions the script does not judge (judge by hand):')
     for word, hover, expr, matched, trace in rng.sample(rest, min(a.sample, len(rest))):
         print(f'  {word}\t{matched}\t{expr}\t{trace}\t{hover[:60]}')
+
+
+def bench_words(a):
+    """A seeded sample of the texts' hovers, one per line: the input of
+    benchmark-lookup and Hachidori's node-lookup (README.md, Measurements 5)."""
+    import random
+    positions = []
+    for path in a.text:
+        positions += hovers(open(path, encoding='utf-8').read())
+    for h in random.Random(a.seed).sample([h for _, h in positions], a.sample):
+        print(h)
 
 
 def compare(a):
@@ -592,6 +605,10 @@ def main():
     ph.add_argument('--sentences', type=int, default=40000)
     ph.add_argument('--seed', type=int, default=20261103)
     ph.add_argument('--show', type=int, default=30)
+    bw = sub.add_parser('bench-words')
+    bw.add_argument('--text', nargs='+', required=True)
+    bw.add_argument('--sample', type=int, default=82)
+    bw.add_argument('--seed', type=int, default=1)
     cp = sub.add_parser('compare')
     cp.add_argument('--dict', required=True)
     cp.add_argument('--batch', required=True)
@@ -600,6 +617,8 @@ def main():
     cp.add_argument('--text', nargs='+', required=True)
     cp.add_argument('--show', type=int, default=30)
     a = p.parse_args()
+    if a.cmd == 'bench-words':
+        return bench_words(a)
     if a.cmd == 'compare':
         compare(a)
     if a.cmd == 'phrases':
