@@ -245,9 +245,9 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
     of these rules) changes the first result of 25 labelled words: 12
     become wrong (другу → другий, дорогу → дорогий, тепла → теплий) and
     none becomes right.
-- **History**: the first commit of this pack, `uk: own rules` (22ff527), has
+- **History**: the first commit of this pack, `uk: own rules` (68c7cc1), has
   the own rules as written before Yomitan's file was read (75 transforms,
-  4,255 rules); the next, `uk: Yomitan's rules and processors` (c7717d2),
+  4,255 rules); the next, `uk: Yomitan's rules and processors` (1276684),
   the port. Later commits changed the own rules after measuring: adjective
   declension also reaching verbs (participles) and nouns; the forms the
   table measurement missed (-ок after й and ь, -ов, -ин, plural-only nouns,
@@ -287,7 +287,8 @@ files are read, not what they hold). At 1fed676, before main's #80 and
 its other language packs, every number was the same; main has since added
 packs, #81's documentation fix and #83's lookup fields, up to 487a6fc, where
 every measurement was run again: the same, file for file, until the pack
-set `formOfNormalizer` (Measurements 1). The pack has no optional processor,
+set `formOfNormalizer` (Measurements 1). Main's next commit, 9c4ccdf, adds
+only the Albanian pack. The pack has no optional processor,
 transform or variant pass, so each file gives the same numbers with every
 option on and with the pack's defaults (`corpus.tsv` + `gaps.tsv` and
 `cases.tsv` were also run with a `# options: default` line added:
