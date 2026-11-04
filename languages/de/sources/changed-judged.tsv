@@ -1,0 +1,84 @@
+# Hand-judged rule-changed first results of README.md (Measurements, real text): 80 of the 2,079 positions where the first result with a definition
+# for the hovered word is another lemma with transforms.json than with no transforms, drawn by sources/changed-sample.py with seed 4.
+# Judged by the pack author (Claude Opus 5.5) by reading each sentence.
+# n	text	word	no rules	transforms.json	trace	context	verdict	why it is wrong
+1	tatoeba	verdunstete	verdunstet	verdunsten	past	verdunstete der Tau.	right	
+2	tatoeba	muß	Muss	müssen	present-modal	muß laut schreien, sonst versteht er uns nicht.	right	
+3	tatoeba	verletzten	verletzt	verletzen	past-wir	verletzten Spieler aus.	wrong	verletzten Spieler: the adjective verletzt
+4	pg22367	ererbten	ererbt	ererben	past-wir	ererbten Möbeln gemütlich ausgestattete Zimmer in eine Höhle verwandeln zu lassen, in der er dann f	wrong	mit ererbten Möbeln: the adjective ererbt
+5	pg5323	liebe	lieb	lieben	present-ich	liebe.	right	
+6	tatoeba	veröffentlichte	veröffentlicht	veröffentlichen	past	veröffentlichte er in den Sechziger- und Siebzigerjahren.	right	
+7	tatoeba	verbreitete	verbreitet	verbreiten	past	verbreitete sich in der Menge.	right	
+8	tatoeba	erforschte	erforscht	erforschen	past	erforschte die Umgebung des Südpols.	right	
+9	tatoeba	hast	hasten	haben	present-du	hast du Recht.	right	
+10	pg5323	heller	helle	hell	declined	heller Sonnenschein auf die mittagsstille Dorfstraße, während nach der Park- und Gartenseite hin ei	right	
+11	tatoeba	hast	hasten	haben	present-du	hast du bis jetzt ausgeübt?	right	
+12	tatoeba	hast	hasten	haben	present-du	hast die Freiheit, dahin zu reisen, wo es dir gefällt.	right	
+13	tatoeba	versteckte	versteckt	verstecken	past	versteckte sich hinter der Tür.	right	
+14	pg69327	beteiligte	beteiligt	beteiligen	past	beteiligte, sah nur flüchtig auf das Papier, überlas gar nicht, was dort stand, denn was dem Prokur	right	
+15	tatoeba	verkaufte	verkauft	verkaufen	past	verkaufte das Patent an eine Firma.	right	
+16	tatoeba	verletzte	verletzt	verletzen	past	verletzte sich beim Rugby.	right	
+17	tatoeba	entfernten	entfernt	entfernen	past-wir	entfernten den Zünder, bevor die Bombe explodieren konnte.	right	
+18	tatoeba	hast	hasten	haben	present-du	hast absolut nichts zu befürchten.	right	
+19	tatoeba	hast	hasten	haben	present-du	hast du besucht?	right	
+20	tatoeba	liebe	lieb	lieben	present-ich	liebe sie nicht mehr.	right	
+21	tatoeba	hast	hasten	haben	present-du	hast.	right	
+22	tatoeba	entdeckte	entdeckt	entdecken	past	entdeckte diese Inseln.	right	
+23	tatoeba	erklärte	erklärt	erklären	past	erklärte mir, wie die Maschine zu bedienen ist.	right	
+24	tatoeba	verbesserte	verbessert	verbessern	past	verbesserte sich letztes Jahr, da bei konstantem Import der Export zulegte.	right	
+25	tatoeba	erlangten	erlangt	erlangen	past-wir	erlangten wir einen Kompromiss.	right	
+26	tatoeba	heiße	heiß	heißen	present-ich	heiße Sonne buk den Grund trocken.	wrong	heiße Sonne: the adjective heiß
+27	pg69327	muß	Muss	müssen	present-modal	muß ich sehn, daß Sie trotz allem nicht genügend Vertrauen zu mir haben.	right	
+28	tatoeba	bedrohte	bedroht	bedrohen	past	bedrohte, erlebte sie, wie eine Generation sich zur Größe erhob und eine Demokratie gerettet wurde.	right	
+29	pg69327	verheiratete	verheiratet	verheiraten	past	verheiratete Frau sind.	wrong	eine verheiratete Frau: the adjective verheiratet
+30	pg22367	erlangten	erlangt	erlangen	past-wir	erlangten Aufträge zu überschreiben, sitzen diese Herren erst beim Frühstück.	wrong	die erlangten Aufträge: the adjective erlangt
+31	pg5323	liebe	lieb	lieben	present-ich	liebe Effi.«	wrong	liebe Effi: the adjective lieb
+32	tatoeba	liebe	lieb	lieben	present-ich	liebe es, auf dem Wasser zu treiben.	right	
+33	tatoeba	ertränkt	ertrinken	ertränken	present-er	ertränkt Bach ein Kätzchen.	right	
+34	tatoeba	entfernten	entfernt	entfernen	past-wir	entfernten die alten Möbel.	right	
+35	pg5323	Bevorzugten	bevorzugt	bevorzugen	past-wir	Bevorzugten, die für derlei Dinge durchaus kein Organ haben, und so kam denn Vetter Briest in die n	wrong	die Bevorzugten: the adjective bevorzugt
+36	tatoeba	liebe	lieb	lieben	present-ich	liebe es, in der Nacht spazieren zu gehen.	right	
+37	tatoeba	komprimierte	komprimiert	komprimieren	past	komprimierte Datei.	wrong	komprimierte Datei: the adjective komprimiert
+38	tatoeba	lasse	lass	lassen	present-ich	lasse mich nicht gerne einkaufen schicken.	right	
+39	tatoeba	hast	hasten	haben	present-du	hast du mir ja nie gesagt!	right	
+40	tatoeba	hast	hasten	haben	present-du	hast du es.	right	
+41	tatoeba	hast	hasten	haben	present-du	hast.	right	
+42	tatoeba	überraschte	überrascht	überraschen	past	überraschte mich.	right	
+43	pg5323	muß	Muss	müssen	present-modal	muß kalt sein.	right	
+44	pg5323	hast	hasten	haben	present-du	hast mir unterwegs allerlei Sonderbares von Stadt und Land erzählt, aber wie wir selber hier leben 	right	
+45	tatoeba	hast	hasten	haben	present-du	hast Schmach gewählt und wirst Krieg bekommen.	right	
+46	pg5323	liebe	lieb	lieben	present-ich	liebe Johanna, es war entsetzlich.	wrong	liebe Johanna: the adjective lieb
+47	pg5323	bewegte	bewegt	bewegen	past	bewegte Meer goß die schon halb winterliche Novembersonne ihr fahles Licht aus, und die Brandung gi	wrong	das bewegte Meer: the adjective bewegt
+48	tatoeba	hast	hasten	haben	present-du	hast eine große Laufmasche.	right	
+49	tatoeba	bewunderte	bewundert	bewundern	past	bewunderte.	right	
+50	tatoeba	wette	wett	wetten	present-ich	wette, dass wir heute einen Test haben werden.	right	
+51	tatoeba	hast	hasten	haben	present-du	hast?	right	
+52	tatoeba	verbesserte	verbessert	verbessern	past	verbesserte sich zunehmend.	right	
+53	tatoeba	hast	hasten	haben	present-du	hast du zum Frühstück gegessen?	right	
+54	tatoeba	hast	hasten	haben	present-du	hast.	right	
+55	pg5323	liebe	lieb	lieben	present-ich	liebe Effi will immer gern was Neues hören; sie langweilt sich in unserm guten Kessin.	wrong	unsere liebe Effi: the adjective lieb
+56	tatoeba	entwickelte	entwickelt	entwickeln	past	entwickelte die Evolutionstheorie.	right	
+57	pg5323	muß	Muss	müssen	present-modal	muß ja jeder zärtlich sein.«	right	
+58	pg69327	leide	leid	leiden	present-ich	leide geradezu darunter.	right	
+59	tatoeba	überholte	überholt	überholen	past	überholte mich.	right	
+60	tatoeba	hast	hasten	haben	present-du	hast, sag nichts!	right	
+61	pg5323	liebe	lieb	lieben	present-ich	liebe Hertha.	wrong	liebe Hertha: the adjective lieb
+62	tatoeba	liebe	lieb	lieben	present-ich	liebe meinen gelben Pullover.	right	
+63	pg5323	überzeugte	überzeugt	überzeugen	past	überzeugte ich mich, als er vor drei Tagen mit Innstetten allein war und ich, von meinem Zimmer her	right	
+64	tatoeba	hast	hasten	haben	present-du	hast.	right	
+65	tatoeba	Vereinten	vereint	vereinen	past-wir	Vereinten Königreich.	wrong	Vereinten Königreich: the adjective vereint
+66	pg69327	verabschiedete	verabschiedet	verabschieden	past	verabschiedete.	right	
+67	pg5323	traute	traut	trauen	past	traute, waren geladen und vor allem viele Kapitäne mit ihren Frauen und Töchtern.	right	
+68	tatoeba	hast	hasten	haben	present-du	hast. Glückwunsch!	right	
+69	tatoeba	hast	hasten	haben	present-du	hast.	right	
+70	tatoeba	hast	hasten	haben	present-du	hast.	right	
+71	tatoeba	hast	hasten	haben	present-du	hast du angefangen, Klavier zu spielen?“ „Weil ich Musiklehrer werden möchte.“	right	
+72	tatoeba	liebe	lieb	lieben	present-ich	liebe Kuchen.	right	
+73	tatoeba	leide	leid	leiden	present-ich	leide.	right	
+74	tatoeba	bewegte	bewegt	bewegen	past	bewegte mich sehr.	right	
+75	tatoeba	überraschten	überrascht	überraschen	past-wir	überraschten meine Cousine mit einer Geburtstagsfeier.	right	
+76	tatoeba	erwiderte	erwidert	erwidern	past	erwiderte der Ladenbesitzer, "das meine ich schon ernst. Sie haben doch das Preisschild gesehen."	right	
+77	pg69327	muß	Muss	müssen	present-modal	muß ich also eingestehn, daß die Untersuchungskommission drei Bankbeamte mitgebracht hat, von denen	right	
+78	tatoeba	bewegte	bewegt	bewegen	past	bewegte, und Kepler nannte sie Satelliten.	right	
+79	tatoeba	lasse	lass	lassen	present-ich	lasse mein Leben doch nicht von einer Arbeitshypothese bestimmen!	right	
+80	pg5323	liebe	lieb	lieben	present-ich	liebe Effi.	wrong	liebe Effi: the adjective lieb

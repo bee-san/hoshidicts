@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts de test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny German dictionary for languages/de/tests/lookup.tsv, written for the pack. All, Lasso, Sage, Schloss and aufwarten stand for the words a wrong reading would reach; the form-of rows are written as wiktionary-to-yomitan writes them.",
+  "sourceLanguage": "de",
+  "targetLanguage": "en"
+}

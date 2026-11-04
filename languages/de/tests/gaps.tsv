@@ -1,0 +1,45 @@
+# Known gaps: run by the conformance test and counted, not enforced.
+# Rows whose category has no ";" are not UniMorph's: the row yomitan-separated prefix is the row of tests/yomitan.tsv (Yomitan's test, GPL-3.0-or-later,
+# Copyright (C) 2023-2026 Yomitan Authors, 2020-2022 Yomichan Authors) that only Yomitan's separated-prefix rule passes: it writes the verb and its particle
+# as two words, which only a dictionary's multi-word rows read; this pack's rule needs the end of the clause and joins them (räum den Tisch auf. -> aufräumen,
+# tests/cases.tsv). sources/build-final.mjs moves it here.
+# Source: UniMorph deu (https://github.com/unimorph/deu/blob/d226d2112d3490d8f04ece10d4538123d4297a39/deu, sha256 8bc98487e3caf861), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary.
+# 1800 rows sampled with seed 1 by sources/build-corpus.mjs (50 adjective, superlative, 70 adjective, comparative, 180 adjective, declined, 100 noun, dative plural, 220 noun, plural, 120 noun, genitive, 30 noun, other singular, 150 verb, separated, 160 verb, participle, 60 verb, zu-infinitive, 80 verb, imperative, 160 verb, subjunctive, 200 verb, past, 220 verb, present); a separated particle's row ends with a full stop (rufe an.), a superlative's row is the adjective without am (schönsten). The rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+yomitan-separated prefix	1	räum den Tisch auf	räum auf	v	separated prefix
+ADJ;SPRL	1	krankesten	krank	adj	*
+ADJ;DAT;MASC;SG	1	schwuligem	schwulstig	adj	*
+N;DAT;MASC;PL	1	Milliardenmärkten	Millardenmarkt	n	*
+N;NOM;NEUT;PL	1	Bestimmungwörter	Bestimmungswort	n	*
+N;NOM;NEUT;PL	1	Sternensysteme	Sternsystem	n	*
+N;NOM;NEUT;PL	1	Asse	As	n	*
+V;SBJV;SG;1;PST	1	flösse ab.	abfliessen	v	*
+V;IND;SG;2;PRS	1	spitzst zu.	zuspitzen	v	*
+V;IND;SG;2;PRS	1	stufst höher.	höherstufen	v	*
+V;IND;PL;2;PST	1	loadetet up.	uploaden	v	*
+V;IND;SG;2;PST	1	stapeltest tief.	tiefstapeln	v	*
+V.PTCP;PST	1	erschossen	erschiessen	v	*
+V;IMP;SG;2	1	ettapiere	etappieren	v	*
+V;SBJV;PL;2;PST	1	ermunteretet	ermuntern	v	*
+V;SBJV;SG;1;PST	1	flisse	fleißen	v	*
+V;SBJV;SG;1;PST	1	bisse	beyßen	v	*
+V;IND;SG;1;PST	1	gerieth	gerathen	v	*
+V;IND;SG;2;PST	1	riehst	reihen	v	*
+V;IND;SG;1;PST	1	muhl	mahlen	v	*
+V;IND;SG;2;PST	1	erblichst	erbleichen	v	*
+V;IND;SG;1;PST	1	schloff	schliefen	v	*
+V;IND;SG;2;PST	1	erkorst	erküren	v	*
+V;IND;SG;2;PST	1	flisst	fleißen	v	*
+V;IND;PL;2;PST	1	muhlt	mahlen	v	*
+V;IND;SG;2;PST	1	splisst	spleißen	v	*
+V;IND;SG;1;PST	1	erlosch	erleschen	v	*
+V;IND;SG;2;PST	1	umwarbtest	umwerben	v	*
+V;IND;PL;2;PST	1	kort	küren	v	*
+V;IND;SG;2;PST	1	beflisst	befleißen	v	*
+V;IND;SG;1;PST	1	vermaß	vermeßen	v	*
+V;IND;PL;1;PST	1	schraken	schrecken	v	*
+V;IND;SG;1;PST	1	schrak	schrecken	v	*
+V;IND;SG;3;PRS	1	räth	rathen	v	*
+V;IND;SG;3;PRS	1	empfäht	empfahen	v	*
+V;IND;SG;2;PRS	1	frägst	fragen	v	*
+V;IND;SG;2;PRS	1	demoliertst	demolieren	v	*

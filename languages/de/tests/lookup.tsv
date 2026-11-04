@@ -1,0 +1,98 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. The pack has no optional feature.
+# category	valid	text	expression	matched
+sentence start	1	Alles klar.	alles	Alles
+sentence start	1	Lassen Sie das.	lassen	Lassen
+sentence start	1	Sagen Sie mir, wann.	sagen	Sagen
+sentence start	0	Alles klar.	All	Alles
+sentence start	0	Lassen Sie das.	Lasso	Lassen
+nouns	1	Häusern	Haus	Häusern
+nouns	1	Kindern gegeben.	Kind	Kindern
+nouns	1	Busse fahren hier.	Bus	Busse
+nouns	1	Häuser stehen leer.	Haus	Häuser
+separated	1	kommt morgen an.	ankommen	kommt morgen an.
+separated	1	Hör auf!	aufhören	Hör auf!
+separated	1	sieht fern, wenn	fernsehen	sieht fern,
+separated	1	wartet auf den Bus.	warten	wartet
+separated	0	wartet auf den Bus.	aufwarten	wartet auf
+subordinate clause	1	ankommt, ist es spät.	ankommen	ankommt
+verbs	1	ging nach Hause.	gehen	ging
+verbs	1	gefällt mir.	gefallen	gefällt
+old spellings	1	schloß die Tür.	schließen	schloß
+old spellings	1	daß er kommt.	dass	daß
+old spellings	1	Strasse	Straße	Strasse
+contractions	1	zum Bahnhof	zu	zum
+derivations	1	Erreichung des Ziels	erreichen	Erreichung
+derivations	1	unmöglich	möglich	unmöglich
+compounds	1	Hausaufgaben	Haus	Haus
+capitals	1	FRAU GRUBACH	Frau	FRAU
+capitals	1	KÜNDIGUNG DES ADVOKATEN	Kündigung	KÜNDIGUNG
+separated	0	der Hand hin.	hindern	der Hand hin.
+adjectives	1	höhern Beamten	hoch	höhern
+separated	0	lächelnd an.	anlächeln	lächelnd an.
+ties	1	gute Laune	gut	gute
+ties	1	letzten Sommer	letzte	letzten
+ties	1	gehört das?	gehören	gehört
+ties	1	schöne Frau	schön	schöne
+ties	1	dunkle Nacht	dunkel	dunkle
+ties	1	berühmte Stadt	berühmt	berühmte
+ties	1	bessere Zeiten	besser	bessere
+ties	1	liebe dich	lieben	liebe
+ties	1	kostet viel	kosten	kostet
+ties	1	gewartet.	warten	gewartet
+ties	1	zugehört.	zuhören	zugehört
+ties	1	schaltet das Licht	schalten	schaltet
+ties	1	meine Mutter	mein	meine
+ties	1	gelobt.	loben	gelobt
+ties	1	schalt doch	schalten	schalt
+ties	1	verfluchte Mist	verflucht	verfluchte
+ties	1	Stunden später	Stunde	Stunden
+ties	1	Reisen bilden.	Reise	Reisen
+ties	1	bösen Wolf	böse	bösen
+ties	1	koste, was es wolle.	kosten	koste
+ties	1	sehn wir uns?	sehen	sehn
+ties	1	heut ist es kalt.	heute	heut
+ties	1	draus wird nichts.	daraus	draus
+ties	1	gelangt zum Ziel.	gelangen	gelangt
+ties	1	drängt mich.	drängen	drängt
+ties	1	getraut.	trauen	getraut
+ties	1	geduldet.	dulden	geduldet
+ties	1	heiße Anna.	heißen	heiße
+ties	1	lasse es sein.	lassen	lasse
+ties	1	leide sehr.	leiden	leide
+ties	1	schicke dir Blumen.	schicken	schicke
+ties	1	wette mit dir.	wetten	wette
+ties	1	bereite Tee.	bereiten	bereite
+ties	1	bekannte Gesichter	bekannt	bekannte
+ties	1	bestimmte Dinge	bestimmt	bestimmte
+ties	1	bewaffnete Männer	bewaffnet	bewaffnete
+ties	1	doppelte Arbeit	doppelt	doppelte
+ties	1	komplizierte Frage	kompliziert	komplizierte
+ties	1	rechte Hand	recht	rechte
+ties	1	verdammte Tür	verdammt	verdammte
+ties	1	verehrte Gäste	verehrt	verehrte
+ties	1	verfickte Kiste	verfickt	verfickte
+ties	1	vereinigten Staaten	vereinigt	vereinigten
+ties	1	verrückte Idee	verrückt	verrückte
+ties	1	geleitet.	leiten	geleitet
+ties	1	angehört.	anhören	angehört
+ties	1	schaltest das Licht	schalten	schaltest
+ties	1	brauche Hilfe.	brauchen	brauche
+ties	1	tränkt die Blumen.	tränken	tränkt
+verbs	1	schlief lange.	schlafen	schlief
+verbs	1	kannte ihn.	kennen	kannte
+verbs	1	geschrieben.	schreiben	geschrieben
+verbs	1	verlor alles.	verlieren	verlor
+nouns	1	Toms Hund	Tom	Toms
+old spelling	1	daß er kommt.	dass	daß
+ties	1	gelangst du nach Hause?	gelangen	gelangst
+ties	1	drängst mich.	drängen	drängst
+ties	1	grade eben.	gerade	grade
+ties	1	oberste Etage	oberer	oberste
+ties	1	obersten Stock	oberer	obersten
+ties	1	zehnten Klasse	zehnte	zehnten
+ties	1	zweier Herren	zwei	zweier
+ties	1	dreier Kinder	drei	dreier
+ties	1	zweien.	zwei	zweien
+ties	1	dreien.	drei	dreien
+ties	1	grosse Haus	groß	grosse
+ties	1	seins.	seiner	seins

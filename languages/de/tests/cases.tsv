@@ -1,0 +1,333 @@
+# Hand-written for this pack (GPL-3.0-or-later): forms of frequent words, constructions the UniMorph sample lacks, and negatives.
+# The pack has no optional processor, transform or variant pass, so every row runs as a lookup does by default.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+present	1	mache	machen	v	present-ich
+present	1	machst	machen	v	present-du
+present	1	macht	machen	v	present-er
+present	1	arbeitest	arbeiten	v	present-du
+present	1	arbeitet	arbeiten	v	present-er
+present	1	sammle	sammeln	v	present-ich
+present	1	sammelst	sammeln	v	present-du
+present	1	wandere	wandern	v	present-ich
+present	1	wandert	wandern	v	present-er
+present	1	reist	reisen	v	present-er
+present	1	heißt	heißen	v	present-er
+present	1	tanzt	tanzen	v	present-er
+present	1	kniet	knien	v	present-er
+present	1	gibst	geben	v	present-du
+present	1	gibt	geben	v	present-er
+present	1	nimmt	nehmen	v	present-er
+present	1	fährt	fahren	v	present-er
+present	1	hältst	halten	v	present-du
+present	1	hält	halten	v	present-er
+present	1	liest	lesen	v	present-du-er
+present	1	isst	essen	v	present-du-er
+present	1	lässt	lassen	v	present-du-er
+present	1	wäschst	waschen	v	present-du
+present	1	läuft	laufen	v	present-er
+present	1	stößt	stoßen	v	present-du-er
+present	1	tust	tun	v	present-du
+present	1	tut	tun	v	present-er
+present	1	hast	haben	v	present-du
+present	1	hat	haben	v	present-er
+present	1	wirst	werden	v	present-du
+present	1	wird	werden	v	present-er
+present	1	bin	sein	v	present-ich
+present	1	bist	sein	v	present-du
+present	1	ist	sein	v	present-er
+present	1	sind	sein	v	present-wir
+present	1	seid	sein	v	present-er
+present	1	kann	können	v	present-modal
+present	1	kannst	können	v	present-du
+present	1	muss	müssen	v	present-modal
+present	1	darf	dürfen	v	present-modal
+present	1	mag	mögen	v	present-modal
+present	1	will	wollen	v	present-modal
+present	1	soll	sollen	v	present-modal
+present	1	weiß	wissen	v	present-modal
+present	1	weißt	wissen	v	present-du
+imperative	1	mach	machen	v	imperative
+imperative	1	komm	kommen	v	imperative
+imperative	1	gib	geben	v	imperative
+imperative	1	nimm	nehmen	v	imperative
+imperative	1	sieh	sehen	v	imperative
+imperative	1	lies	lesen	v	imperative
+imperative	1	iss	essen	v	imperative
+imperative	1	hilf	helfen	v	imperative
+imperative	1	sei	sein	v	imperative
+imperative	1	tu	tun	v	imperative
+imperative	1	sammel	sammeln	v	imperative
+imperative	1	wander	wandern	v	imperative
+imperative	1	freu	freuen	v	imperative
+imperative	1	schließ	schließen	v	imperative
+past	1	machte	machen	v	past
+past	1	machtest	machen	v	past-du
+past	1	machten	machen	v	past-wir
+past	1	machtet	machen	v	past-ihr
+past	1	arbeitete	arbeiten	v	past
+past	1	wanderte	wandern	v	past
+past	1	sammelte	sammeln	v	past
+past	1	ging	gehen	v	past
+past	1	gingst	gehen	v	past-du
+past	1	gingen	gehen	v	past-wir
+past	1	kam	kommen	v	past
+past	1	fand	finden	v	past
+past	1	fandest	finden	v	past-du
+past	1	las	lesen	v	past
+past	1	lasest	lesen	v	past-du
+past	1	saßt	sitzen	v	*
+past	1	schrien	schreien	v	past-wir
+past	1	war	sein	v	past
+past	1	warst	sein	v	past-du
+past	1	waren	sein	v	past-wir
+past	1	hatte	haben	v	past
+past	1	hattest	haben	v	past-du
+past	1	wurde	werden	v	past
+past	1	brachte	bringen	v	past
+past	1	dachte	denken	v	past
+past	1	wusste	wissen	v	past
+past	1	konnte	können	v	past
+past	1	musste	müssen	v	past
+past	1	tat	tun	v	past
+past	1	verstand	verstehen	v	past
+past	1	bekam	bekommen	v	past
+past	1	kniete	knien	v	past
+subjunctive	1	ginge	gehen	v	subjunctive-2
+subjunctive	1	käme	kommen	v	subjunctive-2
+subjunctive	1	wäre	sein	v	subjunctive-2
+subjunctive	1	wärst	sein	v	subjunctive-2-du
+subjunctive	1	wären	sein	v	subjunctive-2-wir
+subjunctive	1	hätte	haben	v	subjunctive-2
+subjunctive	1	hättest	haben	v	subjunctive-2-du
+subjunctive	1	würde	werden	v	subjunctive-2
+subjunctive	1	würdest	werden	v	subjunctive-2-du
+subjunctive	1	könnte	können	v	subjunctive-2
+subjunctive	1	müsste	müssen	v	subjunctive-2
+subjunctive	1	möchte	mögen	v	subjunctive-2
+subjunctive	1	gäbe	geben	v	subjunctive-2
+subjunctive	1	täte	tun	v	subjunctive-2
+subjunctive	1	brächte	bringen	v	subjunctive-2
+subjunctive	1	machest	machen	v	subjunctive-1
+subjunctive	1	sei	sein	v	subjunctive-1
+subjunctive	1	seien	sein	v	subjunctive-1
+subjunctive	1	wandlest	wandeln	v	subjunctive-1
+participles	1	gemacht	machen	v	past-participle
+participles	1	gearbeitet	arbeiten	v	past-participle
+participles	1	gesammelt	sammeln	v	past-participle
+participles	1	gewandert	wandern	v	past-participle
+participles	1	eingekauft	einkaufen	v	past-participle
+participles	1	kennengelernt	kennenlernen	v	past-participle
+participles	1	gegengezeichnet	gegenzeichnen	v	past-participle
+participles	1	gekniet	knien	v	past-participle
+participles	1	gegangen	gehen	v	past-participle
+participles	1	gekommen	kommen	v	past-participle
+participles	1	angefangen	anfangen	v	past-participle
+participles	1	aufgestanden	aufstehen	v	past-participle
+participles	1	verstanden	verstehen	v	past-participle
+participles	1	missverstanden	missverstehen	v	past-participle
+participles	1	unterschrieben	unterschreiben	v	past-participle
+participles	1	anerkannt	anerkennen	v	past-participle
+participles	1	gewesen	sein	v	past-participle
+participles	1	getan	tun	v	past-participle
+participles	1	gehabt	haben	v	past-participle
+participles	1	geworden	werden	v	past-participle
+participles	1	gebracht	bringen	v	past-participle
+participles	1	gewusst	wissen	v	past-participle
+participles	1	gekochten	kochen	v	past-participle|declined
+participles	1	gesprochene	sprechen	v	past-participle|declined
+participles	1	gestillet	stillen	v	past participle
+participles	1	machend	machen	v	present-participle
+participles	1	lächelnd	lächeln	v	present-participle
+participles	1	lächelnde	lächeln	v	present-participle|declined
+participles	1	singenden	singen	v	present-participle|declined
+zu-infinitive	1	anzurufen	anrufen	v	zu-infinitive
+zu-infinitive	1	aufzustehen	aufstehen	v	zu-infinitive
+zu-infinitive	1	kennenzulernen	kennenlernen	v	zu-infinitive
+zu-infinitive	1	einzukaufen	einkaufen	v	zu-infinitive
+zu-infinitive	1	mitzunehmen	mitnehmen	v	zu-infinitive
+zu-infinitive	1	zurückzukommen	zurückkommen	v	zu-infinitive
+zu-infinitive	1	stehenzubleiben	stehenbleiben	v	zu-infinitive
+separated	1	kommt morgen an.	ankommen	v	present-er|separated-prefix
+separated	1	rufe dich morgen an.	anrufen	v	present-ich|separated-prefix
+separated	1	Hör auf!	aufhören	v	imperative|separated-prefix
+separated	1	Kommst du mit?	mitkommen	v	present-du|separated-prefix
+separated	1	sieht gut aus.	aussehen	v	present-er|separated-prefix
+separated	1	stand auf und	aufstehen	v	past|separated-prefix
+separated	1	fängt um acht an,	anfangen	v	present-er|separated-prefix
+separated	1	räum den Tisch auf.	aufräumen	v	imperative|separated-prefix
+separated	1	fangen wir an?	anfangen	v	present-wir|separated-prefix
+separated	1	sammeln es ein;	einsammeln	v	present-wir|separated-prefix
+separated	1	kann nicht mit.	mitkönnen	v	present-modal|separated-prefix
+separated	1	kam gestern zurück.	zurückkommen	v	past|separated-prefix
+separated	1	geht weiter oder	weitergehen	v	present-er|separated-prefix
+separated	1	hielt ihn fest:	festhalten	v	past|separated-prefix
+separated	1	sieht fern…	fernsehen	v	present-er|separated-prefix
+separated	1	lernte ihn kennen.	kennenlernen	v	past|separated-prefix
+separated	1	blieb stehen.	stehenbleiben	v	past|separated-prefix
+separated	1	ging spazieren.	spazierengehen	v	past|separated-prefix
+separated	1	macht ihm etwas weis.	weismachen	v	present-er|separated-prefix
+separated	1	schaut sich nach einem Hotel um.	umschauen	v	present-er|separated-prefix
+nouns	1	Häuser	Haus	n	plural
+nouns	1	Häusern	Haus	n	plural|dative-plural
+nouns	1	Kinder	Kind	n	plural
+nouns	1	Bilder	Bild	n	plural
+nouns	1	Kindern	Kind	n	plural|dative-plural
+nouns	1	Leuten	Leute	n	dative-plural
+nouns	1	Bäume	Baum	n	plural
+nouns	1	Mütter	Mutter	n	plural
+nouns	1	Äpfel	Apfel	n	plural
+nouns	1	Väter	Vater	n	plural
+nouns	1	Töchter	Tochter	n	plural
+nouns	1	Brüder	Bruder	n	plural
+nouns	1	Vögel	Vogel	n	plural
+nouns	1	Mäuse	Maus	n	plural
+nouns	1	Äpfeln	Apfel	n	plural|dative-plural
+nouns	1	Gärten	Garten	n	plural
+nouns	1	Öfen	Ofen	n	plural
+nouns	1	Blumen	Blume	n	plural
+nouns	1	Frauen	Frau	n	plural
+nouns	1	Lehrerinnen	Lehrerin	n	plural
+nouns	1	Autos	Auto	n	plural
+nouns	1	Hotels	Hotel	n	plural-s
+nouns	1	Ergebnisse	Ergebnis	n	plural
+nouns	1	Busse	Bus	n	plural
+nouns	1	Kürbisse	Kürbis	n	plural
+nouns	1	Museen	Museum	n	plural
+nouns	1	Themen	Thema	n	plural
+nouns	1	Zentren	Zentrum	n	plural
+nouns	1	Daten	Datum	n	plural
+nouns	1	Rhythmen	Rhythmus	n	plural
+nouns	1	Zyklen	Zyklus	n	plural
+nouns	1	Mythen	Mythos	n	plural
+nouns	1	Kosmen	Kosmos	n	plural
+nouns	1	Viren	Virus	n	plural
+nouns	1	Risiken	Risiko	n	plural
+nouns	1	Krisen	Krise	n	plural
+nouns	1	Materialien	Material	n	plural
+nouns	1	Prinzipien	Prinzip	n	plural
+nouns	1	Neubauten	Neubau	n	plural
+nouns	1	Hörsäle	Hörsaal	n	plural
+nouns	1	häuser	Haus	n	plural
+nouns	1	Vaters	Vater	*	genitive
+nouns	1	Tages	Tag	*	genitive
+nouns	1	Hauses	Haus	*	genitive
+nouns	1	Namens	Name	*	genitive
+nouns	1	Herzens	Herz	*	genitive
+nouns	1	Peters	Peter	*	genitive
+nouns	1	Hans'	Hans	*	genitive
+nouns	1	Fußes	Fuß	*	genitive
+adjectives	1	schöne	schön	adj	declined
+adjectives	1	schönen	schön	adj	declined
+adjectives	1	schöner	schön	adj	*
+adjectives	1	schönes	schön	adj	declined
+adjectives	1	schönem	schön	adj	declined
+adjectives	1	dunkle	dunkel	adj	declined
+adjectives	1	dunklen	dunkel	adj	declined
+adjectives	1	teure	teuer	adj	declined
+adjectives	1	teuren	teuer	adj	declined
+adjectives	1	hohe	hoch	adj	declined
+adjectives	1	hohen	hoch	adj	declined
+adjectives	1	leisen	leise	adj	declined
+adjectives	1	älter	alt	adj	comparative
+adjectives	1	älteren	alt	adj	comparative|declined
+adjectives	1	größer	groß	adj	comparative
+adjectives	1	besser	gut	adj	comparative
+adjectives	1	mehr	viel	adj	comparative
+adjectives	1	höher	hoch	adj	comparative
+adjectives	1	dunkler	dunkel	adj	comparative
+adjectives	1	teurer	teuer	adj	*
+adjectives	1	schönste	schön	adj	superlative|declined
+adjectives	1	schönsten	schön	adj	superlative|declined
+adjectives	1	älteste	alt	adj	superlative|declined
+adjectives	1	größten	groß	adj	superlative|declined
+adjectives	1	beste	gut	adj	superlative|declined
+adjectives	1	meisten	viel	adj	superlative|declined
+adjectives	1	höchste	hoch	adj	superlative|declined
+adjectives	1	nächste	nah	adj	superlative|declined
+adjectives	1	heißeste	heiß	adj	superlative|declined
+adjectives	1	höhern	hoch	adj	comparative|declined
+adjectives	1	ältern	alt	adj	comparative|declined
+adjectives	1	andern	ander	adj	declined
+adjectives	1	zehnten	zehnte	adj	declined
+contractions	1	zum	zu	*	contraction
+contractions	1	zur	zu	*	contraction
+contractions	1	im	in	*	contraction
+contractions	1	ins	in	*	contraction
+contractions	1	am	an	*	contraction
+contractions	1	beim	bei	*	contraction
+contractions	1	vom	von	*	contraction
+contractions	1	aufs	auf	*	contraction
+contractions	1	übers	über	*	contraction
+clitics	1	gibt's	geben	v	present-er|clitic-es
+clitics	1	macht's	machen	v	present-er|clitic-es
+clitics	1	geht’s	gehen	v	present-er|clitic-es
+derivations	1	Reinigung	reinigen	v	nominalization
+derivations	1	Erreichung	erreichen	v	nominalization
+derivations	1	essbar	essen	v	-bar
+derivations	1	unmöglich	möglich	adj	negative
+derivations	1	Kindheit	Kind	n	-heit
+derivations	1	Freundlichkeit	freundlich	adj	-heit
+derivations	1	unzerbrechlich	zerbrechlich	adj	negative
+old spellings	1	daß	dass	*	
+old spellings	1	muß	müssen	v	present-modal
+old spellings	1	mußte	müssen	v	past
+old spellings	1	wußte	wissen	v	past
+old spellings	1	gewußt	wissen	v	past-participle
+old spellings	1	läßt	lassen	v	present-du-er
+old spellings	1	schloß	schließen	v	past
+old spellings	1	ißt	essen	v	present-du-er
+old spellings	1	Strasse	Straße	*	
+old spellings	1	heisst	heißen	v	present-er
+negatives	0	wartet auf den Bus.	aufwarten	*	*
+negatives	0	wartet auf	aufwarten	*	*
+negatives	0	geht auf die Straße.	aufgehen	*	*
+negatives	0	fährt nach Berlin.	nachfahren	*	*
+negatives	0	ging nach Hause	nachgehen	*	*
+negatives	0	sagte der Auf	aufsagen	*	*
+negatives	0	sagte der Auf	sagte auf	*	*
+negatives	0	wartet lange auf	wartet auf	*	*
+negatives	0	lächelnd an.	anlächeln	*	*
+negatives	0	das macht	das machen	*	*
+negatives	0	die Häuser	die Haus	*	*
+negatives	0	sehr schöne	sehr schön	*	*
+negatives	0	je	jen	*	*
+negatives	0	Lassen	Lasso	*	*
+negatives	0	Jeden	Jedis	*	*
+negatives	0	Photographien	Photograph	*	*
+negatives	0	ass	As	*	*
+negatives	0	weisst	weisen	*	*
+negatives	0	heißt	heiß	*	*
+negatives	0	schloß	schloßen	*	*
+negatives	0	bauten	Bau	*	*
+negatives	0	lasst	lesen	*	*
+negatives	0	dazu ist	da ist	*	*
+negatives	0	einzu	ein	*	*
+negatives	0	schießt	scheißen	*	*
+negatives	0	schiebt	schauen	*	*
+negatives	0	aufschiebe	aufschauen	*	*
+negatives	0	verlässt	verlesen	*	*
+negatives	0	der Hand hin.	hindern	*	*
+negatives	0	die Hand hin.	hindien	*	*
+negatives	0	machest	machen	v	present-du
+negatives	0	machet	machen	v	present-er
+negatives	0	Kunde	Kunden	v	*
+negatives	0	frei	freien	v	*
+negatives	0	kommt an	ankommen	*	*
+negatives	0	Lohn	Loh	*	*
+negatives	0	Mädchenhaare	Madchenhaar	*	*
+negatives	0	Mann	Man	*	*
+negatives	0	hab'	Hab	*	*
+negatives	0	weisst	weis	*	*
+negatives	0	machest	mach	*	*
+negatives	0	ehre	eher	*	*
+negatives	0	führt	fahren	*	*
+negatives	0	führst	fahren	*	*
+negatives	0	sehr best	sehr gut	*	*
+negatives	0	Elektrotechniker	Elektrotechnik	*	*
+negatives	0	Kinder	Kind	v	*
+negatives	0	anzurufen	anrufen	n	*
+negatives	0	geht	hen	*	past-participle
+negatives	0	gegengezeichnet	gengezeichnen	*	past-participle
+present	1	heult	heulen	v	present-er
+negatives	0	heut	heuen	v	present-er
+negatives	0	draus	Drau	*	genitive
