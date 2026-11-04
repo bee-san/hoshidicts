@@ -1,501 +1,501 @@
 # Hand-written for this pack (GPL-3.0-or-later): forms of every conjugation, declension and irregular paradigm the rules cover,
 # the enclitics, spelling variants and wrong lemmas the rules must not give (valid = 0).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
-verb, present system	1	amamus	amo	v	*
-verb, present system	1	amare	amo	v	*
-verb, present system	1	amatur	amo	v	*
-verb, present system	1	amabitur	amo	v	*
-verb, present system	1	amabaris	amo	v	*
-verb, present system	1	amabere	amo	v	*
-verb, present system	1	amantor	amo	v	*
-verb, present system	1	amamini	amo	v	*
-verb, present system	1	regam	rego	v	*
-verb, present system	1	regere	rego	v	*
-verb, present system	1	capi	capio	v	*
-verb, present system	1	hortantur	hortor	v	*
-verb, present system	1	hortare	hortor	v	*
-verb, present system	1	sequere	sequor	v	*
-verb, perfect system	1	amavi	amo	v	*
-verb, perfect system	1	amavisti	amo	v	*
-verb, perfect system	1	amavit	amo	v	*
-verb, perfect system	1	amavimus	amo	v	*
-verb, perfect system	1	amavistis	amo	v	*
-verb, perfect system	1	amaverunt	amo	v	*
-verb, perfect system	1	amaveram	amo	v	*
-verb, perfect system	1	amaverat	amo	v	*
-verb, perfect system	1	amaverant	amo	v	*
-verb, perfect system	1	amavero	amo	v	*
-verb, perfect system	1	amaverit	amo	v	*
-verb, perfect system	1	amaverint	amo	v	*
-verb, perfect system	1	amaverim	amo	v	*
-verb, perfect system	1	amaverimus	amo	v	*
-verb, perfect system	1	amavissem	amo	v	*
-verb, perfect system	1	amavisset	amo	v	*
-verb, perfect system	1	amavissent	amo	v	*
-verb, perfect system	1	amavisse	amo	v	*
-verb, perfect system	1	monui	moneo	v	*
-verb, perfect system	1	monuit	moneo	v	*
-verb, perfect system	1	monuerat	moneo	v	*
-verb, perfect system	1	monuisset	moneo	v	*
-verb, perfect system	1	delevit	deleo	v	*
-verb, perfect system	1	complevit	compleo	v	*
-verb, perfect system	1	complesset	compleo	v	*
-verb, perfect system	1	delesti	deleo	v	*
-verb, perfect system	1	coluit	colo	v	*
-verb, perfect system	1	rapuit	rapio	v	*
-verb, perfect system	1	aperuit	aperio	v	*
-verb, perfect system	1	audivit	audio	v	*
-verb, perfect system	1	audierunt	audio	v	*
-verb, perfect system	1	audierat	audio	v	*
-verb, perfect system	1	audisti	audio	v	*
-verb, perfect system	1	audistis	audio	v	*
-verb, perfect system	1	audisse	audio	v	*
-verb, perfect system	1	audissent	audio	v	*
-verb, perfect system	1	defendit	defendo	v	*
-verb, perfect system	1	defenderunt	defendo	v	*
-verb, perfect system	1	vidit	video	v	*
-verb, perfect system	1	viderunt	video	v	*
-verb, perfect system	1	fugit	fugio	v	*
-verb, perfect system	1	fugerat	fugio	v	*
-verb, perfect system	1	venerunt	venio	v	*
-verb, perfect system	1	convaluit	convalesco	v	*
-verb, perfect system	1	inveteravit	inveterasco	v	*
-verb, perfect system	1	cognovit	cognosco	v	*
-verb, perfect system	1	cognosti	cognosco	v	*
-verb, perfect system	1	cognorunt	cognosco	v	*
-verb, perfect system	1	cognosse	cognosco	v	*
-verb, perfect system	1	nosti	nosco	v	*
-verb, perfect system	1	norunt	nosco	v	*
-verb, perfect system	1	noram	nosco	v	*
-verb, perfect system	1	nosse	nosco	v	*
-verb, perfect system	1	rexit	rego	v	*
-verb, perfect system	1	direxit	dirigo	v	*
-verb, perfect system	1	surrexit	surgo	v	*
-verb, perfect system	1	fecit	facio	v	*
-verb, perfect system	1	confecit	conficio	v	*
-verb, perfect system	1	patefecit	patefacio	v	*
-verb, perfect system	1	cepit	capio	v	*
-verb, perfect system	1	accepit	accipio	v	*
-verb, perfect system	1	egit	ago	v	*
-verb, perfect system	1	exegit	exigo	v	*
-verb, perfect system	1	peregit	perago	v	*
-verb, perfect system	1	coegit	cogo	v	*
-verb, perfect system	1	emit	emo	v	*
-verb, perfect system	1	redemit	redimo	v	*
-verb, perfect system	1	dedit	do	v	*
-verb, perfect system	1	circumdedit	circumdo	v	*
-verb, perfect system	1	tradidit	trado	v	*
-verb, perfect system	1	stetit	sto	v	*
-verb, perfect system	1	constitit	consto	v	*
-verb, perfect system	1	restitit	resisto	v	*
-verb, perfect system	1	tulit	fero	v	*
-verb, perfect system	1	attulit	affero	v	*
-verb, perfect system	1	abstulit	aufero	v	*
-verb, perfect system	1	sustulit	tollo	v	*
-verb, perfect system	1	contulit	confero	v	*
-verb, perfect system	1	rettulit	refero	v	*
-verb, perfect system	1	fuit	sum	v	*
-verb, perfect system	1	fuerat	sum	v	*
-verb, perfect system	1	fuisse	sum	v	*
-verb, perfect system	1	adfuit	adsum	v	*
-verb, perfect system	1	afuit	absum	v	*
-verb, perfect system	1	profuit	prosum	v	*
-verb, perfect system	1	potuit	possum	v	*
-verb, perfect system	1	potuerat	possum	v	*
-verb, perfect system	1	iit	eo	v	*
-verb, perfect system	1	ierunt	eo	v	*
-verb, perfect system	1	iisset	eo	v	*
-verb, perfect system	1	redierunt	redeo	v	*
-verb, perfect system	1	rediit	redeo	v	*
-verb, perfect system	1	redisset	redeo	v	*
-verb, perfect system	1	abiit	abeo	v	*
-verb, perfect system	1	transiit	transeo	v	*
-verb, perfect system	1	periit	pereo	v	*
-verb, perfect system	1	praeteriit	praetereo	v	*
-verb, perfect system	1	voluit	volo	v	*
-verb, perfect system	1	noluit	nolo	v	*
-verb, perfect system	1	maluit	malo	v	*
-verb, perfect system	1	meminerat	memini	v	*
-verb, perfect system	1	oderunt	odi	v	*
-verb, perfect system	1	coeperunt	coepi	v	*
-verb, perfect system	1	quaesivit	quaero	v	*
-verb, perfect system	1	requisivit	requiro	v	*
-verb, perfect system	1	petivit	peto	v	*
-verb, perfect system	1	cucurrit	curro	v	*
-verb, perfect system	1	occurrit	occurro	v	*
-verb, perfect system	1	accurrit	accurro	v	*
-verb, perfect system	1	pepulit	pello	v	*
-verb, perfect system	1	expulit	expello	v	*
-verb, perfect system	1	reppulit	repello	v	*
-verb, perfect system	1	cecidit	cado	v	*
-verb, perfect system	1	occidit	occido	v	*
-verb, perfect system	1	cecinit	cano	v	*
-verb, perfect system	1	tetigit	tango	v	*
-verb, perfect system	1	attigit	attingo	v	*
-verb, perfect system	1	poposcit	posco	v	*
-verb, perfect system	1	depoposcit	deposco	v	*
-verb, perfect system	1	momordit	mordeo	v	*
-verb, perfect system	1	spopondit	spondeo	v	*
-verb, perfect system	1	respondit	respondeo	v	*
-verb, perfect system	1	pependit	pendeo	v	*
-verb, perfect system	1	totondit	tondeo	v	*
-verb, perfect system	1	didicit	disco	v	*
-verb, perfect system	1	fefellit	fallo	v	*
-verb, perfect system	1	peperit	pario	v	*
-verb, perfect system	1	peperci	parco	v	*
-verb, perfect system	1	intellexit	intellego	v	*
-verb, perfect system	1	neglexit	neglego	v	*
-verb, perfect system	1	dilexit	diligo	v	*
-verb, perfect system	1	collegit	colligo	v	*
-verb, perfect system	1	legit	lego	v	*
-verb, perfect system	1	allexit	allicio	v	*
-verb, perfect system	1	aspexit	aspicio	v	*
-verb, perfect system	1	concussit	concutio	v	*
-verb, perfect system	1	possedit	possideo	v	*
-verb, perfect system	1	accubuit	accumbo	v	*
-verb, perfect system	1	assedit	assido	v	*
-verb, perfect system	1	referserat	refercio	v	*
-verb, perfect system	1	descivit	descisco	v	*
-verb, perfect system	1	carpsit	carpo	v	*
-verb, perfect system	1	decerpsit	decerpo	v	*
-verb, perfect system	1	combussit	comburo	v	*
-verb, perfect system	1	inquit	inquam	v	*
-verb, perfect system	1	licuit	licet	v	*
-verb, perfect system	1	oportuerat	oportet	v	*
-verb, perfect system	1	placuit	placeo	v	*
-verb, perfect system	1	posivit	pono	v	*
-verb, perfect system	1	iniecit	inicio	v	*
-verb, perfect system	1	iniiecit	iniicio	v	*
-verb, participle or supine	1	amatus	amo	v	*
-verb, participle or supine	1	amata	amo	v	*
-verb, participle or supine	1	amatorum	amo	v	*
-verb, participle or supine	1	amaturus	amo	v	*
-verb, participle or supine	1	amaturi	amo	v	*
-verb, participle or supine	1	amatum	amo	v	*
-verb, participle or supine	1	amatu	amo	v	*
-verb, participle or supine	1	monitus	moneo	v	*
-verb, participle or supine	1	deletus	deleo	v	*
-verb, participle or supine	1	auditus	audio	v	*
-verb, participle or supine	1	statutus	statuo	v	*
-verb, participle or supine	1	solutus	solvo	v	*
-verb, participle or supine	1	volutus	volvo	v	*
-verb, participle or supine	1	ductus	duco	v	*
-verb, participle or supine	1	adductus	adduco	v	*
-verb, participle or supine	1	factus	facio	v	*
-verb, participle or supine	1	confectus	conficio	v	*
-verb, participle or supine	1	captus	capio	v	*
-verb, participle or supine	1	acceptus	accipio	v	*
-verb, participle or supine	1	iactus	iacio	v	*
-verb, participle or supine	1	eiectus	eicio	v	*
-verb, participle or supine	1	lectus	lego	v	*
-verb, participle or supine	1	electus	eligo	v	*
-verb, participle or supine	1	dictu	dico	v	*
-verb, participle or supine	1	visum	video	v	*
-verb, participle or supine	1	visu	video	v	*
-verb, participle or supine	1	facturus	facio	v	*
-verb, participle or supine	1	futurus	sum	v	*
-verb, participle or supine	1	afuturus	absum	v	*
-verb, participle or supine	1	moriturus	morior	v	*
-verb, participle or supine	1	mortuus	morior	v	*
-verb, participle or supine	1	natus	nascor	v	*
-verb, participle or supine	1	nasciturus	nascor	v	*
-verb, participle or supine	1	ortus	orior	v	*
-verb, participle or supine	1	oriturus	orior	v	*
-verb, participle or supine	1	profectus	proficiscor	v	*
-verb, participle or supine	1	oblitus	obliviscor	v	*
-verb, participle or supine	1	usus	utor	v	*
-verb, participle or supine	1	locutus	loquor	v	*
-verb, participle or supine	1	questus	queror	v	*
-verb, participle or supine	1	lapsus	labor	v	*
-verb, participle or supine	1	nisus	nitor	v	*
-verb, participle or supine	1	fructus	fruor	v	*
-verb, participle or supine	1	fruiturus	fruor	v	*
-verb, participle or supine	1	functus	fungor	v	*
-verb, participle or supine	1	aggressus	aggredior	v	*
-verb, participle or supine	1	egressus	egredior	v	*
-verb, participle or supine	1	gressus	gradior	v	*
-verb, participle or supine	1	expertus	experior	v	*
-verb, participle or supine	1	mensus	metior	v	*
-verb, participle or supine	1	ausus	audeo	v	*
-verb, participle or supine	1	gavisus	gaudeo	v	*
-verb, participle or supine	1	solitus	soleo	v	*
-verb, participle or supine	1	fisus	fido	v	*
-verb, participle or supine	1	confisus	confido	v	*
-verb, participle or supine	1	confessus	confiteor	v	*
-verb, participle or supine	1	fassus	fateor	v	*
-verb, participle or supine	1	ratus	reor	v	*
-verb, participle or supine	1	latus	fero	v	*
-verb, participle or supine	1	allatus	affero	v	*
-verb, participle or supine	1	ablatus	aufero	v	*
-verb, participle or supine	1	sublatus	tollo	v	*
-verb, participle or supine	1	relatus	refero	v	*
-verb, participle or supine	1	collatus	confero	v	*
-verb, participle or supine	1	oblatus	offero	v	*
-verb, participle or supine	1	osurus	odi	v	*
-verb, participle or supine	1	coeptus	coepi	v	*
-verb, participle or supine	1	itum	eo	v	*
-verb, participle or supine	1	aditum	adeo	v	*
-verb, participle or supine	1	reditum	redeo	v	*
-verb, participle or supine	1	rediens	redeo	v	*
-verb, participle or supine	1	redeuntem	redeo	v	*
-verb, participle or supine	1	euntes	eo	v	*
-verb, participle or supine	1	praetereuntium	praetereo	v	*
-verb, participle or supine	1	adeundus	adeo	v	*
-verb, participle or supine	1	eundum	eo	v	*
-verb, participle or supine	1	possessus	possideo	v	*
-verb, participle or supine	1	contentus	contineo	v	*
-verb, participle or supine	1	cultus	colo	v	*
-verb, participle or supine	1	cursum	curro	v	*
-verb, participle or supine	1	scissus	scindo	v	*
-verb, participle or supine	1	sepultus	sepelio	v	*
-verb, participle or supine	1	desultus	desilio	v	*
-verb, with esse	1	amatus est	amo	v	ptc-perf|esse
-verb, with esse	1	amata est	amo	v	*
-verb, with esse	1	amati sunt	amo	v	*
-verb, with esse	1	amatae erant	amo	v	*
-verb, with esse	1	amatum esse	amo	v	*
-verb, with esse	1	amaturus esse	amo	v	*
-verb, with esse	1	amatus sim	amo	v	*
-verb, with esse	1	amatum iri	amo	v	*
-verb, with esse	1	hortatus est	hortor	v	*
-verb, with esse	1	secuti sunt	sequor	v	*
-verb, with esse	1	profectus est	proficiscor	v	*
-verb, with esse	1	natus est	nascor	v	*
-verb, with esse	1	mortuus esset	morior	v	*
-verb, with esse	1	delenda est	deleo	v	*
-verb, with esse	1	laudandum erat	laudo	v	*
-verb, with esse	1	facturus est	facio	v	*
-verb, with esse	1	dictum est	dico	v	*
-verb, with esse	1	factum fuerat	facio	v	*
-verb, with esse	1	ventum est	venio	v	*
-verb, with esse	1	missi sunt	mitto	v	*
-verb, with esse	1	captae sunt	capio	v	*
-verb, with esse	1	ducturum esse	duco	v	*
-verb, with esse	1	passus est	patior	v	*
-verb, with esse	1	usus est	utor	v	*
-verb, with esse	1	locuti sunt	loquor	v	*
-verb, with esse	1	futurum esse	sum	v	*
-verb, with esse	1	itum est	eo	v	*
-verb, with esse	1	adeundum est	adeo	v	*
-verb, irregular	1	es	sum	v	*
-verb, irregular	1	est	sum	v	*
-verb, irregular	1	sumus	sum	v	*
-verb, irregular	1	estis	sum	v	*
-verb, irregular	1	sunt	sum	v	*
-verb, irregular	1	eram	sum	v	*
-verb, irregular	1	erant	sum	v	*
-verb, irregular	1	ero	sum	v	*
-verb, irregular	1	erit	sum	v	*
-verb, irregular	1	erunt	sum	v	*
-verb, irregular	1	sim	sum	v	*
-verb, irregular	1	sit	sum	v	*
-verb, irregular	1	sint	sum	v	*
-verb, irregular	1	essem	sum	v	*
-verb, irregular	1	esset	sum	v	*
-verb, irregular	1	essent	sum	v	*
-verb, irregular	1	este	sum	v	*
-verb, irregular	1	esto	sum	v	*
-verb, irregular	1	estote	sum	v	*
-verb, irregular	1	sunto	sum	v	*
-verb, irregular	1	esse	sum	v	*
-verb, irregular	1	fore	sum	v	*
-verb, irregular	1	adest	adsum	v	*
-verb, irregular	1	adsunt	adsum	v	*
-verb, irregular	1	aderat	adsum	v	*
-verb, irregular	1	adesse	adsum	v	*
-verb, irregular	1	affore	adsum	v	*
-verb, irregular	1	abest	absum	v	*
-verb, irregular	1	aberant	absum	v	*
-verb, irregular	1	afore	absum	v	*
-verb, irregular	1	deest	desum	v	*
-verb, irregular	1	desunt	desum	v	*
-verb, irregular	1	inest	insum	v	*
-verb, irregular	1	interest	intersum	v	*
-verb, irregular	1	intersunt	intersum	v	*
-verb, irregular	1	obest	obsum	v	*
-verb, irregular	1	praeest	praesum	v	*
-verb, irregular	1	praeerat	praesum	v	*
-verb, irregular	1	prodest	prosum	v	*
-verb, irregular	1	prosunt	prosum	v	*
-verb, irregular	1	prodesse	prosum	v	*
-verb, irregular	1	subest	subsum	v	*
-verb, irregular	1	superest	supersum	v	*
-verb, irregular	1	supersunt	supersum	v	*
-verb, irregular	1	potes	possum	v	*
-verb, irregular	1	potest	possum	v	*
-verb, irregular	1	possumus	possum	v	*
-verb, irregular	1	possunt	possum	v	*
-verb, irregular	1	poterat	possum	v	*
-verb, irregular	1	poterit	possum	v	*
-verb, irregular	1	possit	possum	v	*
-verb, irregular	1	posset	possum	v	*
-verb, irregular	1	possent	possum	v	*
-verb, irregular	1	posse	possum	v	*
-verb, irregular	1	is	eo	v	*
-verb, irregular	1	it	eo	v	*
-verb, irregular	1	imus	eo	v	*
-verb, irregular	1	eunt	eo	v	*
-verb, irregular	1	ibat	eo	v	*
-verb, irregular	1	ibit	eo	v	*
-verb, irregular	1	eat	eo	v	*
-verb, irregular	1	iret	eo	v	*
-verb, irregular	1	i	eo	v	*
-verb, irregular	1	ite	eo	v	*
-verb, irregular	1	ito	eo	v	*
-verb, irregular	1	eunto	eo	v	*
-verb, irregular	1	ire	eo	v	*
-verb, irregular	1	iri	eo	v	*
-verb, irregular	1	itur	eo	v	*
-verb, irregular	1	ibatur	eo	v	*
-verb, irregular	1	eundi	eo	v	*
-verb, irregular	1	eundo	eo	v	*
-verb, irregular	1	iens	eo	v	*
-verb, irregular	1	abit	abeo	v	*
-verb, irregular	1	abeunt	abeo	v	*
-verb, irregular	1	adit	adeo	v	*
-verb, irregular	1	adeunt	adeo	v	*
-verb, irregular	1	aditur	adeo	v	*
-verb, irregular	1	anteit	anteeo	v	*
-verb, irregular	1	circumit	circumeo	v	*
-verb, irregular	1	coit	coeo	v	*
-verb, irregular	1	coeunt	coeo	v	*
-verb, irregular	1	exit	exeo	v	*
-verb, irregular	1	exeunt	exeo	v	*
-verb, irregular	1	init	ineo	v	*
-verb, irregular	1	ineunt	ineo	v	*
-verb, irregular	1	interit	intereo	v	*
-verb, irregular	1	introit	introeo	v	*
-verb, irregular	1	obit	obeo	v	*
-verb, irregular	1	perit	pereo	v	*
-verb, irregular	1	pereunt	pereo	v	*
-verb, irregular	1	praeit	praeeo	v	*
-verb, irregular	1	praeterit	praetereo	v	*
-verb, irregular	1	praeteritur	praetereo	v	*
-verb, irregular	1	prodit	prodeo	v	*
-verb, irregular	1	redit	redeo	v	*
-verb, irregular	1	redeunt	redeo	v	*
-verb, irregular	1	redibat	redeo	v	*
-verb, irregular	1	subit	subeo	v	*
-verb, irregular	1	subterit	subtereo	v	*
-verb, irregular	1	transit	transeo	v	*
-verb, irregular	1	transire	transeo	v	*
-verb, irregular	1	deperit	depereo	v	*
-verb, irregular	1	quit	queo	v	*
-verb, irregular	1	queunt	queo	v	*
-verb, irregular	1	quibat	queo	v	*
-verb, irregular	1	nequit	nequeo	v	*
-verb, irregular	1	nequeunt	nequeo	v	*
-verb, irregular	1	nequibat	nequeo	v	*
-verb, irregular	1	fers	fero	v	*
-verb, irregular	1	fert	fero	v	*
-verb, irregular	1	fertis	fero	v	*
-verb, irregular	1	ferre	fero	v	*
-verb, irregular	1	ferret	fero	v	*
-verb, irregular	1	fer	fero	v	*
-verb, irregular	1	ferte	fero	v	*
-verb, irregular	1	ferto	fero	v	*
-verb, irregular	1	fertote	fero	v	*
-verb, irregular	1	ferris	fero	v	*
-verb, irregular	1	fertur	fero	v	*
-verb, irregular	1	ferri	fero	v	*
-verb, irregular	1	ferretur	fero	v	*
-verb, irregular	1	fertor	fero	v	*
-verb, irregular	1	affert	affero	v	*
-verb, irregular	1	aufert	aufero	v	*
-verb, irregular	1	differt	differo	v	*
-verb, irregular	1	effert	effero	v	*
-verb, irregular	1	offert	offero	v	*
-verb, irregular	1	refert	refero	v	*
-verb, irregular	1	confert	confero	v	*
-verb, irregular	1	transfert	transfero	v	*
-verb, irregular	1	ferunt	fero	v	*
-verb, irregular	1	ferebat	fero	v	*
-verb, irregular	1	vis	volo	v	*
-verb, irregular	1	vult	volo	v	*
-verb, irregular	1	volumus	volo	v	*
-verb, irregular	1	vultis	volo	v	*
-verb, irregular	1	volunt	volo	v	*
-verb, irregular	1	volebat	volo	v	*
-verb, irregular	1	velit	volo	v	*
-verb, irregular	1	vellet	volo	v	*
-verb, irregular	1	velle	volo	v	*
-verb, irregular	1	nolumus	nolo	v	*
-verb, irregular	1	nolunt	nolo	v	*
-verb, irregular	1	nolit	nolo	v	*
-verb, irregular	1	nollet	nolo	v	*
-verb, irregular	1	noli	nolo	v	*
-verb, irregular	1	nolite	nolo	v	*
-verb, irregular	1	nolito	nolo	v	*
-verb, irregular	1	nolle	nolo	v	*
-verb, irregular	1	mavis	malo	v	*
-verb, irregular	1	mavult	malo	v	*
-verb, irregular	1	malumus	malo	v	*
-verb, irregular	1	mavultis	malo	v	*
-verb, irregular	1	malit	malo	v	*
-verb, irregular	1	mallet	malo	v	*
-verb, irregular	1	malle	malo	v	*
-verb, irregular	1	fis	fio	v	*
-verb, irregular	1	fit	fio	v	*
-verb, irregular	1	fiunt	fio	v	*
-verb, irregular	1	fiebat	fio	v	*
-verb, irregular	1	fiet	fio	v	*
-verb, irregular	1	fieret	fio	v	*
-verb, irregular	1	fieri	fio	v	*
-verb, irregular	1	fite	fio	v	*
-verb, irregular	1	das	do	v	*
-verb, irregular	1	dat	do	v	*
-verb, irregular	1	damus	do	v	*
-verb, irregular	1	dant	do	v	*
-verb, irregular	1	dabat	do	v	*
-verb, irregular	1	dabit	do	v	*
-verb, irregular	1	det	do	v	*
-verb, irregular	1	daret	do	v	*
-verb, irregular	1	da	do	v	*
-verb, irregular	1	date	do	v	*
-verb, irregular	1	dare	do	v	*
-verb, irregular	1	datur	do	v	*
-verb, irregular	1	dantur	do	v	*
-verb, irregular	1	dari	do	v	*
-verb, irregular	1	dans	do	v	*
-verb, irregular	1	dandi	do	v	*
-verb, irregular	1	circumdat	circumdo	v	*
-verb, irregular	1	dic	dico	v	*
-verb, irregular	1	edic	edico	v	*
-verb, irregular	1	duc	duco	v	*
-verb, irregular	1	educ	educo	v	*
-verb, irregular	1	fac	facio	v	*
-verb, irregular	1	inquis	inquam	v	*
-verb, irregular	1	inquiunt	inquam	v	*
-verb, irregular	1	inquiebat	inquam	v	*
-verb, irregular	1	ais	aio	v	*
-verb, irregular	1	ait	aio	v	*
-verb, irregular	1	aiunt	aio	v	*
-verb, irregular	1	aiebat	aio	v	*
-verb, irregular	1	memento	memini	v	*
-verb, irregular	1	mementote	memini	v	*
-verb, irregular	1	licebat	licet	v	*
-verb, irregular	1	licuisset	licet	v	*
-verb, irregular	1	oportebat	oportet	v	*
-verb, irregular	1	decebat	decet	v	*
-verb, irregular	1	pudebat	pudet	v	*
-verb, irregular	1	paenitebat	paenitet	v	*
-verb, irregular	1	taedebat	taedet	v	*
-verb, irregular	1	libuit	libet	v	*
-verb, irregular	1	miserebat	miseret	v	*
-verb, irregular	1	piguit	piget	v	*
-verb, irregular	1	dedecebat	dedecet	v	*
-verb, irregular	1	lubebat	lubet	v	*
-verb, irregular	1	poenituit	poenitet	v	*
-verb, irregular	1	reris	reor	v	*
-verb, irregular	1	retur	reor	v	*
-verb, irregular	1	rentur	reor	v	*
-verb, irregular	1	rebatur	reor	v	*
-verb, irregular	1	reri	reor	v	*
-verb, irregular	1	fatur	for	v	*
-verb, irregular	1	fantur	for	v	*
-verb, irregular	1	fari	for	v	*
-verb, irregular	1	fandi	for	v	*
-verb, irregular	1	fabor	for	v	*
+present	1	amamus	amo	v	*
+present	1	amare	amo	v	*
+present	1	amatur	amo	v	*
+present	1	amabitur	amo	v	*
+present	1	amabaris	amo	v	*
+present	1	amabere	amo	v	*
+present	1	amantor	amo	v	*
+present	1	amamini	amo	v	*
+present	1	regam	rego	v	*
+present	1	regere	rego	v	*
+present	1	capi	capio	v	*
+present	1	hortantur	hortor	v	*
+present	1	hortare	hortor	v	*
+present	1	sequere	sequor	v	*
+perfect	1	amavi	amo	v	*
+perfect	1	amavisti	amo	v	*
+perfect	1	amavit	amo	v	*
+perfect	1	amavimus	amo	v	*
+perfect	1	amavistis	amo	v	*
+perfect	1	amaverunt	amo	v	*
+perfect	1	amaveram	amo	v	*
+perfect	1	amaverat	amo	v	*
+perfect	1	amaverant	amo	v	*
+perfect	1	amavero	amo	v	*
+perfect	1	amaverit	amo	v	*
+perfect	1	amaverint	amo	v	*
+perfect	1	amaverim	amo	v	*
+perfect	1	amaverimus	amo	v	*
+perfect	1	amavissem	amo	v	*
+perfect	1	amavisset	amo	v	*
+perfect	1	amavissent	amo	v	*
+perfect	1	amavisse	amo	v	*
+perfect	1	monui	moneo	v	*
+perfect	1	monuit	moneo	v	*
+perfect	1	monuerat	moneo	v	*
+perfect	1	monuisset	moneo	v	*
+perfect	1	delevit	deleo	v	*
+perfect	1	complevit	compleo	v	*
+perfect	1	complesset	compleo	v	*
+perfect	1	delesti	deleo	v	*
+perfect	1	coluit	colo	v	*
+perfect	1	rapuit	rapio	v	*
+perfect	1	aperuit	aperio	v	*
+perfect	1	audivit	audio	v	*
+perfect	1	audierunt	audio	v	*
+perfect	1	audierat	audio	v	*
+perfect	1	audisti	audio	v	*
+perfect	1	audistis	audio	v	*
+perfect	1	audisse	audio	v	*
+perfect	1	audissent	audio	v	*
+perfect	1	defendit	defendo	v	*
+perfect	1	defenderunt	defendo	v	*
+perfect	1	vidit	video	v	*
+perfect	1	viderunt	video	v	*
+perfect	1	fugit	fugio	v	*
+perfect	1	fugerat	fugio	v	*
+perfect	1	venerunt	venio	v	*
+perfect	1	convaluit	convalesco	v	*
+perfect	1	inveteravit	inveterasco	v	*
+perfect	1	cognovit	cognosco	v	*
+perfect	1	cognosti	cognosco	v	*
+perfect	1	cognorunt	cognosco	v	*
+perfect	1	cognosse	cognosco	v	*
+perfect	1	nosti	nosco	v	*
+perfect	1	norunt	nosco	v	*
+perfect	1	noram	nosco	v	*
+perfect	1	nosse	nosco	v	*
+perfect	1	rexit	rego	v	*
+perfect	1	direxit	dirigo	v	*
+perfect	1	surrexit	surgo	v	*
+perfect	1	fecit	facio	v	*
+perfect	1	confecit	conficio	v	*
+perfect	1	patefecit	patefacio	v	*
+perfect	1	cepit	capio	v	*
+perfect	1	accepit	accipio	v	*
+perfect	1	egit	ago	v	*
+perfect	1	exegit	exigo	v	*
+perfect	1	peregit	perago	v	*
+perfect	1	coegit	cogo	v	*
+perfect	1	emit	emo	v	*
+perfect	1	redemit	redimo	v	*
+perfect	1	dedit	do	v	*
+perfect	1	circumdedit	circumdo	v	*
+perfect	1	tradidit	trado	v	*
+perfect	1	stetit	sto	v	*
+perfect	1	constitit	consto	v	*
+perfect	1	restitit	resisto	v	*
+perfect	1	tulit	fero	v	*
+perfect	1	attulit	affero	v	*
+perfect	1	abstulit	aufero	v	*
+perfect	1	sustulit	tollo	v	*
+perfect	1	contulit	confero	v	*
+perfect	1	rettulit	refero	v	*
+perfect	1	fuit	sum	v	*
+perfect	1	fuerat	sum	v	*
+perfect	1	fuisse	sum	v	*
+perfect	1	adfuit	adsum	v	*
+perfect	1	afuit	absum	v	*
+perfect	1	profuit	prosum	v	*
+perfect	1	potuit	possum	v	*
+perfect	1	potuerat	possum	v	*
+perfect	1	iit	eo	v	*
+perfect	1	ierunt	eo	v	*
+perfect	1	iisset	eo	v	*
+perfect	1	redierunt	redeo	v	*
+perfect	1	rediit	redeo	v	*
+perfect	1	redisset	redeo	v	*
+perfect	1	abiit	abeo	v	*
+perfect	1	transiit	transeo	v	*
+perfect	1	periit	pereo	v	*
+perfect	1	praeteriit	praetereo	v	*
+perfect	1	voluit	volo	v	*
+perfect	1	noluit	nolo	v	*
+perfect	1	maluit	malo	v	*
+perfect	1	meminerat	memini	v	*
+perfect	1	oderunt	odi	v	*
+perfect	1	coeperunt	coepi	v	*
+perfect	1	quaesivit	quaero	v	*
+perfect	1	requisivit	requiro	v	*
+perfect	1	petivit	peto	v	*
+perfect	1	cucurrit	curro	v	*
+perfect	1	occurrit	occurro	v	*
+perfect	1	accurrit	accurro	v	*
+perfect	1	pepulit	pello	v	*
+perfect	1	expulit	expello	v	*
+perfect	1	reppulit	repello	v	*
+perfect	1	cecidit	cado	v	*
+perfect	1	occidit	occido	v	*
+perfect	1	cecinit	cano	v	*
+perfect	1	tetigit	tango	v	*
+perfect	1	attigit	attingo	v	*
+perfect	1	poposcit	posco	v	*
+perfect	1	depoposcit	deposco	v	*
+perfect	1	momordit	mordeo	v	*
+perfect	1	spopondit	spondeo	v	*
+perfect	1	respondit	respondeo	v	*
+perfect	1	pependit	pendeo	v	*
+perfect	1	totondit	tondeo	v	*
+perfect	1	didicit	disco	v	*
+perfect	1	fefellit	fallo	v	*
+perfect	1	peperit	pario	v	*
+perfect	1	peperci	parco	v	*
+perfect	1	intellexit	intellego	v	*
+perfect	1	neglexit	neglego	v	*
+perfect	1	dilexit	diligo	v	*
+perfect	1	collegit	colligo	v	*
+perfect	1	legit	lego	v	*
+perfect	1	allexit	allicio	v	*
+perfect	1	aspexit	aspicio	v	*
+perfect	1	concussit	concutio	v	*
+perfect	1	possedit	possideo	v	*
+perfect	1	accubuit	accumbo	v	*
+perfect	1	assedit	assido	v	*
+perfect	1	referserat	refercio	v	*
+perfect	1	descivit	descisco	v	*
+perfect	1	carpsit	carpo	v	*
+perfect	1	decerpsit	decerpo	v	*
+perfect	1	combussit	comburo	v	*
+perfect	1	inquit	inquam	v	*
+perfect	1	licuit	licet	v	*
+perfect	1	oportuerat	oportet	v	*
+perfect	1	placuit	placeo	v	*
+perfect	1	posivit	pono	v	*
+perfect	1	iniecit	inicio	v	*
+perfect	1	iniiecit	iniicio	v	*
+participle	1	amatus	amo	v	*
+participle	1	amata	amo	v	*
+participle	1	amatorum	amo	v	*
+participle	1	amaturus	amo	v	*
+participle	1	amaturi	amo	v	*
+participle	1	amatum	amo	v	*
+participle	1	amatu	amo	v	*
+participle	1	monitus	moneo	v	*
+participle	1	deletus	deleo	v	*
+participle	1	auditus	audio	v	*
+participle	1	statutus	statuo	v	*
+participle	1	solutus	solvo	v	*
+participle	1	volutus	volvo	v	*
+participle	1	ductus	duco	v	*
+participle	1	adductus	adduco	v	*
+participle	1	factus	facio	v	*
+participle	1	confectus	conficio	v	*
+participle	1	captus	capio	v	*
+participle	1	acceptus	accipio	v	*
+participle	1	iactus	iacio	v	*
+participle	1	eiectus	eicio	v	*
+participle	1	lectus	lego	v	*
+participle	1	electus	eligo	v	*
+participle	1	dictu	dico	v	*
+participle	1	visum	video	v	*
+participle	1	visu	video	v	*
+participle	1	facturus	facio	v	*
+participle	1	futurus	sum	v	*
+participle	1	afuturus	absum	v	*
+participle	1	moriturus	morior	v	*
+participle	1	mortuus	morior	v	*
+participle	1	natus	nascor	v	*
+participle	1	nasciturus	nascor	v	*
+participle	1	ortus	orior	v	*
+participle	1	oriturus	orior	v	*
+participle	1	profectus	proficiscor	v	*
+participle	1	oblitus	obliviscor	v	*
+participle	1	usus	utor	v	*
+participle	1	locutus	loquor	v	*
+participle	1	questus	queror	v	*
+participle	1	lapsus	labor	v	*
+participle	1	nisus	nitor	v	*
+participle	1	fructus	fruor	v	*
+participle	1	fruiturus	fruor	v	*
+participle	1	functus	fungor	v	*
+participle	1	aggressus	aggredior	v	*
+participle	1	egressus	egredior	v	*
+participle	1	gressus	gradior	v	*
+participle	1	expertus	experior	v	*
+participle	1	mensus	metior	v	*
+participle	1	ausus	audeo	v	*
+participle	1	gavisus	gaudeo	v	*
+participle	1	solitus	soleo	v	*
+participle	1	fisus	fido	v	*
+participle	1	confisus	confido	v	*
+participle	1	confessus	confiteor	v	*
+participle	1	fassus	fateor	v	*
+participle	1	ratus	reor	v	*
+participle	1	latus	fero	v	*
+participle	1	allatus	affero	v	*
+participle	1	ablatus	aufero	v	*
+participle	1	sublatus	tollo	v	*
+participle	1	relatus	refero	v	*
+participle	1	collatus	confero	v	*
+participle	1	oblatus	offero	v	*
+participle	1	osurus	odi	v	*
+participle	1	coeptus	coepi	v	*
+participle	1	itum	eo	v	*
+participle	1	aditum	adeo	v	*
+participle	1	reditum	redeo	v	*
+participle	1	rediens	redeo	v	*
+participle	1	redeuntem	redeo	v	*
+participle	1	euntes	eo	v	*
+participle	1	praetereuntium	praetereo	v	*
+participle	1	adeundus	adeo	v	*
+participle	1	eundum	eo	v	*
+participle	1	possessus	possideo	v	*
+participle	1	contentus	contineo	v	*
+participle	1	cultus	colo	v	*
+participle	1	cursum	curro	v	*
+participle	1	scissus	scindo	v	*
+participle	1	sepultus	sepelio	v	*
+participle	1	desultus	desilio	v	*
+esse	1	amatus est	amo	v	ptc-perf|esse
+esse	1	amata est	amo	v	*
+esse	1	amati sunt	amo	v	*
+esse	1	amatae erant	amo	v	*
+esse	1	amatum esse	amo	v	*
+esse	1	amaturus esse	amo	v	*
+esse	1	amatus sim	amo	v	*
+esse	1	amatum iri	amo	v	*
+esse	1	hortatus est	hortor	v	*
+esse	1	secuti sunt	sequor	v	*
+esse	1	profectus est	proficiscor	v	*
+esse	1	natus est	nascor	v	*
+esse	1	mortuus esset	morior	v	*
+esse	1	delenda est	deleo	v	*
+esse	1	laudandum erat	laudo	v	*
+esse	1	facturus est	facio	v	*
+esse	1	dictum est	dico	v	*
+esse	1	factum fuerat	facio	v	*
+esse	1	ventum est	venio	v	*
+esse	1	missi sunt	mitto	v	*
+esse	1	captae sunt	capio	v	*
+esse	1	ducturum esse	duco	v	*
+esse	1	passus est	patior	v	*
+esse	1	usus est	utor	v	*
+esse	1	locuti sunt	loquor	v	*
+esse	1	futurum esse	sum	v	*
+esse	1	itum est	eo	v	*
+esse	1	adeundum est	adeo	v	*
+irregular	1	es	sum	v	*
+irregular	1	est	sum	v	*
+irregular	1	sumus	sum	v	*
+irregular	1	estis	sum	v	*
+irregular	1	sunt	sum	v	*
+irregular	1	eram	sum	v	*
+irregular	1	erant	sum	v	*
+irregular	1	ero	sum	v	*
+irregular	1	erit	sum	v	*
+irregular	1	erunt	sum	v	*
+irregular	1	sim	sum	v	*
+irregular	1	sit	sum	v	*
+irregular	1	sint	sum	v	*
+irregular	1	essem	sum	v	*
+irregular	1	esset	sum	v	*
+irregular	1	essent	sum	v	*
+irregular	1	este	sum	v	*
+irregular	1	esto	sum	v	*
+irregular	1	estote	sum	v	*
+irregular	1	sunto	sum	v	*
+irregular	1	esse	sum	v	*
+irregular	1	fore	sum	v	*
+irregular	1	adest	adsum	v	*
+irregular	1	adsunt	adsum	v	*
+irregular	1	aderat	adsum	v	*
+irregular	1	adesse	adsum	v	*
+irregular	1	affore	adsum	v	*
+irregular	1	abest	absum	v	*
+irregular	1	aberant	absum	v	*
+irregular	1	afore	absum	v	*
+irregular	1	deest	desum	v	*
+irregular	1	desunt	desum	v	*
+irregular	1	inest	insum	v	*
+irregular	1	interest	intersum	v	*
+irregular	1	intersunt	intersum	v	*
+irregular	1	obest	obsum	v	*
+irregular	1	praeest	praesum	v	*
+irregular	1	praeerat	praesum	v	*
+irregular	1	prodest	prosum	v	*
+irregular	1	prosunt	prosum	v	*
+irregular	1	prodesse	prosum	v	*
+irregular	1	subest	subsum	v	*
+irregular	1	superest	supersum	v	*
+irregular	1	supersunt	supersum	v	*
+irregular	1	potes	possum	v	*
+irregular	1	potest	possum	v	*
+irregular	1	possumus	possum	v	*
+irregular	1	possunt	possum	v	*
+irregular	1	poterat	possum	v	*
+irregular	1	poterit	possum	v	*
+irregular	1	possit	possum	v	*
+irregular	1	posset	possum	v	*
+irregular	1	possent	possum	v	*
+irregular	1	posse	possum	v	*
+irregular	1	is	eo	v	*
+irregular	1	it	eo	v	*
+irregular	1	imus	eo	v	*
+irregular	1	eunt	eo	v	*
+irregular	1	ibat	eo	v	*
+irregular	1	ibit	eo	v	*
+irregular	1	eat	eo	v	*
+irregular	1	iret	eo	v	*
+irregular	1	i	eo	v	*
+irregular	1	ite	eo	v	*
+irregular	1	ito	eo	v	*
+irregular	1	eunto	eo	v	*
+irregular	1	ire	eo	v	*
+irregular	1	iri	eo	v	*
+irregular	1	itur	eo	v	*
+irregular	1	ibatur	eo	v	*
+irregular	1	eundi	eo	v	*
+irregular	1	eundo	eo	v	*
+irregular	1	iens	eo	v	*
+irregular	1	abit	abeo	v	*
+irregular	1	abeunt	abeo	v	*
+irregular	1	adit	adeo	v	*
+irregular	1	adeunt	adeo	v	*
+irregular	1	aditur	adeo	v	*
+irregular	1	anteit	anteeo	v	*
+irregular	1	circumit	circumeo	v	*
+irregular	1	coit	coeo	v	*
+irregular	1	coeunt	coeo	v	*
+irregular	1	exit	exeo	v	*
+irregular	1	exeunt	exeo	v	*
+irregular	1	init	ineo	v	*
+irregular	1	ineunt	ineo	v	*
+irregular	1	interit	intereo	v	*
+irregular	1	introit	introeo	v	*
+irregular	1	obit	obeo	v	*
+irregular	1	perit	pereo	v	*
+irregular	1	pereunt	pereo	v	*
+irregular	1	praeit	praeeo	v	*
+irregular	1	praeterit	praetereo	v	*
+irregular	1	praeteritur	praetereo	v	*
+irregular	1	prodit	prodeo	v	*
+irregular	1	redit	redeo	v	*
+irregular	1	redeunt	redeo	v	*
+irregular	1	redibat	redeo	v	*
+irregular	1	subit	subeo	v	*
+irregular	1	subterit	subtereo	v	*
+irregular	1	transit	transeo	v	*
+irregular	1	transire	transeo	v	*
+irregular	1	deperit	depereo	v	*
+irregular	1	quit	queo	v	*
+irregular	1	queunt	queo	v	*
+irregular	1	quibat	queo	v	*
+irregular	1	nequit	nequeo	v	*
+irregular	1	nequeunt	nequeo	v	*
+irregular	1	nequibat	nequeo	v	*
+irregular	1	fers	fero	v	*
+irregular	1	fert	fero	v	*
+irregular	1	fertis	fero	v	*
+irregular	1	ferre	fero	v	*
+irregular	1	ferret	fero	v	*
+irregular	1	fer	fero	v	*
+irregular	1	ferte	fero	v	*
+irregular	1	ferto	fero	v	*
+irregular	1	fertote	fero	v	*
+irregular	1	ferris	fero	v	*
+irregular	1	fertur	fero	v	*
+irregular	1	ferri	fero	v	*
+irregular	1	ferretur	fero	v	*
+irregular	1	fertor	fero	v	*
+irregular	1	affert	affero	v	*
+irregular	1	aufert	aufero	v	*
+irregular	1	differt	differo	v	*
+irregular	1	effert	effero	v	*
+irregular	1	offert	offero	v	*
+irregular	1	refert	refero	v	*
+irregular	1	confert	confero	v	*
+irregular	1	transfert	transfero	v	*
+irregular	1	ferunt	fero	v	*
+irregular	1	ferebat	fero	v	*
+irregular	1	vis	volo	v	*
+irregular	1	vult	volo	v	*
+irregular	1	volumus	volo	v	*
+irregular	1	vultis	volo	v	*
+irregular	1	volunt	volo	v	*
+irregular	1	volebat	volo	v	*
+irregular	1	velit	volo	v	*
+irregular	1	vellet	volo	v	*
+irregular	1	velle	volo	v	*
+irregular	1	nolumus	nolo	v	*
+irregular	1	nolunt	nolo	v	*
+irregular	1	nolit	nolo	v	*
+irregular	1	nollet	nolo	v	*
+irregular	1	noli	nolo	v	*
+irregular	1	nolite	nolo	v	*
+irregular	1	nolito	nolo	v	*
+irregular	1	nolle	nolo	v	*
+irregular	1	mavis	malo	v	*
+irregular	1	mavult	malo	v	*
+irregular	1	malumus	malo	v	*
+irregular	1	mavultis	malo	v	*
+irregular	1	malit	malo	v	*
+irregular	1	mallet	malo	v	*
+irregular	1	malle	malo	v	*
+irregular	1	fis	fio	v	*
+irregular	1	fit	fio	v	*
+irregular	1	fiunt	fio	v	*
+irregular	1	fiebat	fio	v	*
+irregular	1	fiet	fio	v	*
+irregular	1	fieret	fio	v	*
+irregular	1	fieri	fio	v	*
+irregular	1	fite	fio	v	*
+irregular	1	das	do	v	*
+irregular	1	dat	do	v	*
+irregular	1	damus	do	v	*
+irregular	1	dant	do	v	*
+irregular	1	dabat	do	v	*
+irregular	1	dabit	do	v	*
+irregular	1	det	do	v	*
+irregular	1	daret	do	v	*
+irregular	1	da	do	v	*
+irregular	1	date	do	v	*
+irregular	1	dare	do	v	*
+irregular	1	datur	do	v	*
+irregular	1	dantur	do	v	*
+irregular	1	dari	do	v	*
+irregular	1	dans	do	v	*
+irregular	1	dandi	do	v	*
+irregular	1	circumdat	circumdo	v	*
+irregular	1	dic	dico	v	*
+irregular	1	edic	edico	v	*
+irregular	1	duc	duco	v	*
+irregular	1	educ	educo	v	*
+irregular	1	fac	facio	v	*
+irregular	1	inquis	inquam	v	*
+irregular	1	inquiunt	inquam	v	*
+irregular	1	inquiebat	inquam	v	*
+irregular	1	ais	aio	v	*
+irregular	1	ait	aio	v	*
+irregular	1	aiunt	aio	v	*
+irregular	1	aiebat	aio	v	*
+irregular	1	memento	memini	v	*
+irregular	1	mementote	memini	v	*
+irregular	1	licebat	licet	v	*
+irregular	1	licuisset	licet	v	*
+irregular	1	oportebat	oportet	v	*
+irregular	1	decebat	decet	v	*
+irregular	1	pudebat	pudet	v	*
+irregular	1	paenitebat	paenitet	v	*
+irregular	1	taedebat	taedet	v	*
+irregular	1	libuit	libet	v	*
+irregular	1	miserebat	miseret	v	*
+irregular	1	piguit	piget	v	*
+irregular	1	dedecebat	dedecet	v	*
+irregular	1	lubebat	lubet	v	*
+irregular	1	poenituit	poenitet	v	*
+irregular	1	reris	reor	v	*
+irregular	1	retur	reor	v	*
+irregular	1	rentur	reor	v	*
+irregular	1	rebatur	reor	v	*
+irregular	1	reri	reor	v	*
+irregular	1	fatur	for	v	*
+irregular	1	fantur	for	v	*
+irregular	1	fari	for	v	*
+irregular	1	fandi	for	v	*
+irregular	1	fabor	for	v	*
 noun	1	rosae	rosa	n	*
 noun	1	rosam	rosa	n	*
 noun	1	rosarum	rosa	n	*
@@ -692,232 +692,232 @@ adjective	1	minus	parvus	adj	*
 adjective	1	plurimum	multus	adj	*
 adjective	1	longissime	longus	adj	*
 adjective	1	facillime	facilis	adj	*
-pronoun or determiner	1	mei	ego	*	*
-pronoun or determiner	1	mihi	ego	*	*
-pronoun or determiner	1	me	ego	*	*
-pronoun or determiner	1	nostri	nos	*	*
-pronoun or determiner	1	tui	tu	*	*
-pronoun or determiner	1	tibi	tu	*	*
-pronoun or determiner	1	te	tu	*	*
-pronoun or determiner	1	vestri	vos	*	*
-pronoun or determiner	1	vobis	vos	*	*
-pronoun or determiner	1	sibi	sui	*	*
-pronoun or determiner	1	se	sui	*	*
-pronoun or determiner	1	ea	is	*	*
-pronoun or determiner	1	id	is	*	*
-pronoun or determiner	1	eius	is	*	*
-pronoun or determiner	1	ei	is	*	*
-pronoun or determiner	1	eum	is	*	*
-pronoun or determiner	1	eam	is	*	*
-pronoun or determiner	1	eo	is	*	*
-pronoun or determiner	1	ii	is	*	*
-pronoun or determiner	1	eae	is	*	*
-pronoun or determiner	1	eorum	is	*	*
-pronoun or determiner	1	earum	is	*	*
-pronoun or determiner	1	eos	is	*	*
-pronoun or determiner	1	eas	is	*	*
-pronoun or determiner	1	eius	ea	*	*
-pronoun or determiner	1	eam	ea	*	*
-pronoun or determiner	1	eius	id	*	*
-pronoun or determiner	1	haec	hic	*	*
-pronoun or determiner	1	hoc	hic	*	*
-pronoun or determiner	1	huius	hic	*	*
-pronoun or determiner	1	huic	hic	*	*
-pronoun or determiner	1	hunc	hic	*	*
-pronoun or determiner	1	hanc	hic	*	*
-pronoun or determiner	1	hac	hic	*	*
-pronoun or determiner	1	hi	hic	*	*
-pronoun or determiner	1	hae	hic	*	*
-pronoun or determiner	1	horum	hic	*	*
-pronoun or determiner	1	harum	hic	*	*
-pronoun or determiner	1	his	hic	*	*
-pronoun or determiner	1	hos	hic	*	*
-pronoun or determiner	1	has	hic	*	*
-pronoun or determiner	1	illa	ille	*	*
-pronoun or determiner	1	illud	ille	*	*
-pronoun or determiner	1	illius	ille	*	*
-pronoun or determiner	1	illi	ille	*	*
-pronoun or determiner	1	illorum	ille	*	*
-pronoun or determiner	1	illis	ille	*	*
-pronoun or determiner	1	ista	iste	*	*
-pronoun or determiner	1	istud	iste	*	*
-pronoun or determiner	1	istius	iste	*	*
-pronoun or determiner	1	ipsa	ipse	*	*
-pronoun or determiner	1	ipsum	ipse	*	*
-pronoun or determiner	1	ipsius	ipse	*	*
-pronoun or determiner	1	ipsi	ipse	*	*
-pronoun or determiner	1	ipsorum	ipse	*	*
-pronoun or determiner	1	eadem	idem	*	*
-pronoun or determiner	1	eiusdem	idem	*	*
-pronoun or determiner	1	eidem	idem	*	*
-pronoun or determiner	1	eundem	idem	*	*
-pronoun or determiner	1	eandem	idem	*	*
-pronoun or determiner	1	eodem	idem	*	*
-pronoun or determiner	1	iidem	idem	*	*
-pronoun or determiner	1	eorundem	idem	*	*
-pronoun or determiner	1	earundem	idem	*	*
-pronoun or determiner	1	iisdem	idem	*	*
-pronoun or determiner	1	eosdem	idem	*	*
-pronoun or determiner	1	quae	qui	*	*
-pronoun or determiner	1	quod	qui	*	*
-pronoun or determiner	1	cuius	qui	*	*
-pronoun or determiner	1	cui	qui	*	*
-pronoun or determiner	1	quem	qui	*	*
-pronoun or determiner	1	quam	qui	*	*
-pronoun or determiner	1	quo	qui	*	*
-pronoun or determiner	1	qua	qui	*	*
-pronoun or determiner	1	quorum	qui	*	*
-pronoun or determiner	1	quarum	qui	*	*
-pronoun or determiner	1	quos	qui	*	*
-pronoun or determiner	1	quas	qui	*	*
-pronoun or determiner	1	quid	quis	*	*
-pronoun or determiner	1	cuius	quis	*	*
-pronoun or determiner	1	quaedam	quidam	*	*
-pronoun or determiner	1	quoddam	quidam	*	*
-pronoun or determiner	1	cuiusdam	quidam	*	*
-pronoun or determiner	1	cuidam	quidam	*	*
-pronoun or determiner	1	quendam	quidam	*	*
-pronoun or determiner	1	quandam	quidam	*	*
-pronoun or determiner	1	quodam	quidam	*	*
-pronoun or determiner	1	quorundam	quidam	*	*
-pronoun or determiner	1	quibusdam	quidam	*	*
-pronoun or determiner	1	quosdam	quidam	*	*
-pronoun or determiner	1	quaeque	quisque	*	*
-pronoun or determiner	1	quodque	quisque	*	*
-pronoun or determiner	1	cuiusque	quisque	*	*
-pronoun or determiner	1	cuique	quisque	*	*
-pronoun or determiner	1	quemque	quisque	*	*
-pronoun or determiner	1	quoque	quisque	*	*
-pronoun or determiner	1	quicquam	quisquam	*	*
-pronoun or determiner	1	cuiusquam	quisquam	*	*
-pronoun or determiner	1	quemquam	quisquam	*	*
-pronoun or determiner	1	quaevis	quivis	*	*
-pronoun or determiner	1	quidvis	quivis	*	*
-pronoun or determiner	1	quemvis	quivis	*	*
-pronoun or determiner	1	quolibet	quilibet	*	*
-pronoun or determiner	1	quaecumque	quicumque	*	*
-pronoun or determiner	1	quodcumque	quicumque	*	*
-pronoun or determiner	1	quibuscumque	quicumque	*	*
-pronoun or determiner	1	quaecunque	quicunque	*	*
-pronoun or determiner	1	quempiam	quispiam	*	*
-pronoun or determiner	1	aliquid	aliquis	*	*
-pronoun or determiner	1	aliqua	aliquis	*	*
-pronoun or determiner	1	alicuius	aliquis	*	*
-pronoun or determiner	1	alicui	aliquis	*	*
-pronoun or determiner	1	aliquem	aliquis	*	*
-pronoun or determiner	1	aliquo	aliquis	*	*
-pronoun or determiner	1	aliqui	aliquis	*	*
-pronoun or determiner	1	aliquibus	aliquis	*	*
-pronoun or determiner	1	quidquid	quisquis	*	*
-pronoun or determiner	1	quoquo	quisquis	*	*
-pronoun or determiner	1	utra	uter	*	*
-pronoun or determiner	1	utrum	uter	*	*
-pronoun or determiner	1	utrius	uter	*	*
-pronoun or determiner	1	utriusque	uterque	*	*
-pronoun or determiner	1	utrumque	uterque	*	*
-pronoun or determiner	1	utraque	uterque	*	*
-pronoun or determiner	1	utrosque	uterque	*	*
-pronoun or determiner	1	nulla	nullus	*	*
-pronoun or determiner	1	nullius	nullus	*	*
-pronoun or determiner	1	nulli	nullus	*	*
-pronoun or determiner	1	nullum	nullus	*	*
-pronoun or determiner	1	nullos	nullus	*	*
-pronoun or determiner	1	ullius	ullus	*	*
-pronoun or determiner	1	ullam	ullus	*	*
-pronoun or determiner	1	alia	alius	*	*
-pronoun or determiner	1	aliud	alius	*	*
-pronoun or determiner	1	alii	alius	*	*
-pronoun or determiner	1	alium	alius	*	*
-pronoun or determiner	1	aliorum	alius	*	*
-pronoun or determiner	1	altera	alter	*	*
-pronoun or determiner	1	alterum	alter	*	*
-pronoun or determiner	1	alterius	alter	*	*
-pronoun or determiner	1	alteri	alter	*	*
-pronoun or determiner	1	neutra	neuter	*	*
-pronoun or determiner	1	neutrius	neuter	*	*
-pronoun or determiner	1	mea	meus	*	*
-pronoun or determiner	1	meum	meus	*	*
-pronoun or determiner	1	meae	meus	*	*
-pronoun or determiner	1	meorum	meus	*	*
-pronoun or determiner	1	mi	meus	*	*
-pronoun or determiner	1	tua	tuus	*	*
-pronoun or determiner	1	tuis	tuus	*	*
-pronoun or determiner	1	sua	suus	*	*
-pronoun or determiner	1	suum	suus	*	*
-pronoun or determiner	1	suorum	suus	*	*
-pronoun or determiner	1	suis	suus	*	*
-pronoun or determiner	1	nostra	noster	*	*
-pronoun or determiner	1	nostrum	noster	*	*
-pronoun or determiner	1	nostri	noster	*	*
-pronoun or determiner	1	nostris	noster	*	*
-pronoun or determiner	1	vestra	vester	*	*
-pronoun or determiner	1	vestrum	vester	*	*
-pronoun or determiner	1	neminem	nemo	*	*
-pronoun or determiner	1	neminis	nemo	*	*
-pronoun or determiner	1	nihili	nihil	*	*
-pronoun or determiner	1	nihilo	nihil	*	*
-pronoun or determiner	1	nil	nihil	*	*
-pronoun or determiner	1	duae	duo	*	*
-pronoun or determiner	1	duorum	duo	*	*
-pronoun or determiner	1	duobus	duo	*	*
-pronoun or determiner	1	duabus	duo	*	*
-pronoun or determiner	1	duos	duo	*	*
-pronoun or determiner	1	duas	duo	*	*
-pronoun or determiner	1	ambae	ambo	*	*
-pronoun or determiner	1	ambobus	ambo	*	*
-pronoun or determiner	1	ambos	ambo	*	*
-pronoun or determiner	1	tria	tres	*	*
-pronoun or determiner	1	trium	tres	*	*
-pronoun or determiner	1	tribus	tres	*	*
-pronoun or determiner	1	milia	mille	*	*
-pronoun or determiner	1	milium	mille	*	*
-pronoun or determiner	1	milibus	mille	*	*
-pronoun or determiner	1	millia	mille	*	*
-pronoun or determiner	1	unumquemque	unusquisque	*	*
-pronoun or determiner	1	uniuscuiusque	unusquisque	*	*
-pronoun or determiner	1	unicuique	unusquisque	*	*
-proper name	1	Romam	Roma	*	*
-proper name	1	Romae	Roma	*	*
-proper name	1	Galliam	Gallia	*	*
-proper name	1	Galliae	Gallia	*	*
-proper name	1	Aeneae	Aeneas	*	*
-proper name	1	Aenean	Aeneas	*	*
-proper name	1	Aeneam	Aeneas	*	*
-proper name	1	Anchisen	Anchises	*	*
-proper name	1	Caesaremque	Caesar	*	*
-proper name	1	Belgarum	Belgae	*	*
-proper name	1	Marci	Marcus	*	*
-proper name	1	Marco	Marcus	*	*
-proper name	1	Marcum	Marcus	*	*
-proper name	1	Marce	Marcus	*	*
-proper name	1	Helvetiorum	Helvetii	*	*
-proper name	1	Alexandri	Alexander	*	*
-proper name	1	Alexandrum	Alexander	*	*
-proper name	1	Caesaris	Caesar	*	*
-proper name	1	Caesari	Caesar	*	*
-proper name	1	Caesarem	Caesar	*	*
-proper name	1	Caesare	Caesar	*	*
-proper name	1	Hannibalis	Hannibal	*	*
-proper name	1	Ciceronis	Cicero	*	*
-proper name	1	Ciceroni	Cicero	*	*
-proper name	1	Ciceronem	Cicero	*	*
-proper name	1	Cicerone	Cicero	*	*
-proper name	1	Carthaginis	Carthago	*	*
-proper name	1	Apollinem	Apollo	*	*
-proper name	1	Veneris	Venus	*	*
-proper name	1	Martis	Mars	*	*
-proper name	1	Pallantis	Pallas	*	*
-proper name	1	Palladis	Pallas	*	*
-proper name	1	Phoenicis	Phoenix	*	*
-proper name	1	Delon	Delos	*	*
-proper name	1	Iovis	Iuppiter	*	*
-proper name	1	Iovi	Iuppiter	*	*
-proper name	1	Iovem	Iuppiter	*	*
-proper name	1	Iove	Iuppiter	*	*
-proper name	1	Iesu	Iesus	*	*
-proper name	1	Iesum	Iesus	*	*
-proper name	1	Iunonis	Iuno	*	*
-proper name	1	Iunoni	Iuno	*	*
+pronoun	1	mei	ego	*	*
+pronoun	1	mihi	ego	*	*
+pronoun	1	me	ego	*	*
+pronoun	1	nostri	nos	*	*
+pronoun	1	tui	tu	*	*
+pronoun	1	tibi	tu	*	*
+pronoun	1	te	tu	*	*
+pronoun	1	vestri	vos	*	*
+pronoun	1	vobis	vos	*	*
+pronoun	1	sibi	sui	*	*
+pronoun	1	se	sui	*	*
+pronoun	1	ea	is	*	*
+pronoun	1	id	is	*	*
+pronoun	1	eius	is	*	*
+pronoun	1	ei	is	*	*
+pronoun	1	eum	is	*	*
+pronoun	1	eam	is	*	*
+pronoun	1	eo	is	*	*
+pronoun	1	ii	is	*	*
+pronoun	1	eae	is	*	*
+pronoun	1	eorum	is	*	*
+pronoun	1	earum	is	*	*
+pronoun	1	eos	is	*	*
+pronoun	1	eas	is	*	*
+pronoun	1	eius	ea	*	*
+pronoun	1	eam	ea	*	*
+pronoun	1	eius	id	*	*
+pronoun	1	haec	hic	*	*
+pronoun	1	hoc	hic	*	*
+pronoun	1	huius	hic	*	*
+pronoun	1	huic	hic	*	*
+pronoun	1	hunc	hic	*	*
+pronoun	1	hanc	hic	*	*
+pronoun	1	hac	hic	*	*
+pronoun	1	hi	hic	*	*
+pronoun	1	hae	hic	*	*
+pronoun	1	horum	hic	*	*
+pronoun	1	harum	hic	*	*
+pronoun	1	his	hic	*	*
+pronoun	1	hos	hic	*	*
+pronoun	1	has	hic	*	*
+pronoun	1	illa	ille	*	*
+pronoun	1	illud	ille	*	*
+pronoun	1	illius	ille	*	*
+pronoun	1	illi	ille	*	*
+pronoun	1	illorum	ille	*	*
+pronoun	1	illis	ille	*	*
+pronoun	1	ista	iste	*	*
+pronoun	1	istud	iste	*	*
+pronoun	1	istius	iste	*	*
+pronoun	1	ipsa	ipse	*	*
+pronoun	1	ipsum	ipse	*	*
+pronoun	1	ipsius	ipse	*	*
+pronoun	1	ipsi	ipse	*	*
+pronoun	1	ipsorum	ipse	*	*
+pronoun	1	eadem	idem	*	*
+pronoun	1	eiusdem	idem	*	*
+pronoun	1	eidem	idem	*	*
+pronoun	1	eundem	idem	*	*
+pronoun	1	eandem	idem	*	*
+pronoun	1	eodem	idem	*	*
+pronoun	1	iidem	idem	*	*
+pronoun	1	eorundem	idem	*	*
+pronoun	1	earundem	idem	*	*
+pronoun	1	iisdem	idem	*	*
+pronoun	1	eosdem	idem	*	*
+pronoun	1	quae	qui	*	*
+pronoun	1	quod	qui	*	*
+pronoun	1	cuius	qui	*	*
+pronoun	1	cui	qui	*	*
+pronoun	1	quem	qui	*	*
+pronoun	1	quam	qui	*	*
+pronoun	1	quo	qui	*	*
+pronoun	1	qua	qui	*	*
+pronoun	1	quorum	qui	*	*
+pronoun	1	quarum	qui	*	*
+pronoun	1	quos	qui	*	*
+pronoun	1	quas	qui	*	*
+pronoun	1	quid	quis	*	*
+pronoun	1	cuius	quis	*	*
+pronoun	1	quaedam	quidam	*	*
+pronoun	1	quoddam	quidam	*	*
+pronoun	1	cuiusdam	quidam	*	*
+pronoun	1	cuidam	quidam	*	*
+pronoun	1	quendam	quidam	*	*
+pronoun	1	quandam	quidam	*	*
+pronoun	1	quodam	quidam	*	*
+pronoun	1	quorundam	quidam	*	*
+pronoun	1	quibusdam	quidam	*	*
+pronoun	1	quosdam	quidam	*	*
+pronoun	1	quaeque	quisque	*	*
+pronoun	1	quodque	quisque	*	*
+pronoun	1	cuiusque	quisque	*	*
+pronoun	1	cuique	quisque	*	*
+pronoun	1	quemque	quisque	*	*
+pronoun	1	quoque	quisque	*	*
+pronoun	1	quicquam	quisquam	*	*
+pronoun	1	cuiusquam	quisquam	*	*
+pronoun	1	quemquam	quisquam	*	*
+pronoun	1	quaevis	quivis	*	*
+pronoun	1	quidvis	quivis	*	*
+pronoun	1	quemvis	quivis	*	*
+pronoun	1	quolibet	quilibet	*	*
+pronoun	1	quaecumque	quicumque	*	*
+pronoun	1	quodcumque	quicumque	*	*
+pronoun	1	quibuscumque	quicumque	*	*
+pronoun	1	quaecunque	quicunque	*	*
+pronoun	1	quempiam	quispiam	*	*
+pronoun	1	aliquid	aliquis	*	*
+pronoun	1	aliqua	aliquis	*	*
+pronoun	1	alicuius	aliquis	*	*
+pronoun	1	alicui	aliquis	*	*
+pronoun	1	aliquem	aliquis	*	*
+pronoun	1	aliquo	aliquis	*	*
+pronoun	1	aliqui	aliquis	*	*
+pronoun	1	aliquibus	aliquis	*	*
+pronoun	1	quidquid	quisquis	*	*
+pronoun	1	quoquo	quisquis	*	*
+pronoun	1	utra	uter	*	*
+pronoun	1	utrum	uter	*	*
+pronoun	1	utrius	uter	*	*
+pronoun	1	utriusque	uterque	*	*
+pronoun	1	utrumque	uterque	*	*
+pronoun	1	utraque	uterque	*	*
+pronoun	1	utrosque	uterque	*	*
+pronoun	1	nulla	nullus	*	*
+pronoun	1	nullius	nullus	*	*
+pronoun	1	nulli	nullus	*	*
+pronoun	1	nullum	nullus	*	*
+pronoun	1	nullos	nullus	*	*
+pronoun	1	ullius	ullus	*	*
+pronoun	1	ullam	ullus	*	*
+pronoun	1	alia	alius	*	*
+pronoun	1	aliud	alius	*	*
+pronoun	1	alii	alius	*	*
+pronoun	1	alium	alius	*	*
+pronoun	1	aliorum	alius	*	*
+pronoun	1	altera	alter	*	*
+pronoun	1	alterum	alter	*	*
+pronoun	1	alterius	alter	*	*
+pronoun	1	alteri	alter	*	*
+pronoun	1	neutra	neuter	*	*
+pronoun	1	neutrius	neuter	*	*
+pronoun	1	mea	meus	*	*
+pronoun	1	meum	meus	*	*
+pronoun	1	meae	meus	*	*
+pronoun	1	meorum	meus	*	*
+pronoun	1	mi	meus	*	*
+pronoun	1	tua	tuus	*	*
+pronoun	1	tuis	tuus	*	*
+pronoun	1	sua	suus	*	*
+pronoun	1	suum	suus	*	*
+pronoun	1	suorum	suus	*	*
+pronoun	1	suis	suus	*	*
+pronoun	1	nostra	noster	*	*
+pronoun	1	nostrum	noster	*	*
+pronoun	1	nostri	noster	*	*
+pronoun	1	nostris	noster	*	*
+pronoun	1	vestra	vester	*	*
+pronoun	1	vestrum	vester	*	*
+pronoun	1	neminem	nemo	*	*
+pronoun	1	neminis	nemo	*	*
+pronoun	1	nihili	nihil	*	*
+pronoun	1	nihilo	nihil	*	*
+pronoun	1	nil	nihil	*	*
+pronoun	1	duae	duo	*	*
+pronoun	1	duorum	duo	*	*
+pronoun	1	duobus	duo	*	*
+pronoun	1	duabus	duo	*	*
+pronoun	1	duos	duo	*	*
+pronoun	1	duas	duo	*	*
+pronoun	1	ambae	ambo	*	*
+pronoun	1	ambobus	ambo	*	*
+pronoun	1	ambos	ambo	*	*
+pronoun	1	tria	tres	*	*
+pronoun	1	trium	tres	*	*
+pronoun	1	tribus	tres	*	*
+pronoun	1	milia	mille	*	*
+pronoun	1	milium	mille	*	*
+pronoun	1	milibus	mille	*	*
+pronoun	1	millia	mille	*	*
+pronoun	1	unumquemque	unusquisque	*	*
+pronoun	1	uniuscuiusque	unusquisque	*	*
+pronoun	1	unicuique	unusquisque	*	*
+name	1	Romam	Roma	*	*
+name	1	Romae	Roma	*	*
+name	1	Galliam	Gallia	*	*
+name	1	Galliae	Gallia	*	*
+name	1	Aeneae	Aeneas	*	*
+name	1	Aenean	Aeneas	*	*
+name	1	Aeneam	Aeneas	*	*
+name	1	Anchisen	Anchises	*	*
+name	1	Caesaremque	Caesar	*	*
+name	1	Belgarum	Belgae	*	*
+name	1	Marci	Marcus	*	*
+name	1	Marco	Marcus	*	*
+name	1	Marcum	Marcus	*	*
+name	1	Marce	Marcus	*	*
+name	1	Helvetiorum	Helvetii	*	*
+name	1	Alexandri	Alexander	*	*
+name	1	Alexandrum	Alexander	*	*
+name	1	Caesaris	Caesar	*	*
+name	1	Caesari	Caesar	*	*
+name	1	Caesarem	Caesar	*	*
+name	1	Caesare	Caesar	*	*
+name	1	Hannibalis	Hannibal	*	*
+name	1	Ciceronis	Cicero	*	*
+name	1	Ciceroni	Cicero	*	*
+name	1	Ciceronem	Cicero	*	*
+name	1	Cicerone	Cicero	*	*
+name	1	Carthaginis	Carthago	*	*
+name	1	Apollinem	Apollo	*	*
+name	1	Veneris	Venus	*	*
+name	1	Martis	Mars	*	*
+name	1	Pallantis	Pallas	*	*
+name	1	Palladis	Pallas	*	*
+name	1	Phoenicis	Phoenix	*	*
+name	1	Delon	Delos	*	*
+name	1	Iovis	Iuppiter	*	*
+name	1	Iovi	Iuppiter	*	*
+name	1	Iovem	Iuppiter	*	*
+name	1	Iove	Iuppiter	*	*
+name	1	Iesu	Iesus	*	*
+name	1	Iesum	Iesus	*	*
+name	1	Iunonis	Iuno	*	*
+name	1	Iunoni	Iuno	*	*
 enclitic	1	virumque	vir	*	*
 enclitic	1	populusque	populus	*	*
 enclitic	1	Romaeque	Roma	*	*
@@ -991,24 +991,24 @@ spelling	1	aërem	aer	*	*
 spelling	1	ĭtĕr	iter	*	*
 spelling	1	AMOR	amor	*	*
 spelling	1	Imperatoris	imperator	*	*
-verb, perfect system	1	noris	nosco	v	*
-verb, perfect system	1	norit	nosco	v	*
-verb, irregular	1	licuerit	licet	v	*
-verb, irregular	1	assum	adsum	v	*
-verb, irregular	1	remini	reor	v	*
+perfect	1	noris	nosco	v	*
+perfect	1	norit	nosco	v	*
+irregular	1	licuerit	licet	v	*
+irregular	1	assum	adsum	v	*
+irregular	1	remini	reor	v	*
 noun	1	vasis	vas	n	*
-pronoun or determiner	1	unaquaeque	unusquisque	*	*
-pronoun or determiner	1	aliquae	aliquis	*	*
-pronoun or determiner	1	meo	meus	*	*
-pronoun or determiner	1	duum	duo	*	*
-pronoun or determiner	1	tris	tres	*	*
+pronoun	1	unaquaeque	unusquisque	*	*
+pronoun	1	aliquae	aliquis	*	*
+pronoun	1	meo	meus	*	*
+pronoun	1	duum	duo	*	*
+pronoun	1	tris	tres	*	*
 noun	1	artis	ars	n	*
 noun	1	arte	ars	n	*
 noun	1	opem	ops	n	*
-verb, perfect system	1	suffoderat	suffodio	v	*
-verb, participle or supine	1	effossus	effodio	v	*
-verb, present system	1	amabamus	amo	v	*
-verb, present system	1	amaremur	amo	v	*
+perfect	1	suffoderat	suffodio	v	*
+participle	1	effossus	effodio	v	*
+present	1	amabamus	amo	v	*
+present	1	amaremur	amo	v	*
 negative	0	domini	domo	n	*
 negative	0	vicini	vico	n	*
 negative	0	potui	poto	v	*
@@ -1042,13 +1042,13 @@ negative	0	ferunt	fi	*	*
 negative	0	sui	sus	*	*
 negative	0	tui	tus	*	*
 noun	1	pectinis	pecten	n	*
-verb, present system	1	regeris	rego	v	*
-verb, present system	1	sequeris	sequor	v	*
-verb, present system	1	amer	amo	v	*
-verb, present system	1	horter	hortor	v	*
-verb, present system	1	amabat	amo	v	impf-3s
-verb, perfect system	1	duxit	duco	v	perf-stem|perf-3s
-verb, perfect system	1	statuisti	statuo	v	*
+present	1	regeris	rego	v	*
+present	1	sequeris	sequor	v	*
+present	1	amer	amo	v	*
+present	1	horter	hortor	v	*
+present	1	amabat	amo	v	impf-3s
+perfect	1	duxit	duco	v	perf-stem|perf-3s
+perfect	1	statuisti	statuo	v	*
 noun	1	domini	dominus	n	n-gen-sg+n-nom-pl
 noun	1	regis	rex	n	n-gen-sg
 noun	1	humi	humus	n	n-loc
@@ -1057,7 +1057,7 @@ noun	1	genibus	genu	n	*
 noun	1	cornuum	cornu	n	*
 noun	1	genūs	genu	n	*
 adjective	1	fortior	fortis	adj	comparative
-verb, with esse	1	amatas esse	amo	v	*
+esse	1	amatas esse	amo	v	*
 negative	0	Amat	Amo	*	*
 negative	0	piam	pio	*	*
 negative	0	coit	coo	*	*
@@ -1071,31 +1071,43 @@ negative	0	altus est	alo	*	*
 negative	0	falsum est	fallo	*	*
 negative	0	obesa est	obedo	*	*
 negative	0	veritas est	vereor	*	*
-left to the dictionary	0	advocatus	advoco	*	*
-left to the dictionary	0	advocatus	advocor	*	*
-left to the dictionary	0	invitus	invio	*	*
-left to the dictionary	0	invitus	invior	*	*
-left to the dictionary	0	peritus	pereo	*	*
-left to the dictionary	0	peritus	pereor	*	*
-left to the dictionary	0	argento	argentus	*	*
-left to the dictionary	0	mensam	mensus	*	*
-left to the dictionary	0	patriae	patrius	*	*
-left to the dictionary	0	supplicia	supplex	*	*
-left to the dictionary	0	bella	bellus	*	*
-left to the dictionary	0	canere	caneo	*	*
-verb, present system	1	amaretis	amo	v	*
-verb, participle or supine	1	perterritus est	perterreo	v	*
-verb, participle or supine	1	perhibitus	perhibeo	v	*
+exclusion	0	advocatus	advoco	*	*
+exclusion	0	advocatus	advocor	*	*
+exclusion	0	invitus	invio	*	*
+exclusion	0	invitus	invior	*	*
+exclusion	0	peritus	pereo	*	*
+exclusion	0	peritus	pereor	*	*
+exclusion	0	argento	argentus	*	*
+exclusion	0	mensam	mensus	adj	*
+exclusion	0	patriae	patrius	*	*
+exclusion	0	supplicia	supplex	*	*
+exclusion	0	bella	bellus	*	*
+exclusion	0	canere	caneo	*	*
+present	1	amaretis	amo	v	*
+participle	1	perterritus est	perterreo	v	*
+participle	1	perhibitus	perhibeo	v	*
 adjective	1	bellica	bellicus	adj	*
 adjective	1	patriciae	patricius	adj	*
 adjective	1	argenteo	argenteus	adj	*
-verb, present system	1	candere	candeo	v	*
-left to the dictionary	0	loca	locum	*	*
-verb, with esse	1	amatas fuisse	amo	v	*
-left to the dictionary	0	Itali	Italis	*	*
-left to the dictionary	0	existere	existi	*	*
-left to the dictionary	0	jure	juro	*	*
-left to the dictionary	0	juris	juro	*	*
-left to the dictionary	0	existit	existi	*	*
-left to the dictionary	0	curtius	curtior	*	*
-left to the dictionary	0	coelis	coeles	*	*
+present	1	candere	candeo	v	*
+exclusion	0	loca	locum	*	*
+esse	1	amatas fuisse	amo	v	*
+exclusion	0	Itali	Italis	*	*
+exclusion	0	existere	existi	*	*
+exclusion	0	jure	juro	*	*
+exclusion	0	juris	juro	*	*
+exclusion	0	existit	existi	*	*
+exclusion	0	curtius	curtior	*	*
+exclusion	0	coelis	coeles	*	*
+exclusion	0	lineae	lineus	*	*
+name	0	Iam	Ias	*	*
+esse	1	amatam esse	amo	v	*
+noun	1	creaturam	creatura	n	n-first
+exclusion	0	generum	gener	*	n-acc-sg
+exclusion	0	generi	gener	*	n-gen-sg+n-nom-pl
+exclusion	0	putet	puteo	*	*
+exclusion	0	scribam	scriba	*	*
+exclusion	0	canebat	caneo	*	*
+exclusion	0	pene	penus	*	n-voc-sg
+esse	0	sita est	sino	*	*
+esse	0	recta est	rego	*	*

@@ -50,22 +50,26 @@ form-of	1	Herculis	Hercules	Herculis
 resolution	0	virtus	vir	vir
 part of speech	0	ratis	ratio	ratis
 capitals	1	SENATVS	senatus	SENATVS
-left to the dictionary	1	navi	navis	navi
-left to the dictionary	1	mensas	mensa	mensas
-left to the dictionary	1	copias	copia	copias
-left to the dictionary	1	aceto	acetum	aceto
-left to the dictionary	1	lacum	lacus	lacum
-left to the dictionary	1	armorum	arma	armorum
-left to the dictionary	1	fortes	fortis	fortes
-left to the dictionary	1	fortem	fortis	fortem
-left to the dictionary	1	forti	fortis	forti
-left to the dictionary	1	fortium	fortis	fortium
-left to the dictionary	1	fortibus	fortis	fortibus
-left to the dictionary	1	impetum	impetus	impetum
+exclusion	1	navi	navis	navi
+exclusion	1	mensas	mensa	mensas
+exclusion	1	copias	copia	copias
+exclusion	1	aceto	acetum	aceto
+exclusion	1	lacum	lacus	lacum
+exclusion	1	armorum	arma	armorum
+exclusion	1	fortes	fortis	fortes
+exclusion	1	fortem	fortis	fortem
+exclusion	1	forti	fortis	forti
+exclusion	1	fortium	fortis	fortium
+exclusion	1	fortibus	fortis	fortibus
+exclusion	1	impetum	impetus	impetum
 homograph	1	Galliam	Gallia	Galliam
-left to the dictionary	1	patriam	patria	patriam
-left to the dictionary	1	lineam	linea	lineam
+exclusion	1	patriam	patria	patriam
+exclusion	1	lineam	linea	lineam
 homograph	1	electus	eligo	electus
 homograph	1	summo	summus	summo
-left to the dictionary	1	mensae	mensa	mensae
+exclusion	1	mensae	mensa	mensae
 untagged terms	0	sinis	sine	sinis
+homograph	1	tecta	tectum	tecta
+homograph	1	creaturam	creatura	creaturam
+homograph	1	media	medius	media
+exclusion	1	jura	ius	jura

@@ -90,5 +90,13 @@
   ["eligo", "ēligō", "v", "v", 0, ["to choose"], 89, ""],
   ["elego", "ēlēgō", "v", "v", 0, ["to bequeath away"], 90, ""],
   ["summus", "summus", "adj", "adj", 0, ["highest"], 91, ""],
-  ["summum", "summum", "n", "n", 0, ["top"], 92, ""]
+  ["summum", "summum", "n", "n", 0, ["top"], 92, ""],
+  ["tectum", "tēctum", "n", "n", 0, ["roof"], 93, ""],
+  ["tectus", "tēctus", "v", "v", 0, ["covered"], 94, ""],
+  ["creatura", "creātūra", "n", "n", 0, ["creature"], 95, ""],
+  ["creaturus", "creātūrus", "v", "v", 0, ["about to create"], 96, ""],
+  ["medius", "medius", "adj", "adj", 0, ["middle"], 97, ""],
+  ["medium", "medium", "n", "n", 0, ["middle"], 98, ""],
+  ["ius", "iūs", "n", "n", 0, ["right, law"], 99, ""],
+  ["iuro", "iūrō", "v", "v", 0, ["to swear"], 100, ""]
 ]

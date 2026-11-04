@@ -600,7 +600,7 @@ quiesco quievi quietus
 rapio rapui raptus
 sapio sapui -
 +ripio ripui reptus min:1
-rego rexi rectus
+rego rexi rectus noesse
 +rigo rexi rectus min:1
 surgo surrexi surrectus
 +surgo surrexi surrectus
@@ -614,7 +614,7 @@ scribo scripsi scriptus
 sero sevi satus
 +sero sevi situs
 +sero serui sertus
-sino sivi situs
+sino sivi situs noesse
 desino desii|desivi desitus
 sisto stiti|steti status
 +sisto stiti -
@@ -1474,9 +1474,9 @@ const ESSE = ['sum', 'es', 'est', 'sumus', 'estis', 'sunt', 'eram', 'eras', 'era
               'fueramus', 'fueratis', 'fuerant', 'fuero', 'fueris', 'fuerit', 'fuerimus', 'fueritis', 'fuerint', 'fuerim', 'fuissem', 'fuisses',
               'fuisset', 'fuissemus', 'fuissetis', 'fuissent', 'fuisse', 'iri'];
 slot('esse', '+ esse', 'A participle or gerundive with a form of esse: amātus est, hortātī sunt, amātūrus esse, dēlenda est, laudandum erat; and the supine with īrī, the future passive infinitive (amātum īrī).');
-// The infinitives also say auxi: an accusative participle (-ōs, -ās) forms a
-// periphrastic only with them (amātās esse), so vēritās est is not read as
-// vereor's.
+// The infinitives also say auxi: an accusative participle (-ōs, -ās, -am)
+// forms a periphrastic only with them (amātās esse, captam esse), so vēritās
+// est is not read as vereor's.
 const ESSE_INFINITIVE = new Set(['esse', 'fore', 'fuisse', 'iri']);
 for (const form of ESSE) { sfx('esse', ` ${form}`, '', [], ESSE_INFINITIVE.has(form) ? ['aux', 'auxi'] : ['aux'], {stemMinLength: 3}); }
 // The participle before esse ends its stem in t, s or x (amāt-a, vīs-um,
@@ -1486,8 +1486,8 @@ for (const form of ESSE) { sfx('esse', ` ${form}`, '', [], ESSE_INFINITIVE.has(f
 // is not a participle.
 // The participle they give says ptcx, which the participles of the noesse
 // lines of the stem table do not take.
-for (const [ending, slotId] of [['a', 'adj-a'], ['um', 'adj-um'], ['i', 'adj-i'], ['ae', 'adj-ae'], ['os', 'adj-os'], ['as', 'adj-as']]) {
-    const conditionsIn = ['os', 'as'].includes(ending) ? ['auxi'] : ['aux'];
+for (const [ending, slotId] of [['a', 'adj-a'], ['um', 'adj-um'], ['i', 'adj-i'], ['ae', 'adj-ae'], ['os', 'adj-os'], ['as', 'adj-as'], ['am', 'adj-am']]) {
+    const conditionsIn = ['os', 'as', 'am'].includes(ending) ? ['auxi'] : ['aux'];
     sfx(slotId, ending, 'us', conditionsIn, ['ptcx'], {stemMinLength: 3, stemCharacters: '[^ A-Z]', stemEndsWith: '[dstx]'});
     if (['um', 'i', 'os'].includes(ending)) {
         sfx(slotId, ending, 'us', conditionsIn, ['ptcx'], {stemMinLength: 3, stemCharacters: '[^ A-Z]', stemEndsWith: '[r]'});
@@ -1528,7 +1528,7 @@ function buildTransforms() {
     // before dēdō's, tulit ferō's before tulō's).
     const all = [...groups.values()];
     const rank = (t) => (t.id === 'adj-e+adverb' || t.id === 'adverb' ? 2
-        : /^name-/u.test(t.id) ? -1
+        : /^(name-|n-first)/u.test(t.id) ? -1
         : /^(adj|comparative|superlative|adverb)/u.test(t.id) ? 0
         : /^(n-|pron-)/u.test(t.id) ? 1 : 3);
     const within = (t) => (/^(perf|plupf|futpf|inf-perf)/u.test(t.id) ? 0 : t.id === 'n-dat-pl' ? 2 : t.id === 'n-voc-sg' ? 3 : 1);
@@ -1558,6 +1558,13 @@ for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
     ['n-gen-sg', 'is', 'es', ['n3s'], 'coel*'],                // coelīs: caelum, not caelēs
     ['imp-2s', 'e', 'o', ['v'], 'jur*'],                       // jūre: iūre, not iūrō
     ['pres-2s', 'is', 'o', ['v'], 'jur*'],                     // jūris: iūs
+    ['imp-2s', 'a', 'o', ['v'], 'jur*'],                       // jūra: iūs
+    ['n-acc-sg', 'erum', 'er', ['n2s'], 'gen*'],               // generum: genus, not gener
+    ['n-gen-sg', 'eri', 'er', ['n2s'], 'gen*'],                // generī
+    ['pres-3s', 'et', 'eo', ['v'], 'put'],                     // putet: putō, not puteō
+    ['n-acc-sg', 'am', 'a', ['n1s'], 'scrib*'],                // scrībam: scrībō, not scrība
+    ['impf-3s', 'ebat', 'eo', ['v'], 'can'],                   // canēbat: canō, not caneō
+    ['n-voc-sg', 'e', 'us', ['n2s'], 'pen*'],                  // pene: paene, not penus
     ['adj3-ia', 'icia', 'ex', ['adj3'], 'suppl'],              // supplicia: supplicium, not supplex
     ['subj-2s', 'ias', 'io', ['v'], 'cop'],                    // cōpiās: cōpia, not cōpiō
     ['imp-fut-2s', 'eto', 'eo', ['v'], 'ac'],                  // acētō: acētum, not aceō
@@ -1574,9 +1581,21 @@ for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
     const matches = [...RULES.values()].filter(({rule, slots}) => slots.includes(slotId) && rule.inflected === inflected
         && rule.deinflected === deinflected && rule.conditionsIn.length === 0 && JSON.stringify(rule.conditionsOut) === JSON.stringify(conditionsOut));
     if (matches.length !== 1) { throw new Error(`${slotId} ${inflected} → ${deinflected}: ${matches.length} rules`); }
+    if (matches[0].rule.stemNotStartsWithText) { throw new Error(`${slotId} ${inflected}: two exclusions`); }
     if (stem.endsWith('*')) { matches[0].rule.stemNotStartsWithText = stem.slice(0, -1); continue; }
     exceptStems(matches[0].slots, matches[0].rule, stem.split('|'));
 }
+
+// Nouns that a participle headword shadows: adjectives come first on ties,
+// and wty-la-en has headwords for future participles (creātūrus) and some
+// perfect ones (tēctus), so these noun forms come first: the -tūra and -sūra
+// nouns (creātūram, Scrīptūrīs, mēnsūrae) and second-declension neuters that
+// are nouns in most sentences (tēcta, dictīs, peccātī, vōta, arva, fātīs).
+slot('n-first', 'noun', 'A noun form that is also a form of a participle headword: creātūram → creātūra, tēcta → tēctum.');
+add('n-first', {type: 'circumfix', prefixes: [['', '']], suffixes: ['am', 'ae', 'is', 'as', 'arum'].flatMap((e) => [['t', 's'].map((c) => [`${c}ur${e}`, `${c}ura`])].flat()),
+    conditionsIn: [], conditionsOut: ['n1s'], stemMinLength: 2});
+add('n-first', {type: 'circumfix', prefixes: ['tect', 'dict', 'peccat', 'fat', 'arv', 'vot', 'bell', 'mandat', 'promiss', 'praecept', 'punct', 'institut'].map((x) => [x, x]), suffixes: ['a', 'i', 'o', 'is', 'orum'].map((e) => [e, 'um']),
+    conditionsIn: [], conditionsOut: ['n2s'], stemCharacters: '[]'});
 
 const transforms = buildTransforms();
 const out = {schema: 1, conditions, transforms};

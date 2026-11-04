@@ -129,9 +129,13 @@ MUTANTS = {
     'vocative first': move(lambda i: i == 'n-voc-sg', last=False),
     'names after adjectives': move(lambda i: i.startswith('name-')),
     'nouns before adjectives': move(lambda i: i.startswith(('n-', 'pron-')), last=False),
+    'neuter plural nouns before adjectives': move(lambda i: i == 'n-nom-pl+n-acc-pl', last=False),
+    'no noun forms before the adjectives': drop_rules(lambda tr, r: tr['id'] == 'n-first'),
+    'name rules min stem 2': drop_key('stemMinLength', 2, lambda tr, r: tr['id'].startswith('name-')),
+    '-am participle before esse': drop_rules(lambda tr, r: r.get('inflected') == 'am' and r['conditionsIn'] == ['auxi']),
 }
 MUTANTS['longer stems of the exclusions'] = drop_rules(lambda tr, r: 'stemStartsWithText' in r)
-for stem in ('nav', 'argent', 'patri', 'mens', 'bell', 'suppl', 'cop', 'ac', 'la', 'arm', 'fo', 'can', 'imp', 'loc', 'Ital', 'exist', 'jur', 'curt', 'coel'):
+for stem in ('nav', 'argent', 'patri', 'mens', 'bell', 'suppl', 'cop', 'ac', 'la', 'arm', 'fo', 'can', 'imp', 'loc', 'Ital', 'exist', 'jur', 'curt', 'coel', 'line', 'gen', 'put', 'scrib', 'pen'):
     MUTANTS[f'{stem}- left to the dictionary'] = drop_key('stemNotStartsWithText', stem)
 
 MUTANTS['untaggedTerms pass'] = lambda t, l: l['lookup'].update(untaggedTerms='pass') or 1
