@@ -566,6 +566,7 @@ for (const lemma of ['молодой', 'простой', 'живой', 'густ
 for (const lemma of ['дорогой', 'другой', 'сухой', 'плохой', 'глухой', 'тихой', 'нагой', 'строгой']) {
     const stem = lemma.slice(0, -2);
     for (const [form, word] of [['short.m', stem], ['short.f', `${stem}а`], ['short.n', `${stem}о`], ['short.pl', `${stem}и`]]) {
+        if (word === 'дороги') { continue; }  // дорога's, far more often than дорогой's short form
         wholeWord('adj', [form], word, lemma, [], ADJ, form === 'short.f' && lemma === 'плохой' ? ['плоха', 'плохой'] : null);
     }
 }
@@ -685,19 +686,21 @@ const E2_HUSHING = {'pres.1sg': 'у', 'pres.2sg': 'ишь', 'pres.3sg': 'ит', 
  * adverbial participle are made (from the third-person plural, the first-person
  * plural and the stem). `skip` leaves out forms written elsewhere.
  */
-function presentClass({pres, inf, endings, imp = [], act = true, pass = false, ger = null, min = 2, stemEnd = null, stemNotEnd = null, example = null, skip = [], gerExclude = null, exclude = null}) {
-    const extra = {stemMinLength: min};
-    if (stemEnd !== null) { extra.stemEndsWith = stemEnd; }
-    if (stemNotEnd !== null) { extra.stemNotEndsWith = stemNotEnd; }
-    if (exclude !== null) { extra.stemNotStartsWithText = exclude; }
+function presentClass({pres, inf, endings, imp = [], act = true, pass = false, ger = null, min = 2, stemEnd = null, stemNotEnd = null, example = null, skip = [], gerExclude = null, exclude = null, excludeForms = null}) {
+    const base = {stemMinLength: min};
+    if (stemEnd !== null) { base.stemEndsWith = stemEnd; }
+    if (stemNotEnd !== null) { base.stemNotEndsWith = stemNotEnd; }
+    // exclude: a stem text left out, in every form or only in excludeForms.
+    const extraFor = (form) => (exclude !== null && (excludeForms === null || excludeForms.includes(form)) ? {...base, stemNotStartsWithText: exclude} : base);
+    const extra = extraFor('ptcp.pres.act');
     const ex = (form) => (example && example[form] ? [example[form], example.inf] : null);
     for (const [form, ending] of Object.entries(endings)) {
         if (skip.includes(form)) { continue; }
-        verb([form], pres + ending, inf, extra, ex(form));
+        verb([form], pres + ending, inf, extraFor(form), ex(form));
     }
     for (const ending of imp) {
-        verb(['imp.2sg'], pres + ending, inf, extra, ex('imp.2sg'));
-        verb(['imp.2pl'], `${pres}${ending}те`, inf, extra, ex('imp.2pl'));
+        verb(['imp.2sg'], pres + ending, inf, extraFor('imp.2sg'), ex('imp.2sg'));
+        verb(['imp.2pl'], `${pres}${ending}те`, inf, extraFor('imp.2pl'), ex('imp.2pl'));
     }
     if (act && !skip.includes('ptcp.pres.act')) {
         verb(['ptcp.pres.act'], `${pres}${endings['pres.3pl'].slice(0, -1)}щий`, inf, extra, ex('ptcp.pres.act'));
@@ -706,10 +709,10 @@ function presentClass({pres, inf, endings, imp = [], act = true, pass = false, g
         const pl1 = endings['pres.1pl'];
         // ведомый, несомый after a consonant; рисуемый after a vowel.
         const passive = pl1 === 'ём' ? (/[аяеуюо]$/u.test(pres) ? 'ем' : 'ом') : pl1;
-        verb(['ptcp.pres.pass'], `${pres}${passive}ый`, inf, extra, ex('ptcp.pres.pass'), {refl: false});
+        verb(['ptcp.pres.pass'], `${pres}${passive}ый`, inf, extraFor('ptcp.pres.pass'), ex('ptcp.pres.pass'), {refl: false});
     }
     if (ger !== null) {
-        const gerExtra = gerExclude === null ? extra : {...extra, stemNotStartsWithText: gerExclude};
+        const gerExtra = gerExclude === null ? extraFor('ger.pres') : {...base, stemNotStartsWithText: gerExclude};
         verb(['ger.pres'], pres + ger, inf, gerExtra, ex('ger.pres'));
     }
 }
@@ -747,7 +750,7 @@ for (const [form, ending] of Object.entries({'pres.1sg': 'ю', 'pres.2sg': 'ёш
 // First conjugation, consonant stems: -нуть, стать, деть, писать, сказать, плакать, прятать, искать, клеветать, сыпать, колебать, дремать.
 // The stem ми is left out: минут is минута's genitive plural, not the rare
 // минуть's (мигнуть's forms keep a longer stem, мигнут).
-presentClass({pres: 'н', inf: 'нуть', endings: E1C, imp: ['и'], exclude: 'ми', example: {inf: 'крикнуть', 'pres.1sg': 'крикну', 'pres.3sg': 'крикнет', 'imp.2sg': 'крикни'}});
+presentClass({pres: 'н', inf: 'нуть', endings: E1C, imp: ['и'], exclude: 'ми', excludeForms: ['pres.3pl', 'imp.2sg', 'imp.2pl'], example: {inf: 'крикнуть', 'pres.1sg': 'крикну', 'pres.3sg': 'крикнет', 'imp.2sg': 'крикни'}});
 presentClass({pres: 'стан', inf: 'стать', endings: E1C, imp: ['ь'], act: false, min: 0, example: {inf: 'встать', 'pres.1sg': 'встану', 'imp.2sg': 'встань'}});
 presentClass({pres: 'ден', inf: 'деть', endings: E1C, imp: ['ь'], act: false, min: 1, example: {inf: 'надеть', 'pres.1sg': 'надену', 'imp.2sg': 'надень'}});
 presentClass({pres: 'ш', inf: 'сать', endings: E1C, imp: ['и'], min: 2, example: {inf: 'писать', 'pres.1sg': 'пишу', 'pres.3sg': 'пишет', 'imp.2sg': 'пиши', 'ptcp.pres.act': 'пишущий'}});
@@ -899,8 +902,10 @@ for (const [m, inf, ex] of [['ёл', 'ести', ['вёл', 'вести']]]) {
 }
 // -честь (прочесть, учесть, счесть, почесть): прочту, прочёл, прочла, прочтённый, прочтя.
 for (const [form, ending] of Object.entries({'pres.1sg': 'чту', 'pres.2sg': 'чтёшь', 'pres.3sg': 'чтёт', 'pres.1pl': 'чтём', 'pres.2pl': 'чтёте', 'pres.3pl': 'чтут', 'past.m': 'чёл', 'past.f': 'чла', 'past.n': 'чло', 'past.pl': 'чли', 'imp.2sg': 'чти', 'imp.2pl': 'чтите', 'ptcp.past.act': 'чётший', 'ger.pres': 'чтя'})) {
-    // почту, почти are почта's and the adverb's, not the rare почесть's.
-    verb([form], ending, 'честь', {stemMinLength: 1, stemNotStartsWithText: 'по'}, form === 'past.m' ? ['прочёл', 'прочесть'] : form === 'past.f' ? ['учла', 'учесть'] : form === 'pres.1sg' ? ['прочту', 'прочесть'] : null);
+    // почту, почти, почтут, почтите are почта's, the adverb's and почтить's, which are far
+    // more frequent than the rare почесть; its other forms (почёл, почла, почтёт) are its own.
+    const collides = ['pres.1sg', 'pres.3pl', 'imp.2sg', 'imp.2pl'].includes(form);
+    verb([form], ending, 'честь', collides ? {stemMinLength: 1, stemNotStartsWithText: 'по'} : {stemMinLength: 1}, form === 'past.m' ? ['прочёл', 'прочесть'] : form === 'past.f' ? ['учла', 'учесть'] : form === 'pres.1sg' ? ['прочту', 'прочесть'] : null);
 }
 verb(['ptcp.past.pass'], 'чтённый', 'честь', {stemMinLength: 1}, ['прочтённый', 'прочесть'], {refl: false});
 for (const [m, inf, ex] of [['дший', 'сти', ['ведший', 'вести']], ['тший', 'сти', ['цветший', 'цвести']]]) {
@@ -1123,6 +1128,51 @@ for (const lemma of ['сколько', 'столько', 'несколько']) 
     closed('num', NUM, lemma, {[`${stem}их`]: ['gen.pl', 'prp.pl', 'acc.pl'], [`${stem}им`]: ['dat.pl'], [`${stem}ими`]: ['ins.pl']});
 }
 
+// --- Frequent words a regular ending reads as a rarer headword --------------------------
+// Each was measured on the 10,000 most frequent words and on real text
+// (README.md, History): the word's dictionary rows name both lemmas, the
+// comparator ties them, and the first rule reached wins (docs/languages.md 9.6).
+for (const [word, lemma, forms] of [
+    ['любого', 'любой', ['gen.m', 'gen.n', 'acc.m']], ['любому', 'любой', ['dat.m', 'dat.n']], ['любым', 'любой', ['ins.m', 'ins.n', 'dat.pl']],
+    ['любом', 'любой', ['prp.m', 'prp.n']], ['любое', 'любой', ['nom.n', 'acc.n']], ['любая', 'любой', ['nom.f']], ['любую', 'любой', ['acc.f']],
+    ['любою', 'любой', ['ins.f']], ['любые', 'любой', ['nom.pl', 'acc.pl']], ['любых', 'любой', ['gen.pl', 'prp.pl', 'acc.pl']], ['любыми', 'любой', ['ins.pl']],
+]) {
+    wholeWord('adj', forms, word, lemma, [], ADJ);
+}
+for (const [word, lemma, forms] of [
+    ['правила', 'правило', ['gen.sg', 'nom.pl']], ['правил', 'правило', ['gen.pl']], ['берегу', 'берег', ['dat.sg', 'loc.sg']], ['началом', 'начало', ['ins.sg']],
+    ['начале', 'начало', ['prp.sg']], ['носки', 'носок', ['nom.pl']], ['десятки', 'десяток', ['nom.pl']],
+]) {
+    wholeWord('noun', forms, word, lemma, [], NOUN);
+}
+// Adjectival nouns read as the noun first (животных is животное's, not животный's;
+// в гостиной, в ванной, бокал шампанского, по данным, в столовой). The adjective
+// keeps its second place: в данных условиях, с данным законом, столовой ложкой.
+for (const [word, lemma, forms] of [
+    ['животных', 'животное', ['gen.pl', 'prp.pl', 'acc.pl']], ['животные', 'животное', ['nom.pl', 'acc.pl']], ['наличными', 'наличные', ['ins.pl']],
+    ['шампанского', 'шампанское', ['gen.n']], ['мороженого', 'мороженое', ['gen.n']], ['гостиной', 'гостиная', ['gen.f', 'dat.f', 'ins.f', 'prp.f']],
+    ['ванной', 'ванная', ['gen.f', 'dat.f', 'ins.f', 'prp.f']], ['ванную', 'ванная', ['acc.f']],
+    ['данных', 'данные', ['gen.pl', 'prp.pl', 'acc.pl']], ['данным', 'данные', ['dat.pl']], ['столовой', 'столовая', ['gen.f', 'dat.f', 'ins.f', 'prp.f']],
+]) {
+    put('adj', forms, {type: 'wholeWord', inflected: word, deinflected: lemma, conditionsIn: [], conditionsOut: NOUN});
+}
+// The adverb определённо; only its е spelling needs the row (with ё no rule reaches определить).
+put('adj', ['short.n'], {type: 'wholeWord', inflected: 'определенно', deinflected: 'определённо', conditionsIn: [], conditionsOut: ADJ});
+wholeWord('num', ['dat.pl'], 'двоим', 'двое', [], NUM);
+
+// Stems a row leaves out, by the row's first ending: (transform id, first ending,
+// stem text, the row's stemEndsWith and first lemma ending when needed). Each stem is the one of a frequent word whose reading by that row
+// came before its lemma (методы → метода, постели → постеля, карьеру → карьер,
+// политику → политик, воздухе → воздуха, лагере → лагер, черт- → черт and
+// чертов, кошелек → кошёлка, вперед → впереди, сучка → сучок, убийцу → убиец,
+// спорю → спороть).
+const EXCLUDE = [
+    ['noun-gen.sg+nom.pl', 'а', 'метод'], ['noun-gen.sg+nom.pl', 'я', 'постел'], ['noun-dat.sg+loc.sg', 'у', 'карьер', '{hardConsonant}'],
+    ['noun-dat.sg+loc.sg', 'у', 'политик', '{velar}'], ['noun-dat.sg+prp.sg', 'е', 'воздух', '{velar}'], ['noun-prp.sg', 'е', 'лагер', '{hardConsonant}'],
+    ['noun-gen.pl', 'ов', 'черт', '{hardConsonant}'], ['noun-gen.pl', 'ок', 'кошел'], ['noun-gen.pl', 'ов', 'черт', '[^ьй]'], ['noun-gen.pl', '', 'вперед', undefined, 'ы'],
+    ['noun-fleeting', 'к', 'суч'], ['noun-fleeting', 'йц', 'уби'], ['verb-pres.1sg', 'олю', 'сп'],
+];
+
 // --- Transforms ----------------------------------------------------------------------------
 const POS_ORDER = ['noun', 'adj', 'pron', 'num', 'verb'];
 const POS_WORD = {noun: 'a noun', adj: 'an adjective or participle', pron: 'a pronoun or determiner', num: 'a numeral', verb: 'a verb'};
@@ -1179,6 +1229,14 @@ const transforms = ordered.map((g) => {
     const description = `${name[0].toUpperCase()}${name.slice(1)} of ${POS_WORD[g.pos]}${examples ? `: ${examples}` : ''}.`;
     return {id: g.id, name, description, source: 'own', rules: crossProducts(g.rules)};
 });
+for (const [id, ending, stem, stemEnd, lemmaEnding] of EXCLUDE) {
+    const t = transforms.find((x) => x.id === id);
+    const first = (r) => (r.type === 'suffix' ? [r.inflected, r.deinflected] : r.type === 'circumfix' && r.suffixes ? r.suffixes[0] : [null, null]);
+    const row = t && t.rules.find((r) => first(r)[0] === ending && (lemmaEnding === undefined || first(r)[1] === lemmaEnding)
+        && (stemEnd === undefined || r.stemEndsWith === stemEnd) && !r.stemChange && r.stemNotStartsWithText === undefined);
+    if (!row) { throw new Error(`EXCLUDE: no row of ${id} starting with "${ending}"`); }
+    row.stemNotStartsWithText = stem;
+}
 
 const out = {schema: 1, conditions, transforms};
 writeFileSync(join(here, 'own.json'), formatTransforms(out));

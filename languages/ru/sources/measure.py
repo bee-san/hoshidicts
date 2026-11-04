@@ -24,6 +24,16 @@ word to the end of its sentence; the first result with a definition is judged
 by the same rule where the word has form-of rows, and the rest are counted and
 sampled for judging by hand.
 
+Words written with е whose only headword is their ё spelling (вперед: вперёд)
+have no rows of their own; both subcommands judge them against that headword
+(frequent lists them apart as yoHeadword*).
+
+Capital entries (MAJOR-3 of audit-hachi-lang-ru-b): at the start of a sentence
+the text as written matches the capital's own headword (the letter Я, the river
+По) with no processor step, before the small-letter word. `text` counts these
+positions (CAPITAL_ENTRY below) and the own-lemma rate with them counted wrong;
+`frequent --capitalised` looks each word up with a capital first letter.
+
 --exempt runs lookup-batch-ru with the dictionary exempt from the part-of-speech
 filter (LookupOptions::pos_filter_exempt), which stands in for the pack field
 lookup.untaggedTerms "pass" until it is on main; results whose conditions only
@@ -211,6 +221,28 @@ def first_with_definition(results):
     return None
 
 
+# The capital's own headword where a sentence needs the small-letter word: a
+# one-letter word that is not an initial (not followed by '.') shown as the
+# letter (tag char), and three capitalised names spelled like function words.
+CAPITAL_NAMES = {'По', 'Один', 'Или'}
+
+
+def capital_entry(word, hover, first):
+    """Whether the first result is the capital's own headword (as audit-hachi-lang-ru-b counts it)."""
+    if first['expression'] != word or first['matched'] != word or not word[:1].isupper():
+        return False
+    tags = first.get('tags', '').split()
+    if len(word) == 1:
+        return not hover[len(word):].startswith('.') and 'char' in tags
+    return word in CAPITAL_NAMES and 'name' in tags
+
+
+def yo_headword_only(word, refs, lemmas):
+    """A word with no rows of its own whose ё spelling is a headword (вперед: вперёд)."""
+    spellings = yo_spellings(word)
+    return word not in lemmas and not any(refs.get(sp) for sp in spellings) and any(sp in lemmas for sp in spellings[1:])
+
+
 def all_counts(path):
     counts = {}
     for line in open(path, encoding='utf-8'):
@@ -219,8 +251,40 @@ def all_counts(path):
     return counts
 
 
+def capitalised(a, refs, lemmas, words, counts):
+    """Each word looked up with a capital first letter, as at the start of a
+    sentence: the words whose first result is a capitalised term while the
+    small-letter lookup shows a small-letter one, split by how it was reached."""
+    words = [w for w in words if w[:1].islower()]
+    caps = [w[0].upper() + w[1:] for w in words]
+    small = lookups(a.batch, a.languages, a.dict, words, a.exempt)
+    big = lookups(a.batch, a.languages, a.dict, caps, a.exempt)
+    rows = []
+    for w, c, x, y in zip(words, caps, small, big):
+        fx, fy = first_with_definition(x['results']), first_with_definition(y['results'])
+        if not fx or not fy:
+            continue
+        if fy['expression'][:1].isupper() and not fx['expression'][:1].isupper() and fy['expression'] != fx['expression']:
+            how = 'own entry as written' if not fy['trace'] and fy['expression'] == c else ('pack rule' if any(t in RULE_IDS for t in fy['trace']) else 'form-of row of the capitalised word')
+            rows.append((w, counts[w], fx['expression'], fy['expression'], how, fy['trace']))
+    total = sum(counts[w] for w in words)
+    split = collections.Counter(); split_tokens = collections.Counter()
+    for r in rows:
+        split[r[4]] += 1; split_tokens[r[4]] += r[1]
+    print(json.dumps({'words': len(words), 'capitalisedFirst': len(rows), 'tokens': sum(r[1] for r in rows),
+                      'shareOfListTokens': sum(r[1] for r in rows) / total if total else 0,
+                      'byCause': {k: [split[k], split_tokens[k]] for k in split}}, ensure_ascii=False))
+    for r in sorted(rows, key=lambda r: -r[1])[: a.show]:
+        print(f'  {r[0]}\t{r[1]}\tsmall={r[2]}\tcapital={r[3]}\t{r[4]}\ttrace={r[5]}')
+
+
+RULE_IDS = set()
+
+
 def frequent(a):
     refs, lemmas = load_dictionary(a.zip)
+    global RULE_IDS
+    RULE_IDS = {t['id'] for t in json.load(open(os.path.join(a.languages, 'ru', 'transforms.json'), encoding='utf-8'))['transforms']}
     words = []
     counts = {}
     for line in open(a.freq, encoding='utf-8'):
@@ -232,6 +296,8 @@ def frequent(a):
         if len(words) >= a.top:
             break
     total_tokens = sum(counts.values())
+    if a.capitalised:
+        return capitalised(a, refs, lemmas, words, counts)
     de = deinflections(a.languages, words)
     # Reached: a lemma the word's form-of rows name is among the deinflections
     # with a dictionary-form condition (not only an intermediate state).
@@ -251,9 +317,18 @@ def frequent(a):
         got = {r['text'] for r in de[w] if r['trace'] and set(r['conditions']) & dictionary_forms}
         if got & named:
             reached.append(w)
-    looked = lookups(a.batch, a.languages, a.dict, reached, a.exempt)
+    # Words whose only headword is their ё spelling (вперед: вперёд) have no
+    # rows, so the list above leaves them out; they are judged apart.
+    yo_only = [w for w in words if yo_headword_only(w, refs, lemmas)]
+    looked = lookups(a.batch, a.languages, a.dict, reached + yo_only, a.exempt)
+    looked, yo_looked = looked[: len(reached)], looked[len(reached):]
     proxy = lemma_proxy(refs, lemmas, all_counts(a.freq))
     labels = load_labels(a.labels)
+    yo_wrong = []
+    for w, o in zip(yo_only, yo_looked):
+        first = first_with_definition(o['results'])
+        if first is not None and not own_lemma_ok(w, first['expression'], refs, lemmas, proxy, labels):
+            yo_wrong.append((w, counts[w], first['expression'], first['trace']))
     wrong = []
     missing = []
     strict_wrong = []
@@ -280,6 +355,8 @@ def frequent(a):
         'wrongShareOfListTokens': wrong_tokens / total_tokens,
         'ownLemmaWrong': len(strict_wrong), 'ownLemmaWrongTokens': sum(c for _, c, *_ in strict_wrong),
         'ownLemmaWrongShareOfReachedTokens': sum(c for _, c, *_ in strict_wrong) / reached_tokens if reached_tokens else 0,
+        'yoHeadwordWords': len(yo_only), 'yoHeadwordTokens': sum(counts[w] for w in yo_only),
+        'yoHeadwordWrong': len(yo_wrong), 'yoHeadwordWrongTokens': sum(c for _, c, *_ in yo_wrong),
         'exempt': a.exempt,
     }, ensure_ascii=False))
     for w, c, got, trace, want, via_yo in sorted(wrong, key=lambda x: -x[1])[: a.show]:
@@ -300,6 +377,15 @@ def frequent(a):
     print('wrong by the own-lemma judge (labels, then the frequency proxy):')
     for w, c, got, trace in sorted(strict_wrong, key=lambda x: -x[1])[: a.show]:
         print(f'  {w}\t{c}\tfirst={got}\ttrace={trace}' + (f'\t{cause[w]}' if w in cause else ''))
+    print('words whose only headword is their ё spelling, shown another term first:')
+    yo_cause = {}
+    if a.no_rules and yo_wrong:
+        bare = lookups(a.batch, a.no_rules, a.dict, [w for w, *_ in yo_wrong], a.exempt)
+        for (w, *_), o in zip(yo_wrong, bare):
+            f = first_with_definition(o['results'])
+            yo_cause[w] = 'rules' if f is not None and own_lemma_ok(w, f['expression'], refs, lemmas, proxy, labels) else 'dictionary'
+    for w, c, got, trace in sorted(yo_wrong, key=lambda x: -x[1])[: a.show]:
+        print(f'  {w}\t{c}\tfirst={got}\ttrace={trace}' + (f'\t{yo_cause[w]}' if w in yo_cause else ''))
 
 
 WORD = re.compile(r'[А-Яа-яЁё\u0300\u0301]+(?:-[А-Яа-яЁё\u0300\u0301]+)*')
@@ -329,22 +415,34 @@ def text(a):
     proxy = lemma_proxy(refs, lemmas, all_counts(a.freq)) if a.freq else collections.Counter()
     labels = load_labels(a.labels)
     strict = collections.Counter()
+    capitals = collections.Counter()
+    capital_strict = 0
     judged = wrong = none = 0
     groups = collections.Counter()
     rest = []
     wrong_rows = []
-    for (word, hover), o in zip(positions, looked):
+    strict_at = []  # (position, word, first result) wrong by the own-lemma judge or a capital entry
+
+    def candidates(word):
+        key = strip_stress(word)
+        lower = key[0].lower() + key[1:]
+        return [k for k in (key, lower, key.lower()) if any(refs.get(sp) for sp in yo_spellings(k)) or k in lemmas or yo_headword_only(k, refs, lemmas)]
+
+    def own_wrong(word, hover, first, cands):
+        return not any(own_lemma_ok(k, first['expression'], refs, lemmas, proxy, labels) for k in cands) or capital_entry(word, hover, first)
+
+    for i, ((word, hover), o) in enumerate(zip(positions, looked)):
         first = first_with_definition(o['results'])
         if first is None:
             none += 1
             continue
-        key = strip_stress(word)
-        lower = key[0].lower() + key[1:]
-        cands = [k for k in (key, lower, key.lower()) if any(refs.get(sp) for sp in yo_spellings(k)) or k in lemmas]
+        cands = candidates(word)
         if first['matched'].lower() != word.lower() or not cands:
             rest.append((word, hover, first['expression'], first['matched'], first['trace']))
             continue
         judged += 1
+        if capital_entry(word, hover, first):
+            capitals[word] += 1
         ok = set()
         for k in cands:
             ok |= accepted(k, refs, lemmas)
@@ -354,10 +452,37 @@ def text(a):
             wrong_rows.append((word, first['expression'], first['trace'], sorted(ok)[:4]))
         if a.freq and not any(own_lemma_ok(k, first['expression'], refs, lemmas, proxy, labels) for k in cands):
             strict[(word.lower(), first['expression'])] += 1
+            strict_at.append((i, word, first['expression']))
+        elif a.freq and capital_entry(word, hover, first):
+            # Counted right above (the word's own entry), wrong by the contract's judge.
+            capital_strict += 1
+            strict_at.append((i, word, first['expression']))
     print(json.dumps({'lookups': len(positions), 'noResult': none, 'judgedByScript': judged, 'wrongByScript': wrong,
                       'wrongRate': wrong / judged if judged else 0, 'notJudgedByScript': len(rest),
                       'ownLemmaWrong': sum(strict.values()) if a.freq else None,
-                      'ownLemmaWrongRate': sum(strict.values()) / judged if a.freq and judged else None, 'exempt': a.exempt}, ensure_ascii=False))
+                      'ownLemmaWrongRate': sum(strict.values()) / judged if a.freq and judged else None,
+                      'capitalEntryFirst': sum(capitals.values()),
+                      'ownLemmaWrongWithCapitals': sum(strict.values()) + capital_strict if a.freq else None,
+                      'ownLemmaWrongRateWithCapitals': (sum(strict.values()) + capital_strict) / judged if a.freq and judged else None,
+                      'exempt': a.exempt}, ensure_ascii=False))
+    print('capital entries first (the letter, По, Один, Или):', capitals.most_common())
+    if a.freq and a.no_rules:
+        # The cause of each wrong position: also wrong (or not judged) with a copy
+        # of the pack without transforms means the dictionary's rows and the
+        # ranking keys, not the rules.
+        bare = lookups(a.batch, a.no_rules, a.dict, [positions[i][1] for i, *_ in strict_at], a.exempt)
+        cause = collections.Counter(); rule_groups = collections.Counter(); dict_groups = collections.Counter()
+        for (i, word, expr), o in zip(strict_at, bare):
+            f = first_with_definition(o['results'])
+            hover = positions[i][1]
+            cands = candidates(word)
+            if f is not None and f['matched'].lower() == word.lower() and cands and not own_wrong(word, hover, f, cands):
+                cause['rules'] += 1; rule_groups[(word.lower(), expr)] += 1
+            else:
+                cause['dictionary'] += 1; dict_groups[(word.lower(), expr)] += 1
+        print(json.dumps({'ownLemmaWrongWithCapitalsByCause': dict(cause)}, ensure_ascii=False))
+        print('caused by the rules, largest groups:', rule_groups.most_common(a.show))
+        print('wrong without the rules too, largest groups:', dict_groups.most_common(a.show))
     if a.freq:
         print('wrong by the own-lemma judge, largest groups:', strict.most_common(a.show))
     print('rules behind the wrong first results:', groups.most_common(12))
@@ -447,6 +572,7 @@ def main():
     f.add_argument('--show', type=int, default=60)
     f.add_argument('--labels', default=os.path.join(HERE, 'tie-labels.tsv'))
     f.add_argument('--no-rules', help='a languages dir whose ru pack has no transforms, to split wrong words by cause')
+    f.add_argument('--capitalised', action='store_true', help='look the words up with a capital first letter (capital entries first)')
     t = sub.add_parser('text')
     t.add_argument('--zip', required=True)
     t.add_argument('--dict', required=True)
@@ -459,6 +585,7 @@ def main():
     t.add_argument('--show', type=int, default=40)
     t.add_argument('--freq', help='ru_50k.txt, for the own-lemma judge')
     t.add_argument('--labels', default=os.path.join(HERE, 'tie-labels.tsv'))
+    t.add_argument('--no-rules', help='a languages dir whose ru pack has no transforms, to split wrong positions by cause')
     ph = sub.add_parser('phrases')
     ph.add_argument('--zip', required=True)
     ph.add_argument('--dict', required=True)

@@ -4,6 +4,12 @@
 the 1,000-row sample (README.md, Measurements). Not run by any test.
 
   python3 languages/ru/sources/unimorph-recall.py <languages dir> <unimorph rus file>
+      [--ku-datives <lookup-batch-ru> <imported wty-ru-en dir>]
+
+--ku-datives also reports the singular datives in -ку of the admitted rows
+(коробку, куску): how many the rules do not reach, and for how many of those a
+lookup (sources/lookup-batch.cpp, default options) still shows the lemma, and
+first (README.md, History).
 """
 import json, os, re, subprocess, collections, sys
 R = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
@@ -14,6 +20,7 @@ STRATA = [('noun, singular case', lambda t: t[0] == 'N' and 'SG' in t), ('noun, 
           ('verb, imperative', lambda t: t[0] == 'V' and 'IMP' in t), ('participle', lambda t: t[0] == 'V.PTCP'), ('adverbial participle', lambda t: t[0] == 'V.CVB')]
 POS = {'N': {'n', 'name'}, 'V': {'v'}, 'V.CVB': {'v'}, 'ADJ': {'adj'}}
 rows, seen = [], set()
+DATIVE = set()
 for line in open(sys.argv[2], encoding='utf-8'):
     p = line.rstrip('\n').split('\t')
     if len(p) != 3: continue
@@ -26,6 +33,8 @@ for line in open(sys.argv[2], encoding='utf-8'):
     key = (form, lemma, tags[0] == 'V.PTCP' and 'p' or tags[0])
     if key in seen: continue
     seen.add(key); rows.append((s, form, lemma, pos))
+    if tags[0] == 'N' and 'DAT' in tags and 'SG' in tags:
+        DATIVE.add((form, lemma))
 langs = sys.argv[1]
 forms = sorted({r[1] for r in rows})
 pre = subprocess.run([f'{R}/build/hoshidicts-cli', '--languages', langs, 'preprocess', 'ru', '--stdin'], input='\n'.join(forms) + '\n', capture_output=True, text=True, check=True).stdout.splitlines()
@@ -40,3 +49,14 @@ for s, form, lemma, pos in rows:
         hit[s] += 1
 total, reached = sum(by.values()), sum(hit.values())
 print(json.dumps({'rows': total, 'reached': reached, 'recall': round(reached / total, 4), 'byStratum': {s: round(hit[s] / by[s], 4) for s, _ in STRATA}}, ensure_ascii=False))
+if '--ku-datives' in sys.argv:
+    batch, dictionary = sys.argv[sys.argv.index('--ku-datives') + 1: sys.argv.index('--ku-datives') + 3]
+    ku = sorted({(form, lemma) for s, form, lemma, pos in rows if s == 'noun, singular case' and form.endswith('ку') and (form, lemma) in DATIVE})
+    missed = [(f, l) for f, l in ku if not any(r['text'] == l and (not r['conditions'] or set(r['conditions']) & {'n', 'name'}) for v in variants[f] for r in res[v])]
+    out = subprocess.run([batch, langs, 'ru', dictionary], input='\n'.join(f for f, _ in missed) + '\n', capture_output=True, text=True, check=True).stdout.splitlines()
+    shown = first = 0
+    for (f, l), line in zip(missed, out):
+        defs = [r for r in json.loads(line)['results'] if not r['formOf']]
+        shown += any(r['expression'] == l for r in defs)
+        first += bool(defs) and defs[0]['expression'] == l
+    print(json.dumps({'kuDatives': len(ku), 'notReachedByRules': len(missed), 'lookupShowsLemma': shown, 'lemmaFirst': first}, ensure_ascii=False))

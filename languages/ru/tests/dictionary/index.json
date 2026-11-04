@@ -4,7 +4,7 @@
   "revision": "1",
   "sequenced": false,
   "author": "hoshidicts",
-  "description": "A tiny Russian dictionary for languages/ru/tests/lookup.tsv, written for the pack. Parts of speech are in the definition tags and the rules column is empty, as in wiktionary-to-yomitan's Russian dictionaries; the row for читала is a form-of row as they write them.",
+  "description": "A tiny Russian dictionary for languages/ru/tests/lookup.tsv, written for the pack. Parts of speech are in the definition tags and the rules column is empty, as in wiktionary-to-yomitan's Russian dictionaries; the rows tagged non-lemma are form-of rows as they write them.",
   "sourceLanguage": "ru",
   "targetLanguage": "en"
 }
