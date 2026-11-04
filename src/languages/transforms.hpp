@@ -14,6 +14,7 @@
 #include <string_view>
 #include <vector>
 
+#include "bounds.hpp"
 #include "classes.hpp"
 #include "regex.hpp"
 #include "steps.hpp"
@@ -124,47 +125,21 @@ struct Deinflection {
 };
 using Deinflections = std::vector<Deinflection>;
 
-// The bounds of one deinflection search (section 7.4), so that every search
-// ends whatever a pack's rules say. An output with more than `max_growth`
-// code points beyond the text the search starts from, or one that would be
-// rule `max_depth + 1` of its chain, is neither recorded nor expanded, and a
-// search stops when it holds `max_results` deinflections, its text included.
-// A search also stops when its work budget (SearchBudget) is spent: one unit
-// for every rule application it tries and one for every `work_bytes` bytes
-// the application writes (its output, and each step of the rule's `then`
-// list, counting 4 bytes a code point).
-struct SearchBounds {
-  static constexpr size_t max_growth = 32;
-  static constexpr uint32_t max_depth = 128;
-  static constexpr size_t max_results = 65536;
-  static constexpr size_t max_work = size_t{1} << 20;
-  static constexpr size_t work_bytes = 256;
-};
-
-// The work left to the searches that share it (section 7.4). A lookup gives
-// all of its searches one budget, so that it ends within
-// SearchBounds::max_work whatever number of prefixes, processed variants and
-// variant pass readings it searches; a search given none has its own. A
-// search that finds the budget spent records its text and nothing more.
-struct SearchBudget {
-  size_t work_left = SearchBounds::max_work;
-
-  bool spent() const { return work_left == 0; }
-  void spend(size_t units) { work_left -= units < work_left ? units : work_left; }
-};
-
 // How a bound cut a search short: the bound that stopped it (results or
 // work), or else the first that dropped an output; the output it dropped,
 // which rule `rule` gave from deinflection `parent` (an index into the
 // search's list). When the work budget ran out, `rule` is the rule the search
-// could not try and `text` is empty. The conformance test fails a pack whose
-// inputs reach a bound (section 12.1).
+// could not try, `text` is empty, and `costliest` names the rules that used
+// the most of the search's work, with the units each used, most first (at
+// most three). The conformance test fails a pack whose inputs reach a bound
+// (section 12.1).
 struct BoundHit {
   enum class Bound : unsigned char { None, Growth, Depth, Results, Work };
   Bound bound = Bound::None;
   uint32_t parent = Deinflection::npos;
   uint32_t rule = 0;
   std::string text;
+  std::vector<std::pair<uint32_t, size_t>> costliest;
 
   explicit operator bool() const { return bound != Bound::None; }
 };
@@ -221,7 +196,7 @@ class TransformSet {
   std::vector<std::string_view> condition_names(uint32_t bits) const;
 
  private:
-  // A node's children are edges[child_begin, child_end), in insertion order.
+  // A node's children are edges[child_begin, child_end), sorted by code point.
   struct TrieNode {
     uint32_t child_begin = 0;
     uint32_t child_end = 0;
@@ -248,10 +223,23 @@ class TransformSet {
     std::vector<Edge> edges;
     std::vector<NodeRule> node_rules;
     bool empty() const { return node_rules.empty(); }
-    // The child of `node` on `c`, or UINT32_MAX.
+    // The child of `node` on `c`, or UINT32_MAX: a scan of a few edges, a
+    // binary search of many.
     uint32_t child(uint32_t node, char32_t c) const {
       const TrieNode& n = nodes[node];
-      for (uint32_t e = n.child_begin; e < n.child_end; ++e) {
+      uint32_t lo = n.child_begin;
+      uint32_t hi = n.child_end;
+      while (hi - lo > 8) {
+        const uint32_t mid = lo + (hi - lo) / 2;
+        if (edges[mid].c < c) {
+          lo = mid + 1;
+        } else if (edges[mid].c > c) {
+          hi = mid;
+        } else {
+          return edges[mid].child;
+        }
+      }
+      for (uint32_t e = lo; e < hi; ++e) {
         if (edges[e].c == c) return edges[e].child;
       }
       return UINT32_MAX;
@@ -276,12 +264,12 @@ class TransformSet {
   struct Match;
   struct Stack;
   void search(Run& run) const;
-  void push_frame(Stack& stack, const std::string& text, uint32_t index) const;
+  size_t push_frame(Stack& stack, const std::string& text, uint32_t index) const;
   bool next_output(Run& run, Stack& stack, Frame& frame, std::string& output, uint32_t& rule,
                    uint32_t& conditions_out) const;
   bool apply(Run& run, const Rule& rule, const std::string& text, size_t matched, std::string& out) const;
-  bool stem_ok(const Rule& rule, std::string_view stem) const;
-  bool change_stem(const Rule& rule, std::string_view stem, std::string& out) const;
+  bool stem_ok(Run& run, const Rule& rule, std::string_view stem) const;
+  bool change_stem(Run& run, const Rule& rule, std::string_view stem, std::string& out) const;
   bool finish_then(Run& run, const Rule& rule, std::string& text) const;
 
   Trie suffixes_;

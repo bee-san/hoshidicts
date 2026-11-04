@@ -667,16 +667,10 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
     std::string found = text;
     RawTerms target = QueryAccess::query_raw(query, text, pins, &target_rows);
     if (pack.form_of_normalizer && target.terms.empty() && target_rows.empty()) {
-      std::u32string in;
-      std::u32string out;
-      if (hoshidicts::lang::decode_utf8(text, in)) {
-        hoshidicts::lang::StepLimit limit{hoshidicts::lang::step_limit(in.size())};
-        const bool within = hoshidicts::lang::apply_single(*pack.form_of_normalizer, in, out, limit);
-        if (std::string normalized = hoshidicts::lang::to_utf8(out);
-            within && !normalized.empty() && normalized != text) {
-          target = QueryAccess::query_raw(query, normalized, pins, &target_rows);
-          found = std::move(normalized);
-        }
+      if (std::string normalized = hoshidicts::lang::normalize_text(*pack.form_of_normalizer, text);
+          !normalized.empty() && normalized != text) {
+        target = QueryAccess::query_raw(query, normalized, pins, &target_rows);
+        found = std::move(normalized);
       }
     }
     if (target.terms.empty()) continue;

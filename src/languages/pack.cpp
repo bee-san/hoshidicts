@@ -322,6 +322,8 @@ struct PackParser {
         return a.first.size() != b.first.size() ? a.first.size() > b.first.size() : a.first < b.first;
       });
       if (const Json* limit = get(o, "limit")) s.limit = as_count(*limit, member(path, "limit"), 1);
+      // A step makes at most this many texts, as processors keep (section 6.1).
+      if (s.limit > max_text_variants) fail(member(path, "limit"), "may be at most 4096");
     } else {
       if (!allow_builtin) fail(path, "builtins are not allowed here");
       check_keys(o, path, {"builtin"});
@@ -715,8 +717,12 @@ struct TransformsParser {
     auto change = std::make_unique<StemChange>();
     change->from = string_array(require(c, "from", cpath), member(cpath, "from"));
     if (change->from.empty()) fail(member(cpath, "from"), "needs at least one string");
+    // A stem change tries every string at every code point of the stem, so
+    // both are limited (section 7.4).
+    if (change->from.size() > max_literal_code_points) fail(member(cpath, "from"), "has more than 64 strings");
     for (size_t i = 0; i < change->from.size(); ++i) {
       if (change->from[i].empty()) fail(item(member(cpath, "from"), i), "may not be empty");
+      affix(change->from[i], item(member(cpath, "from"), i));
     }
     change->to = as_string(require(c, "to", cpath), member(cpath, "to"));
     written(change->to, member(cpath, "to"));

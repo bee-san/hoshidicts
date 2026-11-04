@@ -19,10 +19,12 @@ bool starts_with_at(const std::u32string& text, size_t at, const std::u32string&
   return at + key.size() <= text.size() && std::equal(key.begin(), key.end(), text.begin() + static_cast<std::ptrdiff_t>(at));
 }
 
-// The first key (longest first) that matches at `at`, or nullptr.
+// The first key (longest first) that matches at `at`, or nullptr; `ops`
+// counts the keys tried.
 template <typename Entry>
-const Entry* key_at(const std::vector<Entry>& keys, const std::u32string& text, size_t at) {
+const Entry* key_at(const std::vector<Entry>& keys, const std::u32string& text, size_t at, size_t& ops) {
   for (const auto& entry : keys) {
+    ++ops;
     if (starts_with_at(text, at, entry.first)) return &entry;
   }
   return nullptr;
@@ -34,11 +36,11 @@ struct MapMatch {
 };
 
 // Non-overlapping matches, scanning left to right, longest key first.
-void map_matches(const Step& step, const std::u32string& text, std::vector<MapMatch>& out) {
+void map_matches(const Step& step, const std::u32string& text, std::vector<MapMatch>& out, size_t& ops) {
   out.clear();
   size_t i = 0;
   while (i < text.size()) {
-    if (const auto* entry = key_at(step.map, text, i)) {
+    if (const auto* entry = key_at(step.map, text, i, ops)) {
       out.push_back({i, entry});
       i += entry->first.size();
     } else {
@@ -47,11 +49,11 @@ void map_matches(const Step& step, const std::u32string& text, std::vector<MapMa
   }
 }
 
-void apply_map(const Step& step, const std::u32string& text, std::u32string& out) {
+void apply_map(const Step& step, const std::u32string& text, std::u32string& out, size_t& ops) {
   out.clear();
   switch (step.at) {
     case MapAt::Start: {
-      const auto* entry = key_at(step.map, text, 0);
+      const auto* entry = key_at(step.map, text, 0, ops);
       if (entry == nullptr) {
         out = text;
       } else {
@@ -62,6 +64,7 @@ void apply_map(const Step& step, const std::u32string& text, std::u32string& out
     }
     case MapAt::End: {
       for (const auto& entry : step.map) {
+        ++ops;
         if (entry.first.size() <= text.size() && text.ends_with(entry.first)) {
           out.assign(text, 0, text.size() - entry.first.size());
           out += entry.second;
@@ -74,7 +77,7 @@ void apply_map(const Step& step, const std::u32string& text, std::u32string& out
     case MapAt::First:
     case MapAt::Last: {
       std::vector<MapMatch> matches;
-      map_matches(step, text, matches);
+      map_matches(step, text, matches, ops);
       if (matches.empty()) {
         out = text;
         return;
@@ -87,7 +90,7 @@ void apply_map(const Step& step, const std::u32string& text, std::u32string& out
     }
     case MapAt::All: {
       std::vector<MapMatch> matches;
-      map_matches(step, text, matches);
+      map_matches(step, text, matches, ops);
       size_t last = 0;
       for (const auto& m : matches) {
         out.append(text, last, m.index - last);
@@ -137,7 +140,7 @@ bool apply_pattern(const Step& step, const std::u32string& text, std::u32string&
   return within;
 }
 
-void apply_alternatives(const Step& step, const std::u32string& text, std::vector<std::u32string>& out) {
+void apply_alternatives(const Step& step, const std::u32string& text, std::vector<std::u32string>& out, size_t& ops) {
   std::u32string source;
   normalize(text, NormalForm::NFC, source);
   std::vector<std::vector<const std::u32string*>> pieces;
@@ -154,7 +157,7 @@ void apply_alternatives(const Step& step, const std::u32string& text, std::vecto
   std::vector<std::pair<bool, size_t>> order;  // (is literal, index)
   size_t i = 0;
   while (i < source.size()) {
-    const auto* entry = key_at(step.alternatives, source, i);
+    const auto* entry = key_at(step.alternatives, source, i, ops);
     if (entry == nullptr) {
       literal.push_back(source[i]);
       ++i;
@@ -263,7 +266,7 @@ bool apply_step(const Step& step, const std::u32string& in, std::u32string& out,
       }
       return within();
     case StepKind::Map:
-      apply_map(step, in, out);
+      apply_map(step, in, out, limit.ops);
       return within();
     case StepKind::Pattern: {
       const bool rounds_within = apply_pattern(step, in, out, limit);
@@ -271,7 +274,7 @@ bool apply_step(const Step& step, const std::u32string& in, std::u32string& out,
     }
     case StepKind::Alternatives: {
       std::vector<std::u32string> all;
-      apply_alternatives(step, in, all);
+      apply_alternatives(step, in, all, limit.ops);
       out = all.empty() ? in : all.front();
       return within();
     }
@@ -284,7 +287,7 @@ void apply_steps(const StepList& steps, const std::u32string& in, std::vector<st
   // others).
   if (steps.size() == 1 && steps[0].kind == StepKind::Alternatives) {
     const size_t start = out.size();
-    apply_alternatives(steps[0], in, out);
+    apply_alternatives(steps[0], in, out, limit.ops);
     for (size_t i = start; i < out.size(); ++i) {
       limit.written += out[i].size();
       if (out[i].size() > limit.max_code_points) out[i] = in;
@@ -303,7 +306,8 @@ void apply_steps(const StepList& steps, const std::u32string& in, std::vector<st
     next.clear();
     for (const auto& text : texts) {
       if (step.kind == StepKind::Alternatives) {
-        apply_alternatives(step, text, next);
+        size_t ops = 0;
+        apply_alternatives(step, text, next, ops);
       } else {
         apply_step(step, text, next.emplace_back());
       }
@@ -316,6 +320,15 @@ void apply_steps(const StepList& steps, const std::u32string& in, std::vector<st
 void apply_single(const StepList& steps, const std::u32string& in, std::u32string& out) {
   StepLimit unlimited;
   apply_single(steps, in, out, unlimited);
+}
+
+std::string normalize_text(const StepList& steps, std::string_view text) {
+  std::u32string in;
+  if (!decode_utf8(text, in)) return std::string(text);
+  std::vector<std::u32string> outputs;
+  StepLimit limit{step_limit(in.size())};
+  apply_steps(steps, in, outputs, limit);
+  return outputs.empty() ? std::string(text) : to_utf8(outputs.front());
 }
 
 bool apply_single(const StepList& steps, const std::u32string& in, std::u32string& out, StepLimit& limit) {
@@ -400,8 +413,16 @@ constexpr size_t index_from = 32;
 }
 
 // Runs the processors of section 6.1 over `variants` (count in `count`).
-void run_processors(std::span<const Processor> processors, const EnabledOptions& enabled, std::vector<Variant>& variants,
-                    size_t& count, std::vector<Variant>& next_items, bool* limit_reached) {
+void run_processors(std::span<const Processor> processors, const EnabledOptions& enabled,
+                    std::vector<Variant>& variants, size_t& count, std::vector<Variant>& next_items,
+                    bool* limit_reached, SearchBudget* budget) {
+  // With a budget (section 7.4), each builtin or step list applied costs its
+  // work; once it is spent, a variant is kept as it is, as if the processor's
+  // remaining lists had not changed it.
+  const auto spent = [budget] { return budget != nullptr && budget->spent(); };
+  const auto charge_builtin = [budget](const std::u32string& output) {
+    if (budget != nullptr) budget->spend(1 + 4 * output.size() / SearchBounds::work_bytes);
+  };
   static thread_local std::u32string scratch;
   static thread_local std::vector<std::u32string> outputs;
   // A step list may make at most step_limit(n) code points from the n of the
@@ -426,8 +447,14 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
       for (size_t vi = 0; vi < count; ++vi) {
         std::u32string& variant = variants[vi].first;
         const int steps = variants[vi].second;
+        bool stopped = false;
         for (const TextFunction builtin : processor.builtins) {
+          if (spent()) {
+            stopped = true;
+            break;
+          }
           builtin(variant, scratch);
+          charge_builtin(scratch);
           const bool same = scratch == variant;
           if (same && processor.keep_input) continue;
           const int new_steps = same ? steps : steps + 1;
@@ -441,7 +468,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
             ++next_count;
           }
         }
-        if (processor.keep_input) {
+        if (processor.keep_input || stopped) {
           if (Variant* existing = find(variant)) {
             if (steps < existing->second) existing->second = steps;
           } else if (next_count < next_items.size()) {
@@ -463,15 +490,21 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
       for (size_t vi = 0; vi < count; ++vi) {
         std::u32string& variant = variants[vi].first;
         const int steps = variants[vi].second;
+        bool stopped = false;
         for (const TextFunction builtin : processor.builtins) {
+          if (spent()) {
+            stopped = true;
+            break;
+          }
           builtin(variant, scratch);
+          charge_builtin(scratch);
           if (scratch == variant) {
             if (!processor.keep_input) add_variant(next, variant, false, steps, limit_reached);
           } else {
             add_variant(next, scratch, false, steps + 1, limit_reached);
           }
         }
-        if (processor.keep_input) {
+        if (processor.keep_input || stopped) {
           add_variant(next, variant, true, steps, limit_reached);
         }
       }
@@ -484,9 +517,15 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
     for (size_t vi = 0; vi < count; ++vi) {
       std::u32string& variant = variants[vi].first;
       const int steps = variants[vi].second;
+      bool stopped = false;
       for (const StepList& steps_list : processor.variants) {
+        if (spent()) {
+          stopped = true;
+          break;
+        }
         if (steps_list.size() == 1 && steps_list[0].kind == StepKind::Builtin) {
           steps_list[0].builtin(variant, scratch);
+          charge_builtin(scratch);
           if (scratch == variant) {
             if (!processor.keep_input) add_variant(next, variant, false, steps, limit_reached);
           } else {
@@ -497,6 +536,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
         outputs.clear();
         StepLimit limit{max_code_points};
         apply_steps(steps_list, variant, outputs, limit);
+        if (budget != nullptr) charge_steps(*budget, limit);
         for (auto& output : outputs) {
           if (output == variant) {
             if (!processor.keep_input) add_variant(next, variant, false, steps, limit_reached);
@@ -505,7 +545,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
           }
         }
       }
-      if (processor.keep_input) {
+      if (processor.keep_input || stopped) {
         add_variant(next, variant, true, steps, limit_reached);
       }
     }
@@ -519,7 +559,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
 
 // https://github.com/yomidevs/yomitan/blob/81d17d877fb18c62ba826210bf6db2b7f4d4deed/ext/js/language/translator.js#L564
 std::vector<TextVariant> process_text(std::span<const Processor> processors, std::string_view input,
-                                      const EnabledOptions& enabled, bool* limit_reached) {
+                                      const EnabledOptions& enabled, bool* limit_reached, SearchBudget* budget) {
   static thread_local std::vector<Variant> variants_pool;
   static thread_local std::vector<Variant> next_pool;
   std::vector<Variant>& variants = variants_pool;
@@ -531,7 +571,7 @@ std::vector<TextVariant> process_text(std::span<const Processor> processors, std
   utf8::utf8to32(input.begin(), input.end(), std::back_inserter(variants[0].first));
   variants[0].second = 0;
   size_t count = 1;
-  run_processors(processors, enabled, variants, count, next, limit_reached);
+  run_processors(processors, enabled, variants, count, next, limit_reached, budget);
 
   std::vector<TextVariant> result;
   result.reserve(count);
@@ -552,11 +592,11 @@ std::vector<TextVariant> process_text(std::span<const Processor> processors, std
 }
 
 void process_text32(std::span<const Processor> processors, const std::u32string& input, const EnabledOptions& enabled,
-                    std::vector<std::pair<std::u32string, int>>& out, bool* limit_reached) {
+                    std::vector<std::pair<std::u32string, int>>& out, bool* limit_reached, SearchBudget* budget) {
   std::vector<Variant> variants{{input, 0}};
   std::vector<Variant> next;
   size_t count = 1;
-  run_processors(processors, enabled, variants, count, next, limit_reached);
+  run_processors(processors, enabled, variants, count, next, limit_reached, budget);
   out.assign(std::make_move_iterator(variants.begin()), std::make_move_iterator(variants.begin() + static_cast<std::ptrdiff_t>(count)));
 }
 

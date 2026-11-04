@@ -57,7 +57,21 @@ struct TransformSet::Run {
   size_t root_code_points = SIZE_MAX;  // counted when first needed
   size_t then_written = 0;             // code points the `then` steps of the current application wrote
   size_t regex_read = 0;               // code points its regular expressions read
+  size_t rule_ops = 0;                 // operations of the current application (section 7.4)
   bool spent = false;                  // next_output found the budget spent
+  // The units each rule used, when the search reports its bound (BoundHit).
+  ankerl::unordered_dense::map<uint32_t, size_t>* costs = nullptr;
+
+  // Charges `units`, or `ops` operations, to the budget, and to `rule` (or
+  // to no rule: Deinflection::none).
+  void spend(uint32_t rule, size_t units) {
+    budget.spend(units);
+    if (costs != nullptr && rule != Deinflection::none && units != 0) (*costs)[rule] += units;
+  }
+  void add_ops(uint32_t rule, size_t ops) {
+    const size_t units = budget.add_ops(ops);
+    if (costs != nullptr && rule != Deinflection::none && units != 0) (*costs)[rule] += units;
+  }
 
   size_t root_length() {
     if (root_code_points == SIZE_MAX) root_code_points = code_points(out[root].text);
@@ -116,8 +130,8 @@ void TransformSet::insert(TrieBuilder& builder, std::u32string_view key, uint32_
 void TransformSet::finish(Trie& trie, TrieBuilder& builder) {
   const size_t node_count = builder.first_edge.size();
   trie.nodes.assign(node_count, TrieNode{});
-  // Each node's edges, contiguous and in insertion order (its list holds them
-  // newest first).
+  // Each node's edges, contiguous and sorted by code point, so a child is
+  // found by binary search however many a node has (section 7.5).
   trie.edges.resize(builder.edges.size());
   uint32_t at = 0;
   for (size_t n = 0; n < node_count; ++n) {
@@ -129,6 +143,8 @@ void TransformSet::finish(Trie& trie, TrieBuilder& builder) {
     for (uint32_t e = builder.first_edge[n]; e != UINT32_MAX; e = builder.edges[e].next) {
       trie.edges[--slot] = Edge{builder.edges[e].c, builder.edges[e].child};
     }
+    std::sort(trie.edges.begin() + at, trie.edges.begin() + at + count,
+              [](const Edge& a, const Edge& b) { return a.c < b.c; });
     at += count;
   }
   // Each node's rules, in file order (pending is in rule order), placed by a
@@ -223,7 +239,8 @@ void TransformSet::index() {
   }
 }
 
-bool TransformSet::stem_ok(const Rule& rule, std::string_view stem) const {
+bool TransformSet::stem_ok(Run& run, const Rule& rule, std::string_view stem) const {
+  run.rule_ops += stem.size();  // the checks read the stem (section 7.4)
   if (rule.extra->stem_min_length > 0 && code_points(stem) < rule.extra->stem_min_length) return false;
   if (rule.extra->stem_characters != nullptr && !all_in(stem, *rule.extra->stem_characters)) return false;
   if (rule.extra->stem_contains != nullptr && !any_in(stem, *rule.extra->stem_contains)) return false;
@@ -244,20 +261,44 @@ bool TransformSet::stem_ok(const Rule& rule, std::string_view stem) const {
   return true;
 }
 
-bool TransformSet::change_stem(const Rule& rule, std::string_view stem, std::string& out) const {
+bool TransformSet::change_stem(Run& run, const Rule& rule, std::string_view stem, std::string& out) const {
   const StemChange& change = *rule.extra->stem_change;
+  // With `between`, the code points from each offset of the stem to its end
+  // when all are in the class, or UINT32_MAX, from one pass back to front, so
+  // a candidate costs no more than its comparison.
+  thread_local std::vector<uint32_t> tail;
+  thread_local std::vector<size_t> starts;
+  if (change.between != nullptr) {
+    tail.assign(stem.size() + 1, UINT32_MAX);
+    tail[stem.size()] = 0;
+    starts.clear();
+    for (auto it = stem.begin(); it != stem.end();) {
+      starts.push_back(static_cast<size_t>(it - stem.begin()));
+      utf8::unchecked::next(it);
+    }
+    size_t next = stem.size();
+    for (size_t k = starts.size(); k-- > 0;) {
+      const size_t at = starts[k];
+      auto it = stem.begin() + static_cast<std::ptrdiff_t>(at);
+      const char32_t c = utf8::unchecked::next(it);
+      tail[at] = tail[next] != UINT32_MAX && change.between->contains(c) ? tail[next] + 1 : UINT32_MAX;
+      next = at;
+    }
+  }
+  size_t positions = 0;
   size_t chosen_at = std::string_view::npos;
   size_t chosen_length = 0;
   for (size_t i = 0; i < stem.size(); ++i) {
     if ((static_cast<unsigned char>(stem[i]) & 0xC0) == 0x80) continue;
+    ++positions;
     size_t best = 0;
     bool found = false;
     for (const auto& from : change.from) {
       if (from.size() <= best && found) continue;
       if (stem.substr(i).starts_with(from)) {
-        const std::string_view after = stem.substr(i + from.size());
         if (change.between != nullptr) {
-          if (code_points(after) < change.between_min_length || !all_in(after, *change.between)) continue;
+          const uint32_t after = tail[i + from.size()];
+          if (after == UINT32_MAX || after < change.between_min_length) continue;
         }
         best = from.size();
         found = true;
@@ -269,6 +310,8 @@ bool TransformSet::change_stem(const Rule& rule, std::string_view stem, std::str
       if (!change.last) break;
     }
   }
+  // Every string at every position tried, and the pass over the stem.
+  run.rule_ops += positions * change.from.size() + (change.between != nullptr ? stem.size() : 0);
   if (chosen_at == std::string_view::npos) return false;
   out.assign(stem.substr(0, chosen_at));
   out += change.to;
@@ -289,6 +332,7 @@ bool TransformSet::finish_then(Run& run, const Rule& rule, std::string& text) co
   apply_single(rule.extra->then, in, result, limit);
   run.then_written += limit.written;
   run.regex_read += limit.read;
+  run.rule_ops += limit.ops;
   text = to_utf8(result);
   return true;
 }
@@ -301,9 +345,9 @@ bool TransformSet::apply(Run& run, const Rule& rule, const std::string& text, si
   switch (rule.type) {
     case RuleType::Suffix: {
       std::string_view stem(text.data(), matched);
-      if (rule.stem_checks && !stem_ok(rule, stem)) return false;
+      if (rule.stem_checks && !stem_ok(run, rule, stem)) return false;
       if (rule.has_stem_change) {
-        if (!change_stem(rule, stem, changed)) return false;
+        if (!change_stem(run, rule, stem, changed)) return false;
         stem = changed;
       }
       out.reserve(stem.size() + rule.b.size());
@@ -318,9 +362,9 @@ bool TransformSet::apply(Run& run, const Rule& rule, const std::string& text, si
     case RuleType::Circumfix: {
       if (rule.a.size() > matched || !std::string_view(text).starts_with(rule.a)) return false;
       std::string_view stem(text.data() + rule.a.size(), matched - rule.a.size());
-      if (rule.stem_checks && !stem_ok(rule, stem)) return false;
+      if (rule.stem_checks && !stem_ok(run, rule, stem)) return false;
       if (rule.has_stem_change) {
-        if (!change_stem(rule, stem, changed)) return false;
+        if (!change_stem(run, rule, stem, changed)) return false;
         stem = changed;
       }
       out.reserve(rule.b.size() + stem.size() + rule.d.size());
@@ -331,7 +375,7 @@ bool TransformSet::apply(Run& run, const Rule& rule, const std::string& text, si
     }
     case RuleType::Prefix: {
       const std::string_view stem(text.data() + matched, text.size() - matched);
-      if (rule.stem_checks && !stem_ok(rule, stem)) return false;
+      if (rule.stem_checks && !stem_ok(run, rule, stem)) return false;
       out.reserve(rule.b.size() + stem.size());
       out.assign(rule.b);
       out += stem;
@@ -342,6 +386,7 @@ bool TransformSet::apply(Run& run, const Rule& rule, const std::string& text, si
       if (!rule.extra->pattern->replace(text, out)) return false;
       return finish_then(run, rule, out);
     case RuleType::Replace: {
+      run.rule_ops += text.size();  // the search for every occurrence
       std::vector<size_t> found;
       for (size_t i = text.find(rule.a); i != std::string::npos; i = text.find(rule.a, i + rule.a.size())) {
         if (!(rule.extra->not_at_start && i == 0)) found.push_back(i);
@@ -366,6 +411,7 @@ bool TransformSet::apply(Run& run, const Rule& rule, const std::string& text, si
       // A verb that is not a verb guard word, then runs of anything but a
       // space whose pieces are not guard words, then a particle; the runs
       // are removed.
+      run.rule_ops += text.size();  // the pieces and their parts are read once
       std::vector<std::string_view> pieces;
       for (size_t start = 0;;) {
         const size_t space = text.find(' ', start);
@@ -421,15 +467,17 @@ bool TransformSet::apply(Run& run, const Rule& rule, const std::string& text, si
 // matches in the order they apply: suffix-indexed rules, longest matched
 // suffix first, then those of the empty suffix; prefix-indexed rules the
 // same way; then phrasal rules, longest first-word ending first.
-void TransformSet::push_frame(Stack& stack, const std::string& text, uint32_t index) const {
+size_t TransformSet::push_frame(Stack& stack, const std::string& text, uint32_t index) const {
   std::vector<Match>& matches = stack.matches;
   const auto first = static_cast<uint32_t>(matches.size());
+  size_t walked = 0;  // code points the trie walks read
   {
     uint32_t node = 0;
     size_t count = 0;
     auto it = text.end();
     while (it != text.begin() && count < max_matches) {
       const char32_t c = utf8::prior(it, text.begin());
+      ++walked;
       const uint32_t child = suffixes_.child(node, c);
       if (child == UINT32_MAX) break;
       node = child;
@@ -450,6 +498,7 @@ void TransformSet::push_frame(Stack& stack, const std::string& text, uint32_t in
     auto p = text.begin();
     while (p != text.end() && count < max_matches) {
       const char32_t c = utf8::next(p, text.end());
+      ++walked;
       const uint32_t child = prefixes_.child(node, c);
       if (child == UINT32_MAX) break;
       node = child;
@@ -475,6 +524,7 @@ void TransformSet::push_frame(Stack& stack, const std::string& text, uint32_t in
         auto q = text.begin() + static_cast<std::ptrdiff_t>(space);
         while (q != text.begin() && count < max_matches) {
           const char32_t c = utf8::prior(q, text.begin());
+          ++walked;
           const uint32_t child = phrasal_.child(node, c);
           if (child == UINT32_MAX) break;
           node = child;
@@ -499,6 +549,7 @@ void TransformSet::push_frame(Stack& stack, const std::string& text, uint32_t in
     rule = (m.trie == 0 ? suffixes_ : m.trie == 1 ? prefixes_ : phrasal_).nodes[m.node].rules_begin;
   }
   stack.frames.push_back(Frame{index, first, first, end, rule, first_space});
+  return walked;
 }
 
 // The frame's next rule application that gives an output, in the order of
@@ -507,23 +558,32 @@ void TransformSet::push_frame(Stack& stack, const std::string& text, uint32_t in
 bool TransformSet::next_output(Run& run, Stack& stack, Frame& frame, std::string& output, uint32_t& rule_index,
                                uint32_t& conditions_out) const {
   const Deinflections& out = run.out;
-  // Each rule tried costs a unit of the budget; its output and `then` steps a
-  // unit per SearchBounds::work_bytes bytes they write, and its regular
-  // expressions a unit per code point they read (section 7.4). With none
-  // left, the search stops before `rule_index`.
+  // The work budget (section 7.4): each rule tried costs a unit; then, output
+  // or not, a unit per SearchBounds::work_bytes bytes it and its `then` steps
+  // wrote, a unit per code point its regular expressions read, and its
+  // operations (stem scans, stem change candidates, map keys tried, text
+  // searched). A rule its conditions or options skip is an operation. With
+  // the budget spent, the search stops before `rule_index`.
+  const auto stop = [&](uint32_t rule) {
+    run.spent = true;
+    rule_index = rule;
+    return false;
+  };
   const auto try_rule = [&](uint32_t rule) {
-    if (run.budget.spent()) {
-      run.spent = true;
-      rule_index = rule;
-      return false;
-    }
-    run.budget.spend(1);
+    if (run.budget.spent()) return false;
+    run.spend(rule, 1);
     run.then_written = 0;
     run.regex_read = 0;
+    run.rule_ops = 0;
     return true;
   };
-  const auto charge = [&] {
-    run.budget.spend((output.size() + 4 * run.then_written) / SearchBounds::work_bytes + run.regex_read);
+  const auto settle = [&](uint32_t rule) {
+    run.spend(rule, (output.size() + 4 * run.then_written) / SearchBounds::work_bytes + run.regex_read);
+    run.add_ops(rule, run.rule_ops);
+  };
+  const auto skip = [&](uint32_t rule) {
+    run.add_ops(rule, 1);
+    return !run.budget.spent();
   };
   const uint32_t conditions = out[frame.index].conditions;
   const auto allowed = [&](uint32_t conditions_in, uint16_t transform) {
@@ -540,22 +600,30 @@ bool TransformSet::next_output(Run& run, Stack& stack, Frame& frame, std::string
     const uint32_t rules_end = trie.nodes[m.node].rules_end;
     while (frame.rule < rules_end) {
       const NodeRule& nr = trie.node_rules[frame.rule++];
-      if (!allowed(nr.conditions_in, nr.transform)) continue;
-      if (!try_rule(nr.rule)) return false;
+      if (!allowed(nr.conditions_in, nr.transform)) {
+        if (!skip(nr.rule)) return stop(nr.rule);
+        continue;
+      }
+      if (!try_rule(nr.rule)) return stop(nr.rule);
       const std::string& text = out[frame.index].text;
       output.clear();
+      bool made = true;
       if (m.trie == 2) {
         const Rule& rule = rules[nr.rule];
         const size_t space = frame.space;
         const size_t next = text.find(' ', space + 1);
         const std::string_view second =
             std::string_view(text).substr(space + 1, (next == std::string::npos ? text.size() : next) - space - 1);
-        if (!rule.extra->followed_by->contains(second)) continue;
-        output.reserve(text.size() + rule.b.size());
-        output.append(text, 0, m.matched);
-        output += rule.b;
-        output.append(text, space);
-        if (!finish_then(run, rule, output)) continue;
+        run.rule_ops += text.size();  // the second word, found and looked up
+        if (!rule.extra->followed_by->contains(second)) {
+          made = false;
+        } else {
+          output.reserve(text.size() + rule.b.size());
+          output.append(text, 0, m.matched);
+          output += rule.b;
+          output.append(text, space);
+          made = finish_then(run, rule, output);
+        }
       } else {
         switch (nr.kind) {
           case 0:
@@ -564,18 +632,16 @@ bool TransformSet::next_output(Run& run, Stack& stack, Frame& frame, std::string
             output.append(nr.to);
             break;
           case 1:
-            if (m.matched != 0) continue;
-            output.assign(nr.to);
+            made = m.matched == 0;
+            if (made) output.assign(nr.to);
             break;
           default:
-            if (!apply(run, rules[nr.rule], text, m.matched, output)) {
-              run.budget.spend(run.regex_read);  // a pattern that did not match read the text too
-              continue;
-            }
+            made = apply(run, rules[nr.rule], text, m.matched, output);
             break;
         }
       }
-      charge();
+      settle(nr.rule);
+      if (!made) continue;
       rule_index = nr.rule;
       conditions_out = nr.conditions_out;
       return true;
@@ -590,11 +656,15 @@ bool TransformSet::next_output(Run& run, Stack& stack, Frame& frame, std::string
   while (frame.rule < unindexed_.size()) {
     const uint32_t r = unindexed_[frame.rule++];
     const Rule& rule = rules[r];
-    if (!allowed(rule.conditions_in, rule.transform)) continue;
-    if (!try_rule(r)) return false;
+    if (!allowed(rule.conditions_in, rule.transform)) {
+      if (!skip(r)) return stop(r);
+      continue;
+    }
+    if (!try_rule(r)) return stop(r);
     output.clear();
-    if (!apply(run, rule, out[frame.index].text, 0, output)) continue;
-    charge();
+    const bool made = apply(run, rule, out[frame.index].text, 0, output);
+    settle(r);
+    if (!made) continue;
     rule_index = r;
     conditions_out = rule.conditions_out;
     return true;
@@ -625,15 +695,38 @@ void TransformSet::search(Run& run) const {
   bool counted = false;
   const auto is_cycle = [&](uint32_t index, uint32_t rule) {
     const std::string& text = out[index].text;
+    size_t steps = 0;
+    bool cycle = false;
     for (uint32_t n = index; out[n].parent != Deinflection::npos; n = out[n].parent) {
-      if (out[n].via == rule && out[out[n].parent].text == text) return true;
+      ++steps;
+      if (out[n].via == rule && out[out[n].parent].text == text) {
+        cycle = true;
+        break;
+      }
     }
-    return false;
+    run.add_ops(rule, steps);
+    return cycle;
   };
   // What this search reports: the bound that stopped it (results or work),
-  // or else the first that dropped an output.
+  // or else the first that dropped an output; and, for the work bound, the
+  // rules that used the most of it.
   BoundHit hit;
-  push_frame(stack, out[root].text, root);
+  ankerl::unordered_dense::map<uint32_t, size_t> costs;
+  if (run.hit != nullptr) run.costs = &costs;
+  const auto costliest = [&] {
+    std::vector<std::pair<uint32_t, size_t>> ranked(costs.begin(), costs.end());
+    std::ranges::sort(ranked, [](const auto& a, const auto& b) {
+      return a.second != b.second ? a.second > b.second : a.first < b.first;
+    });
+    if (ranked.size() > 3) ranked.resize(3);
+    return ranked;
+  };
+  // A search that finds the budget spent records its text and nothing more.
+  if (run.budget.spent()) {
+    if (run.hit != nullptr && !*run.hit) *run.hit = BoundHit{BoundHit::Bound::Work, root, Deinflection::none, {}, {}};
+    return;
+  }
+  run.add_ops(Deinflection::none, push_frame(stack, out[root].text, root));
   while (!stack.frames.empty()) {
     Frame& frame = stack.frames.back();
     // Each output has a buffer of its own, so that a long one a bound drops
@@ -643,7 +736,7 @@ void TransformSet::search(Run& run) const {
     uint32_t conditions_out = 0;
     if (!next_output(run, stack, frame, output, rule, conditions_out)) {
       if (run.spent) {
-        if (run.hit != nullptr) hit = BoundHit{BoundHit::Bound::Work, frame.index, rule, {}};
+        if (run.hit != nullptr) hit = BoundHit{BoundHit::Bound::Work, frame.index, rule, {}, costliest()};
         break;
       }
       stack.matches.resize(frame.first);
@@ -670,14 +763,14 @@ void TransformSet::search(Run& run) const {
     }
     if (bound != BoundHit::Bound::None) {
       if (run.hit != nullptr && (!hit || bound == BoundHit::Bound::Results)) {
-        hit = BoundHit{bound, index, rule, std::move(output)};
+        hit = BoundHit{bound, index, rule, std::move(output), {}};
       }
       if (bound == BoundHit::Bound::Results) break;
       continue;
     }
     const uint32_t depth = out[index].depth + 1;
     out.push_back(Deinflection{std::move(output), conditions_out, index, rule, depth});
-    push_frame(stack, out.back().text, static_cast<uint32_t>(out.size() - 1));
+    run.add_ops(rule, push_frame(stack, out.back().text, static_cast<uint32_t>(out.size() - 1)));
   }
   if (run.hit != nullptr && !*run.hit) *run.hit = std::move(hit);
   // A search that went far keeps no large stack for the thread's next one.

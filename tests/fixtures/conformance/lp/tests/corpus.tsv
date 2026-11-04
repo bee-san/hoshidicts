@@ -3,3 +3,4 @@
 # category	valid	source	term	rule	reasons
 names	1	Rome	Romis	*	name
 negatives	0	Roma	Romis	*	*
+negatives	0	romaromaromaromarome	x	*	*

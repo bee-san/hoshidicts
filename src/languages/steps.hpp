@@ -12,6 +12,7 @@
 #include <utility>
 #include <vector>
 
+#include "bounds.hpp"
 #include "builtins/builtins.hpp"
 #include "classes.hpp"
 #include "regex.hpp"
@@ -48,13 +49,28 @@ inline constexpr size_t max_literal_code_points = 64;
 
 // What a step list may write (sections 6.2 and 7.4): a list stops once its
 // text has more than `max_code_points`; `written` adds up the code points of
-// every step's output (of every round of a repeated pattern), and `read` the
-// code points every `pattern` step's regular expression read (every round).
+// every step's output (of every round of a repeated pattern), `read` the
+// code points every `pattern` step's regular expression read (every round),
+// and `ops` the `map` and `alternatives` keys tried.
 struct StepLimit {
   size_t max_code_points = SIZE_MAX;
   size_t written = 0;
   size_t read = 0;
+  size_t ops = 0;
 };
+
+// The work a step list's application costs in a SearchBudget (section 7.4):
+// a unit, a unit per SearchBounds::work_bytes bytes written (4 a code point)
+// and a unit per code point read, with its operations.
+inline void charge_steps(SearchBudget& budget, const StepLimit& limit) {
+  budget.spend(1 + 4 * limit.written / SearchBounds::work_bytes + limit.read);
+  budget.add_ops(limit.ops);
+}
+
+// `text` after `steps` (a readingNormalizer or formOfNormalizer), within the
+// step limit of its length (section 6.2): the first output, or `text` itself
+// when the steps go past the limit or `text` is not UTF-8.
+std::string normalize_text(const StepList& steps, std::string_view text);
 
 // The longest text a step list may make from a text of `n` code points.
 constexpr size_t step_limit(size_t n) { return 16 * (n + 32); }
@@ -118,11 +134,17 @@ struct EnabledOptions {
 };
 
 // The variants of section 6.1, sorted by code points. `limit_reached` is set
-// when an input reached max_text_variants.
+// when an input reached max_text_variants. With `budget` (section 7.4), each
+// step list or builtin a processor applies costs a unit of it, plus a unit per
+// SearchBounds::work_bytes bytes it writes and its operations; once it is
+// spent, the processors stop adding variants, so the text and those made
+// before are what is left.
 std::vector<TextVariant> process_text(std::span<const Processor> processors, std::string_view input,
-                                      const EnabledOptions& enabled, bool* limit_reached = nullptr);
+                                      const EnabledOptions& enabled, bool* limit_reached = nullptr,
+                                      SearchBudget* budget = nullptr);
 // The same on code points, for chaining (postprocessors).
 void process_text32(std::span<const Processor> processors, const std::u32string& input, const EnabledOptions& enabled,
-                    std::vector<std::pair<std::u32string, int>>& out, bool* limit_reached = nullptr);
+                    std::vector<std::pair<std::u32string, int>>& out, bool* limit_reached = nullptr,
+                    SearchBudget* budget = nullptr);
 
 }  // namespace hoshidicts::lang

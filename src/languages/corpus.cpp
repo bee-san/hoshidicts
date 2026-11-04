@@ -156,12 +156,11 @@ std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::stri
   std::vector<SourceDeinflection> out;
   BoundHit hit;
   BoundHit* const hit_ptr = search != nullptr ? &hit : nullptr;
-  // The source's searches share one work budget, as a lookup's do.
+  // The source's processors and searches share one work budget, as a
+  // lookup's do; its use is added to `search` at the end.
   SearchBudget budget;
-  size_t work_left = budget.work_left;
   const auto searched = [&](const Deinflections& list, size_t begin, const std::string& from) {
-    if (search != nullptr) add_search(pack, list, begin, hit, work_left - budget.work_left, from, *search);
-    work_left = budget.work_left;
+    if (search != nullptr) add_search(pack, list, begin, hit, 0, from, *search);
   };
   const auto emit = [&](const Deinflections& list) {
     for (const auto& d : list) {
@@ -183,14 +182,14 @@ std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::stri
         out.push_back(std::move(base));
         continue;
       }
-      for (auto& variant : process_text(pack.postprocessors, d.text, enabled, limit_reached)) {
+      for (auto& variant : process_text(pack.postprocessors, d.text, enabled, limit_reached, &budget)) {
         SourceDeinflection post = base;
         post.text = std::move(variant.text);
         out.push_back(std::move(post));
       }
     }
   };
-  for (const auto& variant : process_text(pack.preprocessors, source, enabled, limit_reached)) {
+  for (const auto& variant : process_text(pack.preprocessors, source, enabled, limit_reached, &budget)) {
     Deinflections list;
     if (pack.transforms) {
       pack.transforms->deinflect(variant.text, list, &enabled_transforms, hit_ptr, &budget);
@@ -218,6 +217,7 @@ std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::stri
       emit(pass_list);
     }
   }
+  if (search != nullptr) search->work += budget.used();
   return out;
 }
 
@@ -235,6 +235,7 @@ void merge_search(const SourceSearch& one, SourceSearch& into) {
     into.steps = one.steps;
     into.texts = one.texts;
     into.busiest = one.busiest;
+    into.costliest = one.costliest;
   }
 }
 }  // namespace
@@ -246,6 +247,19 @@ SourceSearch lookup_search(const PackData& pack, std::string_view text, size_t s
   const RowOptions o = row_options(pack, options);
   const EnabledOptions enabled{o.ids};
   const auto& set = *pack.transforms;
+  // The work of `text`'s postprocessed forms, a unit each looked up; the
+  // postprocessors get no more than `allowed`, past which the lookup's
+  // budget is spent anyway.
+  const auto post_forms = [&](const std::string& text, size_t allowed) -> size_t {
+    if (pack.postprocessors.empty()) return 1;
+    SearchBudget post;
+    post.work_left = std::min(allowed, SearchBounds::max_work);
+    const size_t start = post.work_left;
+    const size_t forms = process_text(pack.postprocessors, text, enabled, nullptr, &post).size();
+    return start - post.work_left + forms;
+  };
+  // Work past the budget changes nothing: the lookup reaches the work bound.
+  const size_t enough = SearchBounds::max_work + 1;
   // The search of `searched` (a processed variant, or a reading of the
   // variant `from`), with a budget of its own, from the cache or now.
   const auto search = [&](std::string searched, const VariantPass* pass, const std::string& from) {
@@ -260,7 +274,13 @@ SourceSearch lookup_search(const PackData& pack, std::string_view text, size_t s
       } else {
         set.deinflect_from_step(searched, pass->step, list, &o.enabled_transforms, &hit, &budget);
       }
-      if (!list.empty()) add_search(pack, list, 0, hit, SearchBounds::max_work - budget.work_left, from, one);
+      if (!list.empty()) add_search(pack, list, 0, hit, budget.used(), from, one);
+      // The forms a lookup looks up: each deinflection, or its postprocessed
+      // variants, a unit each, with the postprocessors' work.
+      for (const auto& d : list) {
+        if (one.work >= enough) break;
+        one.work += post_forms(d.text, enough - one.work);
+      }
       found = cache.emplace(std::move(searched), std::move(one)).first;
     }
     merge_search(found->second, lookup);
@@ -277,8 +297,26 @@ SourceSearch lookup_search(const PackData& pack, std::string_view text, size_t s
       ends.push_back(i);
     }
   }
+  // Where the first 8 code points end, when the text has them: a lookup
+  // also postprocesses that prefix's variants, to recognise long keys.
+  size_t eight = std::string_view::npos;
+  for (size_t i = 0, n = 0; i <= text.size(); ++i) {
+    if (i == text.size() || (static_cast<unsigned char>(text[i]) & 0xC0) != 0x80) {
+      if (n++ == 8) {
+        eight = i;
+        break;
+      }
+    }
+  }
   for (const size_t end : ends) {
-    for (const auto& variant : process_text(pack.preprocessors, text.substr(0, end), enabled)) {
+    if (lookup.work >= enough) break;
+    SearchBudget pre;
+    const auto variants = process_text(pack.preprocessors, text.substr(0, end), enabled, nullptr, &pre);
+    lookup.work += pre.used();
+    if (end == eight) {
+      for (const auto& v : variants) lookup.work += post_forms(v.text, enough);
+    }
+    for (const auto& variant : variants) {
       if (!variant.text.empty()) search(variant.text, nullptr, variant.text);
       if (!o.all) continue;  // every variant pass is optional (section 4.4)
       for (const auto& pass : pack.variant_passes) {
@@ -350,6 +388,12 @@ void add_search(const PackData& pack, const Deinflections& list, size_t begin, c
   }
   search.results = std::max(search.results, list.size() - begin);
   if (!hit || search.bound != BoundHit::Bound::None || !pack.transforms) return;
+  // A search that found the budget spent tried no rule: the lookup's work ran
+  // out, with no chain of its own.
+  if (hit.rule == Deinflection::none) {
+    search.bound = hit.bound;
+    return;
+  }
   const auto& set = *pack.transforms;
   const auto rule_name = [&](uint32_t rule) {
     return set.transforms[set.rules[rule].transform].id + "[" + std::to_string(set.rules[rule].index_in_transform) +
@@ -374,8 +418,9 @@ void add_search(const PackData& pack, const Deinflections& list, size_t begin, c
   }
   search.steps.push_back(rule_name(hit.rule));
   search.texts.push_back(hit.text);
-  // Which rules made this search so large (section 12.1 step 7).
-  if (hit.bound == BoundHit::Bound::Results || hit.bound == BoundHit::Bound::Work) {
+  // Which rules used its work, or made it so large (section 12.1 step 7).
+  for (const auto& [rule, units] : hit.costliest) search.costliest.emplace_back(rule_name(rule), units);
+  if (hit.bound == BoundHit::Bound::Results) {
     std::map<uint32_t, size_t> made;
     for (size_t i = begin; i < list.size(); ++i) {
       if (list[i].via < Deinflection::step_base) ++made[list[i].via];
@@ -405,8 +450,8 @@ std::string describe(const SourceSearch& hit) {
       break;
     case BoundHit::Bound::Work:
       if (hit.steps.empty()) {
-        return "more than " + std::to_string(SearchBounds::max_work) + " units of work in one lookup (its " +
-               std::to_string(hit.searches) + " searches need " + std::to_string(hit.work) + ")";
+        return "more than " + std::to_string(SearchBounds::max_work) + " units of work in one lookup (" +
+               std::to_string(hit.work) + " counted, in " + std::to_string(hit.searches) + " searches)";
       }
       out = "more than " + std::to_string(SearchBounds::max_work) + " units of work";
       break;
@@ -444,6 +489,12 @@ std::string describe(const SourceSearch& hit) {
     out += "; the rules that made the most of its deinflections:";
     for (size_t k = 0; k < hit.busiest.size(); ++k) {
       out += (k ? ", " : " ") + hit.busiest[k].first + " (" + std::to_string(hit.busiest[k].second) + ")";
+    }
+  }
+  if (!hit.costliest.empty()) {
+    out += "; the rules that used the most of its work:";
+    for (size_t k = 0; k < hit.costliest.size(); ++k) {
+      out += (k ? ", " : " ") + hit.costliest[k].first + " (" + std::to_string(hit.costliest[k].second) + " units)";
     }
   }
   return out;

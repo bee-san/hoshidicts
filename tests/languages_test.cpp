@@ -4,6 +4,8 @@
 // conditions, cycles, the search bounds, schema checks, rules that replace a
 // pack's own (10.3), the registry, and word resolution in a lookup.
 #include <algorithm>
+#include <atomic>
+#include <chrono>
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
@@ -12,6 +14,7 @@
 #include <random>
 #include <set>
 #include <string>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -1098,9 +1101,10 @@ void test_search_bounds() {
     if (pack) {
       lang::BoundHit hit;
       const auto list = search(*pack, "a", &hit);
-      // The growth bound drops outputs on the way; the results bound stops
-      // the search, and the report names it.
-      check(hit.bound == Bound::Results && list.size() == max_results,
+      // The growth bound drops outputs on the way; the work bound stops the
+      // search (each output's trie walk and cycle check add to its try)
+      // before the results bound would, and the report names it.
+      check(hit.bound == Bound::Work && list.size() < max_results && list.size() > max_results / 2,
             "growing fan-out: bounded: " + std::to_string(list.size()));
       size_t longest = 0;
       for (const auto& d : list) longest = std::max(longest, code_points(d.text));
@@ -1241,8 +1245,9 @@ void test_search_bounds() {
             "describe shortens a long dropped output: " + described);
       // Its work: 1 for the try, (1024 output bytes + 4 x (16 + 128 + 1024)
       // code points written) / 256 = 22, and 2 + 16 + 128 code points the
-      // regular expression read: 169. An optional rule that is off costs
-      // nothing.
+      // regular expression read: 169; as a corpus row also 1 for the
+      // decapitalize preprocessor. An optional rule that is off is one
+      // operation, a 64th of a unit.
       const auto with_optional = load(
           transforms_json(
               transform(
@@ -1259,9 +1264,9 @@ void test_search_bounds() {
         lang::SearchBudget budget;
         lang::Deinflections list2;
         with_optional->data().transforms->deinflect("as", list2, nullptr, nullptr, &budget);
-        check(source.work == 169 && lang::SearchBounds::max_work - budget.work_left == 169 && list2.size() == 1,
+        check(source.work == 170 && budget.used() == 169 && list2.size() == 1,
               "the work of a multiplying then list: " + std::to_string(source.work) + " and " +
-                  std::to_string(lang::SearchBounds::max_work - budget.work_left));
+                  std::to_string(budget.used()));
       }
     }
   }
@@ -1325,7 +1330,7 @@ void test_search_bounds() {
       const std::string described = lang::describe(source);
       check(source.bound == Bound::Work && source.work == lang::SearchBounds::max_work &&
                 described.starts_with("more than 1048576 units of work, after ") &&
-                described.find("-> (not tried); the rules that made the most of its deinflections: wide[0] (") !=
+                described.find("-> (not tried); the rules that used the most of its work: wide[0] (") !=
                     std::string::npos,
             "the work bound described: " + described);
     }
@@ -1344,16 +1349,15 @@ void test_search_bounds() {
       lang::SearchBudget budget;
       lang::Deinflections list;
       pack->data().transforms->deinflect("aaaa", list, nullptr, nullptr, &budget);
-      check(list.size() == 1 && lang::SearchBounds::max_work - budget.work_left == 5,
-            "a pattern that does not match costs what it read: " +
-                std::to_string(lang::SearchBounds::max_work - budget.work_left));
+      check(list.size() == 1 && budget.used() == 5,
+            "a pattern that does not match costs what it read: " + std::to_string(budget.used()));
     }
   }
   {
     // A lookup's searches need one budget together (lookup_search): with a
     // cache that says the searches of a and ab use 600,000 units each, the
-    // lookup of ab needs 1,200,000, past the budget, though neither search
-    // reached a bound.
+    // lookup of ab needs 1,200,002 (its two prefixes each cost a unit of
+    // preprocessing), past the budget, though neither search reached a bound.
     const auto pack =
         load(transforms_json(transform(
                  "s", R"({"type":"suffix","inflected":"s","deinflected":"","conditionsIn":[],"conditionsOut":[]})")),
@@ -1365,8 +1369,9 @@ void test_search_bounds() {
       cache["ab"].work = 600000;
       cache["ab"].searches = 1;
       const auto lookup = lang::lookup_search(pack->data(), "ab", 16, lang::TestOptions::All, cache);
-      check(lookup.bound == Bound::Work && lookup.work == 1200000 && lookup.searches == 2 && lookup.steps.empty() &&
-                lang::describe(lookup) == "more than 1048576 units of work in one lookup (its 2 searches need 1200000)",
+      check(lookup.bound == Bound::Work && lookup.work == 1200002 && lookup.searches == 2 && lookup.steps.empty() &&
+                lang::describe(lookup) ==
+                    "more than 1048576 units of work in one lookup (1200002 counted, in 2 searches)",
             "a lookup that needs more than one budget: " + lang::describe(lookup));
       lang::SearchCache fresh;
       check(lang::lookup_search(pack->data(), "ab", 16, lang::TestOptions::All, fresh).bound == Bound::None,
@@ -1504,6 +1509,312 @@ void test_search_bounds() {
     check(deep.bound == Bound::Depth && longest_chain(cut) == max_depth &&
               std::ranges::none_of(cut, [](const lang::Deinflection& d) { return d.text == "食べる"; }),
           "食べ + させ × 200 + る: the depth bound");
+  }
+}
+
+// What the work budget counts besides rule applications (section 7.4), the
+// load-time limits that keep each count small, and the processors' share.
+void test_work_accounting() {
+  using Bound = lang::BoundHit::Bound;
+  std::string error;
+  {
+    // The budget clamps at zero, and operations go in 64 to a unit.
+    lang::SearchBudget budget;
+    budget.work_left = 5;
+    budget.spend(10);
+    check(budget.spent() && budget.work_left == 0 && budget.used() == lang::SearchBounds::max_work,
+          "spending more than is left empties the budget");
+    lang::SearchBudget ops;
+    check(ops.add_ops(63) == 0 && ops.used() == 0 && ops.add_ops(1) == 1 && ops.used() == 1 && ops.add_ops(130) == 2 &&
+              ops.ops == 2,
+          "64 operations to a unit");
+  }
+  {
+    // Rules their conditions skip are operations: from a, the rule a -> b
+    // gives b, whose node holds 640 rules for a condition b never has. 1 unit
+    // for the try, and 642 operations (640 skips, 2 code points the trie
+    // walks read): 11 units.
+    std::string dead;
+    for (int i = 0; i < 640; ++i) {
+      dead += R"(,{"type":"suffix","inflected":"b","deinflected":"z","conditionsIn":["n"],"conditionsOut":["n"]})";
+    }
+    const auto pack =
+        load(transforms_json(transform(
+                 "t", R"({"type":"suffix","inflected":"a","deinflected":"b","conditionsIn":[],"conditionsOut":["x"]})" +
+                          dead)),
+             &error);
+    check(pack != nullptr, "skip pack loads: " + error);
+    if (pack) {
+      lang::SearchBudget budget;
+      lang::Deinflections list;
+      pack->data().transforms->deinflect("a", list, nullptr, nullptr, &budget);
+      check(list.size() == 2 && budget.used() == 11 && budget.ops == 2,
+            "skipped rules are charged: " + std::to_string(budget.used()) + " units, " + std::to_string(budget.ops) +
+                " ops");
+    }
+  }
+  {
+    // Searching a text for a replace rule's occurrences reads it: 128 bytes,
+    // twice (the root, and the output the rule made, where it finds none), and
+    // 2 code points the trie walks read; with the two tries, 2 + 258 / 64 = 6.
+    const auto pack = load(
+        transforms_json(transform(
+            "r",
+            R"({"type":"replace","inflected":"x","deinflected":"y","occurrence":"first","conditionsIn":[],"conditionsOut":[]})")),
+        &error);
+    check(pack != nullptr, "replace pack loads: " + error);
+    if (pack) {
+      lang::SearchBudget budget;
+      lang::Deinflections list;
+      pack->data().transforms->deinflect(std::string(127, 'a') + "x", list, nullptr, nullptr, &budget);
+      check(list.size() == 2 && budget.used() == 6,
+            "a replace rule's scan is charged: " + std::to_string(budget.used()));
+    }
+  }
+  {
+    // A trie node with many children is searched by code point: 1,000 suffix
+    // rules on 1,000 code points, each found.
+    std::string rules;
+    for (int i = 0; i < 1000; ++i) {
+      std::string c;
+      lang::append_utf8(c, static_cast<char32_t>(0x4E00 + i));
+      rules += std::string(i ? "," : "") + R"({"type":"suffix","inflected":")" + c + R"(","deinflected":"x)" +
+               std::to_string(i) + R"(","conditionsIn":[],"conditionsOut":[]})";
+    }
+    const auto pack = load(transforms_json(transform("wide", rules)), &error);
+    check(pack != nullptr, "wide trie pack loads: " + error);
+    if (pack) {
+      bool all = true;
+      for (int i : {0, 7, 8, 500, 777, 999}) {
+        std::string text = "a";
+        lang::append_utf8(text, static_cast<char32_t>(0x4E00 + i));
+        const auto r = deinflect(*pack, text);
+        all = all && r.size() == 2 && r[1] == "ax" + std::to_string(i) + "::wide";
+      }
+      std::string miss = "a";
+      lang::append_utf8(miss, static_cast<char32_t>(0x4E00 + 1000));
+      check(all && deinflect(*pack, miss).size() == 1, "children found among 1,000");
+    }
+  }
+  {
+    // A stem change tries at most 64 strings of at most 64 code points.
+    const auto with_from = [&](const std::string& from) {
+      std::string e;
+      const bool ok = load(transforms_json(transform(
+                               "s", R"({"type":"suffix","inflected":"o","deinflected":"ar","stemChange":{"from":[)" +
+                                        from + R"(],"to":"e"},"conditionsIn":[],"conditionsOut":[]})")),
+                           &e) != nullptr;
+      return std::pair{ok, e};
+    };
+    std::string many;
+    for (int i = 0; i < 65; ++i) many += std::string(i ? "," : "") + "\"a" + std::to_string(i) + "\"";
+    std::string sixty_four;
+    for (int i = 0; i < 64; ++i) sixty_four += std::string(i ? "," : "") + "\"a" + std::to_string(i) + "\"";
+    const auto [ok64, e64] = with_from(sixty_four);
+    const auto [ok65, e65] = with_from(many);
+    const auto [ok_long, e_long] = with_from("\"" + std::string(65, 'a') + "\"");
+    check(ok64 && !ok65 && e65.find("stemChange.from: has more than 64 strings") != std::string::npos && !ok_long &&
+              e_long.find("stemChange.from[0]: an affix is longer than 64 code points") != std::string::npos,
+          "stemChange.from limits: " + e64 + " / " + e65 + " / " + e_long);
+  }
+  {
+    // A stem change's candidates are operations: 64 strings tried at each of
+    // the 64 code points of the stem, 4,096, plus the 2 code points the trie
+    // walk reads (x, then a miss on a), and 1 unit for the try:
+    // 1 + (4,096 + 2) / 64 = 65 units.
+    std::string from;
+    for (int i = 0; i < 64; ++i) from += std::string(i ? "," : "") + "\"q" + std::to_string(i) + "\"";
+    const auto pack = load(
+        transforms_json(transform("s", R"({"type":"suffix","inflected":"x","deinflected":"","stemChange":{"from":[)" +
+                                           from + R"(],"to":"e"},"conditionsIn":[],"conditionsOut":[]})")),
+        &error);
+    check(pack != nullptr, "candidate pack loads: " + error);
+    if (pack) {
+      lang::SearchBudget budget;
+      lang::Deinflections list;
+      pack->data().transforms->deinflect(std::string(64, 'a') + "x", list, nullptr, nullptr, &budget);
+      check(list.size() == 1 && budget.used() == 65,
+            "stem change candidates are charged: " + std::to_string(budget.used()));
+    }
+  }
+  {
+    // A stem change with `between`: the last match whose rest of the stem is
+    // all in the class, at least betweenMinLength long.
+    const auto pack = load(
+        transforms_json(transform(
+            "s",
+            R"({"type":"suffix","inflected":"x","deinflected":"","stemChange":{"from":["o","e"],"to":"i","occurrence":"last","between":"[b-df-hj-np-tv-z]","betweenMinLength":2},"conditionsIn":[],"conditionsOut":[]})")),
+        &error);
+    check(pack != nullptr, "between pack loads: " + error);
+    if (pack) {
+      // kotebd: o has e after it, e has bd (2): e -> i. kobtd: o has btd.
+      // koteb, kotbe: no match has 2 consonants after it.
+      const auto r = deinflect(*pack, "kotebdx");
+      const auto r1 = deinflect(*pack, "kobtdx");
+      const auto r2 = deinflect(*pack, "kotebx");
+      const auto r3 = deinflect(*pack, "kotbex");
+      check(r.size() == 2 && r[1] == "kotibd::s" && r1.size() == 2 && r1[1] == "kibtd::s" && r2.size() == 1 &&
+                r3.size() == 1,
+            "stemChange between: " + join(r) + " / " + join(r1) + " / " + join(r2) + " / " + join(r3));
+    }
+  }
+  {
+    // The texts steps write and their counts are limited too: an
+    // alternative of 65 code points, and an alternatives limit over 4,096.
+    std::string language = language_json();
+    const std::string decapitalize = R"({"id":"decapitalize","variants":[[{"case":"lower"}]]})";
+    const auto with = [&](const std::string& processor) {
+      std::string l = language;
+      l.replace(l.find(decapitalize), decapitalize.size(), processor);
+      std::string e;
+      const bool ok =
+          hoshidicts::parse_language_pack(
+              l,
+              transforms_json(transform(
+                  "s", R"({"type":"suffix","inflected":"s","deinflected":"","conditionsIn":[],"conditionsOut":[]})")),
+              &e) != nullptr;
+      return std::pair{ok, e};
+    };
+    const auto [ok64, e64] =
+        with(R"({"id":"a","variants":[[{"alternatives":{"a":[")" + std::string(64, 'x') + R"("]}}]]})");
+    const auto [ok65, e65] =
+        with(R"({"id":"a","variants":[[{"alternatives":{"a":[")" + std::string(65, 'x') + R"("]}}]]})");
+    const auto [okl, el] = with(R"({"id":"a","variants":[[{"alternatives":{"a":["b"]},"limit":4097}]]})");
+    check(ok64 && !ok65 &&
+              e65.find("alternatives.a: a text a step writes is longer than 64 code points") != std::string::npos &&
+              !okl && el.find("limit: may be at most 4096") != std::string::npos,
+          "alternatives limits: " + e64 + " / " + e65 + " / " + el);
+  }
+  {
+    // Processors take the step limit from the text process_text was given,
+    // not from each variant, so a chain of six that each double the text
+    // stops at step_limit(16) = 768 code points.
+    lang::Step twice;
+    twice.kind = lang::StepKind::Pattern;
+    twice.pattern = pattern("([a-z])", "$1$1", true);
+    std::vector<lang::Processor> chain;
+    for (int i = 0; i < 6; ++i) chain.push_back(lang::Processor{"d" + std::to_string(i), "", false, false, {{twice}}});
+    const auto v = lang::process_text(chain, std::string(16, 'a'), {});
+    check(v.size() == 1 && v[0].text.size() == 512,
+          "a chain of doubling processors: " + std::to_string(v[0].text.size()));
+  }
+  {
+    // Processors given a budget charge it, and stop when it is spent: each
+    // keeps the variants made before.
+    lang::Step twice;
+    twice.kind = lang::StepKind::Pattern;
+    twice.pattern = pattern("([a-z])", "$1$1", true);
+    lang::Processor doubling{"double", "", true, false, {{twice}}};
+    const std::vector<lang::Processor> processors{doubling};
+    lang::SearchBudget budget;
+    const auto v = lang::process_text(processors, "abcd", {}, nullptr, &budget);
+    // 1, (4 x 8 written) / 256 = 0, and 4 code points read.
+    check(v.size() == 2 && budget.used() == 5, "a processor's work: " + std::to_string(budget.used()));
+    lang::SearchBudget spent;
+    spent.work_left = 0;
+    const auto w = lang::process_text(processors, "abcd", {}, nullptr, &spent);
+    check(w.size() == 1 && w[0].text == "abcd", "a spent budget leaves the text as it is");
+    lang::Processor replacing{"double", "", false, false, {{twice}}};
+    const std::vector<lang::Processor> replace{replacing};
+    lang::SearchBudget spent2;
+    spent2.work_left = 0;
+    const auto x = lang::process_text(replace, "abcd", {}, nullptr, &spent2);
+    check(x.size() == 1 && x[0].text == "abcd" && x[0].steps == 0,
+          "a spent budget keeps the text with keepInput false");
+  }
+  {
+    // normalize_text (readingNormalizer, formOfNormalizer) stays within the
+    // step limit: a pattern that doubles a run of a up to 600 reaches 1,024
+    // without the limit, and is left as it was within step_limit(1) = 528.
+    lang::Step grow;
+    grow.kind = lang::StepKind::Pattern;
+    grow.pattern = pattern("^(a{1,600})$", "$1$1");
+    grow.repeat = true;
+    const lang::StepList steps{grow};
+    std::u32string unlimited;
+    lang::apply_single(steps, u32("a"), unlimited);
+    check(unlimited.size() == 1024 && lang::normalize_text(steps, "a") == "a" &&
+              lang::normalize_text(steps, "aa") == "aa",
+          "normalize_text within the limit");
+    lang::Step lower = case_step(lang::CaseMode::Lower);
+    check(lang::normalize_text({lower}, "AbC") == "abc" && lang::normalize_text({lower}, "\xFF") == "\xFF",
+          "normalize_text applies the steps, and leaves invalid UTF-8 alone");
+  }
+  {
+    // A Work bound names the rules that used the most of the work: the
+    // doubling `then` rule, not the fan-out that made the most deinflections.
+    const auto pack = load(
+        transforms_json(transform(
+            "f",
+            R"J({"type":"replace","inflected":"a","deinflected":"b","occurrence":"first","conditionsIn":[],"conditionsOut":[]},
+                     {"type":"replace","inflected":"a","deinflected":"c","occurrence":"first","conditionsIn":[],"conditionsOut":[]},
+                     {"type":"suffix","inflected":"s","deinflected":"s","conditionsIn":[],"conditionsOut":[],"then":[{"pattern":"(.)","replace":"$1$1","global":true,"repeat":true}]})J")),
+        &error);
+    check(pack != nullptr, "costly pack loads: " + error);
+    if (pack) {
+      lang::SourceSearch source;
+      bool limit = false;
+      lang::deinflect_source(pack->data(), std::string(16, 'a') + "s", &limit, lang::TestOptions::All, &source);
+      const std::string described = lang::describe(source);
+      check(source.bound == Bound::Work && !source.costliest.empty() && source.costliest[0].first == "f[2]" &&
+                described.find("; the rules that used the most of its work: f[2] (") != std::string::npos,
+            "the costliest rule is named: " + described);
+    }
+  }
+  {
+    // A corpus row's variant pass readings share its budget (deinflect_source),
+    // as Deinflector::deinflect_neko_speech's do: with 2,000 appending rules
+    // the search of にゃ spends it, and each reading records its text only.
+    std::string rules;
+    for (int i = 0; i < 2000; ++i) {
+      rules += std::string(i ? "," : "") + R"({"type":"suffix","inflected":"","deinflected":"x)" + std::to_string(i) +
+               R"(","conditionsIn":[],"conditionsOut":[],"stemMinLength":1})";
+    }
+    const auto pack = load(transforms_json(transform("wide", rules)), &error,
+                           R"(,"variantPasses":[{"id":"nekoSpeech","builtin":"ja.nekoSpeech","optional":true}])");
+    if (pack) {
+      bool limit = false;
+      const auto all = lang::deinflect_source(pack->data(), "にゃ", &limit, lang::TestOptions::All);
+      const auto defaults = lang::deinflect_source(pack->data(), "にゃ", &limit, lang::TestOptions::Default);
+      check(all.size() == defaults.size() + 5,
+            "a corpus row's readings share its budget: " + std::to_string(all.size()) + " and " +
+                std::to_string(defaults.size()));
+    }
+  }
+  {
+    // Searches on several threads at once give what one thread gives: each
+    // thread has a search stack of its own. The fan-out keeps hundreds of
+    // frames and matches on the stack, so a shared one would mix them up.
+    const auto pack = load(
+        transforms_json(transform(
+            "f",
+            R"({"type":"replace","inflected":"a","deinflected":"b","occurrence":"first","conditionsIn":[],"conditionsOut":[]},
+                                       {"type":"replace","inflected":"a","deinflected":"c","occurrence":"first","conditionsIn":[],"conditionsOut":[]})")),
+        &error);
+    if (pack) {
+      const std::vector<std::string> texts = {std::string(10, 'a'), std::string(9, 'a') + "x",
+                                              "xa" + std::string(8, 'a')};
+      std::vector<lang::Deinflections> reference(texts.size());
+      for (size_t t = 0; t < texts.size(); ++t) pack->data().transforms->deinflect(texts[t], reference[t]);
+      std::atomic<int> mismatches = 0;
+      std::vector<std::thread> threads;
+      for (int t = 0; t < 8; ++t) {
+        threads.emplace_back([&, t] {
+          for (int k = 0; k < 40; ++k) {
+            const size_t which = static_cast<size_t>(t + k) % texts.size();
+            lang::Deinflections list;
+            pack->data().transforms->deinflect(texts[which], list);
+            bool same = list.size() == reference[which].size();
+            for (size_t i = 0; same && i < list.size(); ++i) {
+              same = list[i].text == reference[which][i].text && list[i].parent == reference[which][i].parent;
+            }
+            if (!same) ++mismatches;
+          }
+        });
+      }
+      for (auto& thread : threads) thread.join();
+      check(mismatches == 0, "searches on 8 threads: " + std::to_string(mismatches.load()) + " mismatches");
+    }
   }
 }
 
@@ -2136,7 +2447,7 @@ void test_lookup_budget() {
       std::filesystem::temp_directory_path() / ("hoshidicts-lookup-budget-" + std::to_string(std::random_device{}()));
   std::filesystem::create_directories(root);
   const std::string index = R"({"title":"budget","format":3,"revision":"1"})";
-  const std::string bank = R"([["walk","","v","v",0,["to walk"],0,""]])";
+  const std::string bank = R"([["walk","","v","v",0,["to walk"],0,""],["a","","","",0,["the letter"],0,""]])";
   {
     std::ofstream(root / "budget.zip", std::ios::binary)
         << build_zip({{"index.json", index}, {"term_bank_1.json", bank}});
@@ -2174,6 +2485,102 @@ void test_lookup_budget() {
   check(first("walkedqq", "yy") == "walk|walked",
         "without the wide rules walkedqq finds walk: " + first("walkedqq", "yy"));
   check(first("walkedqq", "xx") == "walk|walk", "the lookup's searches share one budget: " + first("walkedqq", "xx"));
+  // A variant pass's readings share the budget too: with the wide rules and
+  // the nekoSpeech pass, the search of aにゃ spends it, so the reading aな
+  // records its text only and its rule な -> "" is never tried; a is found
+  // as the prefix a. With a budget of its own the reading would give a for
+  // the whole of aにゃ.
+  {
+    const std::string pass = R"(,"variantPasses":[{"id":"nekoSpeech","builtin":"ja.nekoSpeech","optional":true}])";
+    std::string with_pass = language;
+    with_pass.replace(with_pass.find(R"("transforms":"transforms.json")"),
+                      std::strlen(R"("transforms":"transforms.json")"), R"("transforms":"transforms.json")" + pass);
+    const std::string na =
+        transform("na", R"({"type":"suffix","inflected":"な","deinflected":"","conditionsIn":[],"conditionsOut":[]})");
+    std::string wide_pass = with_pass;
+    wide_pass.replace(wide_pass.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":"zw")");
+    std::string plain_pass = with_pass;
+    plain_pass.replace(plain_pass.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":"zp")");
+    check(registry.add(wide_pass, transforms_json(na + "," + transform("wide", wide)), &error),
+          "add the wide pass pack: " + error);
+    check(registry.add(plain_pass, transforms_json(na), &error), "add the plain pass pack: " + error);
+    const Lookup pass_lookup(query, registry);
+    const auto first_pass = [&](const std::string& code) {
+      LookupOptions options;
+      options.language = code;
+      options.language_options = {"nekoSpeech"};
+      const auto results = pass_lookup.lookup("aにゃ", 16, 16, options);
+      return results.empty() ? std::string("(none)") : results.front().term.expression + "|" + results.front().matched;
+    };
+    check(first_pass("zp") == "a|aにゃ", "a pass reading finds a: " + first_pass("zp"));
+    check(first_pass("zw") == "a|a", "a pass reading shares the lookup's budget: " + first_pass("zw"));
+  }
+  // Postprocessors are charged to the budget (section 7.4): the 2-rule
+  // fan-out with a postprocessor that writes B for b and C for c makes 2^17
+  // deinflections from a x 16, each with up to 2^16 forms. The lookup's
+  // budget stops it; conformance (lookup_search) sees the work bound.
+  {
+    std::string fan = language;
+    fan.replace(fan.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":"zf")");
+    fan.replace(
+        fan.find(R"("transforms":"transforms.json")"), std::strlen(R"("transforms":"transforms.json")"),
+        R"("transforms":"transforms.json","postprocessors":[{"id":"cap","variants":[[{"alternatives":{"b":["B"],"c":["C"]},"limit":4096}]]}])");
+    const std::string fan_rules = transforms_json(transform(
+        "f",
+        R"({"type":"replace","inflected":"a","deinflected":"b","occurrence":"first","conditionsIn":[],"conditionsOut":[]},
+               {"type":"replace","inflected":"a","deinflected":"c","occurrence":"first","conditionsIn":[],"conditionsOut":[]})"));
+    check(registry.add(fan, fan_rules, &error), "add the fan-out pack: " + error);
+    const Lookup fan_lookup(query, registry);
+    LookupOptions options;
+    options.language = "zf";
+    const auto start = std::chrono::steady_clock::now();
+    const auto results = fan_lookup.lookup(std::string(16, 'a'), 16, 16, options);
+    const double seconds = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
+    check(seconds < 30, "the postprocessor fan-out lookup ends: " + std::to_string(seconds) + " s");
+    lang::SearchCache cache;
+    const auto simulated =
+        lang::lookup_search(registry.find("zf")->data(), std::string(16, 'a'), 16, lang::TestOptions::All, cache);
+    check(simulated.bound != lang::BoundHit::Bound::None && simulated.work > lang::SearchBounds::max_work,
+          "lookup_search counts the postprocessors' work: " + std::to_string(simulated.work));
+  }
+  // Lookup charges a unit for each text it looks up (section 7.4). With -ed
+  // and the 2-rule fan-out on a, the prefixes a lookup of walked + a x 17
+  // scans before walked use 944,086 units without that unit and 1,271,744
+  // with it (327,658 forms), so only with it is the budget spent when
+  // walked is searched: walk is then found as the prefix walk, not from
+  // walked. With a x 10 (29,519 units) the budget lasts either way.
+  {
+    std::string fan_language = language;
+    fan_language.replace(fan_language.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":"zm")");
+    const std::string fan_rules = transforms_json(
+        past + "," +
+        transform(
+            "f",
+            R"({"type":"replace","inflected":"a","deinflected":"b","occurrence":"first","conditionsIn":["x"],"conditionsOut":["x"]},
+                        {"type":"replace","inflected":"a","deinflected":"c","occurrence":"first","conditionsIn":["x"],"conditionsOut":["x"]})"));
+    check(registry.add(fan_language, fan_rules, &error), "add the forms pack: " + error);
+    const Lookup forms_lookup(query, registry);
+    LookupOptions options;
+    options.language = "zm";
+    const auto first_of = [&](size_t k) {
+      const std::string text = "walked" + std::string(k, 'a');
+      const auto results = forms_lookup.lookup(text, 16, text.size(), options);
+      return results.empty() ? std::string("(none)") : results.front().term.expression + "|" + results.front().matched;
+    };
+    check(first_of(10) == "walk|walked", "the budget lasts for walked + a x 10: " + first_of(10));
+    check(first_of(17) == "walk|walk", "each form looked up is charged: " + first_of(17));
+  }
+  // lookup_search, as Lookup, charges a unit for each text looked up: a
+  // lookup of walked alone (scan 0) costs 1 for decapitalize, 1 for the -ed
+  // try and 2 for the forms walked and walk.
+  {
+    std::string language2 = language;
+    language2.replace(language2.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":"zl")");
+    check(registry.add(language2, transforms_json(past), &error), "add the looked-up forms pack: " + error);
+    lang::SearchCache cache;
+    const auto one = lang::lookup_search(registry.find("zl")->data(), "walked", 0, lang::TestOptions::All, cache);
+    check(one.work == 1 + 1 + 2, "a lookup's forms are charged: " + std::to_string(one.work));
+  }
   std::filesystem::remove_all(root);
 }
 
@@ -2190,6 +2597,7 @@ int main(int argc, char** argv) {
   test_steps();
   test_rules();
   test_search_bounds();
+  test_work_accounting();
   test_schema();
   test_replaced_rules();
   test_registry();

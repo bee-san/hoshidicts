@@ -228,20 +228,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     }
   }
 
-  // The pack's readingNormalizer (section 9.6).
+  // The pack's readingNormalizer (section 9.6), within the step limit
+  // (section 6.2).
   struct Normalizer : DictionaryQuery::ReadingNormalizer {
     const lang::StepList* steps = nullptr;
-    std::string normalize(std::string_view reading) const override {
-      std::u32string in;
-      if (!lang::decode_utf8(reading, in)) {
-        return std::string(reading);
-      }
-      std::u32string out;
-      std::vector<std::u32string> outputs;
-      lang::StepLimit limit{lang::step_limit(in.size())};
-      lang::apply_steps(*steps, in, outputs, limit);
-      return outputs.empty() ? std::string(reading) : lang::to_utf8(outputs.front());
-    }
+    std::string normalize(std::string_view reading) const override { return lang::normalize_text(*steps, reading); }
   };
   std::optional<Normalizer> normalizer_storage;
   if (pack.reading_normalizer) {
@@ -528,13 +519,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // lookup.formOfNormalizer (section 9.10): a reference's text after the
   // pack's steps, or empty when they leave it as it is (or empty it).
   const auto normalize_form_of = [&](const std::string& text) {
-    std::string normalized;
-    std::u32string in;
-    if (lang::decode_utf8(text, in)) {
-      std::u32string out;
-      lang::StepLimit limit{lang::step_limit(in.size())};
-      if (lang::apply_single(*pack.form_of_normalizer, in, out, limit)) normalized = lang::to_utf8(out);
-    }
+    std::string normalized = lang::normalize_text(*pack.form_of_normalizer, text);
     if (normalized == text) normalized.clear();
     return normalized;
   };
@@ -569,7 +554,10 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // (section 9.3), and records the forms that need no part of speech for the
   // metadata-only pass.
   auto merge_deinflection = [&](size_t matched_len, const Deinflection* base, uint32_t di, int steps, bool probe) {
+    // Each form looked up costs a unit of the lookup's budget, and the
+    // postprocessors theirs (section 7.4).
     if (pack.postprocessors.empty()) {
+      search_budget.spend(1);
       merge(matched_len, base, di, base[di].text, steps);
       if (probe && metadata_only && base[di].conditions == 0) {
         metadata_probes.push_back(
@@ -580,7 +568,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     if (!forms) {
       forms = std::make_unique<std::deque<std::string>>();
     }
-    for (auto& variant : lang::process_text(pack.postprocessors, base[di].text, enabled)) {
+    for (auto& variant : lang::process_text(pack.postprocessors, base[di].text, enabled, nullptr, &search_budget)) {
+      search_budget.spend(1);
       forms->push_back(std::move(variant.text));
       const std::string& form = forms->back();
       merge(matched_len, base, di, form, steps + variant.steps);
@@ -597,9 +586,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     prefix_variants.reserve(variants.size());
     for (const auto& variant : variants) {
       if (pack.postprocessors.empty()) {
+        search_budget.spend(1);
         prefix_variants.push_back(variant.text);
       } else {
-        for (auto& post : lang::process_text(pack.postprocessors, variant.text, enabled)) {
+        for (auto& post : lang::process_text(pack.postprocessors, variant.text, enabled, nullptr, &search_budget)) {
+          search_budget.spend(1);
           prefix_variants.push_back(std::move(post.text));
         }
       }
@@ -611,7 +602,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // Scans one prefix of the input: every processed variant, deinflected, looked
   // up, and merged into the candidates keeping the longest matched form.
   auto scan_prefix = [&](std::string_view search_str, size_t codepoints) {
-    auto processor_results = lang::process_text(pack.preprocessors, search_str, enabled);
+    auto processor_results = lang::process_text(pack.preprocessors, search_str, enabled, nullptr, &search_budget);
     if (!word_resolution && codepoints == scan_index::long_key_prefix_codepoints) {
       add_prefix_variants(processor_results);
     }
@@ -693,7 +684,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     if (window >= scan_index::long_key_prefix_codepoints) {
       add_prefix_variants(lang::process_text(
           pack.preprocessors, std::string_view(lookup_string.data(), offsets[scan_index::long_key_prefix_codepoints]),
-          enabled));
+          enabled, nullptr, &search_budget));
     }
     for (size_t p = window; p > 0; --p) {
       if (boundary(p)) {

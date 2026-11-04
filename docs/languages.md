@@ -548,7 +548,8 @@ that display transforms and `then` steps may not use `builtin` or
 `pattern` for display transforms.
 
 A text a step writes, a `map` value, an alternative or a `pattern`
-replacement, is at most 64 code points; packs with longer ones do not load.
+replacement, is at most 64 code points, and an `alternatives` step's `limit`
+at most 4,096; packs past either do not load.
 And the engine stops a step list once its text has more than 16 × (n + 32)
 code points, n being the code points of the text it was given (for
 processors, the text `process_text` was given; for a rule's `then` list,
@@ -725,7 +726,8 @@ parts.
  "stemChange": {"from": ["ie"], "to": "e", "occurrence": "first"}}
 ```
 
-`from` lists strings to look for in the stem; `occurrence` picks the `first`
+`from` lists strings to look for in the stem, at most 64 of at most 64 code
+points each; `occurrence` picks the `first`
 or `last` match of any of them that satisfies `between`, and at one position
 the longest `from` wins. Optional `between` is a class that every code point
 between the change and the end of the stem must belong to, with
@@ -791,29 +793,51 @@ pass's reading) is its input:
 | growth | 32 code points | an output more than 32 code points longer than the input is neither recorded nor expanded |
 | depth | 128 rules | an output that would be the 129th rule of its chain is neither recorded nor expanded |
 | results | 65,536 | the search stops once it holds 65,536 deinflections, the input included |
-| work | 1,048,576 units | the search stops when its work budget is spent; a lookup's searches share one budget |
+| work | 1,048,576 units | the search stops when its work budget is spent; a lookup's searches and processors share one budget |
 
-The work budget counts a unit for every rule application a search tries
-(every rule whose conditions and options let it apply to a text), one more
-for every 256 bytes the application writes (its output, and each step of its
-`then` list, a code point counting 4 bytes), and one for every code point a
-regular expression reads (a `pattern` rule, and each round of a `pattern`
-step in its `then` list). A search given no budget has one of its own. A
-lookup gives all of its searches one budget: every prefix it scans, each
-processed variant of it and each variant pass reading; once the budget is
-spent, each later search records its input and nothing more, so the text as
-written is still looked up. `Deinflector::deinflect_neko_speech`, a corpus
-row (section 12.2) and `hoshidicts-cli deinflect` share one budget across a
-text's searches in the same way.
+The work budget counts what a search and a lookup do:
 
-Two limits keep each rule application small. The texts a rule writes are at
-most 64 code points (7.3), as are those of steps (6.2), so a rule's output
-before its `then` list is at most 64 times its input. And a step list stops
-once its text has more than 16 × (n + 32) code points, n being the code
-points of the search's input: in a rule's `then` list the text so far is the
-output, which the growth bound drops (a `then` step that writes 8 copies of
-each code point, with `repeat`, stops at its third round on a 2-code-point
-input). Processors use the same limit (section 6.2).
+- a unit for every rule application a search tries (every rule whose
+  conditions and options let it apply to a text), whether it gives an output
+  or not;
+- a unit for every 256 bytes the application writes: its output, and each
+  step of its `then` list, a code point counting 4 bytes;
+- a unit for every code point a regular expression reads: a `pattern` rule,
+  and each round of a `pattern` step;
+- a unit for every 64 operations that grow with a text or with a pack: a
+  rule its conditions or options skip, a code point a trie walk reads, a step
+  of the cycle check, a byte the stem constraints and `replace`, `phrasal`
+  and `interposedObject` rules read, a `stemChange` string tried at a stem
+  position, a `map` or `alternatives` key tried;
+- for each builtin or step list a pre- or postprocessor applies, a unit, with
+  its writes, reads and operations counted as above;
+- a unit for every text a lookup looks up in its dictionaries: each
+  deinflection, or each of its postprocessed forms, and each variant by which
+  it recognises long keys (section 9.1).
+
+A search given no budget has one of its own. A lookup gives one budget to
+everything it does: every prefix it scans and its processed variants, every
+search of them and of variant pass readings, every postprocessed form. Once
+the budget is spent, each later search records its input and nothing more,
+processors keep their texts as they are, and the texts left are still looked
+up, so the text as written always is. `Deinflector::deinflect_neko_speech`,
+a corpus row (section 12.2) and `hoshidicts-cli deinflect` share one budget
+across a text's processors and searches in the same way. The budget is per
+lookup: a host that makes many lookups for one request, as Hachidori's
+segmenter makes one for each code point of its text, multiplies it, and
+should limit such requests itself.
+
+Load-time limits keep each unit small. The texts a rule writes are at most
+64 code points (7.3), as are those of steps (6.2), so a rule's output before
+its `then` list is at most 64 times its input; a `stemChange` has at most 64
+`from` strings of at most 64 code points; an `alternatives` step makes at
+most 4,096 texts. A step list stops once its text has more than 16 × (n + 32)
+code points, n being the code points of the search's input: in a rule's
+`then` list the text so far is the output, which the growth bound drops (a
+`then` step that writes 8 copies of each code point, with `repeat`, stops at
+its third round on a 2-code-point input). Processors use the same limit
+(section 6.2). A trie node's children are found by binary search, however
+many it has.
 
 Growth and depth end every chain; the results bound also ends a search whose
 rules fan out, which 2 rules can make exponential (each replacing the first
@@ -821,11 +845,15 @@ rules fan out, which 2 rules can make exponential (each replacing the first
 length); the work budget ends a search whose rules each apply to every text
 (with 2,000 rules that append to a text, the search of `a` spends it holding
 540 deinflections), and a lookup whose processors make many variants of each
-prefix. Only an output a bound drops, and what the searches after a spent
+prefix, or whose postprocessors make thousands of forms of each
+deinflection. Only an output a bound drops, and what the work after a spent
 budget would have found, is lost; everything recorded before stays, in the
-same order. Memory is bounded with the work: besides each search's input, a
-lookup holds at most one deinflection per unit, each at most 32 code points
-longer than its search's input.
+same order. Memory is bounded with the work: every deinflection a lookup
+holds costs at least two units (its try and its look-up), and is at most 32
+code points longer than its search's input. The most memory a lookup took in
+the tests below is 90 MB, in 0.27 s: a pack whose two rules both append to
+every text, on 16 code points of 4 bytes each (349,606 deinflections of up to
+192 bytes).
 
 The values come from two censuses. The first measured the unbounded search
 on main 5ca9a6f, for the 15 packs on main and the 11 in open pull requests:
@@ -841,23 +869,24 @@ the defaults:
 | any pack, corpus, prefixes, samples, affix inputs | 10 rules (Tagalog) | +17 (Serbo-Croatian *i* → *i/languages M to Z*) | 2,694 (Ancient Greek) |
 | any pack, generated strings | 15 rules (Tagalog) | +13 (English placeholders) | 6,058 (Ancient Greek) |
 
-The second measured the work of whole lookups with these bounds, for the 26
-packs on main 9c4ccdf and in open pull requests: a lookup of every corpus
-string, one at every cursor position of the `host.sample` texts, of every
-input built from the affixes, of 5,000 generated strings and, for Japanese,
-of the parity inputs, with every option on and with the defaults, at scan
-lengths 16 and 32 (1,200,686 lookups each):
+The second measured the work of whole lookups with these bounds
+(`lookup_search`, which counts all of the above), for the 26 packs on main
+6d89fda and in open pull requests: a lookup of every corpus string, one at
+every cursor position of the `host.sample` texts, of every input built from
+the affixes, of 5,000 generated strings and, for Japanese, of the parity
+inputs, with every option on and with the defaults, at scan lengths 16 and
+32 (1,202,416 lookups each):
 
 | | Scan 16 | Scan 32 |
 | --- | ---: | ---: |
-| Japanese, the parity inputs | 3,262 units | 3,262 units |
-| any pack, corpus strings and samples | 82,619 (Arabic) | 82,619 (Arabic) |
-| any pack, every input | 300,455 (Arabic, a generated string) | 455,236 (Arabic, a generated string) |
+| Japanese, the parity inputs | 9,267 units | 9,267 units |
+| any pack, corpus strings and samples | 86,668 (Arabic) | 86,668 (Arabic) |
+| any pack, every input | 312,274 (Arabic, a generated string) | 486,879 (Arabic, a generated string) |
 
 The depth bound is about 3 times the parity test's deepest chain and 8 times
 the deepest from other inputs; the margin is about twice the longest output;
 the results bound about 10 times the largest search; the work budget about
-13 times the busiest lookup of real text and 2.3 times the busiest of all.
+12 times the busiest lookup of real text and 2.2 times the busiest of all.
 None is reached by any input of either census, so every result above is the
 same with the bounds, and `ja-deinflect-parity` checks that none is reached
 on its inputs, their processed variants and their cat-speech readings, nor by
@@ -1925,7 +1954,7 @@ Japanese transform id equal to its name:
   every tenth generated string needs more than one work budget, and prints
   how far they went: the longest chain has 44 rules, the longest output adds
   1 code point, the largest search holds 212 deinflections, the busiest
-  lookup uses 2,033 units of work.
+  lookup uses 5,630 units of work.
 - `ja-process-parity`: processor variants and steps for the same inputs.
 - `ja-lookup-parity`: `lookup()` and `lookup_dictionary()` results (matched,
   deinflected, trace, term, frequencies, pitches, preprocessor steps) on a
@@ -2065,12 +2094,14 @@ For every pack it checks:
    chain: the rule of each step named by its transform id and its index in
    that transform, the first and last five steps of a longer chain, and each
    text of more than 48 code points shown by its first 40. For the results
-   and work bounds it also names the three rules that made the most of that
-   search's deinflections. For the loop of section 7.4 the line is (one line,
+   bound it also names the three rules that made the most of that search's
+   deinflections, and for the work bound the three that used the most of its
+   work. Its lookups count the processors' work and the forms looked up, as a
+   lookup does (section 7.4). For the loop of section 7.4 the line is (one line,
    wrapped here):
 
    ```text
-   FAIL lp: the deinflection search reached a bound (docs/languages.md 7.4) in 22 of 38 lookups;
+   FAIL lp: the deinflection search reached a bound (docs/languages.md 7.4) in 23 of 39 lookups;
      the first, Rome: an output more than 32 code points longer than the text the search started
      from, after 65 steps: Rome -name[0]-> Romis -name[1]-> Romae -name[0]-> Romais -name[1]->
      Romaae -name[0]-> Romaais ... (55 more) ... -name[0]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaais
@@ -2086,7 +2117,7 @@ For every pack it checks:
    ja: search bounds: 7354 lookups (1474 of corpus strings and host.sample texts, 86 at their cursor
      positions, 5794 of inputs built from the rules' affixes; 40423 texts searched) stay within them:
      the longest chain has 6 of 128 rules, the longest output adds 1 of 32 code points, the largest
-     search holds 41 of 65536 deinflections, the busiest lookup uses 124 of 1048576 units of work
+     search holds 41 of 65536 deinflections, the busiest lookup uses 1747 of 1048576 units of work
    ```
 
    Such a loop usually comes from rules whose outputs have no conditions
@@ -2521,6 +2552,8 @@ who measures better values uses them and says why.
   expression takes on them. A pattern with nested repeated groups, which the
   dialect allows (7.6), can still take exponential time on one text of a
   lookup's length; keep repeated groups unnested.
+- **The work budget is per lookup.** A host request that makes many lookups,
+  such as segmenting a text into words, gets a budget for each (7.4).
 - **No morphology.** Deinflection proposes forms; it does not analyse.
   Agglutinative languages (Korean, Basque, Georgian) produce long traces and
   some false candidates, which the dictionary query and part-of-speech filter
