@@ -31,7 +31,7 @@ host's hover. A result is visible unless all its glossaries are form-of rows
   gives as the other lemma's past participle is not counted against it
   (falada shown as falado, then falar): the participle's feminine and plural
   are adjectives or passives.
-- Two kinds of right result need the context to judge, so they are counted
+- Four kinds of right result need the context to judge, so they are counted
   apart and sampled for a hand check: "nounOrParticiple", a word in
   -ado/-ada/-ido/-ida (or their plurals) shown as a noun-only headword through
   the plural or the feminine while the lookup also lists the participle's
@@ -43,7 +43,11 @@ host's hover. A result is visible unless all its glossaries are form-of rows
   adjective headword (an `n` or `adj` entry) that the word's rows name,
   reached by the plural, feminine, diminutive or superlative or as the
   word's own entry (dados as dar before dado; morta as morrer before morto,
-  an adjectival participle).
+  an adjectival participle); and "nounOrAdjective", a word in -as shown as
+  an -a noun's plural while the lookup also lists the -o adjective or
+  determiner's feminine plural, or the other way round, both named by the
+  word's rows (todas as toda, the Toda people, or todo; caras as cara, a
+  face or a guy, or caro).
 
 frequent: the list's first <top> words; a word counts as reached when a
 deinflection of it (hoshidicts-cli deinflect, next to lookup-batch) is in its
@@ -215,15 +219,30 @@ class Judge:
                 if (not r['trace'] or r['trace'][0] in nominal) and {'n', 'adj'} & set(self.tags.get(r['expression'], ())):
                     return 'verbOrNoun'
             return None
-        if 'adj' in self.tags.get(result['expression'], ()) or step not in ('plural', 'feminine'):
-            return None
-        later = [r['trace'][0] for r in answer['results'] if not r['formOf'] and r['trace'] and r is not result]
-        word = norm(result['matched'])
-        if PARTICIPLE_ENDING.search(word) and 'participle' in later:
-            return 'nounOrParticiple'
-        if step == 'plural' and re.search(r'(as|es)$', word) and ('present-tu' in later or 'subjunctive-tu' in later):
-            return 'nounOrTu'
+        if 'adj' not in self.tags.get(result['expression'], ()) and step in ('plural', 'feminine'):
+            later = [r['trace'][0] for r in answer['results'] if not r['formOf'] and r['trace'] and r is not result]
+            word = norm(result['matched'])
+            if PARTICIPLE_ENDING.search(word) and 'participle' in later:
+                return 'nounOrParticiple'
+            if step == 'plural' and re.search(r'(as|es)$', word) and ('present-tu' in later or 'subjunctive-tu' in later):
+                return 'nounOrTu'
+        if self.noun_or_adjective(result, answer):
+            return 'nounOrAdjective'
         return None
+
+    def noun_or_adjective(self, result, answer):
+        """An -as word shown as an -a noun's plural or an -o adjective's feminine plural, the other also listed."""
+        step = result['trace'][0] if result['trace'] else ''
+        expression = result['expression']
+        if step not in ('plural', 'feminine') or not norm(result['matched']).endswith('as') or expression[-1:] not in ('a', 'o'):
+            return False
+        noun, adjective = expression[:-1] + 'a', expression[:-1] + 'o'
+        if 'n' not in self.tags.get(noun, ()) or not {'adj', 'det'} & set(self.tags.get(adjective, ())):
+            return False
+        if not {noun, adjective} <= self.l1(result['matched']):
+            return False
+        other = adjective if expression == noun else noun
+        return any(not r['formOf'] and r['expression'] == other and r['matched'] == result['matched'] for r in answer['results'])
 
     def rare_first(self, result, answer):
         """A rule-made first lemma at least ten times rarer than another lemma the matched text's rows name."""
@@ -312,8 +331,8 @@ def frequent(args, judge):
     report = {
         'list': Path(args.inputs[0]).name, 'top': len(words), 'tokens': total_tokens,
         'reached': stats['reached'], 'reachedTokenShare': round(tokens['reached'] / total_tokens, 4),
-        'firstVisible': {k: stats[k] for k in ('own', 'right', 'nounOrParticiple', 'nounOrTu', 'verbOrNoun', 'rare', 'wrong', 'unjudged', 'nothing')},
-        'needsContextTokenShare': {k: round(tokens[k] / total_tokens, 5) for k in ('nounOrParticiple', 'nounOrTu', 'verbOrNoun')},
+        'firstVisible': {k: stats[k] for k in ('own', 'right', 'nounOrParticiple', 'nounOrTu', 'verbOrNoun', 'nounOrAdjective', 'rare', 'wrong', 'unjudged', 'nothing')},
+        'needsContextTokenShare': {k: round(tokens[k] / total_tokens, 5) for k in ('nounOrParticiple', 'nounOrTu', 'verbOrNoun', 'nounOrAdjective')},
         'wrongFirst': stats['wrong'] + stats['rare'], 'wrongFirstTokenShare': round((tokens['wrong'] + tokens['rare']) / total_tokens, 5),
         'wrongAboveRight': stats['above'], 'wrongAboveRightTokenShare': round(tokens['above'] / total_tokens, 5),
         'wrongExamples': sorted(wrong, reverse=True)[:60], 'aboveExamples': sorted(above, reverse=True)[:60],
@@ -361,7 +380,7 @@ def judge_hovers(args, judge, items, label):
                 wrong_examples[key].append(f"{first['matched']} → {first['expression']}")
         elif verdict == 'unjudged':
             unjudged.append({'hover': hover[:60], 'matched': first['matched'], 'expression': first['expression'], 'trace': first['trace']})
-        elif verdict in ('nounOrParticiple', 'nounOrTu', 'verbOrNoun'):
+        elif verdict in ('nounOrParticiple', 'nounOrTu', 'verbOrNoun', 'nounOrAdjective'):
             context[verdict].append({'hover': hover[:60], 'matched': first['matched'], 'expression': first['expression'],
                                      'next': next((r['expression'] for r in answer['results'][1:] if not r['formOf']), None)})
     rng = random.Random(1)
@@ -426,7 +445,7 @@ def homographs(args, judge):
             feminine[form] = stem
         by_stem = defaultdict(set)
         for lemma, _ in rows:
-            if len(lemma) > 3 and lemma[-2:] in ('ar', 'er', 'ir'):
+            if len(lemma) >= 3 and lemma[-2:] in ('ar', 'er', 'ir'):
                 by_stem[lemma[:-2]].add(lemma)
         pair = next((sorted(v) for v in by_stem.values() if len(v) >= 2), None)
         if pair:
