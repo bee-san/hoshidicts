@@ -1,0 +1,12 @@
+# The judgement of audit-hachi-lang-sh-d (2026-11-03, written for this pack, GPL-3.0-or-later): frequent l-participles
+# whose own form-of rows name only a rare noun, which ranks first as dictionary-confirmed (section 9.6), while the
+# dominant reading, the verb, is reached only by a pack rule. The strict 8 of its list (smjela, smjeli, osjetila and
+# došla were judged borderline). measure.py judged --judged reads it. word<TAB>dominant lemma<TAB>count in hr_50k
+vidjela	vidjeti	53784
+morala	morati	19742
+vratila	vratiti	15223
+počela	početi	13447
+tražila	tražiti	10775
+bacila	baciti	3208
+bacili	baciti	2288
+pili	piti	2164

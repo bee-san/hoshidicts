@@ -121,7 +121,7 @@ def main():
     bank = [[h, '', '', '', 0, ['(test entry)'], 1000 + i, ''] for i, h in enumerate(sorted(set(entries) - hand))]
     bank += [[cw, '', 'non-lemma', '', 0, [[other, ['(test)']], [cl, ['(test)']]], 5000 + i, ''] for i, (cw, other, cl) in enumerate(references)]
     with open(os.path.join(PACK, 'tests', 'dictionary', 'term_bank_2.json'), 'w', encoding='utf-8') as f:
-        f.write('[\n' + ',\n'.join('  ' + json.dumps(r, ensure_ascii=False, separators=(',', ':')) for r in bank) + '\n]\n')
+        f.write('[\n' + ',\n'.join('  ' + json.dumps(r, ensure_ascii=False) for r in bank) + '\n]\n')
     path = os.path.join(PACK, 'tests', 'lookup.tsv')
     text = open(path, encoding='utf-8').read()
     head = text[:text.index(MARKER)] if MARKER in text else text.rstrip('\n') + '\n'

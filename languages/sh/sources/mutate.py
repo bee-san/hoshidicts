@@ -200,6 +200,14 @@ MUTATIONS = [
     ('processor: Cyrillic Џ → D', processor_map('cyrillicToLatin', 'Џ', 'D')),
     ('processor: Cyrillic ћ → c', processor_map('cyrillicToLatin', 'ћ', 'c')),
     ('processor: Cyrillic Њ → N', processor_map('cyrillicToLatin', 'Њ', 'N')),
+    ('processor: Cyrillic ж → z', processor_map('cyrillicToLatin', 'ж', 'z')),
+    ('processor: Cyrillic Ж → Z', processor_map('cyrillicToLatin', 'Ж', 'Z')),
+    ('processor: Cyrillic ч → c', processor_map('cyrillicToLatin', 'ч', 'c')),
+    ('processor: Cyrillic Ч → C', processor_map('cyrillicToLatin', 'Ч', 'C')),
+    ('processor: Cyrillic ш → s', processor_map('cyrillicToLatin', 'ш', 's')),
+    ('processor: Cyrillic Ш → S', processor_map('cyrillicToLatin', 'Ш', 'S')),
+    ('processor: Cyrillic ђ → dj', processor_map('cyrillicToLatin', 'ђ', 'dj')),
+    ('processor: Cyrillic Ђ → Dj', processor_map('cyrillicToLatin', 'Ђ', 'Dj')),
     ('present 3sg -re: consonant guard removed', lambda t, lang: sum(
         r.pop('stemEndsWith') is not None for tr, r in rules(t) if tr['id'] == 'prs-present-3sg' and 'stemEndsWith' in r
         and any(a == 're' and b in ('rijeti', 'reti') for a, b in r.get('suffixes', [])))),

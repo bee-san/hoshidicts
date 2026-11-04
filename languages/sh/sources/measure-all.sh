@@ -85,6 +85,11 @@ print('per rule:', len(r), 'rows;', sum(1 for x in r if x['recovers'] > 0), 'rec
         echo "judged hr: $(python3 $P/measure.py judged --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/hr_50k.txt")"
         for script in "" --cyrillic; do
           echo "judged and PREFER hr ${script:-latin}: $(python3 $P/measure.py judged $script --prefer-list "$OUT/prefer-list.tsv" --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/hr_50k.txt" --show 60)"
+          for list in judged-cyrillic-ties judged-shadowed-verbs; do
+            for g in hr sr; do
+              echo "$list $g ${script:-latin}: $(python3 $P/measure.py judged $script --judged "$P/$list.tsv" --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${g}_50k.txt" --show 30)"
+            done
+          done
         done
       fi
       echo "nogold $f: $(python3 $P/measure.py nogold --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --out "$OUT/nogold-$i-$f.tsv" --sample 60)"

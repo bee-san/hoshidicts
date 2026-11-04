@@ -123,7 +123,8 @@
         {"type": "wholeWord", "inflected": "daju", "deinflected": "dati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "stoje", "deinflected": "stajati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "odu", "deinflected": "otići", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "kolju", "deinflected": "klati", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "kolju", "deinflected": "klati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "оду", "deinflected": "отићи", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1175,7 +1176,8 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
-        {"type": "wholeWord", "inflected": "човјека", "deinflected": "човјек", "conditionsIn": [], "conditionsOut": ["n"]}
+        {"type": "wholeWord", "inflected": "човјека", "deinflected": "човјек", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "носа", "deinflected": "нос", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1189,7 +1191,9 @@
         {"type": "wholeWord", "inflected": "stanu", "deinflected": "stan", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "planu", "deinflected": "plan", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "човјеку", "deinflected": "човјек", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "столу", "deinflected": "стол", "conditionsIn": [], "conditionsOut": ["n"]}
+        {"type": "wholeWord", "inflected": "столу", "deinflected": "стол", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "рају", "deinflected": "рај", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "живу", "deinflected": "жив", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1228,7 +1232,8 @@
         {"type": "suffix", "inflected": "oce", "deinflected": "lac", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"},
         {"type": "wholeWord", "inflected": "sine", "deinflected": "sin", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "planete", "deinflected": "planet", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "планете", "deinflected": "планет", "conditionsIn": [], "conditionsOut": ["n"]}
+        {"type": "wholeWord", "inflected": "планете", "deinflected": "планет", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "младе", "deinflected": "млад", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1349,7 +1354,8 @@
         {"type": "wholeWord", "inflected": "telu", "deinflected": "telo", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "odelu", "deinflected": "odelo", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "језеру", "deinflected": "језеро", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "добру", "deinflected": "добар", "conditionsIn": [], "conditionsOut": ["n"]}
+        {"type": "wholeWord", "inflected": "добру", "deinflected": "добар", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ручку", "deinflected": "ручак", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1847,7 +1853,11 @@
         {"type": "wholeWord", "inflected": "veća", "deinflected": "velik", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "veću", "deinflected": "velik", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "šire", "deinflected": "širok", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "теже", "deinflected": "тежак", "conditionsIn": [], "conditionsOut": ["adj"]}
+        {"type": "wholeWord", "inflected": "теже", "deinflected": "тежак", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "радије", "deinflected": "рад", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "већа", "deinflected": "велик", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "бољу", "deinflected": "добар", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "већу", "deinflected": "велик", "conditionsIn": [], "conditionsOut": ["adj"]}
       ]
     },
     {
@@ -1918,7 +1928,8 @@
         {"type": "wholeWord", "inflected": "хода", "deinflected": "ходати", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "погледа", "deinflected": "погледати", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "пјева", "deinflected": "пјевати", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "пева", "deinflected": "певати", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "пева", "deinflected": "певати", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "рече", "deinflected": "рећи", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1948,7 +1959,8 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["pijete", "piti"], ["bijete", "biti"], ["šijete", "šiti"], ["lijete", "liti"], ["vijete", "viti"], ["mijete", "miti"], ["krijete", "kriti"], ["gnjijete", "gnjiti"], ["stanete", "stati"], ["jedete", "jesti"], ["kradete", "krasti"], ["bodete", "bosti"], ["vedete", "vesti"], ["bredete", "bresti"], ["predete", "presti"], ["pletete", "plesti"], ["metete", "mesti"], ["gnjetete", "gnjesti"], ["cvatete", "cvasti"], ["rastete", "rasti"], ["tresete", "tresti"], ["pasete", "pasti"], ["nesete", "nesti"], ["grizete", "gristi"], ["muzete", "musti"], ["vezete", "vesti"], ["šaljete", "slati"], ["kunete", "kleti"], ["jebete", "jebati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "rijete", "deinflected": "riti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[pk]"},
         {"type": "suffix", "inflected": "rete", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rete", "rijeti"], ["rete", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rete", "rijeti"], ["rete", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "wholeWord", "inflected": "бринете", "deinflected": "бринути", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2126,7 +2138,8 @@
         {"type": "wholeWord", "inflected": "sedi", "deinflected": "sedeti", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "boji", "deinflected": "bojati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "жели", "deinflected": "жељети", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "боји", "deinflected": "бојати", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "боји", "deinflected": "бојати", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "живи", "deinflected": "живети", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2153,7 +2166,8 @@
         {"type": "wholeWord", "inflected": "sede", "deinflected": "sedeti", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "разуме", "deinflected": "разумети", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "уме", "deinflected": "умети", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "седе", "deinflected": "седети", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "седе", "deinflected": "седети", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "живе", "deinflected": "живети", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2174,7 +2188,9 @@
         {"type": "wholeWord", "inflected": "napiše", "deinflected": "napisati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "puše", "deinflected": "puhati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "зове", "deinflected": "звати", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "стиже", "deinflected": "стизати", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "стиже", "deinflected": "стизати", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "пише", "deinflected": "писати", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "стане", "deinflected": "стати", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2497,7 +2513,8 @@
         {"type": "wholeWord", "inflected": "reci", "deinflected": "reći", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "obuci", "deinflected": "obući", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "реци", "deinflected": "рећи", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "зови", "deinflected": "звати", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "зови", "deinflected": "звати", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "опери", "deinflected": "опрати", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {

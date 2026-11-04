@@ -1227,22 +1227,36 @@ for (const [word, ...readings] of noPreferAt === -1 ? PREFER : []) {
 const reads = (rule, word) => (rule.type === 'wholeWord' ? (rule.inflected === word ? rule.deinflected : null) : oneStep(rule, word));
 const judgedTies = readFileSync(join(here, 'judged-ties-hr.tsv'), 'utf8').split('\n')
     .filter((line) => line.trim() && !line.startsWith('#')).map((line) => line.split('\t')).map(([w, lemmas]) => [w, ...lemmas.split('|')]);
+// Frequent Cyrillic-only ties, right in Latin by rule order (judged by
+// audit-hachi-lang-sh-d): the first lemma a rule reaches gets the twin.
+const judgedCyrillicRows = readFileSync(join(here, 'judged-cyrillic-ties.tsv'), 'utf8').split('\n')
+    .filter((line) => line.trim() && !line.startsWith('#')).map((line) => line.split('\t'));
+const judgedCyrillic = judgedCyrillicRows.map(([w, lemmas]) => [w, ...lemmas.split('|')]);
+// A word no single rule reads as its lemma (bolju → dobar, a comparative
+// the Latin rows name) names the group whose transform takes its twin.
+const twinGroup = new Map(judgedCyrillicRows.filter((r) => r[3]).map((r) => [r[0], r[3]]));
+const firstOnly = new Set(judgedCyrillic.map(([w]) => w));
 const allTwinsAt = process.argv.indexOf('--all-twins');
 const twinList = new Set(readFileSync(join(here, 'cyrillic-twins.tsv'), 'utf8').split('\n')
     .filter((line) => line.trim() && !line.startsWith('#')).map((line) => line.split('\t').slice(0, 2).join('\t')));
 const twinCandidates = [];
 let cyrillicRules = 0;
 const twinned = new Set();
-for (const [word, ...readings] of noPreferAt === -1 ? [...PREFER, ...judgedTies] : []) {
+for (const [word, ...readings] of noPreferAt === -1 ? [...PREFER, ...judgedTies, ...judgedCyrillic] : []) {
     if (twinned.has(word)) { continue; }
     twinned.add(word);
+    let made = false;
     for (const reading of readings) {
+        if (made && firstOnly.has(word)) { break; }
         const [lemma, as] = reading.split(':');
         const groups = READING_GROUPS[as] ?? null;
-        const entry = [...merged.values()].find((e) => (groups === null || groups.includes(e.group)) && reads(ruleOf(e.spec), word) === lemma);
+        const entry = [...merged.values()].find((e) => (groups === null || groups.includes(e.group)) && reads(ruleOf(e.spec), word) === lemma)
+            ?? (twinGroup.has(word) ? [...merged.values()].find((e) => e.group === twinGroup.get(word)
+                && ruleOf(e.spec).conditionsOut.some((c) => ['v', 'n', 'adj', 'pron'].includes(c))) : undefined);
         if (entry === undefined) { continue; }
         const [cw, cl] = [toCyrillic(word), toCyrillic(lemma)];
         twinCandidates.push([word, lemma, cw, cl]);
+        made = true;
         if (allTwinsAt === -1 && !twinList.has(`${word}\t${lemma}`)) { continue; }
         const spec = {group: entry.group, type: 'wholeWord', inflected: cw, deinflected: cl, tags: entry.tags, examples: [[cw, cl]],
             opts: {out: ruleOf(entry.spec).conditionsOut}};

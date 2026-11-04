@@ -1,0 +1,23 @@
+# The judgement of audit-hachi-lang-sh-d (2026-11-03, written for this pack, GPL-3.0-or-later): frequent words of
+# sr_50k's top 10,000 whose Cyrillic first result was wrong while the Latin one is right, and whose Cyrillic
+# form-of rows name the right lemma. Judged by the dominant use; the first lemma a rule reaches gets a Cyrillic
+# twin in sources/build-own.mjs (ekavian first for Serbian Cyrillic). word<TAB>dominant lemma(s)<TAB>the wrong
+# Cyrillic first result<TAB>the transform group of the twin, where no single rule reaches the lemma
+# (the Latin word reaches it through its own references)
+živi	živeti|živjeti|živ	жива "mercury"
+piše	pisati	пити "to drink" (aorist)
+radije	rad	радио "radio"	comparative
+žive	živeti|živjeti|živ	жива "mercury"
+reče	reći	редак "line, row"
+veća	velik	веће "council"
+odu	otići	ода "ode"
+mlade	mlad	млада "bride"
+bolju	dobar	бол "pain"	comparative
+stane	stati	стан "flat"
+veću	velik	веће "council"
+nosa	nos	носати "to carry" (sic)
+brinete	brinuti	бринета "brunette"
+raju	raj	раја "rayah"
+živu	živ|živeti|živjeti	жива "mercury"
+operi	oprati	опера "opera"
+ručku	ručak	ручка "handle"
