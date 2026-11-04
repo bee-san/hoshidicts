@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Writes sources/own.json, Ancient Greek deinflection rules written for this pack from Smyth's and Goodwin's
-// grammars and the shape of Wiktionary's tables (nothing is copied):   node languages/grc/sources/own-rules.mjs
-// README.md, "Own rules", describes them.
+// Writes sources/own.json, rules written from Smyth's and Goodwin's grammars (README.md, "Own rules").
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
@@ -16,9 +14,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const TWINS = process.env.GRC_TWINS === '1';
 const OUT = process.env.GRC_OUT ?? join(here, 'own.json');
 
-// ---------------------------------------------------------------------------
-// Conditions
-// ---------------------------------------------------------------------------
+// ==== Conditions
 
 const conditions = {
   v: {name: 'Verb', isDictionaryForm: true},
@@ -42,9 +38,7 @@ const conditions = {
   plpm: {name: 'Pluperfect middle stem', isDictionaryForm: false},
 };
 
-// ---------------------------------------------------------------------------
-// Transforms and rule emission
-// ---------------------------------------------------------------------------
+// ==== Transforms and rule emission
 
 const transforms = [];
 const byId = new Map();
@@ -143,8 +137,7 @@ function buildAccentTransform() {
   transform('accent', 'accent', 'Puts back the dictionary form\'s accent where a rule removed the syllable that carried it (ἔλυσα → λυω → λύω, λυόμενος → λύω, θεοῦ → θεος → θεός): the recessive accent of a verb; the accent of a noun or adjective on its last syllable or, before a short last syllable, further back.');
   // Only a text without an accent takes one; a text accented elsewhere takes a second one and finds nothing.
   const gate = {};
-  // Verbs: an acute on the stem's last vowel before -ω and -ομαι (λυω → λύω, βουλομαι → βούλομαι, παιδεύω): the rule
-  // marks the ending, accents the text's last vowel and writes the ending back. Only an unaccented stem takes one.
+  // Verbs: an acute on the stem's last vowel before -ω and -ομαι (λυω → λύω, βουλομαι → βούλομαι).
   const ACUTE = Object.fromEntries([...PLAIN_TARGETS, ...DIAERESIS_TARGETS, ...BREATHING_TARGETS, ...SUBSCRIPT_TARGETS].map((v) => [v, acute(v)]));
   const LONG = [...'αηιυω', ...'ἀἁἠἡἰἱὐὑὠὡ', ...SUBSCRIPT_TARGETS];
   const CIRCUMFLEX = Object.fromEntries(LONG.map((v) => [v, NFC(v + '\u0342')]));
@@ -191,9 +184,7 @@ function buildAccentTransform() {
   void PV;
 }
 
-// ---------------------------------------------------------------------------
-// Nominal declension
-// ---------------------------------------------------------------------------
+// ==== Nominal declension
 
 // The order is the order of the transforms, which decides between equal traces: the accusative plural -ους of
 // the second declension is commoner than the genitive singular -ους of σ-stems (λόγους, γένους).
@@ -228,10 +219,7 @@ function ultimaLength(ending, override) {
   return last.length;
 }
 
-/**
- * A noun or adjective ending to the dictionary form's: the stem keeps its accent (λόγου → λόγος), or turns acute and
- * circumflex where the last syllable's length changes (δώρου → δῶρον); the accent transform does the rest (θεοῦ).
- */
+/** A noun or adjective ending to the dictionary form's (λόγου → λόγος, δώρου → δῶρον). */
 function nominal(id, ending, lemma, conditionsOut, opts = {}) {
   const e = stripAccents(ending);
   const l = stripAccents(lemma);
@@ -459,9 +447,7 @@ function buildNominal() {
 }
 
 
-// ---------------------------------------------------------------------------
-// Verbs
-// ---------------------------------------------------------------------------
+// ==== Verbs
 
 const PERSONS = {
   '1sg': '1st singular', '2sg': '2nd singular', '3sg': '3rd singular', '1pl': '1st plural', '2pl': '2nd plural',
@@ -1406,10 +1392,7 @@ function buildAthematic() {
   }
 }
 
-/**
- * Compounds of ἵστημι and ἵημι: after a preverb the forms give ιστημι and ιημι, and the preverb takes its form
- * before a rough breathing (καθ-ίστημι, ἀφ-ίημι), not before στ- or the augment (κατα-στήσας, ἀπ-έστη).
- */
+/** Compounds of ἵστημι and ἵημι: the preverb before a rough breathing (καθ-ίστημι), not before στ- (κατα-στήσας). */
 function buildAthematicCompounds() {
   transform('compound', 'compound', 'The dictionary form of a compound of ἵστημι or ἵημι: the preverb before a rough breathing (καταστήσας → καθίστημι, ἀπέστη → ἀφίστημι, ἀφεῖναι → ἀφίημι).');
   const pairs = [
@@ -1459,10 +1442,7 @@ function closed(tid, name, description, lemma, forms, opts = {}) {
   }
 }
 
-/**
- * Writes the closed-class forms, as written only. A form of four letters or more is a suffix rule, unless it ends
- * one of these dictionary forms (κεῖνος in ἐκεῖνος): rules re-read their output, which would then grow without end.
- */
+/** Closed-class forms; of four letters or more a suffix rule, unless it ends another (κεῖνος in ἐκεῖνος). */
 function flushClosed() {
   const lemmas = [...new Set(PENDING_CLOSED.map(([, , l]) => l))];
   for (const [tid, f, lemma, opts] of PENDING_CLOSED) {
@@ -1477,7 +1457,7 @@ function buildClosedClasses() {
   const D = 'Forms of the article, pronouns and numerals, which have paradigms of their own.';
   closed('article', 'article', 'The definite article ὁ, ἡ, τό.', 'ὁ', ['ἡ', 'τό', 'τοῦ', 'τῆς', 'τῷ', 'τῇ', 'τόν', 'τήν', 'οἱ', 'αἱ', 'τά', 'τῶν', 'τοῖς', 'ταῖς', 'τούς', 'τάς', 'τώ', 'τοῖν', 'ταῖν', 'τοῖσι', 'τοῖσιν', 'τῇσι', 'τῇσιν', 'τοί', 'ταί', 'τοῖο', 'τάων', 'τᾶς', 'τᾷ', 'τάν', 'ἁ'], {whole: true});
   closed('pronoun', 'pronoun', D, 'ἐγώ', ['ἐμοῦ', 'μου', 'ἐμοί', 'μοι', 'ἐμέ', 'με', 'ἐμεῖο', 'ἐμέο', 'ἐμεῦ', 'μευ', 'ἐμέθεν', 'ἔγωγε', 'ἔμοιγε', 'ἔμεγε', 'ἐγών', 'μοί', 'μέ', 'μού', 'γώ', 'γὼ', 'νῶ', 'νῷν', 'νῶι', 'νῶϊ', 'νῶιν', 'νῶϊν']);
-  closed('pronoun', 'pronoun', D, 'σφεῖς', ['σφῶν', 'σφίσι', 'σφίσιν', 'σφᾶς', 'σφέας', 'σφεας', 'σφέων', 'σφε', 'σφι', 'σφιν', 'σφώ', 'σφῶϊ', 'σφῶι', 'σφῷν', 'σφωε', 'σφωϊν', 'σφέα', 'σφεα']);
+  closed('pronoun', 'pronoun', D, 'σφεῖς', ['σφῶν', 'σφίσι', 'σφίσιν', 'σφᾶς', 'σφέας', 'σφεας', 'σφέων', 'σφε', 'σφι', 'σφιν', 'σφωε', 'σφωϊν', 'σφέα', 'σφεα']);
   closed('pronoun', 'pronoun', D, 'ἡμεῖς', ['ἡμῶν', 'ἡμῖν', 'ἡμᾶς', 'ἡμέων', 'ἡμεῖων', 'ἡμῖν', 'ἧμιν', 'ἡμέας', 'ἄμμες', 'ἄμμι', 'ἄμμε', 'νῶ', 'νῷν', 'νῶι', 'νῶϊ']);
   closed('pronoun', 'pronoun', D, 'σύ', ['σοῦ', 'σου', 'σοί', 'σοι', 'σέ', 'σε', 'τοι', 'σεῖο', 'σέο', 'σεῦ', 'σευ', 'τεοῖο', 'σέθεν', 'τύνη', 'τοί', 'τέ', 'σύγε', 'τυ', 'τίν', 'τεΐν']);
   closed('pronoun', 'pronoun', D, 'ὑμεῖς', ['ὑμῶν', 'ὑμῖν', 'ὑμᾶς', 'ὑμέων', 'ὕμμες', 'ὔμμες', 'ὕμμι', 'ὔμμι', 'ὕμμε', 'ὔμμε', 'ὑμέας', 'σφῶϊ', 'σφῷν', 'σφώ', 'σφῶιν']);
@@ -1563,9 +1543,7 @@ function buildClosedClasses() {
   flushClosed();
 }
 
-// ---------------------------------------------------------------------------
-// Clitics and spelling: elision, crasis, enclitic particles.
-// ---------------------------------------------------------------------------
+// ==== Clitics and spelling: elision, crasis, enclitic particles.
 
 function buildSpelling() {
   transform('spelling-variant', 'spelling', 'A dictionary form in another spelling: -σσω for -ττω and back (πράττω, πράσσω), γιγν- for γιν- (γίνομαι, γιγνώσκω).');
@@ -1640,9 +1618,7 @@ function buildClitics() {
 }
 
 
-// ---------------------------------------------------------------------------
-// Exceptions
-// ---------------------------------------------------------------------------
+// ==== Exceptions
 
 // Common forms other rules read first as a rarer word (ἔλεγε as ἔλεγος), as whole words: exceptions.tsv and
 // exceptions-manual.tsv (README.md, "Own rules"). Left out of the list: forms that fit Homer only.
@@ -1680,9 +1656,7 @@ function buildExceptions() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Output
-// ---------------------------------------------------------------------------
+// ==== Output
 
 /** Two-space JSON with each rule on one line (docs/languages.md section 3). */
 export function format(pack) {

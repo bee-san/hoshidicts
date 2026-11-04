@@ -512,6 +512,8 @@ trace	1	Ξυμμαχία	Συμμαχία	*	spelling
 trace	1	οἴκτιστος	οἰκτρός	adj	comparison
 trace	1	δύνηται	δύναμαι	v	ath-mid
 trace	1	ἐπίστηται	ἐπίσταμαι	v	ath-mid
+closed	1	σφῷν	ὑμεῖς	*	*
+negative	0	σφῷν	σφεῖς	*	*
 # exceptions: written by sources/exception-cases.mjs from own-rules.mjs (README.md, "Rule provenance"); do not edit below.
 exc	1	ἔχει	ἔχω	*	exc
 exc	1	τέ	τε	*	exc
@@ -750,6 +752,18 @@ exc	1	καθέξει	κατέχω	*	exc
 exc	1	ἀτάσθαλα	ἀτάσθαλος	*	exc
 exc	1	οὕτω	οὕτως	*	exc
 exc	1	νηός	ναῦς	*	exc
+exc	1	λέξει	λέγω	*	exc
+exc	1	δόξει	δοκέω	*	exc
+exc	1	λύσει	λύω	*	exc
+exc	1	δείξει	δείκνυμι	*	exc
+exc	1	δείξεις	δείκνυμι	*	exc
+exc	1	πωλήσει	πωλέω	*	exc
+exc	1	δράσεις	δράω	*	exc
+exc	1	Ἐλεφαντίνης	Ἐλεφαντίνη	*	exc
+exc	1	Θήρην	Θήρα	*	exc
+exc	1	Σούσοισι	Σοῦσα	*	exc
+exc	1	Μαγνησίης	Μαγνησία	*	exc
+exc	1	Συρίην	Συρία	*	exc
 exc	0	ζάἐχει	ζάἔχω	*	*
 exc	0	ζάἐμου	ζάἐγώ	*	*
 exc	0	ζάἑνα	ζάεἷς	*	*

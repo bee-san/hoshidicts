@@ -55,5 +55,15 @@
   ["ἵημι", "", "v", "v", 0, ["to send"], 54, ""],
   ["ναῦς", "", "n", "n", 0, ["ship"], 55, ""],
   ["νέος", "", "adj", "adj", 0, ["young"], 56, ""],
-  ["νεῶν", "", "non-lemma", "", 0, [["νέος", ["genitive plural feminine"]], ["ναῦς", ["genitive plural"]]], 57, ""]
+  ["νεῶν", "", "non-lemma", "", 0, [["νέος", ["genitive plural feminine"]], ["ναῦς", ["genitive plural"]]], 57, ""],
+  ["θεά", "", "n", "n", 0, ["goddess"], 58, ""],
+  ["πλείων", "", "adj", "adj", 0, ["greater in number"], 59, ""],
+  ["πλέω", "", "v", "v", 0, ["to go by sea"], 60, ""],
+  ["πλέον", "", "non-lemma", "", 0, [["πλέω", ["neuter active participle"]]], 61, ""],
+  ["σταθμός", "", "n", "n", 0, ["post; station"], 62, ""],
+  ["σταθμάω", "", "v", "v", 0, ["to weigh out"], 63, ""],
+  ["σταθμῷ", "", "non-lemma", "", 0, [["σταθμός", ["dative singular"]]], 64, ""],
+  ["σταθμω", "σταθμῶ", "non-lemma", "", 0, [["σταθμάω", ["first-person singular active indicative"]]], 65, ""],
+  ["νεώς", "", "n", "n", 0, ["temple (Attic)"], 66, ""],
+  ["νηός", "", "non-lemma", "", 0, [["νεώς", ["Epic"]]], 67, ""]
 ]
