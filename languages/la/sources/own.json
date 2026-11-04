@@ -224,7 +224,12 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["turam", "tura"], ["suram", "sura"], ["turae", "tura"], ["surae", "sura"], ["turis", "tura"], ["suris", "sura"], ["turas", "tura"], ["suras", "sura"], ["turarum", "tura"], ["surarum", "sura"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemMinLength": 3, "stemNotStartsWithText": "fac"},
         {"type": "circumfix", "prefixes": [["tect", "tect"], ["dict", "dict"], ["peccat", "peccat"], ["fat", "fat"], ["arv", "arv"], ["vot", "vot"], ["bell", "bell"], ["mandat", "mandat"], ["promiss", "promiss"], ["praecept", "praecept"], ["punct", "punct"], ["institut", "institut"], ["iacul", "iacul"]], "suffixes": [["a", "um"], ["i", "um"], ["o", "um"], ["is", "um"], ["orum", "um"]], "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[]"},
-        {"type": "circumfix", "prefixes": [["pluvi", "pluvi"], ["music", "music"], ["iniuri", "iniuri"], ["aquil", "aquil"], ["penn", "penn"], ["vine", "vine"], ["vesper", "vesper"], ["mathematic", "mathematic"]], "suffixes": [["ae", "a"], ["am", "a"], ["as", "a"], ["is", "a"], ["arum", "a"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["pluvi", "pluvi"], ["music", "music"], ["iniuri", "iniuri"], ["aquil", "aquil"], ["penn", "penn"], ["vine", "vine"], ["vesper", "vesper"], ["mathematic", "mathematic"], ["ros", "ros"]], "suffixes": [["ae", "a"], ["am", "a"], ["as", "a"], ["is", "a"], ["arum", "a"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "loca", "deinflected": "locus", "conditionsIn": [], "conditionsOut": ["n2s"]},
+        {"type": "wholeWord", "inflected": "viris", "deinflected": "vir", "conditionsIn": [], "conditionsOut": ["n2s"]},
+        {"type": "wholeWord", "inflected": "animalia", "deinflected": "animal", "conditionsIn": [], "conditionsOut": ["n3s"]},
+        {"type": "wholeWord", "inflected": "exercitum", "deinflected": "exercitus", "conditionsIn": [], "conditionsOut": ["n4s"]},
+        {"type": "wholeWord", "inflected": "exercitu", "deinflected": "exercitus", "conditionsIn": [], "conditionsOut": ["n4s"]}
       ]
     },
     {
@@ -233,7 +238,7 @@
       "description": "An ordinal before the noun of the same form: decimam → decimus.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["decim", "decim"], ["sext", "sext"], ["proxim", "proxim"]], "suffixes": [["am", "us"], ["ae", "us"], ["as", "us"], ["arum", "us"]], "conditionsIn": [], "conditionsOut": [], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["decim", "decim"], ["sext", "sext"], ["proxim", "proxim"], ["terti", "terti"]], "suffixes": [["a", "us"], ["am", "us"], ["ae", "us"], ["as", "us"], ["arum", "us"]], "conditionsIn": [], "conditionsOut": [], "stemCharacters": "[]"}
       ]
     },
     {
@@ -2184,7 +2189,7 @@
         {"type": "suffix", "inflected": "matibus", "deinflected": "ma", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "ibus", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "ibus", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ibus", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ibus", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 2, "stemNotStartsWithText": "man"},
         {"type": "suffix", "inflected": "ibus", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n4s"], "stemMinLength": 3},
         {"type": "suffix", "inflected": "ubus", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n4s"], "stemMinLength": 3},
         {"type": "suffix", "inflected": "ibus", "deinflected": "u", "conditionsIn": [], "conditionsOut": ["n4s"], "stemMinLength": 2},
@@ -2194,7 +2199,7 @@
         {"type": "suffix", "inflected": "is", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["n2p"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "is", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n2p"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "ibus", "deinflected": "ia", "conditionsIn": [], "conditionsOut": ["n3p"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ibus", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["n3p"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ibus", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["n3p"], "stemMinLength": 2, "stemNotStartsWithText": "man"},
         {"type": "wholeWord", "inflected": "viribus", "deinflected": "vis", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "bubus", "deinflected": "bos", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "bobus", "deinflected": "bos", "conditionsIn": [], "conditionsOut": ["n"]},
@@ -3164,7 +3169,8 @@
         {"type": "circumfix", "prefixes": [["", ""], ["ab", "ab"], ["ad", "ad"], ["ad", "as"], ["de", "de"], ["in", "in"], ["inter", "inter"], ["ob", "ob"], ["prae", "prae"], ["prod", "pro"], ["sub", "sub"], ["super", "super"]], "suffixes": [["ero", "sum"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "wholeWord", "inflected": "potero", "deinflected": "possum", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""], ["ab", "ab"], ["ad", "ad"], ["ante", "ante"], ["circum", "circum"], ["co", "co"], ["deper", "deper"], ["ex", "ex"], ["in", "in"], ["inter", "inter"], ["intro", "intro"], ["ob", "ob"], ["per", "per"], ["post", "post"], ["prae", "prae"], ["praeter", "praeter"], ["prod", "prod"], ["red", "red"], ["sub", "sub"], ["subter", "subter"], ["trans", "trans"], ["qu", "qu"], ["nequ", "nequ"]], "suffixes": [["ibo", "eo"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"},
-        {"type": "circumfix", "prefixes": [["d", "d"], ["circumd", "circumd"]], "suffixes": [["abo", "o"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["d", "d"], ["circumd", "circumd"]], "suffixes": [["abo", "o"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "dicam", "deinflected": "dico", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -3535,7 +3541,7 @@
     {
       "id": "pres-pass-1s",
       "name": "present passive, 1st sg",
-      "description": "Present indicative passive, first person singular: amor, moneor, regor, capior, audior. Deponent verbs have these forms with an active meaning (hortor, vereor, sequor, patior, largior).",
+      "description": "Present indicative passive, first person singular: amor, moneor, regor, capior, audior. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "or", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3548,7 +3554,7 @@
     {
       "id": "pres-pass-2s",
       "name": "present passive, 2nd sg",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Deponent verbs have these forms with an active meaning (hortaris, vereris, sequeris, pateris, largiris).",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aris", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3570,7 +3576,7 @@
     {
       "id": "pres-pass-2s+imp-pass-2s+inf",
       "name": "present passive, 2nd sg / imperative passive, 2nd sg / infinitive",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Deponent verbs have these forms with an active meaning (hortaris, vereris, sequeris, pateris, largiris). Also: imperative passive, 2nd sg; infinitive.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents. Also: imperative passive, 2nd sg; infinitive.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "are", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3585,7 +3591,7 @@
     {
       "id": "pres-pass-2s+imp-pass-2s",
       "name": "present passive, 2nd sg / imperative passive, 2nd sg",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Deponent verbs have these forms with an active meaning (hortaris, vereris, sequeris, pateris, largiris). Also: imperative passive, 2nd sg.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents. Also: imperative passive, 2nd sg.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "are", "deinflected": "or", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3597,7 +3603,7 @@
     {
       "id": "pres-pass-2s+fut-pass-2s",
       "name": "present passive, 2nd sg / future passive, 2nd sg",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Deponent verbs have these forms with an active meaning (hortaris, vereris, sequeris, pateris, largiris). Also: future passive, 2nd sg.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents. Also: future passive, 2nd sg.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "eris", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotEndsWith": "[aeio]"},
@@ -3607,7 +3613,7 @@
     {
       "id": "pres-pass-2s+fut-pass-2s+imp-pass-2s+inf",
       "name": "present passive, 2nd sg / future passive, 2nd sg / imperative passive, 2nd sg / infinitive",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Deponent verbs have these forms with an active meaning (hortaris, vereris, sequeris, pateris, largiris). Also: future passive, 2nd sg; imperative passive, 2nd sg; infinitive.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents. Also: future passive, 2nd sg; imperative passive, 2nd sg; infinitive.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ere", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]"}
@@ -3616,7 +3622,7 @@
     {
       "id": "pres-pass-2s+fut-pass-2s+imp-pass-2s",
       "name": "present passive, 2nd sg / future passive, 2nd sg / imperative passive, 2nd sg",
-      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Deponent verbs have these forms with an active meaning (hortaris, vereris, sequeris, pateris, largiris). Also: future passive, 2nd sg; imperative passive, 2nd sg.",
+      "description": "Present indicative passive, second person singular: amaris, moneris, regeris, caperis, audiris. Also deponents. Also: future passive, 2nd sg; imperative passive, 2nd sg.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ere", "deinflected": "or", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]"}
@@ -3625,7 +3631,7 @@
     {
       "id": "pres-pass-3s",
       "name": "present passive, 3rd sg",
-      "description": "Present indicative passive, third person singular: amatur, monetur, regitur, capitur, auditur. Deponent verbs have these forms with an active meaning (hortatur, veretur, sequitur, patitur, largitur).",
+      "description": "Present indicative passive, third person singular: amatur, monetur, regitur, capitur, auditur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "atur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3646,7 +3652,7 @@
     {
       "id": "pres-pass-1p",
       "name": "present passive, 1st pl",
-      "description": "Present indicative passive, first person plural: amamur, monemur, regimur, capimur, audimur. Deponent verbs have these forms with an active meaning (hortamur, veremur, sequimur, patimur, largimur).",
+      "description": "Present indicative passive, first person plural: amamur, monemur, regimur, capimur, audimur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "amur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3665,7 +3671,7 @@
     {
       "id": "pres-pass-2p+imp-pass-2p",
       "name": "present passive, 2nd pl / imperative passive, 2nd pl",
-      "description": "Present indicative passive, second person plural: amamini, monemini, regimini, capimini, audimini. Deponent verbs have these forms with an active meaning (hortamini, veremini, sequimini, patimini, largimini). Also: imperative passive, 2nd pl.",
+      "description": "Present indicative passive, second person plural: amamini, monemini, regimini, capimini, audimini. Also deponents. Also: imperative passive, 2nd pl.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "amini", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3682,7 +3688,7 @@
     {
       "id": "pres-pass-3p",
       "name": "present passive, 3rd pl",
-      "description": "Present indicative passive, third person plural: amantur, monentur, reguntur, capiuntur, audiuntur. Deponent verbs have these forms with an active meaning (hortantur, verentur, sequuntur, patiuntur, largiuntur).",
+      "description": "Present indicative passive, third person plural: amantur, monentur, reguntur, capiuntur, audiuntur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "antur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3702,7 +3708,7 @@
     {
       "id": "impf-pass-1s",
       "name": "imperfect passive, 1st sg",
-      "description": "Imperfect indicative passive, first person singular: amabar, monebar, regebar, capiebar, audiebar. Deponent verbs have these forms with an active meaning (hortabar, verebar, sequebar, patiebar, largiebar).",
+      "description": "Imperfect indicative passive, first person singular: amabar, monebar, regebar, capiebar, audiebar. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abar", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3720,7 +3726,7 @@
     {
       "id": "impf-pass-2s",
       "name": "imperfect passive, 2nd sg",
-      "description": "Imperfect indicative passive, second person singular: amabaris, monebaris, regebaris, capiebaris, audiebaris. Deponent verbs have these forms with an active meaning (hortabaris, verebaris, sequebaris, patiebaris, largiebaris).",
+      "description": "Imperfect indicative passive, second person singular: amabaris, monebaris, regebaris, capiebaris, audiebaris. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abaris", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3748,7 +3754,7 @@
     {
       "id": "impf-pass-3s",
       "name": "imperfect passive, 3rd sg",
-      "description": "Imperfect indicative passive, third person singular: amabatur, monebatur, regebatur, capiebatur, audiebatur. Deponent verbs have these forms with an active meaning (hortabatur, verebatur, sequebatur, patiebatur, largiebatur).",
+      "description": "Imperfect indicative passive, third person singular: amabatur, monebatur, regebatur, capiebatur, audiebatur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abatur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3767,7 +3773,7 @@
     {
       "id": "impf-pass-1p",
       "name": "imperfect passive, 1st pl",
-      "description": "Imperfect indicative passive, first person plural: amabamur, monebamur, regebamur, capiebamur, audiebamur. Deponent verbs have these forms with an active meaning (hortabamur, verebamur, sequebamur, patiebamur, largiebamur).",
+      "description": "Imperfect indicative passive, first person plural: amabamur, monebamur, regebamur, capiebamur, audiebamur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abamur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3785,7 +3791,7 @@
     {
       "id": "impf-pass-2p",
       "name": "imperfect passive, 2nd pl",
-      "description": "Imperfect indicative passive, second person plural: amabamini, monebamini, regebamini, capiebamini, audiebamini. Deponent verbs have these forms with an active meaning (hortabamini, verebamini, sequebamini, patiebamini, largiebamini).",
+      "description": "Imperfect indicative passive, second person plural: amabamini, monebamini, regebamini, capiebamini, audiebamini. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abamini", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3803,7 +3809,7 @@
     {
       "id": "impf-pass-3p",
       "name": "imperfect passive, 3rd pl",
-      "description": "Imperfect indicative passive, third person plural: amabantur, monebantur, regebantur, capiebantur, audiebantur. Deponent verbs have these forms with an active meaning (hortabantur, verebantur, sequebantur, patiebantur, largiebantur).",
+      "description": "Imperfect indicative passive, third person plural: amabantur, monebantur, regebantur, capiebantur, audiebantur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abantur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3822,7 +3828,7 @@
     {
       "id": "fut-pass-1s",
       "name": "future passive, 1st sg",
-      "description": "Future indicative passive, first person singular: amabor, monebor, regar, capiar, audiar. Deponent verbs have these forms with an active meaning (hortabor, verebor, sequar, patiar, largiar).",
+      "description": "Future indicative passive, first person singular: amabor, monebor, regar, capiar, audiar. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abor", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3837,7 +3843,7 @@
     {
       "id": "fut-pass-1s+subj-pass-1s",
       "name": "future passive, 1st sg / present subjunctive passive, 1st sg",
-      "description": "Future indicative passive, first person singular: amabor, monebor, regar, capiar, audiar. Deponent verbs have these forms with an active meaning (hortabor, verebor, sequar, patiar, largiar). Also: present subjunctive passive, 1st sg.",
+      "description": "Future indicative passive, first person singular: amabor, monebor, regar, capiar, audiar. Also deponents. Also: present subjunctive passive, 1st sg.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ar", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]"},
@@ -3849,7 +3855,7 @@
     {
       "id": "fut-pass-2s",
       "name": "future passive, 2nd sg",
-      "description": "Future indicative passive, second person singular: amaberis, moneberis, regeris, capieris, audieris. Deponent verbs have these forms with an active meaning (hortaberis, vereberis, sequeris, patieris, largieris).",
+      "description": "Future indicative passive, second person singular: amaberis, moneberis, regeris, capieris, audieris. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aberis", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3873,7 +3879,7 @@
     {
       "id": "fut-pass-3s",
       "name": "future passive, 3rd sg",
-      "description": "Future indicative passive, third person singular: amabitur, monebitur, regetur, capietur, audietur. Deponent verbs have these forms with an active meaning (hortabitur, verebitur, sequetur, patietur, largietur).",
+      "description": "Future indicative passive, third person singular: amabitur, monebitur, regetur, capietur, audietur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abitur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3893,7 +3899,7 @@
     {
       "id": "fut-pass-1p",
       "name": "future passive, 1st pl",
-      "description": "Future indicative passive, first person plural: amabimur, monebimur, regemur, capiemur, audiemur. Deponent verbs have these forms with an active meaning (hortabimur, verebimur, sequemur, patiemur, largiemur).",
+      "description": "Future indicative passive, first person plural: amabimur, monebimur, regemur, capiemur, audiemur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abimur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3912,7 +3918,7 @@
     {
       "id": "fut-pass-2p",
       "name": "future passive, 2nd pl",
-      "description": "Future indicative passive, second person plural: amabimini, monebimini, regemini, capiemini, audiemini. Deponent verbs have these forms with an active meaning (hortabimini, verebimini, sequemini, patiemini, largiemini).",
+      "description": "Future indicative passive, second person plural: amabimini, monebimini, regemini, capiemini, audiemini. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abimini", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3931,7 +3937,7 @@
     {
       "id": "fut-pass-3p",
       "name": "future passive, 3rd pl",
-      "description": "Future indicative passive, third person plural: amabuntur, monebuntur, regentur, capientur, audientur. Deponent verbs have these forms with an active meaning (hortabuntur, verebuntur, sequentur, patientur, largientur).",
+      "description": "Future indicative passive, third person plural: amabuntur, monebuntur, regentur, capientur, audientur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "abuntur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3951,7 +3957,7 @@
     {
       "id": "subj-pass-1s",
       "name": "present subjunctive passive, 1st sg",
-      "description": "Present subjunctive passive, first person singular: amer, monear, regar, capiar, audiar. Deponent verbs have these forms with an active meaning (horter, verear, sequar, patiar, largiar).",
+      "description": "Present subjunctive passive, first person singular: amer, monear, regar, capiar, audiar. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "er", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
@@ -3965,7 +3971,7 @@
     {
       "id": "subj-pass-2s",
       "name": "present subjunctive passive, 2nd sg",
-      "description": "Present subjunctive passive, second person singular: ameris, monearis, regaris, capiaris, audiaris. Deponent verbs have these forms with an active meaning (horteris, verearis, sequaris, patiaris, largiaris).",
+      "description": "Present subjunctive passive, second person singular: ameris, monearis, regaris, capiaris, audiaris. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "eris", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -3992,7 +3998,7 @@
     {
       "id": "subj-pass-3s",
       "name": "present subjunctive passive, 3rd sg",
-      "description": "Present subjunctive passive, third person singular: ametur, moneatur, regatur, capiatur, audiatur. Deponent verbs have these forms with an active meaning (hortetur, vereatur, sequatur, patiatur, largiatur).",
+      "description": "Present subjunctive passive, third person singular: ametur, moneatur, regatur, capiatur, audiatur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4011,7 +4017,7 @@
     {
       "id": "subj-pass-1p",
       "name": "present subjunctive passive, 1st pl",
-      "description": "Present subjunctive passive, first person plural: amemur, moneamur, regamur, capiamur, audiamur. Deponent verbs have these forms with an active meaning (hortemur, vereamur, sequamur, patiamur, largiamur).",
+      "description": "Present subjunctive passive, first person plural: amemur, moneamur, regamur, capiamur, audiamur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "emur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4029,7 +4035,7 @@
     {
       "id": "subj-pass-2p",
       "name": "present subjunctive passive, 2nd pl",
-      "description": "Present subjunctive passive, second person plural: amemini, moneamini, regamini, capiamini, audiamini. Deponent verbs have these forms with an active meaning (hortemini, vereamini, sequamini, patiamini, largiamini).",
+      "description": "Present subjunctive passive, second person plural: amemini, moneamini, regamini, capiamini, audiamini. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "emini", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4047,7 +4053,7 @@
     {
       "id": "subj-pass-3p",
       "name": "present subjunctive passive, 3rd pl",
-      "description": "Present subjunctive passive, third person plural: amentur, moneantur, regantur, capiantur, audiantur. Deponent verbs have these forms with an active meaning (hortentur, vereantur, sequantur, patiantur, largiantur).",
+      "description": "Present subjunctive passive, third person plural: amentur, moneantur, regantur, capiantur, audiantur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "entur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4066,7 +4072,7 @@
     {
       "id": "impf-subj-pass-1s",
       "name": "imperfect subjunctive passive, 1st sg",
-      "description": "Imperfect subjunctive passive, first person singular: amarer, monerer, regerer, caperer, audirer. Deponent verbs have these forms with an active meaning (hortarer, vererer, sequerer, paterer, largirer).",
+      "description": "Imperfect subjunctive passive, first person singular: amarer, monerer, regerer, caperer, audirer. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "arer", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4088,7 +4094,7 @@
     {
       "id": "impf-subj-pass-2s",
       "name": "imperfect subjunctive passive, 2nd sg",
-      "description": "Imperfect subjunctive passive, second person singular: amareris, monereris, regereris, capereris, audireris. Deponent verbs have these forms with an active meaning (hortareris, verereris, sequereris, patereris, largireris).",
+      "description": "Imperfect subjunctive passive, second person singular: amareris, monereris, regereris, capereris, audireris. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "areris", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4122,7 +4128,7 @@
     {
       "id": "impf-subj-pass-3s",
       "name": "imperfect subjunctive passive, 3rd sg",
-      "description": "Imperfect subjunctive passive, third person singular: amaretur, moneretur, regeretur, caperetur, audiretur. Deponent verbs have these forms with an active meaning (hortaretur, vereretur, sequeretur, pateretur, largiretur).",
+      "description": "Imperfect subjunctive passive, third person singular: amaretur, moneretur, regeretur, caperetur, audiretur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aretur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4145,7 +4151,7 @@
     {
       "id": "impf-subj-pass-1p",
       "name": "imperfect subjunctive passive, 1st pl",
-      "description": "Imperfect subjunctive passive, first person plural: amaremur, moneremur, regeremur, caperemur, audiremur. Deponent verbs have these forms with an active meaning (hortaremur, vereremur, sequeremur, pateremur, largiremur).",
+      "description": "Imperfect subjunctive passive, first person plural: amaremur, moneremur, regeremur, caperemur, audiremur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aremur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4167,7 +4173,7 @@
     {
       "id": "impf-subj-pass-2p",
       "name": "imperfect subjunctive passive, 2nd pl",
-      "description": "Imperfect subjunctive passive, second person plural: amaremini, moneremini, regeremini, caperemini, audiremini. Deponent verbs have these forms with an active meaning (hortaremini, vereremini, sequeremini, pateremini, largiremini).",
+      "description": "Imperfect subjunctive passive, second person plural: amaremini, moneremini, regeremini, caperemini, audiremini. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aremini", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4189,7 +4195,7 @@
     {
       "id": "impf-subj-pass-3p",
       "name": "imperfect subjunctive passive, 3rd pl",
-      "description": "Imperfect subjunctive passive, third person plural: amarentur, monerentur, regerentur, caperentur, audirentur. Deponent verbs have these forms with an active meaning (hortarentur, vererentur, sequerentur, paterentur, largirentur).",
+      "description": "Imperfect subjunctive passive, third person plural: amarentur, monerentur, regerentur, caperentur, audirentur. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "arentur", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
@@ -4925,7 +4931,8 @@
         {"type": "wholeWord", "inflected": "nolle", "deinflected": "nolo", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "malle", "deinflected": "malo", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "fieri", "deinflected": "fio", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "circumfix", "prefixes": [["lic", "lic"], ["oport", "oport"], ["dec", "dec"], ["dedec", "dedec"], ["lib", "lib"], ["lub", "lub"], ["pig", "pig"], ["pud", "pud"], ["taed", "taed"], ["paenit", "paenit"], ["poenit", "poenit"], ["miser", "miser"]], "suffixes": [["ere", "et"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["lic", "lic"], ["oport", "oport"], ["dec", "dec"], ["dedec", "dedec"], ["lib", "lib"], ["lub", "lub"], ["pig", "pig"], ["pud", "pud"], ["taed", "taed"], ["paenit", "paenit"], ["poenit", "poenit"], ["miser", "miser"]], "suffixes": [["ere", "et"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "oportere", "deinflected": "oportet", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -4958,7 +4965,7 @@
     {
       "id": "pres-pass-2p",
       "name": "present passive, 2nd pl",
-      "description": "Present indicative passive, second person plural: amamini, monemini, regimini, capimini, audimini. Deponent verbs have these forms with an active meaning (hortamini, veremini, sequimini, patimini, largimini).",
+      "description": "Present indicative passive, second person plural: amamini, monemini, regimini, capimini, audimini. Also deponents.",
       "source": "own",
       "rules": [
         {"type": "wholeWord", "inflected": "famini", "deinflected": "for", "conditionsIn": [], "conditionsOut": ["v"]},

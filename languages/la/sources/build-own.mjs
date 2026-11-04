@@ -239,12 +239,12 @@ function examples(table, index, roots, lemmaOf) {
     }).join(', ');
 }
 
-const DEPONENT_NOTE = 'Deponent verbs have these forms with an active meaning';
+const DEPONENT_NOTE = 'Also deponents';
 
 for (const [id, name, text, voice, table] of FINITE) {
     PERSONS.forEach((person, i) => {
         let description = `${text}, ${PERSON_TEXT[person]}: ${examples(table, i, ROOT, LEMMA)}.`;
-        if (voice === 'pass') { description += ` ${DEPONENT_NOTE} (${examples(table, i, DEP_ROOT, DEPONENT)}).`; }
+        if (voice === 'pass') { description += ` ${DEPONENT_NOTE}.`; }
         const slotId = slot(`${id}-${person}`, `${name}, ${PERSON_NAME[person]}`, description);
         for (const c of CONJ) {
             const cell = table[c][i];
@@ -1534,6 +1534,8 @@ for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
     ['n-dat-sg', 'rti', 'rs', ['n3s'], 'fo'],
     ['n-gen-pl', 'rtium', 'rs', ['n3s'], 'fo'],
     ['n-dat-pl', 'rtibus', 'rs', ['n3s'], 'fo'],
+    ['n-dat-pl', 'ibus', 'es', ['n3s'], 'man*'],               // manibus: manus, not Mānēs
+    ['n-dat-pl', 'ibus', 'es', ['n3p'], 'man*'],
 ]) {
     const matches = [...RULES.values()].filter(({rule, slots}) => slots.includes(slotId) && rule.inflected === inflected
         && rule.deinflected === deinflected && rule.conditionsIn.length === 0 && JSON.stringify(rule.conditionsOut) === JSON.stringify(conditionsOut));
@@ -1553,13 +1555,20 @@ add('n-first', {type: 'circumfix', prefixes: [['', '']], suffixes: ['am', 'ae', 
     conditionsIn: [], conditionsOut: ['n1s'], stemMinLength: 3, stemNotStartsWithText: 'fac'}); // not futūrīs, saturae, factūram (esse)
 add('n-first', {type: 'circumfix', prefixes: ['tect', 'dict', 'peccat', 'fat', 'arv', 'vot', 'bell', 'mandat', 'promiss', 'praecept', 'punct', 'institut', 'iacul'].map((x) => [x, x]), suffixes: ['a', 'i', 'o', 'is', 'orum'].map((e) => [e, 'um']),
     conditionsIn: [], conditionsOut: ['n2s'], stemCharacters: '[]'});
-add('n-first', {type: 'circumfix', prefixes: ['pluvi', 'music', 'iniuri', 'aquil', 'penn', 'vine', 'vesper', 'mathematic'].map((x) => [x, x]),
+add('n-first', {type: 'circumfix', prefixes: ['pluvi', 'music', 'iniuri', 'aquil', 'penn', 'vine', 'vesper', 'mathematic', 'ros'].map((x) => [x, x]),
     suffixes: ['ae', 'am', 'as', 'is', 'arum'].map((e) => [e, 'a']), conditionsIn: [], conditionsOut: ['n1s'], stemCharacters: '[]'});
 // wty-la-en tags no ordinal, so only a rule with no conditions reaches one
 // before the noun of the same form (decimam: decimus, not decima "tithe").
 slot('ord', 'ordinal', 'An ordinal before the noun of the same form: decimam → decimus.');
-add('ord', {type: 'circumfix', prefixes: ['decim', 'sext', 'proxim'].map((x) => [x, x]), suffixes: ['am', 'ae', 'as', 'arum'].map((e) => [e, 'us']),
+add('ord', {type: 'circumfix', prefixes: ['decim', 'sext', 'proxim', 'terti'].map((x) => [x, x]), suffixes: ['a', 'am', 'ae', 'as', 'arum'].map((e) => [e, 'us']),
     conditionsIn: [], conditionsOut: [], stemCharacters: '[]'});
+
+// A whole-word rule's term ranks before one only references reach (9.6), and
+// the reading key no longer applies to this pack: these frequent words showed
+// a rule's rare lemma first (loca: locō, viris: vīs, exercitum: exerceō).
+for (const [a, b, c] of [['loca', 'locus', 'n2s'], ['viris', 'vir', 'n2s'], ['animalia', 'animal', 'n3s'], ['exercitum', 'exercitus', 'n4s'], ['exercitu', 'exercitus', 'n4s']]) { whole('n-first', a, b, [], [c]); }
+whole('inf', 'oportere', 'oportet', [], ['v']);
+whole('fut-1s', 'dicam', 'dico', [], ['v']);
 
 const transforms = buildTransforms();
 const out = {schema: 1, conditions, transforms};

@@ -5406,6 +5406,12 @@
         ["pluviae", "pluviae"],
         ["desiderat", "desiderat"],
         ["mensurae", "mensurae"],
+        ["exercitum", "exercitum"],
+        ["oportere", "oportere"],
+        ["dicam", "dicam"],
+        ["tertia", "tertia"],
+        ["manibus", "manibus"],
+        ["musicam", "musicam"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "arma virumque canō, trōiae quī prīmus ab ōrīs ītaliam vēnit."]
       ]
     },
@@ -7284,6 +7290,12 @@
         ["pluviae", "Pluviae"],
         ["desiderat", "Desiderat"],
         ["mensurae", "Mensurae"],
+        ["exercitum", "Exercitum"],
+        ["oportere", "Oportere"],
+        ["dicam", "Dicam"],
+        ["tertia", "Tertia"],
+        ["manibus", "Manibus"],
+        ["musicam", "Musicam"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit."]
       ]
     }
