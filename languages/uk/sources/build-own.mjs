@@ -241,9 +241,9 @@ for (const [ending, labels] of SOFT_ENDINGS) {
         // is found before the -ці → -ка of the feminine (українка); -лець
         // has -льці (пальці), so not after л.
         for (const x of [...'бвгґджзкмнпрстфхцчшщаеєиіїоуюя']) { noun(x + 'ці', x + 'ець', labels, {stemMinLength: 0}); }
-        continue;
+    } else {
+        noun('ц' + ending, 'ець', labels, {stemEndsWith: '[{consonant}{vowel}]'}, ending === 'я' ? 'хлопця → хлопець' : undefined);
     }
-    noun('ц' + ending, 'ець', labels, {stemEndsWith: '[{consonant}{vowel}]'}, ending === 'я' ? 'хлопця → хлопець' : undefined);
     noun('н' + ending, 'ень', labels, {stemEndsWith: C}, ending === 'я' ? 'учня → учень' : undefined);
     noun('н' + ending, 'онь', labels, {stemEndsWith: C}, ending === 'ю' ? 'вогню → вогонь' : undefined);
 }
