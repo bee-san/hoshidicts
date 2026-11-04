@@ -372,7 +372,7 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     follow g or q (`segui` is the preterite of seguir, not a present of
     "seguuir"); the -ir e → i change only applies between consonants (`seguia`
     is not "segueir").
-- **History.** The first commit of this pack, `pt: own rules` (25813549), has
+- **History.** The first commit of this pack, `pt: own rules` (96ca5c30), has
   the own rules as written before any measurement: 88 transforms and 2,745
   rule rows (5,223 rules expanded). Later commits changed them after
   measuring:
@@ -384,7 +384,7 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     the same deinflections twice under two names;
   - rows were written as cross products (the same deinflections on the
     459,646 words above, in the same order), which keeps `own.json` at
-    373 kB although the rules grew (479 kB at 25813549);
+    373 kB although the rules grew (479 kB at 96ca5c30);
   - the stems without spaces or capitals, the pronoun stems without spaces,
     the exact-stem exclusions (`alguem`, `sida` among them), -guer, u → o, the
     names, -azinho, `esto` and `sao` came from the real-text, Tatoeba and
@@ -413,8 +413,10 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     `físicas`), `vimos` → ver, one plural row for 154 nouns and adjectives in
     -r instead of the 35 readings, and `lookup.formOfIgnore` for wty-pt-en's
     negative-imperative references;
-  - after the eighth (MERGE_OK at c596b1e), rebased on main 4328429: notes in
-    Known gaps and in Ties between two lemmas only.
+  - after the eighth (MERGE_OK at c596b1e), rebased on main 4328429 and then
+    6d89fda: notes in Known gaps and in Ties between two lemmas, the
+    own-rules commit id and one figure (80,159 hovers on `não`); no rule
+    changed.
 
 ## Measurements
 
