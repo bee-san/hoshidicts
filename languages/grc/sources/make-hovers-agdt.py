@@ -1,20 +1,10 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Hover texts with gold lemmas from the Perseus Ancient Greek Dependency
-Treebank, for the real-text measurements of README.md. Not run by any test.
+"""Hover texts with the treebank's lemmas, for README.md's real text.   python3 make-hovers-agdt.py <out> <tlg*.tb.xml>...
 
-    python3 make-hovers-agdt.py <out dir> <tlg*.tb.xml>...
-
-Each sentence of the treebank is written out as running text: words joined
-by spaces, punctuation attached to the word before it. For every word token
-the hover text is the sentence from that word to its end, as a host passes it
-to a word lookup. Writes <out>/hover.tsv: hover text, the word as written, the
-treebank's lemma (trailing sense digits removed), its part-of-speech tag, and
-the lemma and tag of the word before it in the sentence (- for none).
-
-The treebank writes an elided word's apostrophe as a combining comma above
-after the final consonant (δ̓, ἀλλ̓); that is changed to U+2019, as printed
-texts write it. Placeholders ([0]) and tokens without a lemma are skipped.
+Each sentence is written as running text; for every word the hover is the sentence from it to its end. <out>/hover.tsv:
+hover, word, lemma (sense digits removed), tag, and the previous word's lemma and tag (- for none). The treebank's
+elision mark (a combining comma above, δ̓) becomes U+2019; placeholders and tokens without a lemma are skipped.
 """
 import re
 import sys

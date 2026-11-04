@@ -1,14 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Splits the sample of build-corpus.py into tests/corpus.tsv (the rows the
-pack's rules reach) and tests/gaps.tsv (the others). Not run by any test.
-
-    python3 split-corpus.py <sample.tsv> <hoshidicts-cli> [languages dir]
-
-A row is reached when its term is among the deinflections of one of the
-source's preprocessed variants, with conditions compatible with its rule
-column, every optional processor and transform on: what the conformance test
-checks (docs/languages.md 12.1).
+"""Splits build-corpus.py's sample into tests/corpus.tsv (rows the rules reach, as the conformance test checks them,
+every option on) and tests/gaps.tsv.   python3 split-corpus.py <sample.tsv> <hoshidicts-cli> [languages dir]
 """
 import json
 import os

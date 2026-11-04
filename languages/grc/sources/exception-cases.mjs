@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Writes the `exc` rows at the end of tests/cases.tsv, one per exception (own-rules.mjs, exceptionList):
-// the form reaches its term with the trace `exceptions`, so a form left out of transforms.json fails a test.
-// And negative rows: the whole words read no longer word that ends like them (ζά before a form without accents,
-// which would give a word with two accents), so rules that lose stemCharacters "[]" fail a test. The forms are the
-// first three whose probe no other rule reaches: the CLI preprocesses the probe with every option on and
-// deinflects each variant, as the conformance test does.
+// Writes the `exc` rows at the end of tests/cases.tsv: each exception reaches its term with the trace `exceptions`,
+// and three negatives (ζά before a form without accents, which no other rule reaches) keep the whole words whole.
 //
 //   node languages/grc/sources/exception-cases.mjs [build/hoshidicts-cli]
 

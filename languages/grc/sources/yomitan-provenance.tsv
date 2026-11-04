@@ -1,6 +1,5 @@
-# Every rule of sources/yomitan.json (Yomitan d3c54c1, GPL-3.0-or-later, Copyright (C) 2025-2026 Yomitan Authors) and what transforms.json
-# does with it, written by sources/build-final.mjs: the own transforms whose rule makes the same deinflection (marked source "both"), "kept"
-# (source "yomitan") or "left out" (README.md, "Rule provenance").
+# Yomitan d3c54c1's rules (GPL-3.0-or-later, (C) 2025-2026 Yomitan Authors) in transforms.json, by build-final.mjs: the own transforms
+# that repeat each (source "both"), "kept" or "left out" (README.md, "Rule provenance").
 # transform	rule	deinflection	in transforms.json
 2nd person singular present active indicative	0	εις → ω (v)	ind-act-2sg
 2nd person singular present active indicative	1	εις → εω (v)	ind-act-2sg

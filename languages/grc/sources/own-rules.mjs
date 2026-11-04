@@ -1,14 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Writes languages/grc/sources/own.json: Ancient Greek deinflection rules
-// written for this pack from the standard description of the language
-// (Smyth, Greek Grammar; Goodwin, Greek Grammar; Wiktionary's Ancient Greek
-// declension and conjugation tables). No table or text is copied from them.
-//
-//   node languages/grc/sources/own-rules.mjs
-//
-// The rules run on text as written (accents and breathings, after the pack's
-// preprocessors) and on the same text without any diacritic, which is how
-// wiktionary-to-yomitan writes its form-of rows. See README.md, "Rule design".
+// Writes sources/own.json, Ancient Greek deinflection rules written for this pack from Smyth's and Goodwin's
+// grammars and the shape of Wiktionary's tables (nothing is copied):   node languages/grc/sources/own-rules.mjs
+// README.md, "Own rules", describes them.
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
@@ -1716,13 +1709,9 @@ function buildClitics() {
 // Exceptions
 // ---------------------------------------------------------------------------
 
-// Forms that other rules read first as a rarer word: ἔλεγε as ἔλεγος "song of mourning" for λέγω, ἐμοῦ as ἐμός
-// for ἐγώ. Among equal readings the engine puts the term found first first; it reads the text without diacritics
-// and without accents before the text as written, and in each it finds a rule's term before the terms the
-// dictionary's form-of rows name. So each form is a whole word as written and without accents, read as the term
-// the dictionary alone puts first. The transform's position does not matter.
-// sources/exceptions.tsv is written by `measure.py exceptions` (README.md, "Rule provenance");
-// sources/exceptions-manual.tsv is written by hand.
+// Common forms that other rules read first as a rarer word (ἔλεγε as ἔλεγος for λέγω), as whole words as written
+// and without accents: sources/exceptions.tsv (measure.py exceptions) and exceptions-manual.tsv. README.md, "Own
+// rules", says why.
 // Forms of the list left out: chosen on 26 treebank files that are mostly Homer, they fit Homer only.
 const EXCEPTIONS_LEFT_OUT = {
   'ἄκουσα': 'Homer\'s unaugmented aorist of ἀκούω; in Attic the feminine of ἄκων "unwilling", which the rules read',

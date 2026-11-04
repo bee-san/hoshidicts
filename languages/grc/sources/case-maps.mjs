@@ -5,15 +5,10 @@
 //
 //   node languages/grc/sources/case-maps.mjs
 //
-// Yomitan's processors are `text.toLowerCase()` and
-// `text.charAt(0).toUpperCase() + text.slice(1)`. A `case` step gives the same
-// results, but the conformance test then pins its output on every corpus
-// string in tests/classes.json (docs/languages.md 12.1), 150 KB for this pack.
-// A map has nothing to pin: these are JavaScript's mappings of every Greek and
-// Latin letter, written out. Final_Sigma (ΛΟΓΟΣ → λογος) is the first step of
-// decapitalize: a capital sigma at the end of the text or before a space or
-// punctuation is ς. JavaScript also asks for a cased letter before it, so a
-// lone Σ gives σ there and ς here (sources/yomitan-differences.tsv).
+// Yomitan's processors are toLowerCase() and toUpperCase() of the first letter. A `case` step would make
+// tests/classes.json pin its output on every corpus string (150 KB); a map of JavaScript's mappings of every Greek
+// and Latin letter pins nothing. Final_Sigma comes first: a capital sigma at the end or before a space or
+// punctuation is ς (JavaScript also wants a cased letter before it; sources/yomitan-differences.tsv).
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';

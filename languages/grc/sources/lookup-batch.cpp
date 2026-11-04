@@ -9,16 +9,10 @@
 //
 //   build/lookup-batch <languages dir> <code> <imported dictionary> [max_results] [scan_length] < texts
 //
-// Each input line is looked up with Lookup::lookup (default 16 results, scan
-// length 16, no language options: what a host's hover does) and answered with
-// one JSON line: {"text", "results": [{"expression", "reading", "matched",
-// "rules", "trace": [ids], "formOf", "gloss"}]}. rules is the term's
-// part-of-speech tags (the rules column of its rows). formOf is true when every glossary of
-// the result has the definition tag non-lemma (a form-of row of kaikki- or
-// wiktionary-to-yomitan); gloss is the text of the first glossary's definitions
-// (its JSON's string values joined by spaces, from wiktionary-to-yomitan's
-// "glosses" list to its "backlink", so without the grammar and etymology
-// preamble; the whole glossary when it has no such list), at most 600 bytes.
+// Each line is looked up as a host's hover (16 results, scan length 16, default options) and answered with
+// {"text", "results": [{"expression", "reading", "matched", "rules", "trace", "formOf", "gloss"}]}: rules is the
+// term's tags, formOf is true when every glossary is a non-lemma row, gloss the first glossary's definitions
+// (its "glosses" list, without the grammar and etymology notes), at most 600 bytes.
 
 #include <fstream>
 #include <iostream>

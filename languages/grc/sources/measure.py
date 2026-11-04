@@ -9,9 +9,9 @@
                                                         the first results the rules change: the pack against the same
                                                         pack without rules (the dictionary's form-of rows alone); --forms
                                                         lists the forms they make wrong, largest first; --changed the
-                                                        forms whose first result they change while the judge calls
-                                                        both wrong (the treebank's lemma is neither: εἰμί for οὖσα,
-                                                        where the dictionary alone shows ὤν), for judging by hand
+                                                        forms they turn from no result into a wrong one, and those
+                                                        whose first result they change while the judge calls both
+                                                        wrong (εἰμί for οὖσα, where the dictionary alone shows ὤν)
     python3 measure.py exceptions <agdt dir> --exclude <files> [--min 10] > sources/exceptions.tsv
                                                         the forms of the frequency list whose first result the rules
                                                         (all but the transform `exceptions`) turn from right to wrong
@@ -26,22 +26,8 @@
                                                         case and number agree with the treebank's tag?
 
 hover.tsv is what make-hovers-agdt.py writes. Options: --batch build/lookup-batch, --cli build/hoshidicts-cli,
---languages languages, --dictionary <wty-grc-en imported>, --exclude <treebank file names, comma-separated> (the
-frequency list without them). A lookup is a host's hover: the text from the word to the end of its sentence, 16
-results, scan length 16, default options (lookup-batch). Every token is judged against its own treebank lemma (sense
-digits removed):
-
-- right: the first result is the lemma;
-- variant: the same word written otherwise (accents, vowel-length marks, an iota subscript, capitals; not another
-  breathing: οἷος, οἶος), when the treebank's spelling of the lemma is not among the results or the first result's
-  definitions name it (πέρι "initial-stressed form of περί"); or the word's own entry whose definitions name the
-  lemma or say it is the word elided or contracted (δ' "apocopic form of δέ"). Definitions are the glosses only
-  (lookup-batch's gloss), and a word naming itself does not count;
-- wrong: another lemma, or the word's own entry for another word (τῷ "then", for the article); `listed` when the
-  lemma is among the 16 results;
-- none: no result.
-
-The frequent forms weigh each form by its tokens, each token with its own lemma.
+--languages languages, --dictionary <wty-grc-en imported>, --exclude <treebank files, comma-separated>. A lookup is a
+host's hover (16 results, scan length 16, default options). README.md, Measurements, describes the judge.
 """
 import argparse, collections, json, random, re, shutil, subprocess, sys, tempfile, unicodedata
 from pathlib import Path
@@ -253,15 +239,15 @@ elif a.command == 'rules':
     ex = collections.defaultdict(collections.Counter)
     forms = collections.Counter()
     form_ex = {}
-    changed = collections.Counter()
+    changed, nothing = collections.Counter(), collections.Counter()
     changed_ex, changed_gold = {}, collections.defaultdict(collections.Counter)
     for word, gold, n, x, y in triples:
         ok_pack = judge(x, gold, word) in ('right', 'variant')
         ok_bare = judge(y, gold, word) in ('right', 'variant')
-        if not ok_pack and not ok_bare and x and y and x[0]['expression'] != y[0]['expression']:
-            changed[word] += n
+        if not ok_pack and x and (not y or (not ok_bare and x[0]['expression'] != y[0]['expression'])):
+            (changed if y else nothing)[word] += n
             changed_gold[word][gold] += n
-            changed_ex[word] = f'{x[0]["expression"]} [{trace(x[0])}], without rules {y[0]["expression"]} [{trace(y[0])}]'
+            changed_ex[word] = f'{x[0]["expression"]} [{trace(x[0])}], without rules {y[0]["expression"] + " [" + trace(y[0]) + "]" if y else "nothing"}'
         if ok_pack and not ok_bare:
             made['n'] += n
         elif ok_bare and not ok_pack:
@@ -282,11 +268,10 @@ elif a.command == 'rules':
         for w, n in forms.most_common(a.forms):
             print(f'  {n:6d} {w} → {form_ex[w]}')
     if a.changed:
-        print(f'the {a.changed} forms whose first result the rules change while both are judged wrong '
-              f'({sum(changed.values())} tokens in {len(changed)} forms):')
-        for w, n in changed.most_common(a.changed):
-            golds = '/'.join(g for g, _ in changed_gold[w].most_common())
-            print(f'  {n:6d} {w} → {changed_ex[w]}; treebank {golds}')
+        for name, c in (('turn from no result into a wrong one', nothing), ('change while both are judged wrong', changed)):
+            print(f'the {a.changed} forms the rules {name} ({sum(c.values())} tokens in {len(c)} forms):')
+            for w, n in c.most_common(a.changed):
+                print(f'  {n:6d} {w} → {changed_ex[w]}; treebank {"/".join(g for g, _ in changed_gold[w].most_common())}')
 elif a.command == 'exceptions':
     top, count, golds = frequent_forms(a.input)
     bare, without = no_rules_pack(), no_rules_pack('exceptions')

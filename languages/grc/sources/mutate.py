@@ -4,12 +4,9 @@
 
     python3 mutate.py <scratch dir> [--cli-dir build] [--suggest <words> <headwords>]
 
-For every transform and every stem constraint its rules use (stemMinLength, stemCharacters, stemContains,
-stemEndsWith, stemNotEndsWith, ...), a copy of the pack in <scratch dir>/grc loses that constraint in all the
-transform's rules; tests/classes.json is written again and language-conformance-test runs on the copy. Prints the
-mutations no test notices. With --suggest, for each of those it prints the words of <words> (one per line) that
-the copy deinflects to a text the pack does not give, those texts in <headwords> first: candidates for a
-negative row of tests/cases.tsv.
+For every transform and stem constraint its rules use, a copy of the pack loses that constraint and the conformance
+test runs on it; prints the mutations no test notices. --suggest lists words of <words> the copy deinflects to a new
+text (those in <headwords> first): candidates for a negative row of tests/cases.tsv.
 """
 import json, shutil, subprocess, sys
 from pathlib import Path

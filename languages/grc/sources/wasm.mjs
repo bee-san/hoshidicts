@@ -3,11 +3,9 @@
 //
 //   node languages/grc/sources/wasm.mjs <hachidori checkout> <imported wty-grc-en> <words> [runs]
 //
-// For Hachidori's prebuilt single-thread and threaded engines (extension/vendor/), in `runs` fresh engines
-// (default 10): hdw_language_load of this pack's language.json and transforms.json, and the live heap it adds
-// (hdw_memory_stats). In the last engine the imported dictionary is added, paged, and every text of <words>
-// (what measure.py benchmark writes) is looked up with hdw_lookup (16 results, scan length 16, default options) in
-// 6 passes, the first dropped.
+// Hachidori's prebuilt engines, single-thread and threaded: hdw_language_load and the heap it adds in `runs` fresh
+// engines (default 10), then hdw_lookup of every text of <words> (measure.py benchmark) with the dictionary paged,
+// 16 results, scan length 16, in 6 passes, the first dropped.
 
 import {readFileSync, readdirSync} from 'node:fs';
 import {dirname, join, resolve} from 'node:path';

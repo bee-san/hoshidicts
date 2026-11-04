@@ -157,9 +157,8 @@ for (const [k, v] of Object.entries(yomitan.conditions)) if (!(k in conditions))
 writeFileSync(join(here, '..', 'transforms.json'), format({schema: 1, conditions, transforms}));
 
 const header = [
-  '# Every rule of sources/yomitan.json (Yomitan d3c54c1, GPL-3.0-or-later, Copyright (C) 2025-2026 Yomitan Authors) and what transforms.json',
-  '# does with it, written by sources/build-final.mjs: the own transforms whose rule makes the same deinflection (marked source "both"), "kept"',
-  '# (source "yomitan") or "left out" (README.md, "Rule provenance").',
+  '# Yomitan d3c54c1\'s rules (GPL-3.0-or-later, (C) 2025-2026 Yomitan Authors) in transforms.json, by build-final.mjs: the own transforms',
+  '# that repeat each (source "both"), "kept" or "left out" (README.md, "Rule provenance").',
   '# transform\trule\tdeinflection\tin transforms.json',
 ];
 writeFileSync(join(here, 'yomitan-provenance.tsv'), [...header, ...rows.map((r) => r.join('\t'))].join('\n') + '\n');
