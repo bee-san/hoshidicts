@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts ka test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": true,
+  "author": "hoshidicts",
+  "description": "A tiny Georgian dictionary for languages/ka/tests/lookup.tsv, written for the pack (GPL-3.0-or-later). Most lemma rows carry a part of speech in the rules column; ფანჯარა, ხატავს, ლამაზი and მას have none, as every row of wty-ka-en, and the form-of rows have none, as wiktionary-to-yomitan writes them; some of those name two lemmas, the wrong one first, as wty-ka-en does (იყო, ბუნების, მან, მათ, მის).",
+  "sourceLanguage": "ka",
+  "targetLanguage": "en"
+}
