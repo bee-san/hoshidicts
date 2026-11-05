@@ -49,7 +49,7 @@ std::vector<std::string> read_word_list(const std::string& path) {
 int main(int argc, char** argv) {
   if (argc < 5) {
     std::cout << std::format(
-        "{} <csv_path> <iterations> --term <dict_path>... [--freq <dict_path>...] [--pitch <dict_path>...] [--kanji <dict_path>...] [--paged-entries] [--paged-index] [--metadata-only-terms] [--language <code>] [--languages <dir>] [--json]\n"
+        "{} <csv_path> <iterations> --term <dict_path>... [--freq <dict_path>...] [--pitch <dict_path>...] [--kanji <dict_path>...] [--paged-entries] [--paged-index] [--metadata-only-terms] [--no-glossary-text] [--no-pitches] [--language <code>] [--languages <dir>] [--json]\n"
         "--language defaults to ja (the built-in pack); --languages defaults to {}\n",
         argv[0], HOSHIDICTS_LANGUAGES_DIR);
     return 1;
@@ -89,6 +89,10 @@ int main(int argc, char** argv) {
       index_storage = DictionaryIndexStorage::Paged;
     } else if (arg == "--metadata-only-terms") {
       options.metadata_only_terms = true;
+    } else if (arg == "--no-glossary-text") {
+      options.glossary_text = false;
+    } else if (arg == "--no-pitches") {
+      options.pitches = false;
     } else if (arg == "--json") {
       json = true;
     } else if (arg == "--language" && i + 1 < argc) {

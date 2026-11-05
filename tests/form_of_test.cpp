@@ -559,6 +559,54 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
           "lookup_dictionary: gone with follow and asTerm");
     check(brief(run_in("left", d.forms)) == "left(left;left;) leave(left;leave;past*>participle*)", "lookup_dictionary: left");
   }
+  // Without glossary text and pitches (LookupOptions::glossary_text and
+  // pitches), the references are still read from the rows' glossaries, so the
+  // results are those with them: the same terms, traces, dictionary steps,
+  // frequencies and glossary marks, with no text, no compressed data and no
+  // pitches. walked and strode are reached through references only, left's
+  // row also has a definition, and metadata-only terms are on for strode.
+  {
+    const auto bare_of = [](LookupOptions options) {
+      options.glossary_text = false;
+      options.pitches = false;
+      return options;
+    };
+    // describe() with the glossary text and the pitches left out.
+    const auto without_text = [](std::vector<LookupResult> results) {
+      std::string out;
+      for (auto& r : results) {
+        for (auto& g : r.term.glossaries) g.glossary.clear();
+        r.term.pitches.clear();
+        out += describe(r);
+        for (const auto& g : r.term.glossaries) out += g.drop_form_of ? "|f" : "|-";
+        out += "\n";
+      }
+      return out;
+    };
+    LookupOptions metadata;
+    metadata.metadata_only_terms = true;
+    for (const auto& [text, options] : std::vector<std::pair<std::string, LookupOptions>>{
+             {"walked", {}}, {"unwalked", {}}, {"left", {}}, {"leaves", {}}, {"strode", metadata}, {"Walked", {}}}) {
+      const auto full = run(text, "fo", options);
+      const auto bare = run(text, "fo", bare_of(options));
+      check(!full.empty() && without_text(bare) == without_text(full),
+            "no glossary text or pitches: " + text + " gives the same results" + mode + ": " + brief(bare));
+      check(std::ranges::none_of(bare,
+                                 [](const LookupResult& r) {
+                                   return !r.term.pitches.empty() ||
+                                          std::ranges::any_of(r.term.glossaries, [](const GlossaryEntry& g) {
+                                            return !g.glossary.empty() || g.compressed_data != nullptr ||
+                                                   g.compressed_size != 0 || g.zstd_dict != nullptr;
+                                          });
+                                 }),
+            "no glossary text or pitches: " + text + " has none" + mode);
+    }
+    // The full lookup has the text and the pronunciation the bare one leaves out.
+    const auto walked = run("walked");
+    check(!walked.empty() && !walked[0].term.glossaries.empty() && !walked[0].term.glossaries[0].glossary.empty() &&
+              transcriptions(walked[0].term) == "/wɔːk/",
+          "the full lookup of walked has glossary text and a pronunciation");
+  }
 }
 
 // The C API marks dictionary steps.
