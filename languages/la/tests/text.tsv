@@ -1,0 +1,42 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data.
+# category	valid	input	variant
+diacritics	1	amāvit	amavit
+diacritics	1	Rōmam	Romam
+diacritics	1	ĭtĕr	iter
+diacritics	1	poëtae	poetae
+diacritics	1	vīdistī	vidisti
+diacritics	1	ā̆ra	ara
+diacritics	1	ÁMOR	AMOR
+diphthongs	1	cælum	caelum
+diphthongs	1	pœna	poena
+diphthongs	1	Æneas	AEneas
+diphthongs	1	Æneas	Aeneas
+diphthongs	1	caelum	cælum
+j to i	1	ejus	eius
+j to i	1	Julius	Iulius
+j to i	1	jam	iam
+j to i	1	jussit	iussit
+u to v	1	uidit	vidit
+u to v	1	uirumque	virumque
+u to v	1	Uergilius	Vergilius
+u to v	1	seruus	servus
+u to v	1	nouus	novus
+u to v	1	uolui	volui
+u to v	1	silua	silva
+u to v	1	uiuus	vivus
+u to v	1	uiuus	viuus
+decapitalize	1	AMOR	amor
+decapitalize	1	Romam	romam
+decapitalize	1	SENATVS	senatvs
+capitalize	1	roma	Roma
+capitalize	1	aeneas	Aeneas
+keep input	1	Amor	Amor
+keep input	1	uidit	uidit
+keep input	1	amāvit	amāvit
+one way	0	vir	uir
+one way	0	iam	jam
+one way	0	amat	amāt
+one way	0	caelum	coelum
+one way	0	vir	uir
+enclitics	0	loquentes	lontes
+capitals	1	SENATVS	SENATUS

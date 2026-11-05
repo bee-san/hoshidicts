@@ -1,0 +1,9 @@
+# Yomitan rule (transform, inflected → deinflected, conditionsOut)	own rule that makes the same deinflection (transform id), or - when none does
+plural: i → us ["n2s"]	n-gen-sg+n-nom-pl
+plural: i → us ["adj12"]	adj-i
+plural: e → "" ["n1s"]	n-gen-sg+n-dat-sg+n-nom-pl
+plural: ae → a ["adj12"]	-
+plural: a → um ["adj12"]	-
+feminine: a → us ["adj12"]	adj-a
+neuter: um → us ["adj12"]	adj-um
+ablative: o → um ["n2s"]	n-dat-sg+n-abl-sg
