@@ -1,0 +1,65 @@
+# GPL-3.0-or-later; Copyright (C) 2025-2026 Yomitan Authors
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/ancient-greek-transforms.test.js
+# Converted by tools/port-yomitan-tests.mjs; sources/build-final.mjs then sets the reasons column to * (any trace): the final rules reach
+# these lemmas through this pack's own transforms, whose ids are not Yomitan's. A row whose rule the final set leaves out is a negative
+# (valid 0): nominalization ος → εω (README.md, "Rule provenance").
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+verbs	1	λύεις	λύω	v	*
+verbs	1	λύει	λύω	v	*
+verbs	1	λύομεν	λύω	v	*
+verbs	1	λύετε	λύω	v	*
+verbs	1	λύουσι	λύω	v	*
+verbs	1	λύουσιν	λύω	v	*
+verbs	1	φιλεις	φιλεω	v	*
+verbs	1	φιλει	φιλεω	v	*
+verbs	1	φιλεομεν	φιλεω	v	*
+verbs	1	φιλεετε	φιλεω	v	*
+verbs	1	φιλεουσι	φιλεω	v	*
+verbs	1	φιλεουσιν	φιλεω	v	*
+verbs	1	δεχῃ	δεχομαι	v	*
+verbs	1	δεχει	δεχομαι	v	*
+verbs	1	δεχεται	δεχομαι	v	*
+verbs	1	δεχομεθα	δεχομαι	v	*
+verbs	1	δεχεσθε	δεχομαι	v	*
+verbs	1	δεχονται	δεχομαι	v	*
+nouns	1	σκιας	σκια	n	*
+nouns	1	σκιαν	σκια	n	*
+nouns	1	σκιαι	σκια	n	*
+nouns	1	σκιων	σκια	n	*
+nouns	1	σκιαις	σκια	n	*
+nouns	1	σκιας	σκια	n	*
+nouns	1	σκιαι	σκια	n	*
+nouns	1	φωνης	φωνη	n	*
+nouns	1	φωνην	φωνη	n	*
+nouns	1	φωναι	φωνη	n	*
+nouns	1	φωνων	φωνη	n	*
+nouns	1	φωναις	φωνη	n	*
+nouns	1	φωνας	φωνη	n	*
+nouns	1	φωναι	φωνη	n	*
+nouns	1	νεανιου	νεανιας	n	*
+nouns	1	νεανια	νεανιας	n	*
+nouns	1	νεανιαν	νεανιας	n	*
+nouns	1	νεανια	νεανιας	n	*
+nouns	1	νεανιαι	νεανιας	n	*
+nouns	1	νεανιων	νεανιας	n	*
+nouns	1	νεανιαις	νεανιας	n	*
+nouns	1	νεανιαι	νεανιας	n	*
+nouns	1	ανθρωπου	ανθρωπος	n	*
+nouns	1	ανθρωπω	ανθρωπος	n	*
+nouns	1	ανθρωπον	ανθρωπος	n	*
+nouns	1	ανθρωπε	ανθρωπος	n	*
+nouns	1	ανθρωποι	ανθρωπος	n	*
+nouns	1	ανθρωπων	ανθρωπος	n	*
+nouns	1	ανθρωποις	ανθρωπος	n	*
+nouns	1	ανθρωπους	ανθρωπος	n	*
+nouns	1	ανθρωποι	ανθρωπος	n	*
+nouns	1	δωρου	δωρον	n	*
+nouns	1	δωρω	δωρον	n	*
+nouns	1	δωρα	δωρον	n	*
+nouns	1	δωρων	δωρον	n	*
+nouns	1	δωροις	δωρον	n	*
+nouns	1	δωρα	δωρον	n	*
+nouns	1	δωρα	δωρον	n	*
+nouns	0	γεωργος	γεωργεω	v	*
+nouns	0	πονος	πονεω	v	*
+adjectives	1	καλον	καλος	adj	*

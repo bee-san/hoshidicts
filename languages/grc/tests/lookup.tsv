@@ -1,0 +1,38 @@
+# options: default
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/ (written for the pack), with the pack's defaults, as a host looks words up.
+# Rows the order of the rules decides (README.md, "Order"), the exceptions, and rules left out: the first result has this
+# expression and matched text (valid 1), or does not (valid 0).
+# category	valid	text	expression	matched
+declension	1	φίλων ἀνδρῶν	φίλος	φίλων
+middle	1	ἕποντο δὲ	ἕπομαι	ἕποντο
+augment	1	ἐδύνατο γὰρ	δύναμαι	ἐδύνατο
+relative	1	ἥ ποτε	ὅς	ἥ
+relative	0	ἥ ποτε	ὁ	ἥ
+genitive	1	πολέμου ἕνεκα	πόλεμος	πολέμου
+untagged	1	τούτοισι δὲ	οὗτος	τούτοισι
+dative	1	μόρῳ θανεῖν	μόρος	μόρῳ
+subjunctive	1	μάθω τι	μανθάνω	μάθω
+particle	1	ἀλλά μοι	ἀλλά	ἀλλά
+elision	1	νύχθ’ ὅλην	νύξ	νύχθ’
+exceptions	1	ἔλεγον δὲ	λέγω	ἔλεγον
+exceptions	1	ἔλεγε δὲ	λέγω	ἔλεγε
+exceptions	1	ἐμοῦ γε	ἐγώ	ἐμοῦ
+exceptions	1	ἕνα μόνον	εἷς	ἕνα
+exceptions	1	ἔτη τρία	ἔτος	ἔτη
+exceptions	1	μένων ἐν	μένω	μένων
+comparison	1	ἔχθιστος ἀνδρῶν	ἐχθρός	ἔχθιστος
+comparison	1	αἴσχιστον ἔργον	αἰσχρός	αἴσχιστον
+comparison	1	πλείους ἢ	πλείων	πλείους
+middle	1	ἕπεται δὲ	ἕπομαι	ἕπεται
+athematic	1	δύνηται ποιεῖν	δύναμαι	δύνηται
+participle	1	οὖσα δὲ	εἰμί	οὖσα
+genitive	1	ἀνέμων ἀέλλαις	ἄνεμος	ἀνέμων
+middle	1	μηχανῶνται δὲ	μηχανάομαι	μηχανῶνται
+aorist	1	ὁρμηθέντες δὲ	ὁρμάω	ὁρμηθέντες
+exceptions	1	θεῷ δὲ	θεός	θεῷ
+exceptions	1	ἓν δὲ	εἷς	ἓν
+exceptions	1	νεῶν δὲ	ναῦς	νεῶν
+declension	1	θεῶν δὲ	θεός	θεῶν
+exceptions	1	πλέον ἢ	πλείων	πλέον
+exceptions	1	σταθμῷ δὲ	σταθμός	σταθμῷ
+exceptions	1	νηὸς δὲ	ναῦς	νηὸς

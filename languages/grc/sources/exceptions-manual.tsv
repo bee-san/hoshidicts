@@ -1,0 +1,187 @@
+# Exceptions chosen by hand (README.md, "Rule provenance"; GPL-3.0-or-later): forms other rules read first as a rarer
+# word that measure.py exceptions does not choose, from the audits and measure.py rules on the whole treebank (in-sample).
+# form	term	part of speech
+# the other form of the ἔλεγε collision, which the list leaves out
+ἔλεγον	λέγω	v
+# the treebank lemmatizes it as ἐρῶ, so the judge counts λέγω wrong too
+εἴρηται	λέγω	v
+# the treebank lemmatizes it as πλέω or πλέως
+πλεῖον	πλείων	adj
+# under the list's threshold
+πείσας	πείθω	v
+χίλια	χίλιοι	
+κοτε	ποτέ	
+σώσας	σῴζω	v
+# the treebank writes the lemma ὄις
+οἰῶν	οἶς	n
+# the dictionary alone shows the Ionic μήν
+μῆνα	μείς	n
+μῆνας	μείς	n
+μηνῶν	μείς	n
+# iota adscript
+Ἅιδου	ᾍδης	
+Ἅιδην	ᾍδης	
+Ἅιδα	ᾍδης	
+Ἅιδαν	ᾍδης	
+ἐπύθετο	πυνθάνομαι	v
+πύθωμαι	πυνθάνομαι	v
+πύθῃ	πυνθάνομαι	v
+πύθηται	πυνθάνομαι	v
+πύθησθε	πυνθάνομαι	v
+πυθοίμην	πυνθάνομαι	v
+πύθοιτο	πυνθάνομαι	v
+πυθόμενος	πυνθάνομαι	v
+πυθόμενον	πυνθάνομαι	v
+πυθόμενοι	πυνθάνομαι	v
+πυθομένη	πυνθάνομαι	v
+# the largest unambiguous wrong first results of measure.py rules --forms
+ἰχθύων	ἰχθύς	n
+βαρεῖαν	βαρύς	adj
+βαρείας	βαρύς	adj
+βαρείῃ	βαρύς	adj
+τύχοι	τυγχάνω	v
+νέμων	νέμω	v
+ἕλκων	ἕλκω	v
+τίσασθαι	τίνω	v
+ἐτίσατο	τίνω	v
+πάθοι	πάσχω	v
+πάθω	πάσχω	v
+ὄρουσαν	ὀρούω	v
+φανῇ	φαίνω	v
+τυράννων	τύραννος	n
+δικαίῳ	δίκαιος	adj
+ἀξίους	ἄξιος	
+δήσας	δέω	v
+ἐτέων	ἔτος	n
+ἔασε	ἐάω	v
+λελύσθαι	λύω	v
+δυῶν	δύο	
+Λυκίους	Λύκιος	n
+Ἶριν	Ἶρις	
+ἴσθ’	ἴσθ'	v
+ἵκεθ’	ἵκεθ'	v
+ἱκόμεθ’	ἱκόμεθ'	v
+τροπαῖον	τρόπαιον	n
+# the fourth audit: Ionic and Epic words other rules read as an unrelated word where the dictionary alone shows nothing
+ἐπείτε	ἐπεί	
+ἐπεάν	ἐπήν	
+νέες	ναῦς	n
+Ἀσίην	Ἀσία	
+Ἀσίης	Ἀσία	
+Τροίην	Τροία	
+Τροίης	Τροία	
+ζῶσι	ζῶ	v
+ζῶσιν	ζῶ	v
+πλοῦν	πλόος	n
+μέσσον	μέσος	adj
+Ἀθηναίης	Ἀθηναία	
+Ἀθηναίην	Ἀθηναία	
+ἐπειρέσθαι	ἐπέρομαι	v
+ἑσσωθέντες	ἡσσάομαι	v
+Ἀΐδαο	ᾍδης	
+Ἀίδαο	ᾍδης	
+Ὀδυσεῦ	Ὀδυσσεύς	
+ἐΐσην	ἴσος	adj
+# the fourth audit: cards the dictionary orders or the rules make (στάδιοι → στάδιος, μέσα → μέσης, the πυθ- aorist)
+στάδιοι	στάδιον	n
+μέσα	μέσος	adj
+μέσας	μέσος	adj
+ἐπυθόμην	πυνθάνομαι	v
+ἐπυθόμεθα	πυνθάνομαι	v
+πυθομένους	πυνθάνομαι	v
+# the fifth audit: lemmas whose forms other rules read as an unrelated word (τάσσω as τήκω, ἔρδω as ἔργω, δαμάζω as δέμω, Epic μέσσος as μέδω)
+ἔταξαν	τάσσω	v
+ἔρξον	ἔρδω	v
+ἔρξω	ἔρδω	v
+ἔρξας	ἔρδω	v
+ἔρξῃς	ἔρδω	v
+δαμέντες	δαμάζω	v
+δαμέντα	δαμάζω	v
+δαμέντας	δαμάζω	v
+μέσσῃ	μέσος	adj
+μέσσην	μέσος	adj
+μέσσῃσιν	μέσος	adj
+μέσσαν	μέσος	adj
+μέσσας	μέσος	adj
+μέσαι	μέσος	adj
+συμφορήν	συμφορά	n
+συμφορῆς	συμφορά	n
+συμφορέων	συμφορά	n
+πρήσσειν	πράσσω	v
+πρήσσοντα	πράσσω	v
+πρήσσων	πράσσω	v
+πρήσσοντι	πράσσω	v
+πρήσσεσθαι	πράσσω	v
+βορέω	Βορέας	
+Βορέω	Βορέας	
+ἑσσώθησαν	ἡσσάομαι	v
+ἑσσώθη	ἡσσάομαι	v
+ἑσσωθῆναι	ἡσσάομαι	v
+ἐφράσσατο	φράζω	v
+φράσσατο	φράζω	v
+τελεῖ	τελέω	v
+τελῶ	τελέω	v
+κεφαλέων	κεφαλή	n
+σκιῇ	σκιά	n
+ἐπάν	ἐπήν	
+τίσαιτο	τίνω	v
+τίσεσθαι	τίνω	v
+ἄραντες	ἀείρω	v
+πάθῃσι	πάσχω	v
+πάθῃς	πάσχω	v
+# the fifth audit: names whose form-of row the common-noun rules come before (Κύπρου as κύπρος "henna")
+Φᾶσιν	Φᾶσις	
+Ἀθήνῃσι	Ἀθῆναι	
+Κύπρου	Κύπρος	
+Θήρας	Θήρα	
+Νίνον	Νίνος	
+Νίνου	Νίνος	
+Ἀκάνθου	Ἄκανθος	
+Πάρον	Πάρος	
+Κρέοντα	Κρέων	
+Κρέοντι	Κρέων	
+# main's tie-breaks (#83): forms whose exception lost the reading tie-break before, or that the rules now read as another word
+νεῶν	ναῦς	n
+δοῖεν	δίδωμι	v
+πλέον	πλείων	adj
+ὀχέων	ὄχεα	
+ἆσαι	ἄω	v
+σταθμῷ	σταθμός	n
+ἴδῃ	ὁράω	v
+ἴδῃς	ὁράω	v
+Κύρου	Κῦρος	
+θεῖναι	τίθημι	v
+πείσεις	πείθω	v
+πείσει	πείθω	v
+ἔπεισαν	πείθω	v
+πεῖσαι	πείθω	v
+ἤρχετο	ἄρχω	v
+βάτην	βαίνω	v
+εὐρέι	εὐρύς	adj
+ὀπί	ὄψ	n
+βουλῇσι	βουλή	n
+νίψασθαι	νίζω	v
+νεώμεθα	νέομαι	v
+ξίφεσίν	ξίφος	n
+ῥῖνάς	ῥίς	n
+διαί	διά	
+τεύχων	τεύχω	v
+λέξεις	λέγω	v
+καθέξει	κατέχω	v
+ἀτάσθαλα	ἀτάσθαλος	adj
+# cards the dictionary itself orders: the adverbial reference οὕτω → οὗτος, Epic νηός → νεώς "temple"
+οὕτω	οὕτως	
+νηός	ναῦς	n
+# the sixth audit: futures other rules read as a -σις noun, and names in held-out Herodotus
+λέξει	λέγω	v
+δόξει	δοκέω	v
+λύσει	λύω	v
+δείξει	δείκνυμι	v
+δείξεις	δείκνυμι	v
+πωλήσει	πωλέω	v
+δράσεις	δράω	v
+Ἐλεφαντίνης	Ἐλεφαντίνη	
+Θήρην	Θήρα	
+Σούσοισι	Σοῦσα	
+Μαγνησίης	Μαγνησία	
+Συρίην	Συρία	
