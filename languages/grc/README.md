@@ -945,7 +945,7 @@ python3 languages/grc/sources/mutate.py <scratch dir>
 - **Hachidori** (feat/multi-language 803f7b6e with this branch in
   `third_party/hoshidicts`, `node scripts/sync-languages.mjs`, then
   `node test/chrome-language-pack.mjs` with wty-grc-en.zip and 11 cases of
-  real sentences), at 4e303ba: 15 checks pass and none fails, among them
+  real sentences), at 4534dfc: 15 checks pass and none fails, among them
   ξυνέγραψε → συγγράφω (with the trace of Known gaps), ἄειδε → ἀείδω,
   ἔπεμψαν → πέμπω, γένοιτ’ → γίγνομαι, the Anki note and the switch to
   Japanese and back.
