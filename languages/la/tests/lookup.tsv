@@ -1,0 +1,95 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/.
+# category	valid	text	expression	matched
+enclitic	1	virumque canō	vir	virumque
+enclitic	1	arma virumque canō	arma	arma
+enclitic	1	senātus populusque Rōmānus	senatus	senātus
+enclitic	1	populusque Rōmānus	populus	populusque
+enclitic	1	vidēsne illum	video	vidēsne
+enclitic	1	mēcum venī	ego	mēcum
+name	1	Trōiae quī prīmus	Troia	Trōiae
+name	1	Ītaliam vēnit	Italia	Ītaliam
+name	1	Caesaris exercitus	Caesar	Caesaris
+verb	1	vēnit Lāvīniaque	venio	vēnit
+verb	1	cecinit carmen	cano	cecinit
+verb	1	uidit urbem	video	uidit
+verb	1	rēxērunt populōs	rego	rēxērunt
+esse	1	amātus est ā patre	amo	amātus est
+esse	1	missī sunt lēgātī	mitto	missī sunt
+esse	1	Carthāgō dēlenda est	Carthago	Carthāgō
+esse	1	dēlenda est urbs	deleo	dēlenda est
+noun	1	urbem cēpērunt	urbs	urbem
+noun	1	patrī meō	pater	patrī
+adjective	1	magnā vōce	magnus	magnā
+adjective	1	magna est urbs	magnus	magna
+adjective	0	magna est urbs	magnus	magna est
+adjective	1	prīmus ab ōrīs	primus	prīmus
+pronoun	1	eius fīlius	is	eius
+pronoun	1	quod vīdī	qui	quod
+word	1	sine dubiō	sine	sine
+word	0	sine dubiō	si	sine
+word	1	vir, quem	vir	vir
+word	1	vir; quem	vir	vir
+word	1	virumque” canō	vir	virumque
+word	1	Graeco-Rōmānus	Graecus	Graeco
+word	1	ab ōrīs	ab	ab
+word	1	ōrīs	ora	ōrīs
+enclitic	1	bene dixit	bene	bene
+enclitic	0	bene dixit	be	bene
+enclitic	1	salve, amice	salve	salve
+enclitic	1	Romane, memento	Romanus	Romane
+enclitic	0	Romane, memento	Roma	Romane
+enclitic	1	pone tergum	pone	pone
+enclitic	1	estne verum	sum	estne
+enclitic	1	sive vir	sive	sive
+homograph	1	dedit	do	dedit
+homograph	1	maris	mare	maris
+homograph	1	mense	mensis	mense
+esse	1	laudata est	laudo	laudata est
+esse	1	rosa est	rosa	rosa
+form-of	1	Herculis	Hercules	Herculis
+resolution	0	virtus	vir	vir
+part of speech	0	ratis	ratio	ratis
+capitals	1	SENATVS	senatus	SENATVS
+exclusion	1	navi	navis	navi
+exclusion	1	mensas	mensa	mensas
+exclusion	1	copias	copia	copias
+exclusion	1	aceto	acetum	aceto
+exclusion	1	lacum	lacus	lacum
+exclusion	1	armorum	arma	armorum
+exclusion	1	fortes	fortis	fortes
+exclusion	1	fortem	fortis	fortem
+exclusion	1	forti	fortis	forti
+exclusion	1	fortium	fortis	fortium
+exclusion	1	fortibus	fortis	fortibus
+exclusion	1	impetum	impetus	impetum
+homograph	1	Galliam	Gallia	Galliam
+exclusion	1	patriam	patria	patriam
+exclusion	1	lineam	linea	lineam
+homograph	1	electus	eligo	electus
+homograph	1	summo	summus	summo
+exclusion	1	mensae	mensa	mensae
+untagged terms	0	sinis	sine	sinis
+homograph	1	tecta	tectum	tecta
+homograph	1	creaturam	creatura	creaturam
+homograph	1	media	medius	media
+exclusion	1	jura	ius	jura
+homograph	1	armis	arma	armis
+homograph	1	pluviae	pluvia	pluviae
+homograph	1	decimam	decimus	decimam
+homograph	1	desiderat	desidero	desiderat
+homograph	1	mensurae	mensura	mensurae
+homograph	1	loca	locus	loca
+homograph	1	animalia	animal	animalia
+homograph	1	exercitum	exercitus	exercitum
+homograph	1	oportere	oportet	oportere
+homograph	1	dicam	dico	dicam
+homograph	1	tertia	tertius	tertia
+homograph	1	rosae	rosa	rosae
+homograph	1	manibus	manus	manibus
+homograph	1	musicam	musica	musicam
+homograph	1	argenti	argentum	argenti
+homograph	1	nate	natus	nate
+homograph	1	que	qui	que
+homograph	1	solis	sol	solis
+homograph	1	proxime	prope	proxime
+homograph	1	exercitu	exercitus	exercitu

@@ -1,0 +1,759 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first (* means any trace).
+# The pack has no optional processor, transform or variant pass, so every option on and the defaults run the same rules (there is no defaults.tsv).
+# guard rows fail without one stem constraint each; given-up rows are rare words' readings a constraint gives up (README.md, Measurements 7).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+fleeting	1	отца	отец	n	noun-fleeting|noun-gen.sg+nom.pl
+fleeting	1	отцом	отец	n	*
+fleeting	1	дня	день	n	*
+fleeting	1	дней	день	n	*
+fleeting	1	куска	кусок	n	*
+fleeting	1	кошелька	кошелёк	n	*
+fleeting	1	пальцы	палец	n	*
+fleeting	1	бойца	боец	n	*
+fleeting	1	зайца	заяц	n	*
+fleeting	1	любви	любовь	n	*
+fleeting	1	угла	угол	n	*
+fleeting	1	орла	орёл	n	*
+fleeting	1	ветра	ветер	n	*
+fleeting	1	рта	рот	n	*
+fleeting	1	сна	сон	n	*
+fleeting	1	льда	лёд	n	*
+fleeting	1	лаптя	лапоть	n	*
+fleeting	1	огня	огонь	n	*
+fleeting	1	ковра	ковёр	n	*
+fleeting	1	кашля	кашель	n	*
+fleeting	1	свёкра	свёкор	n	*
+genitive-plural	1	свадеб	свадьба	n	*
+plural-only	1	денег	деньги	n	*
+genitive-plural	1	ошибок	ошибка	n	*
+genitive-plural	1	ручек	ручка	n	*
+genitive-plural	1	копеек	копейка	n	*
+genitive-plural	1	сестёр	сестра	n	*
+genitive-plural	1	сестер	сестра	n	*
+genitive-plural	1	песен	песня	n	*
+genitive-plural	1	деревень	деревня	n	*
+genitive-plural	1	окон	окно	n	*
+genitive-plural	1	писем	письмо	n	*
+genitive-plural	1	тюрем	тюрьма	n	*
+genitive-plural	1	сердец	сердце	n	*
+genitive-plural	1	колец	кольцо	n	*
+genitive-plural	1	крылец	крыльцо	n	*
+genitive-plural	1	статей	статья	n	*
+genitive-plural	1	идей	идея	n	*
+noun	1	секвойе	секвойя	n	*
+genitive-plural	1	линий	линия	n	*
+irregular-noun	1	люди	человек	n	*
+irregular-noun	1	людьми	человек	n	*
+irregular-noun	1	детей	ребёнок	n	*
+irregular-noun	1	детьми	ребёнок	n	*
+irregular-noun	1	матери	мать	n	*
+irregular-noun	1	дочерью	дочь	n	*
+irregular-noun	1	дочерьми	дочь	n	*
+irregular-noun	1	времени	время	n	*
+irregular-noun	1	именами	имя	n	*
+irregular-noun	1	братья	брат	n	*
+irregular-noun	1	братьев	брат	n	*
+irregular-noun	1	деревья	дерево	n	*
+irregular-noun	1	друзья	друг	n	*
+irregular-noun	1	сыновей	сын	n	*
+irregular-noun	1	котята	котёнок	n	*
+irregular-noun	1	медвежата	медвежонок	n	*
+irregular-noun	1	англичане	англичанин	n	*
+irregular-noun	1	бояре	боярин	n	*
+irregular-noun	1	хозяева	хозяин	n	*
+irregular-noun	1	соседей	сосед	n	*
+irregular-noun	1	небеса	небо	n	*
+irregular-noun	1	путём	путь	n	*
+irregular-noun	1	господу	господь	n	*
+yo	1	словарём	словарь	n	*
+yo	1	словарем	словарь	n	*
+yo	1	статьёй	статья	n	*
+yo	1	моём	мой	pron	*
+yo	1	идёт	идти	v	*
+yo	1	идет	идти	v	*
+yo	1	несёшь	нести	v	*
+yo	1	нёс	нести	v	*
+yo	1	нес	нести	v	*
+yo	1	пьёт	пить	v	*
+yo	1	жёны	жена	n	*
+plural-only	1	часов	часы	n	*
+plural-only	1	деньгами	деньги	n	*
+plural-only	1	суток	сутки	n	*
+plural-only	1	брюк	брюки	n	*
+adjective	1	красивыми	красивый	adj	*
+adjective	1	молодого	молодой	adj	*
+adjective	1	русской	русский	adj	*
+adjective	1	другие	другой	adj	*
+adjective	1	хорошую	хороший	adj	*
+adjective	1	большими	большой	adj	*
+adjective	1	синюю	синий	adj	*
+adjective	1	карими	карий	adj	*
+adjective	1	третьего	третий	adj	*
+adjective	1	лисьей	лисий	adj	*
+adjective	1	мамино	мамин	adj	*
+adjectival-noun	1	учёного	учёный	n	*
+adjectival-noun	1	столовой	столовая	n	*
+adjectival-noun	1	запятые	запятая	n	*
+adjectival-noun	1	животного	животное	n	*
+adjectival-noun	1	жаркими	жаркое	n	*
+adjectival-noun	1	мороженым	мороженое	n	*
+surname	1	Пушкиным	Пушкин	name	*
+surname	1	Ивановой	Иванов	name	*
+short-adjective	1	красива	красивый	adj	*
+short-adjective	1	молод	молодой	adj	*
+short-adjective	1	интересен	интересный	adj	*
+short-adjective	1	умён	умный	adj	*
+short-adjective	1	болен	больной	adj	*
+short-adjective	1	короток	короткий	adj	*
+short-adjective	1	светел	светлый	adj	*
+short-adjective	1	зол	злой	adj	*
+short-adjective	1	остёр	острый	adj	*
+short-adjective	1	хитер	хитрый	adj	*
+short-adjective	1	уверена	уверенный	adj	*
+short-adjective	1	решена	решённый	adj	*
+comparative	1	быстрее	быстрый	adj	*
+comparative	1	быстрей	быстрый	adj	*
+comparative	1	побыстрее	быстрый	adj	*
+comparative	1	громче	громкий	adj	*
+comparative	1	дороже	дорогой	adj	*
+comparative	1	моложе	молодой	adj	*
+comparative	1	тише	тихий	adj	*
+comparative	1	чище	чистый	adj	*
+comparative	1	проще	простой	adj	*
+comparative	1	дешевле	дешёвый	adj	*
+comparative	1	глубже	глубокий	adj	*
+comparative	1	тоньше	тонкий	adj	*
+comparative	1	старше	старый	adj	*
+comparative	1	лучше	хороший	adj	*
+comparative	1	получше	хороший	adj	*
+comparative	1	хуже	плохой	adj	*
+comparative	1	меньше	маленький	adj	*
+adverb	1	по-старинному	старинный	adj	*
+adverb	1	по-хорошему	хороший	adj	*
+adverb	1	по-летнему	летний	adj	*
+adverb	1	по-дружески	дружеский	adj	*
+adverb	1	по-волчьи	волчий	adj	*
+superlative	1	новейший	новый	adj	*
+superlative	1	величайший	великий	adj	*
+superlative	1	ближайшего	близкий	adj	*
+superlative	1	строжайший	строгий	adj	*
+present	1	читаю	читать	v	verb-pres.1sg
+present	1	читаешь	читать	v	verb-pres.2sg
+present	1	читает	читать	v	verb-pres.3sg
+present	1	читаем	читать	v	*
+present	1	читаете	читать	v	*
+present	1	читают	читать	v	verb-pres.3pl
+present	1	говорю	говорить	v	verb-pres.1sg
+present	1	говоришь	говорить	v	verb-pres.2sg
+present	1	говорят	говорить	v	verb-pres.3pl
+present	1	смотрю	смотреть	v	*
+present	1	рисую	рисовать	v	*
+present	1	танцуют	танцевать	v	*
+present	1	воюет	воевать	v	*
+present	1	даёт	давать	v	*
+present	1	встаёт	вставать	v	*
+present	1	узнаёшь	узнавать	v	*
+present	1	крикнет	крикнуть	v	*
+present	1	пишу	писать	v	*
+present	1	пишешь	писать	v	*
+present	1	скажу	сказать	v	*
+present	1	плачет	плакать	v	*
+present	1	ищу	искать	v	*
+present	1	ждёт	ждать	v	*
+present	1	беру	брать	v	*
+present	1	зовёт	звать	v	*
+present	1	живёт	жить	v	*
+present	1	будет	быть	v	*
+present	1	едут	ехать	v	*
+present	1	несёт	нести	v	*
+present	1	ведёт	вести	v	*
+present	1	везу	везти	v	*
+present	1	растёт	расти	v	*
+present	1	кладёт	класть	v	*
+present	1	сядет	сесть	v	*
+present	1	может	мочь	v	*
+present	1	могут	мочь	v	*
+present	1	печёт	печь	v	*
+present	1	учат	учить	v	*
+present	1	кричит	кричать	v	*
+present	1	стоишь	стоять	v	*
+present	1	пьёшь	пить	v	*
+present	1	моет	мыть	v	*
+present	1	надеюсь	надеяться	v	*
+present	1	смеётся	смеяться	v	*
+present	1	учится	учиться	v	*
+present	1	одевается	одеваться	v	*
+consonant-change	1	хожу	ходить	v	verb-pres.1sg
+consonant-change	1	вижу	видеть	v	*
+consonant-change	1	прошу	просить	v	*
+consonant-change	1	плачу	платить	v	*
+consonant-change	1	прощу	простить	v	*
+consonant-change	1	езжу	ездить	v	*
+consonant-change	1	люблю	любить	v	*
+consonant-change	1	куплю	купить	v	*
+consonant-change	1	ставлю	ставить	v	*
+consonant-change	1	кормлю	кормить	v	*
+consonant-change	1	сплю	спать	v	*
+consonant-change	1	сыплю	сыпать	v	*
+irregular-verb	1	хочу	хотеть	v	*
+irregular-verb	1	хочешь	хотеть	v	*
+irregular-verb	1	хотят	хотеть	v	*
+irregular-verb	1	бегут	бежать	v	*
+irregular-verb	1	дам	дать	v	*
+irregular-verb	1	даст	дать	v	*
+irregular-verb	1	дадут	дать	v	*
+irregular-verb	1	отдам	отдать	v	*
+irregular-verb	1	ем	есть	v	*
+irregular-verb	1	ест	есть	v	*
+irregular-verb	1	едят	есть	v	*
+irregular-verb	1	съем	съесть	v	*
+irregular-verb	1	доест	доесть	v	*
+irregular-verb	1	возьмёшь	взять	v	*
+irregular-verb	1	пойму	понять	v	*
+irregular-verb	1	сниму	снять	v	*
+irregular-verb	1	примет	принять	v	*
+irregular-verb	1	начнёт	начать	v	*
+irregular-verb	1	лягу	лечь	v	*
+irregular-verb	1	ляжет	лечь	v	*
+irregular-verb	1	жгут	жечь	v	*
+irregular-verb	1	сожгу	сжечь	v	*
+irregular-verb	1	шлёт	слать	v	*
+irregular-verb	1	поёт	петь	v	*
+irregular-verb	1	бреет	брить	v	*
+irregular-verb	1	лжёт	лгать	v	*
+irregular-verb	1	гонит	гнать	v	*
+irregular-verb	1	собьюсь	сбиться	v	*
+irregular-verb	1	разольёт	разлить	v	*
+irregular-verb	1	прижмёт	прижать	v	*
+irregular-verb	1	поборет	побороть	v	*
+irregular-verb	1	иду	идти	v	*
+irregular-verb	1	пойду	пойти	v	*
+irregular-verb	1	придёт	прийти	v	*
+irregular-verb	1	найдёт	найти	v	*
+irregular-verb	1	выйдешь	выйти	v	*
+past	1	читал	читать	v	verb-past.m
+past	1	читала	читать	v	verb-past.f
+past	1	читало	читать	v	verb-past.n
+past	1	читали	читать	v	verb-past.pl
+past	1	говорила	говорить	v	*
+past	1	умела	уметь	v	*
+past	1	вернулся	вернуться	v	*
+past	1	смеялась	смеяться	v	*
+past	1	был	быть	v	*
+past	1	была	быть	v	*
+past	1	нёс	нести	v	*
+past	1	несла	нести	v	*
+past	1	вёл	вести	v	*
+past	1	вела	вести	v	*
+past	1	вёз	везти	v	*
+past	1	полз	ползти	v	*
+past	1	рос	расти	v	*
+past	1	росла	расти	v	*
+past	1	мог	мочь	v	*
+past	1	могла	мочь	v	*
+past	1	берёг	беречь	v	*
+past	1	пёк	печь	v	*
+past	1	лёг	лечь	v	*
+past	1	легла	лечь	v	*
+past	1	сел	сесть	v	*
+past	1	упал	упасть	v	*
+past	1	умер	умереть	v	*
+past	1	тёр	тереть	v	*
+past	1	привык	привыкнуть	v	*
+past	1	достиг	достичь	v	*
+present	1	достигнет	достичь	v	*
+past	1	постигла	постичь	v	*
+past	1	привыкла	привыкнуть	v	*
+past	1	исчез	исчезнуть	v	*
+past	1	шёл	идти	v	*
+past	1	шла	идти	v	*
+past	1	пришёл	прийти	v	*
+past	1	пришла	прийти	v	*
+past	1	вышли	выйти	v	*
+past	1	ел	есть	v	*
+past	1	съел	съесть	v	*
+past	1	залез	залезть	v	*
+past	1	прочёл	прочесть	v	*
+past	1	учла	учесть	v	*
+present	1	прочтёт	прочесть	v	*
+imperative	1	читай	читать	v	verb-imp.2sg
+imperative	1	читайте	читать	v	verb-imp.2pl
+imperative	1	говори	говорить	v	*
+imperative	1	смотрите	смотреть	v	*
+imperative	1	рисуй	рисовать	v	*
+imperative	1	пиши	писать	v	*
+imperative	1	скажите	сказать	v	*
+imperative	1	плачь	плакать	v	*
+imperative	1	крикни	крикнуть	v	*
+imperative	1	встань	встать	v	*
+imperative	1	открой	открыть	v	*
+imperative	1	пей	пить	v	*
+imperative	1	строй	строить	v	*
+imperative	1	стой	стоять	v	*
+imperative	1	дай	дать	v	*
+imperative	1	ешь	есть	v	*
+imperative	1	ляг	лечь	v	*
+imperative	1	поезжай	поехать	v	*
+imperative	1	будь	быть	v	*
+imperative	1	иди	идти	v	*
+imperative	1	возьми	взять	v	*
+imperative	1	садись	садиться	v	*
+imperative	1	вернитесь	вернуться	v	*
+imperative	1	помоги	помочь	v	*
+participle	1	читающий	читать	v	*
+participle	1	читающего	читать	v	*
+participle	1	читавший	читать	v	*
+participle	1	читаемый	читать	v	*
+participle	1	рисуемый	рисовать	v	*
+participle	1	любимый	любить	v	*
+participle	1	ведомый	вести	v	*
+participle	1	пишущий	писать	v	*
+participle	1	говорящая	говорить	v	*
+participle	1	учащегося	учиться	v	*
+participle	1	сделанный	сделать	v	*
+participle	1	сделана	сделать	v	*
+participle	1	потерянного	потерять	v	*
+participle	1	построенный	построить	v	*
+participle	1	решённый	решить	v	*
+participle	1	рождённого	родить	v	*
+participle	1	брошенный	бросить	v	*
+participle	1	приглашённых	пригласить	v	*
+participle	1	купленный	купить	v	*
+participle	1	поставленный	поставить	v	*
+participle	1	удивлённый	удивить	v	*
+participle	1	принесённый	принести	v	*
+participle	1	найденный	найти	v	*
+participle	1	открытый	открыть	v	*
+participle	1	убитый	убить	v	*
+participle	1	взятый	взять	v	*
+participle	1	начатый	начать	v	*
+participle	1	запертый	запереть	v	*
+participle	1	пришедший	прийти	v	*
+participle	1	ведший	вести	v	*
+participle	1	мёртвых	мёртвый	adj	*
+adverbial-participle	1	читая	читать	v	*
+adverbial-participle	1	говоря	говорить	v	*
+adverbial-participle	1	крича	кричать	v	*
+adverbial-participle	1	стоя	стоять	v	*
+adverbial-participle	1	плача	плакать	v	*
+adverbial-participle	1	рисуя	рисовать	v	*
+adverbial-participle	1	неся	нести	v	*
+adverbial-participle	1	придя	прийти	v	*
+adverbial-participle	1	будучи	быть	v	*
+adverbial-participle	1	прочитав	прочитать	v	*
+adverbial-participle	1	прочитавши	прочитать	v	*
+adverbial-participle	1	вернувшись	вернуться	v	*
+adverbial-participle	1	улыбаясь	улыбаться	v	*
+adverbial-participle	1	привыкши	привыкнуть	v	*
+adverbial-participle	1	съев	съесть	v	*
+pronoun	1	меня	я	pron	*
+pronoun	1	мне	я	pron	*
+pronoun	1	тобой	ты	pron	*
+pronoun	1	него	он	pron	*
+pronoun	1	ней	она	pron	*
+pronoun	1	ними	они	pron	*
+pronoun	1	себе	себя	pron	*
+pronoun	1	кого	кто	pron	*
+pronoun	1	чем	что	pron	*
+pronoun	1	кому-нибудь	кто-нибудь	pron	*
+pronoun	1	чего-то	что-то	pron	*
+pronoun	1	никого	никто	pron	*
+pronoun	1	этого	этот	pron	*
+pronoun	1	тех	тот	pron	*
+pronoun	1	всех	весь	pron	*
+pronoun	1	всё	весь	pron	*
+pronoun	1	моего	мой	pron	*
+pronoun	1	нашей	наш	pron	*
+pronoun	1	чьих	чей	pron	*
+pronoun	1	самого	сам	pron	*
+numeral	1	одного	один	num	*
+numeral	1	двух	два	num	*
+numeral	1	две	два	num	*
+numeral	1	трём	три	num	*
+numeral	1	пяти	пять	num	*
+numeral	1	пятью	пять	num	*
+numeral	1	восьми	восемь	num	*
+numeral	1	сорока	сорок	num	*
+numeral	1	ста	сто	num	*
+numeral	1	пятидесяти	пятьдесят	num	*
+numeral	1	двухсот	двести	num	*
+numeral	1	пятистах	пятьсот	num	*
+numeral	1	нескольких	несколько	num	*
+stress	1	кни́ги	книга	n	*
+stress	1	чита́ла	читать	v	*
+stress	1	гото̀вый	готовый	adj	*
+capital	1	Книги	книга	n	*
+capital	1	ЧИТАЛА	читать	v	*
+capital	1	Москвы	Москва	name	*
+capital	1	Иванов	Иван	name	*
+capital	1	Книг	книга	n	*
+old-spelling	1	столъ	стол	n	*
+old-spelling	1	мѣста	место	n	*
+old-spelling	1	Россіи	Россия	name	*
+coverage	1	месяца	месяц	n	*
+coverage	1	гения	гений	n	*
+coverage	1	гении	гений	n	*
+coverage	1	воробья	воробей	n	*
+coverage	1	животному	животное	n	*
+coverage	1	животном	животное	n	*
+coverage	1	красивою	красивый	adj	*
+coverage	1	ему	он	pron	*
+coverage	1	нему	он	pron	*
+coverage	1	этому	этот	pron	*
+coverage	1	ним	он	pron	*
+coverage	1	этим	этот	pron	*
+coverage	1	всем	весь	pron	*
+coverage	1	нём	он	pron	*
+coverage	1	нем	он	pron	*
+coverage	1	его	оно	pron	*
+coverage	1	ему	оно	pron	*
+coverage	1	им	оно	pron	*
+coverage	1	нём	оно	pron	*
+coverage	1	эта	этот	pron	*
+coverage	1	её	она	pron	*
+coverage	1	ее	она	pron	*
+coverage	1	ей	она	pron	*
+coverage	1	эту	этот	pron	*
+coverage	1	ею	она	pron	*
+coverage	1	эти	этот	pron	*
+coverage	1	их	они	pron	*
+coverage	1	им	они	pron	*
+coverage	1	одному	один	num	*
+coverage	1	одним	один	num	*
+coverage	1	одном	один	num	*
+coverage	1	одно	один	num	*
+coverage	1	одна	один	num	*
+coverage	1	одной	один	num	*
+coverage	1	одну	один	num	*
+coverage	1	одни	один	num	*
+homograph	1	тем	тема	n	*
+homograph	1	уже	уж	n	*
+homograph	1	для	длить	v	*
+homograph	1	весь	весить	v	*
+homograph	1	три	тереть	v	*
+homograph	1	дело	деть	v	*
+negatives	0	сила	сить	*	*
+negatives	0	тело	теть	*	*
+negatives	0	мало	мать	*	*
+negatives	0	он	она	*	*
+negatives	0	он	оно	*	*
+negatives	0	ты	т	n	*
+negatives	0	мы	мыть	*	*
+negatives	0	тем	есть	*	*
+negatives	0	систем	система	*	noun-gen.sg+nom.pl
+negatives	0	систем	есть	*	*
+negatives	0	вся	весь	n	*
+negatives	0	моих	мыть	*	*
+negatives	0	дома	домой	*	*
+negatives	0	пока	покой	*	*
+negatives	0	спать	спасть	*	*
+negatives	0	душа	душить	*	*
+negatives	0	встреча	встречать	*	*
+negatives	0	самом	сом	*	*
+negatives	0	тех	тот	n	*
+negatives	0	дом на	домна	*	*
+negatives	0	дом на	дом	n	noun-gen.pl
+negatives	0	почёл	почести	*	*
+negatives	0	прочёл	прочести	*	*
+negatives	0	Итак	Итака	*	*
+negatives	0	Вас	Васи	*	*
+negatives	0	Наше	Нахой	*	*
+negatives	0	Милая	Милой	*	*
+negatives	0	Никого	Никой	*	*
+guard	0	я	й	*	*
+guard	0	и я	и й	*	*
+guard	0	я	ь	*	*
+guard	0	она	оне	*	*
+guard	0	и та	и то	*	*
+guard	0	по имени	по имя	*	*
+guard	0	и	ь	*	*
+guard	0	что ли	что ль	*	*
+guard	0	ну	но	*	*
+guard	0	буду	буде	*	*
+guard	0	на волю	на воле	*	*
+guard	0	на борту	на борт	*	*
+guard	0	не	ня	*	*
+guard	0	самое	Самоа	*	*
+guard	0	не те	не та	*	*
+guard	0	ну	на	*	*
+guard	0	теряю	теряя	*	*
+guard	0	я эту	я эта	*	*
+guard	0	чем	че	*	*
+guard	0	будем	буде	*	*
+guard	0	и том	и то	*	*
+guard	0	ней	ня	*	*
+guard	0	идеей	идёя	*	*
+guard	0	о ней	о ня	*	*
+guard	0	не	но	*	*
+guard	0	мае	Мао	*	*
+guard	0	а те	а то	*	*
+guard	0	у марии	у марий	*	*
+guard	0	были	было	*	*
+guard	0	в и	в й	*	*
+guard	0	было	былое	*	*
+guard	0	всё ж	всё же	*	*
+guard	0	вам	во	*	*
+guard	0	местам	месть	*	*
+guard	0	не там	не то	*	*
+guard	0	вами	во	*	*
+guard	0	местами	месть	*	*
+guard	0	я вами	я вы	*	*
+guard	0	бах	бы	*	*
+guard	0	местах	месть	*	*
+guard	0	на улицах	на улице	*	*
+guard	0	дл	дол	*	*
+guard	0	в парк	в парок	*	*
+guard	0	чего	чий	*	*
+guard	0	большого	больший	*	*
+guard	0	я чего	я чий	*	*
+guard	0	кому	кой	*	*
+guard	0	большому	больший	*	*
+guard	0	никому	Никой	*	*
+guard	0	так называемому	так называемой	*	*
+guard	0	ким	кой	*	*
+guard	0	самым	сам	*	*
+guard	0	милым	Милой	*	*
+guard	0	в дым	в дый	*	*
+guard	0	чем	чий	*	*
+guard	0	большом	больший	*	*
+guard	0	ханом	Ханой	*	*
+guard	0	я чем	я чий	*	*
+guard	0	но	н	*	*
+guard	0	просто	прост	*	*
+guard	0	я во	я в	*	*
+guard	0	кое	кий	*	*
+guard	0	большое	больший	*	*
+guard	0	единственное	Ёдинствённой	*	*
+guard	0	ё моё	е мый	*	*
+guard	0	кого	кое	*	*
+guard	0	большого	большое	*	*
+guard	0	что такого	что такое	*	*
+guard	0	кому	кое	*	*
+guard	0	большому	большое	*	*
+guard	0	так называемому	так называемое	*	*
+guard	0	ком	кое	*	*
+guard	0	большом	большое	*	*
+guard	0	я том	я тое	*	*
+guard	0	чая	чий	*	*
+guard	0	юлая	Юлий	*	*
+guard	0	уж чья	уж чий	*	*
+guard	0	свой	свая	*	*
+guard	0	такой	так	*	*
+guard	0	с той	с тый	*	*
+guard	0	чую	чий	*	*
+guard	0	чувствую	чувствий	*	*
+guard	0	вселенную	Вселенной	*	*
+guard	0	я пью	я пий	*	*
+guard	0	свою	свая	*	*
+guard	0	змею	змий	*	*
+guard	0	пеленою	Пёлёной	*	*
+guard	0	в бою	в бый	*	*
+guard	0	злые	злое	*	*
+guard	0	занятие	занятой	*	*
+guard	0	милые	Милой	*	*
+guard	0	что такие	что такое	*	*
+guard	0	оных	он	*	*
+guard	0	самых	сам	*	*
+guard	0	невинных	Невинной	*	*
+guard	0	у них	у ний	*	*
+guard	0	ким	кое	*	*
+guard	0	кривим	кривая	*	*
+guard	0	в дым	в дое	*	*
+guard	0	иными	иное	*	*
+guard	0	самыми	сам	*	*
+guard	0	милыми	Милой	*	*
+guard	0	с ними	с ний	*	*
+guard	0	к	кий	*	*
+guard	0	рад	радий	*	*
+guard	0	сам	самый	*	*
+guard	0	я с	я сый	*	*
+guard	0	ка	кий	*	*
+guard	0	рада	радий	*	*
+guard	0	я на	я ный	*	*
+guard	0	ко	кий	*	*
+guard	0	вино	винный	*	*
+guard	0	я по	я пый	*	*
+guard	0	ки	кий	*	*
+guard	0	ради	радий	*	*
+guard	0	я бы	я бый	*	*
+guard	0	еще	едкий	*	*
+guard	0	змей	змий	*	*
+guard	0	я уже	я узкий	*	*
+guard	0	пока	ка	*	*
+guard	0	пот в	т в	*	*
+guard	0	милейший	Милой	*	*
+guard	0	он величайший	он вёликий	*	*
+guard	0	даю	дать	*	*
+guard	0	чем	честь	*	*
+guard	0	я эту	я эсти	*	*
+guard	0	лишь	лить	*	*
+guard	0	видишь	видать	*	*
+guard	0	ты лишь	ты лить	*	*
+guard	0	тешь	тесть	*	*
+guard	0	счет	стать	*	*
+guard	0	хватит	хватать	*	*
+guard	0	не курит	не курить	*	*
+guard	0	чем	тать	*	*
+guard	0	каким	какать	*	*
+guard	0	я им	я ить	*	*
+guard	0	счете	стать	*	*
+guard	0	ведите	весть	*	*
+guard	0	не спите	нё спать	*	*
+guard	0	дите	деть	*	*
+guard	0	видите	видать	*	*
+guard	0	не курите	не курить	*	*
+guard	0	дают	дать	*	*
+guard	0	брат	брить	*	*
+guard	0	я тут	я сти	*	*
+guard	0	п	пнуть	*	*
+guard	0	так сказал	так сказать	*	*
+guard	0	тела	тесть	*	*
+guard	0	так сказала	так сказать	*	*
+guard	0	тело	тесть	*	*
+guard	0	должно было	должно быть	*	*
+guard	0	пули	путь	*	*
+guard	0	вели	весть	*	*
+guard	0	так сказали	так сказать	*	*
+guard	0	ли	лить	*	*
+guard	0	пути	путать	*	*
+guard	0	не суй	не суть	*	*
+guard	0	пейте	петь	*	*
+guard	0	давайте	даваить	*	*
+guard	0	о дайте	о даять	*	*
+guard	0	сущий	сти	*	*
+guard	0	следующий	слёдевать	*	*
+guard	0	не любящий	нё любить	*	*
+guard	0	шедший	йти	*	*
+guard	0	хороший	хоронуть	*	*
+guard	0	мой младший	мой мласти	*	*
+guard	0	метимый	метать	*	*
+guard	0	он знакомый	он значь	*	*
+guard	0	пятый	пять	*	*
+guard	0	в десятый	в дёсять	*	*
+guard	0	мая	мать	*	*
+guard	0	куда	кудить	*	*
+guard	0	будет для	будет длить	*	*
+guard	0	гав	гать	*	*
+guard	0	лев	лесть	*	*
+guard	0	а исав	а исать	*	*
+guard	0	она	он	*	noun-gen.sg
+guard	0	ии	ий	*	noun-prp.sg+nom.pl
+guard	0	ним	нить	*	verb-ptcp.pres.pass|adj-short.m
+guard	0	мои	моь	n	*
+guard	0	ну	н	n	*
+guard	0	шоу	шо	n	*
+guard	0	бейший	бой	adj	*
+guard	0	боейший	боый	adj	*
+guard	0	мени	мя	*	*
+guard	0	ька	ёк	*	*
+guard	0	о съешь	о съесть	*	*
+guard	0	по-тому	тый	*	*
+guard	0	по-а новому	а новый	*	*
+given-up	0	тел	тло	*	*
+guard	0	Лет	Лета	*	*
+guard	0	сам	с	n	*
+given-up	0	мер	мереть	*	*
+past	1	дал	дать	v	*
+past	1	пил	пить	v	*
+past	1	жил	жить	v	*
+past	1	мыл	мыть	v	*
+consonant-change	1	вожу	возить	v	*
+given-up	0	спал	спасть	*	*
+given-up	0	минут	минуть	*	verb-pres.3pl
+given-up	0	кучу	кутить	*	*
+given-up	0	почту	почесть	*	*
+given-up	0	танцует	танцовать	*	*
+given-up	0	коробку	коробок	*	*
+past	1	спала	спать	v	*
+present	1	мигнут	мигнуть	v	*
+present	1	прочту	прочесть	v	*
+trace	1	новом	новый	adj	adj-prp.m+prp.n
+trace	1	меня	я	pron	pron-gen.sg+acc.sg
+trace	1	пяти	пять	num	num-gen.pl+dat.pl+prp.pl
+guard	0	пересчете	перестать	*	*
+trace	1	обе	оба	num	num-nom.f+acc.f
+present	1	гнёт	гнуть	v	*
+present	1	мнёт	мять	v	*
+present	1	чует	чуять	v	*
+imperative	1	шепчи	шептать	v	*
+irregular-noun	1	семян	семя	n	*
+plural-only	1	очков	очки	n	*
+present	1	клянусь	клясться	v	*
+present	1	поклянётся	поклясться	v	*
+given-up	0	помни	помять	*	*
+short-adjective	1	прав	правый	adj	adj-short.m
+short-adjective	1	сер	серый	adj	adj-short.m
+given-up	0	почтут	почесть	*	verb-pres.3pl
+given-up	0	почти	почесть	*	verb-imp.2sg
+given-up	0	почтите	почесть	*	verb-imp.2pl
+given-up	0	спавший	спасть	*	verb-ptcp.past.act
+given-up	0	спала	спасть	*	verb-past.f
+given-up	0	спало	спасть	*	verb-past.n
+given-up	0	спали	спасть	*	verb-past.pl
+guard	0	мини	минуть	*	verb-imp.2sg
+guard	0	миньте	минуть	*	verb-imp.2pl
+given-up	0	танцуешь	танцовать	*	*
+given-up	0	танцуем	танцовать	*	*
+given-up	0	танцуй	танцовать	*	*
+given-up	0	танцуйте	танцовать	*	*
+given-up	0	танцующий	танцовать	*	*
+guard	0	пересчешь	перестать	*	*
+guard	0	пересчем	перестать	*	*
+guard	0	пересчь	перестать	*	*
+guard	0	пересчьте	перестать	*	*
+guard	0	пересчущий	перестать	*	*
+guard	0	пересчет	перестать	*	*
+given-up	0	спав	спасть	*	*
+guard	0	нет	нуть	*	*
+guard	0	дает	дать	*	verb-pres.3sg
+guard	0	тете	сти	*	*
+guard	0	ищете	итать	*	*
+given-up	0	танцую	танцовать	*	*
+given-up	0	танцуют	танцовать	*	*
+given-up	0	танцуя	танцовать	*	*
+guard	0	пересчу	перестать	*	*
+guard	0	пересчут	перестать	*	*
+guard	0	пересча	перестать	*	*
+present	1	почтёт	почесть	v	verb-pres.3sg
+past	1	почёл	почесть	v	verb-past.m
+past	1	почла	почесть	v	verb-past.f
+gerund	1	почтя	почесть	v	verb-ger.pres
+present	1	минет	минуть	v	verb-pres.3sg
+present	1	минете	минуть	v	verb-pres.2pl
+adjective	1	любом	любой	adj	adj-prp.m+prp.n
+adjective	1	любую	любой	adj	adj-acc.f
+adjective	1	любых	любой	adj	adj-gen.pl+acc.pl+prp.pl
+noun	1	правила	правило	n	noun-gen.sg+nom.pl
+noun	1	правил	правило	n	noun-gen.pl
+noun	1	берегу	берег	n	noun-dat.sg+loc.sg
+noun	1	началом	начало	n	noun-ins.sg
+noun	1	начале	начало	n	noun-prp.sg
+noun	1	носки	носок	n	noun-nom.pl
+noun	1	десятки	десяток	n	noun-nom.pl
+adverb	1	определенно	определённо	adj	adj-short.n
+numeral	1	двоим	двое	num	num-dat.pl
+guard	0	чертов	черт	n	*
+guard	0	чертов	черты	*	*
+guard	0	вперед	впереди	*	*
+given-up	0	методы	метода	*	*
+given-up	0	постели	постеля	*	*
+given-up	0	карьеру	карьер	n	*
+given-up	0	политику	политик	*	*
+given-up	0	воздухе	воздуха	*	*
+given-up	0	лагере	лагер	n	*
+given-up	0	сучка	сучок	*	*
+given-up	0	убийцу	убиец	*	*
+given-up	0	спорю	спороть	*	*
+given-up	0	дороги	дорогой	*	*
+adjectival noun	1	животных	животное	n	adj-gen.pl+acc.pl+prp.pl
+adjectival noun	1	гостиной	гостиная	n	adj-gen.f+dat.f+ins.f+prp.f
+adjectival noun	1	шампанского	шампанское	n	adj-gen.n
+adjectival noun	1	наличными	наличные	n	adj-ins.pl
+adjectival noun	1	данным	данные	n	adj-dat.pl
+adjectival noun	1	гостиную	гостиная	n	adj-acc.f
+adjectival noun	1	млекопитающих	млекопитающее	n	adj-gen.pl+acc.pl+prp.pl
+present	1	заплачу	заплатить	v	verb-pres.1sg
+noun	1	свечу	свеча	n	noun-acc.sg
+noun	1	воротам	ворота	n	noun-dat.pl
+adjective	1	полового	половой	adj	adj-gen.m+acc.m+gen.n
+yo	1	черт	чёрт	n	noun-nom.sg

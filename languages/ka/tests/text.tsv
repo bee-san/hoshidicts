@@ -1,0 +1,9 @@
+# Written for this pack (GPL-3.0-or-later): what the text processors of language.json make of an input.
+# category	valid	input	variant (valid = 1: among the variants; 0: not among them)
+mtavruli	1	ᲡᲐᲥᲐᲠᲗᲕᲔᲚᲝ	საქართველო
+mtavruli	1	ᲡᲐᲥᲐᲠᲗᲕᲔᲚᲝ	ᲡᲐᲥᲐᲠᲗᲕᲔᲚᲝ
+mtavruli	1	Ქართული	ქართული
+mtavruli	1	სახლი	სახლი
+mtavruli	0	სახლი	ᲡᲐᲮᲚᲘ
+asomtavruli	1	ႠႡႢ	ⴀⴁⴂ
+latin	1	Tbilisi	tbilisi

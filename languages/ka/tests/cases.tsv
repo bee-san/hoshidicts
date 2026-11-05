@@ -1,0 +1,717 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+case	1	სახლმა	სახლი	n	erg
+case	1	დედამ	დედა	n	erg
+case	1	სახლს	სახლი	n	dat
+case	1	დედას	დედა	n	dat
+case	1	სახლის	სახლი	n	gen
+case	1	დედის	დედა	n	gen
+case	1	მეფის	მეფე	n	gen
+case	1	ხის	ხე	n	gen
+case	1	რადიოს	რადიო	n	*
+case	1	სახლით	სახლი	n	ins
+case	1	დედით	დედა	n	ins
+case	1	რადიოთი	რადიო	n	ins
+case	1	კარგად	კარგი	adj	adv
+case	1	მეფედ	მეფე	n	adv
+case	1	მეგობარო	მეგობარი	n	voc
+case	1	დედავ	დედა	n	voc
+case	1	ძმაო	ძმა	n	voc
+syncope	1	წყლის	წყალი	n	gen|sync
+syncope	1	წყლიდან	წყალი	n	ins|sync|pp-dan
+syncope	1	სოფლის	სოფელი	n	gen|sync
+syncope	1	ქვეყნის	ქვეყანა	n	gen|sync
+syncope	1	ფანჯრის	ფანჯარა	n	gen|sync
+syncope	1	ნახევრად	ნახევარი	n	adv|sync
+syncope	1	მინდვრები	მინდორი	n	pl|sync
+plural	1	სახლები	სახლი	n	pl
+plural	1	სახლებმა	სახლი	n	pl|erg
+plural	1	დედებს	დედა	n	pl|dat
+plural	1	მეფეების	მეფე	n	pl|gen
+plural	1	ქვეყნებში	ქვეყანა	n	pl|sync|dat|pp-shi
+plural	1	წყლებით	წყალი	n	pl|sync|ins
+plural	1	ბავშვებო	ბავშვი	n	pl|voc
+plural	1	ქართველთა	ქართველი	n	pl-archaic
+plural	1	დედანი	დედა	n	pl-archaic
+plural	1	ძმანო	ძმა	n	pl-archaic
+postposition	1	სახლში	სახლი	n	dat|pp-shi
+postposition	1	მანქანაში	მანქანა	n	dat|pp-shi
+postposition	1	მაგიდაზე	მაგიდა	n	dat|pp-ze
+postposition	1	მეგობართან	მეგობარი	n	dat|pp-tan
+postposition	1	დედასთან	დედა	n	dat|pp-tan
+postposition	1	თბილისთან	თბილისი	n	dat|pp-tan
+postposition	1	სახლივით	სახლი	n	dat|pp-vit
+postposition	1	დედასავით	დედა	n	dat|pp-vit
+postposition	1	ბავშვისთვის	ბავშვი	n	gen|pp-tvis
+postposition	1	ქვეყნისთვის	ქვეყანა	n	gen|sync|pp-tvis
+postposition	1	სახლისათვის	სახლი	n	gen|ext|pp-tvis
+postposition	1	რადიოსთვის	რადიო	n	*
+postposition	1	ხისგან	ხე	n	gen|pp-gan
+postposition	1	ხისაგან	ხე	n	gen|ext|pp-gan
+postposition	1	ზღვისკენ	ზღვა	n	gen|pp-ken
+postposition	1	ხალხისადმი	ხალხი	n	gen|pp-admi
+postposition	1	ლომისებრ	ლომი	n	gen|pp-ebr
+postposition	1	სკოლიდან	სკოლა	n	ins|pp-dan
+postposition	1	მეტროდან	მეტრო	n	ins|pp-dan
+postposition	1	ცოლითურთ	ცოლი	n	ins|pp-urt
+postposition	1	ქალაქამდე	ქალაქი	n	adv|pp-mde
+postposition	1	ზღვამდე	ზღვა	n	adv|pp-mde
+postposition	1	ქართველთათვის	ქართველი	n	pl-archaic|pp-tvis
+extension	1	სახლსა	სახლი	n	dat|ext
+extension	1	კაცისა	კაცი	n	gen|ext
+extension	1	ხმითა	ხმა	n	ins|ext
+extension	1	ძალადა	ძალა	n	adv|ext
+adjective	1	უდიდესი	დიდი	adj	sup
+adjective	1	უმცირესი	მცირე	adj	sup
+adjective	1	უმაღლესი	მაღალი	adj	sup
+adjective	1	უახლოესი	ახლო	adj	sup
+adjective	1	უდიდესმა	დიდი	adj	sup|erg
+adjective	1	მოთეთრო	თეთრი	adj	moder
+adjective	1	მოწითალო	წითელი	adj	moder
+adjective	1	ახალ	ახალი	adj	attr
+adjective	1	ქართულ	ქართული	adj	attr
+clitic	1	მეც	მე	*	cl-c
+clitic	1	სახლშიც	სახლი	n	dat|pp-shi|cl-c
+clitic	1	ვისაც	ვინ	*	pron|cl-c
+clitic	1	რასაც	რა	*	pron|cl-c
+clitic	1	ახლავე	ახლა	*	cl-ve
+clitic	1	იქვე	იქ	*	cl-ve
+clitic	1	რაღა	რა	*	cl-gha
+clitic	1	კარგია	კარგი	adj	cop
+clitic	1	ქვეყანაა	ქვეყანა	n	cop
+clitic	1	სადაა	სად	*	cop
+clitic	1	სახლშია	სახლი	n	dat|pp-shi|cop
+clitic	1	წლისაა	წელი	n	gen|sync|cop
+clitic	1	კარგიაო	კარგი	adj	cop|quot
+clitic	1	მოვალმეთქი	მოვალ	*	quot-1
+clitic	1	მოვალთქო	მოვალ	*	quot-2
+pronoun	1	ჩემთვის	მე	*	pron
+pronoun	1	შენთან	შენ	*	pron
+pronoun	1	მასთან	ის	*	pron
+pronoun	1	მას	ის	*	pron
+pronoun	1	ამაზე	ეს	*	pron
+pronoun	1	იმას	ის	*	pron
+pronoun	1	მათთვის	ისინი	*	pron
+pronoun	1	რაში	რა	*	pron
+pronoun	1	ვისთან	ვინ	*	pron
+present	1	ვწერ	წერს	v	pres-1
+present	1	ვაკეთებ	აკეთებს	v	pres-2|subj-1
+present	1	აკეთებ	აკეთებს	v	pres-2
+present	1	ვაკეთებთ	აკეთებს	v	*
+present	1	აკეთებენ	აკეთებს	v	pres-3pl
+present	1	ჭრიან	ჭრის	v	pres-3pl
+present	1	ვლაპარაკობ	ლაპარაკობს	v	*
+present	1	ვცხოვრობთ	ცხოვრობს	v	*
+present	1	ვიმალები	იმალება	v	*
+present	1	იმალებიან	იმალება	v	pres-3pl
+present	1	უნდათ	უნდა	v	pres-pl
+imperfect	1	წერდა	წერს	v	impf
+imperfect	1	ვაკეთებდი	აკეთებს	v	*
+imperfect	1	ვმუშაობდით	მუშაობს	v	*
+imperfect	1	მოდიოდა	მოდის	v	impf
+imperfect	1	იმალებოდა	იმალება	v	impf
+subjunctive	1	აკეთებდეს	აკეთებს	v	subj
+future	1	დავწერ	დაწერს	v	pres-1
+future	1	გავაკეთებთ	გააკეთებს	v	*
+future	1	დავწერთ	წერს	v	*
+future	1	ითამაშებს	თამაშობს	v	pv
+future	1	ვიმუშავებ	მუშაობს	v	*
+future	1	დაიმალება	იმალება	v	pv
+aorist	1	დაწერა	დაწერს	v	aor
+aorist	1	დავწერე	დაწერს	v	*
+aorist	1	დაწერეს	დაწერს	v	aor
+aorist	1	გააკეთა	გააკეთებს	v	aor
+aorist	1	გააკეთეთ	აკეთებს	v	*
+aorist	1	გაათბო	გაათბობს	v	aor
+aorist	1	გავჭერი	გაჭრის	v	*
+aorist	1	მოვკალი	მოკლავს	v	*
+aorist	1	მოკლა	მოკლავს	v	aor
+aorist	1	ითამაშა	თამაშობს	v	*
+aorist	1	დაიმალა	დაიმალება	v	aor
+aorist	1	გაწითლდა	გაწითლდება	v	aor
+aorist	1	დაანგრია	დაანგრევს	v	aor
+optative	1	დაწეროს	დაწერს	v	opt
+optative	1	გავაკეთოთ	გააკეთებს	v	*
+optative	1	გაჭრას	გაჭრის	v	opt
+optative	1	დაიმალოს	დაიმალება	v	opt
+perfect	1	დაუწერია	დაწერს	v	perf
+perfect	1	დამიწერია	დაწერს	v	perf|inv-person
+perfect	1	გაუკეთებია	გააკეთებს	v	perf
+perfect	1	დაგვიწერიათ	დაწერს	v	perf|inv-person|inv-pl
+perfect	1	უთამაშია	ითამაშებს	v	perf
+perfect	1	დაეწერა	დაწერს	v	pluperf
+perfect	1	გაეკეთებინა	გააკეთებს	v	pluperf
+perfect	1	გამეკეთებინა	გააკეთებს	v	pluperf|inv-person
+perfect	1	დაეწეროს	დაწერს	v	perf-subj
+perfect	1	დამალულა	დამალული	*	perf-pass
+perfect	1	დავმალულვარ	იმალება	v	*
+person	1	მიყვარს	უყვარს	v	obj-1
+person	1	გიყვარს	უყვარს	v	obj-2
+person	1	გვიყვარს	უყვარს	v	obj-1pl
+person	1	მომწონს	მოსწონს	v	obj-1
+person	1	მჭირდება	სჭირდება	v	obj-1
+person	1	მყავს	ჰყავს	v	obj-1
+person	1	შემიძლია	შეუძლია	v	obj-1
+person	1	მეშინია	ეშინია	v	obj-1
+person	1	მხატავს	ხატავს	v	obj-1
+person	1	გაკეთებს	აკეთებს	v	obj-2
+person	1	მიყვარხარ	უყვარს	v	*
+person	1	ვთხოვ	სთხოვს	v	*
+negative	0	თბილისთან	თბილი	*	*
+negative	0	ვარ	არ	*	*
+negative	0	მზე	ზე	*	*
+negative	0	მას	ას	*	*
+negative	0	მან	ან	*	*
+negative	0	მათ	ათ	*	*
+negative	0	მისი	ისი	*	*
+negative	0	მოდის	დის	*	*
+negative	0	მიდის	დის	*	*
+negative	0	გავიდა	ავიდა	*	*
+negative	0	გაიგო	აიგო	*	*
+negative	0	გამოცდას	ცდას	*	*
+negative	0	გამოცდის	ცდა	*	*
+negative	0	აქვს	ქვს	*	*
+negative	0	ქალაქში	ქალაქა	*	*
+negative	0	თვალი	თალი	*	*
+negative	0	ვისი	ისი	*	*
+negative	0	მესმის	მესამე	*	*
+negative	0	ამისი	აისი	*	*
+pronoun	1	ამისი	ეს	*	pron
+# Constraint rows (sources/constraint-rows.mjs, then checked by hand): each fails when the stem constraint its category names is deleted from that transform (docs/languages.md section 14 step 7). Sources with a Latin letter or a digit are built inputs, not words.
+constraint erg:stemMinLength	0	ამ	ა	*	*
+constraint erg:stemCharacters	0	Qბმა	Qბი	*	*
+constraint erg:stemEndsWith	0	აიმ	აი	*	*
+constraint dat:stemMinLength	0	ას	ა	*	*
+constraint dat:stemCharacters	0	Qბს	Qბი	*	*
+constraint gen:stemMinLength	0	ის	ა	*	*
+constraint gen:stemCharacters	0	როგორ არის	როგორ არა	*	*
+constraint gen:stemEndsWith	0	არს	არ	*	*
+constraint ins:stemMinLength	0	ით	ა	*	*
+constraint ins:stemCharacters	0	Qბით	Qბი	*	*
+constraint ins:stemEndsWith	0	დათ	და	*	*
+constraint adv:stemMinLength	0	ად	ა	*	*
+constraint adv:stemCharacters	0	Qბად	Qბი	*	*
+constraint adv:stemEndsWith	0	აიდო	აი	*	*
+constraint voc:stemMinLength	0	ავ	ა	*	*
+constraint voc:stemCharacters	0	Qბო	Qბი	*	*
+constraint voc:stemEndsWith	0	აივ	აი	*	*
+constraint pl:stemMinLength	0	ები	ა	*	*
+constraint pl:stemCharacters	0	Qბები	Qბი	*	*
+constraint pl:stemEndsWith	0	ეგების	ეგ	*	*
+constraint pl-archaic:stemMinLength	0	ათ	ა	*	*
+constraint pl-archaic:stemCharacters	0	Qბნი	Qბი	*	*
+constraint pl-archaic:stemEndsWith	0	ვანო	ვაი	*	*
+constraint sync:stemCharacters	0	Qბლის	Qბელის	*	*
+constraint sync:stemEndsWith	0	ბად	აბი	*	*
+constraint ext:stemMinLength	0	სა	ს	*	*
+constraint ext:stemCharacters	0	Qბსა	Qბს	*	*
+constraint ext:stemEndsWith	0	გინდა	გინდ	*	*
+constraint pp-shi:stemMinLength	0	ში	ს	*	*
+constraint pp-shi:stemCharacters	0	Qბში	Qბს	*	*
+constraint pp-shi:stemEndsWith	0	რომში	რომ	*	*
+constraint pp-ze:stemMinLength	0	ზე	ს	*	*
+constraint pp-ze:stemCharacters	0	Qბზე	Qბს	*	*
+constraint pp-ze:stemEndsWith	0	ჯერზე	ჯერ	*	*
+constraint pp-tan:stemMinLength	0	სთან	ს	*	*
+constraint pp-tan:stemCharacters	0	Qბთან	Qბს	*	*
+constraint pp-tan:stemEndsWith	0	შეთან	შე	*	*
+constraint pp-vit:stemMinLength	0	თივით	თს	*	*
+constraint pp-vit:stemCharacters	0	Qბივით	Qბს	*	*
+constraint pp-vit:stemEndsWith	0	იყავით	იყ	*	*
+constraint pp-tvis:stemMinLength	0	სთვის	ს	*	*
+constraint pp-tvis:stemCharacters	0	Qბთვის	Qბ	*	*
+constraint pp-gan:stemMinLength	0	სგან	ს	*	*
+constraint pp-gan:stemCharacters	0	Qბგან	Qბ	*	*
+constraint pp-ken:stemMinLength	0	ბკენ	ბ	*	*
+constraint pp-ken:stemCharacters	0	Qბკენ	Qბ	*	*
+constraint pp-admi:stemEndsWith	0	ბეადმი	ბე	*	*
+constraint pp-ebr:stemEndsWith	0	ცეცხლებრ	ცეცხლ	*	*
+constraint pp-dan:stemMinLength	0	ოდან	ოთ	*	*
+constraint pp-dan:stemCharacters	0	Qბიდან	Qბით	*	*
+constraint pp-dan:stemEndsWith	0	აქედან	აქეთ	*	*
+constraint pp-urt:stemEndsWith	0	გშურთ	გშ	*	*
+constraint pp-mde:stemMinLength	0	ამდე	ად	*	*
+constraint pp-mde:stemCharacters	0	Qბამდე	Qბად	*	*
+constraint pp-mde:stemEndsWith	0	აქმდე	აქდ	*	*
+constraint sup:stemMinLength	0	უბესი	ბე	*	*
+constraint sup:stemCharacters	0	უფრო უარესს	ფრო უარი	*	*
+constraint sup:stemEndsWith	0	უარეს	არ	*	*
+constraint moder:stemMinLength	0	მოპოებისა	პი	*	*
+constraint moder:stemCharacters	0	მოვა დრო	ვა დრი	*	*
+constraint moder:stemEndsWith	0	მოამბეო	ამბეი	*	*
+constraint attr:stemMinLength	0	კ	კი	*	*
+constraint attr:stemCharacters	0	ე არ	ე არი	*	*
+constraint attr:stemEndsWith	0	ესე	ესეი	*	*
+constraint cl-c:stemMinLength	0	ოც	ო	*	*
+constraint cl-c:stemCharacters	0	Qბც	Qბ	*	*
+constraint cl-c:stemEndsWith	0	შიაც	ში	*	*
+constraint cl-ve:stemMinLength	0	თვე	თ	*	*
+constraint cl-ve:stemCharacters	0	Qბვე	Qბ	*	*
+constraint cl-ve:stemEndsWith	0	ბეავე	ბე	*	*
+constraint cl-gha:stemMinLength	0	აღა	ა	*	*
+constraint cl-gha:stemCharacters	0	Qბღა	Qბ	*	*
+constraint cop:stemMinLength	0	აა	ა	*	*
+constraint cop:stemCharacters	0	Qბია	Qბი	*	*
+constraint cop:stemEndsWith	0	ღიაა	ღი	*	*
+constraint quot:stemMinLength	0	დო	დ	*	*
+constraint quot:stemCharacters	0	Qბაო	Qბა	*	*
+constraint quot-1:stemMinLength	0	ბმეთქი	ბ	*	*
+constraint quot-1:stemCharacters	0	Qბმეთქი	Qბ	*	*
+constraint quot-2:stemMinLength	0	ბთქო	ბ	*	*
+constraint quot-2:stemCharacters	0	Qბთქო	Qბ	*	*
+constraint pres-2:stemMinLength	0	დი	დის	*	*
+constraint pres-2:stemCharacters	0	Qბი	Qბის	*	*
+constraint pres-2:stemEndsWith	0	ალი	ალა	*	*
+constraint pres-1:stemMinLength	0	გვ	ვს	*	*
+constraint pres-1:stemCharacters	0	მე არ	ე არს	*	*
+constraint pres-1:stemEndsWith	0	იყო	იყოს	*	*
+constraint pres-1:stemStartsWith	0	გაბ	საბს	*	*
+constraint pres-pl:stemMinLength	0	თ	ს	*	*
+constraint pres-pl:stemCharacters	0	Qბთ	Qბს	*	*
+constraint pres-pl:stemEndsWith	0	მოდით	ოდა	*	*
+constraint pres-3pl:stemMinLength	0	ენ	ს	*	*
+constraint pres-3pl:stemCharacters	0	Qბენ	Qბს	*	*
+constraint pres-3pl:stemEndsWith	0	არიან	არა	*	*
+constraint theme-12:stemMinLength	0	გვარ	გს	*	*
+constraint theme-12:stemCharacters	0	Qბვარ	Qბს	*	*
+constraint theme-12:stemEndsWith	0	ვგავართ	ვგას	*	*
+constraint impf:stemMinLength	0	და	ს	*	*
+constraint impf:stemCharacters	0	Qბდი	Qბს	*	*
+constraint impf:stemEndsWith	0	დიოდა	დია	*	*
+constraint subj:stemMinLength	0	დე	ს	*	*
+constraint subj:stemCharacters	0	Qბდე	Qბს	*	*
+constraint subj:stemEndsWith	0	ემოდე	ემა	*	*
+constraint aor:stemMinLength	0	და	დებს	*	*
+constraint aor:stemCharacters	0	Qბე	Qბებს	*	*
+constraint aor:stemEndsWith	0	ვია	ვის	*	*
+constraint aor:stemNotEndsWith	0	განა	ანებებს	*	*
+constraint opt:stemMinLength	0	და	დის	*	*
+constraint opt:stemCharacters	0	Qბო	Qბებს	*	*
+constraint opt:stemEndsWith	0	რაო	რას	*	*
+constraint inv-pl:stemMinLength	0	ათ	ა	*	*
+constraint inv-pl:stemCharacters	0	Qბათ	Qბა	*	*
+constraint inv-pl:stemEndsWith	0	ბაივარ	ბაია	*	*
+constraint inv-person:stemMinLength	0	მეაა	ეა	*	*
+constraint inv-person:stemCharacters	0	მე ეს	ე ეს	*	*
+constraint perf:stemCharacters	0	უცხო სახლია	ცხო სახლს	*	*
+constraint perf:stemEndsWith	0	გირგოლაია	რგოლას	*	*
+constraint pluperf:stemCharacters	0	ეს მაგიდაა	ს მაგიდის	*	*
+constraint pluperf:stemEndsWith	0	ეა	ს	*	*
+constraint perf-subj:stemCharacters	0	ეს მას	ს მის	*	*
+constraint perf-subj:stemEndsWith	0	ეფხიას	ფხიის	*	*
+constraint perf-pass:stemMinLength	0	მილიყვნენ	მილი	*	*
+constraint perf-pass:stemCharacters	0	Qბულა	Qბული	*	*
+constraint ptcp-pass:stemMinLength	0	აგებულების	აგდება	*	*
+constraint ptcp-pass:stemCharacters	0	და ხილი	დაი ხება	*	*
+constraint ptcp-pass:stemEndsWith	0	ადრეულ	აიდრეება	*	*
+constraint subj-1:stemCharacters	0	ვარ დ	არ დ	*	*
+constraint subj-1:stemStartsWith	0	ვადა	სადა	*	*
+constraint obj-1:stemCharacters	0	მე არ	ე არ	*	*
+constraint obj-1:stemStartsWith	0	ამხა	ასხამს	*	*
+constraint obj-2:stemMinLength	0	გა	ა	*	*
+constraint obj-2:stemCharacters	0	გზა არ	ზა არ	*	*
+constraint obj-2:stemStartsWith	0	გაგა	საგა	*	*
+constraint obj-1pl:stemMinLength	0	გავი	ს	*	*
+constraint obj-1pl:stemCharacters	0	გვიან შენ	უან შენს	*	*
+constraint obj-1pl:stemStartsWith	0	გვარი	სარი	*	*
+constraint pv:stemCharacters	0	არა უშავს	რა უშავს	*	*
+constraint pv:stemNotStartsWith	0	აღმა	ღებავს	*	*
+constraint pp-admi:stemMinLength	0	სადმი	ს	*	*
+constraint pp-admi:stemCharacters	0	Qსადმი	Qს	*	*
+constraint pp-ebr:stemMinLength	0	სებრ	ს	*	*
+constraint pp-ebr:stemCharacters	0	Qსებრ	Qს	*	*
+constraint pp-urt:stemMinLength	0	თურთ	თ	*	*
+constraint pp-urt:stemCharacters	0	Qთურთ	Qთ	*	*
+word	1	იყო	არის	v	word
+word	1	თქვეს	ამბობს	v	word
+word	1	მითხარი	ეუბნება	v	word
+word	1	აღარა	აღარ	*	word
+word	1	კიდეც	კიდევ	*	word
+word	1	დავით	დავითი	*	word
+pronoun	1	მის	ის	*	pron
+pronoun	1	მით	ის	*	pron
+pronoun	1	შენა	შენ	*	pron
+pronoun	1	თქვე	თქვენ	*	pron
+pronoun	1	არავის	არავინ	*	pron
+indirect	1	მოეწონა	მოსწონს	v	indirect
+indirect	1	მომეწონა	მოსწონს	v	indirect|inv-person
+indirect	1	მოეწონება	მოსწონს	v	indirect
+noun -ება	1	ბუნების	ბუნება	n	gen
+noun -ება	1	ბუნებით	ბუნება	n	ins
+noun -ება	1	ბუნებად	ბუნება	n	adv
+perfect	1	დაუხატავს	დახატავს	v	perf
+perfect	1	დამიხატავს	დახატავს	v	perf|inv-person
+perfect	1	მოუკლავს	მოკლავს	v	perf
+aorist	1	გათალა	გათლის	v	aor
+aorist	1	გათალეს	გათლის	v	aor
+person	1	გაშენებდათ	აშენებს	v	*
+person	1	დაგწერდათ	წერს	v	*
+negative	0	მოიგო	იგი	*	*
+negative	0	მოსული	სული	*	*
+negative	0	ვაშენებ	ვაშენ	*	*
+syncope pair	1	სოფლის	სოფელი	n	gen|sync
+syncope pair	1	წყლის	წყალი	n	gen|sync
+syncope pair	1	ფოთლის	ფოთოლი	n	gen|sync
+syncope pair	1	ნახევრის	ნახევარი	n	gen|sync
+syncope pair	1	ოქტომბრის	ოქტომბერი	n	gen|sync
+syncope pair	1	გოდრის	გოდორი	n	gen|sync
+syncope pair	1	ნიშნის	ნიშანი	n	gen|sync
+syncope pair	1	ყურძნის	ყურძენი	n	gen|sync
+syncope pair	1	საპნის	საპონი	n	gen|sync
+syncope pair	1	ატმის	ატამი	n	gen|sync
+syncope pair	1	ირმის	ირემი	n	gen|sync
+syncope pair	1	ნიღბის	ნიღაბი	n	gen|sync
+syncope pair	1	ხოხბის	ხოხობი	n	gen|sync
+syncope pair	1	კარვის	კარავი	n	gen|sync
+syncope pair	1	მზითვის	მზითევი	n	gen|sync
+syncope pair	1	ნაბდის	ნაბადი	n	gen|sync
+syncope pair	1	ბეჭდის	ბეჭედი	n	gen|sync
+syncope pair	1	არყის	არაყი	n	gen|sync
+syncope pair	1	სომხის	სომეხი	n	gen|sync
+syncope pair	1	მინდვრის	მინდორი	n	gen|sync
+syncope pair	1	მაწვნის	მაწონი	n	gen|sync
+syncope pair	1	ნიგვზის	ნიგოზი	n	gen|sync
+preverb ა	1	ააშენებს	აშენებს	v	pv
+preverb ა	1	ავხატავ	ახატავს	v	pres-2|subj-1
+preverb ა	1	ამხატავს	ახატავს	v	obj-1
+preverb ამო	1	ამოიღებს	იღებს	v	pv
+preverb ამო	1	ამოვხატავ	ამოხატავს	v	pres-2|subj-1
+preverb ამო	1	ამომხატავს	ამოხატავს	v	obj-1
+preverb აღ	1	აღწერს	წერს	v	pv
+preverb აღ	1	აღვხატავ	აღხატავს	v	pres-2|subj-1
+preverb აღ	1	აღმხატავს	აღხატავს	v	obj-1
+preverb გა	1	გააკეთებს	აკეთებს	v	pv
+preverb გა	1	გავხატავ	გახატავს	v	pres-2|subj-1
+preverb გა	1	გამხატავს	გახატავს	v	obj-1
+preverb გადა	1	გადაწერს	წერს	v	pv
+preverb გადა	1	გადავხატავ	გადახატავს	v	pres-2|subj-1
+preverb გადა	1	გადამხატავს	გადახატავს	v	obj-1
+preverb გადმო	1	გადმოწერს	წერს	v	pv
+preverb გადმო	1	გადმოვხატავ	გადმოხატავს	v	pres-2|subj-1
+preverb გადმო	1	გადმომხატავს	გადმოხატავს	v	obj-1
+preverb გამო	1	გამოწერს	წერს	v	pv
+preverb გამო	1	გამოვხატავ	გამოხატავს	v	pres-2|subj-1
+preverb გამო	1	გამომხატავს	გამოხატავს	v	obj-1
+preverb გარდა	1	გარდაქმნის	ქმნის	v	pv
+preverb გარდა	1	გარდავხატავ	გარდახატავს	v	pres-2|subj-1
+preverb გარდა	1	გარდამხატავს	გარდახატავს	v	obj-1
+preverb და	1	დაწერს	წერს	v	pv
+preverb და	1	დავხატავ	დახატავს	v	pres-2|subj-1
+preverb და	1	დამხატავს	დახატავს	v	obj-1
+preverb მი	1	მიწერს	წერს	v	pv
+preverb მი	1	მივხატავ	მიხატავს	v	pres-2|subj-1
+preverb მი	1	მიმხატავს	მიხატავს	v	obj-1
+preverb მიმო	1	მიმოწერს	წერს	v	pv
+preverb მიმო	1	მიმოვხატავ	მიმოხატავს	v	pres-2|subj-1
+preverb მიმო	1	მიმომხატავს	მიმოხატავს	v	obj-1
+preverb მო	1	მოკლავს	კლავს	v	pv
+preverb მო	1	მოვხატავ	მოხატავს	v	pres-2|subj-1
+preverb მო	1	მომხატავს	მოხატავს	v	obj-1
+preverb შე	1	შეჭამს	ჭამს	v	pv
+preverb შე	1	შევხატავ	შეხატავს	v	pres-2|subj-1
+preverb შე	1	შემხატავს	შეხატავს	v	obj-1
+preverb შემო	1	შემოწერს	წერს	v	pv
+preverb შემო	1	შემოვხატავ	შემოხატავს	v	pres-2|subj-1
+preverb შემო	1	შემომხატავს	შემოხატავს	v	obj-1
+preverb ჩა	1	ჩაწერს	წერს	v	pv
+preverb ჩა	1	ჩავხატავ	ჩახატავს	v	pres-2|subj-1
+preverb ჩა	1	ჩამხატავს	ჩახატავს	v	obj-1
+preverb ჩამო	1	ჩამოწერს	წერს	v	pv
+preverb ჩამო	1	ჩამოვხატავ	ჩამოხატავს	v	pres-2|subj-1
+preverb ჩამო	1	ჩამომხატავს	ჩამოხატავს	v	obj-1
+preverb წა	1	წაიკითხავს	იკითხავს	v	pv
+preverb წა	1	წავხატავ	წახატავს	v	pres-2|subj-1
+preverb წა	1	წამხატავს	წახატავს	v	obj-1
+preverb წამო	1	წამოიღებს	იღებს	v	pv
+preverb წამო	1	წამოვხატავ	წამოხატავს	v	pres-2|subj-1
+preverb წამო	1	წამომხატავს	წამოხატავს	v	obj-1
+preverb წარ	1	წარწერს	წერს	v	pv
+preverb წარ	1	წარვხატავ	წარხატავს	v	pres-2|subj-1
+preverb წარ	1	წარმხატავს	წარხატავს	v	obj-1
+person	1	მომწონს	მოსწონს	v	obj-1
+person	1	გვყავს	ჰყავს	v	obj-1pl
+person	1	ვთხოვ	სთხოვს	v	*
+person	1	გჯერა	სჯერა	v	obj-2
+person	1	გქვია	ჰქვია	v	obj-2
+present	1	ხატავ	ხატავს	v	pres-2
+present	1	აკეთებ	აკეთებს	v	pres-2
+present	1	თამაშობ	თამაშობს	v	pres-2
+present	1	სვამ	სვამს	v	pres-2
+present	1	აძლევ	აძლევს	v	pres-2
+present	1	ითმენ	ითმენს	v	pres-2
+word	1	გახდა	ხდება	v	word
+word	1	დაუწყო	დაიწყებს	v	word
+word	1	ფენის	ფენა	*	word
+word	1	ჭამ	ჭამს	v	word
+aorist	1	დაცალე	დაცლის	v	aor
+aorist	1	გაშალეს	გაშლის	v	aor
+aorist	1	დათვალეთ	დათვლის	v	aor
+aorist	1	გაზარდა	გაზრდის	v	aor
+aorist	1	დაიცადა	დაიცდის	v	aor
+aorist	1	მოიხადა	მოიხდის	v	aor
+aorist	1	გათხარა	გათხრის	v	aor
+aorist	1	ვიცვლი	ვიცვლებს	v	aor
+optative	1	გაზარდოს	გაზრდის	v	opt
+optative	1	დათვალოთ	დათვლის	v	opt
+optative	1	დაიცადონ	დაიცდის	v	opt
+optative	1	გათხაროს	გათხრის	v	opt
+optative	1	გაშალო	გაშლის	v	opt
+optative	1	გაგზავნოს	გაგზავნის	v	opt
+optative	1	უშველოს	უშველის	v	opt
+present	1	გაივლი	გაივლის	v	pres-2
+present	1	შველი	შველის	v	pres-2
+present	1	ცლი	ცლის	v	pres-2
+person	1	ვიცვლი	ცვლის	v	pv|subj-1|aor
+person	1	მივეცი	მიეცი	v	subj-1
+negative	0	ტიალო	ტილის	*	*
+negative	0	მოიხედა	მოიხდის	*	*
+negative	0	ჩამოართვა	ჩამორთვის	*	*
+negative	0	იამა	იმის	*	*
+negative	0	დაწერილი	დაწერილის	*	*
+negative	0	მოსული	მოსულის	*	*
+word	1	ბაზის	ბაზა	*	word
+word	1	კერის	კერა	*	word
+word	1	ფილებით	ფილა	*	word
+word	1	ტყუპებზე	ტყუპი	*	word
+word	1	პირად	პირადი	*	word
+word	1	დგომა	დგას	v	word
+word	1	დგომას	დგას	v	word
+word	1	დაუწყეს	დაიწყებს	v	word
+negative	0	მოეცა	მოსცს	*	*
+negative	0	მოეწ ნა	მოსწ ნს	*	*
+negative	0	მოეწონია	მოსწონის	*	*
+negative	0	გადაუბამს	ბამს	*	*
+two orders	1	ვაკეთებ	აკეთებს	v	subj-1|pres-2
+two orders	1	ვაკეთებ	აკეთებს	v	pres-2|subj-1
+two orders	1	ვთამაშობ	თამაშობს	v	subj-1|pres-2
+two orders	1	ვთამაშობ	თამაშობს	v	pres-2|subj-1
+two orders	1	ვხატავ	ხატავს	v	subj-1|pres-2
+two orders	1	ვხატავ	ხატავს	v	pres-2|subj-1
+two orders	1	ვდგამ	დგამს	v	subj-1|pres-2
+two orders	1	ვდგამ	დგამს	v	pres-2|subj-1
+two orders	1	ვარჩევ	არჩევს	v	subj-1|pres-2
+two orders	1	ვარჩევ	არჩევს	v	pres-2|subj-1
+two orders	1	ვკბენ	კბენს	v	subj-1|pres-2
+two orders	1	ვკბენ	კბენს	v	pres-2|subj-1
+two orders	1	გავყოფ	გაყოფს	v	subj-1|pres-2
+two orders	1	გავყოფ	გაყოფს	v	pres-2|subj-1
+two orders	1	გავჭრი	გაჭრის	v	subj-1|pres-2
+two orders	1	გავჭრი	გაჭრის	v	pres-2|subj-1
+two orders	1	გავშლი	გაშლის	v	subj-1|pres-2
+two orders	1	გავშლი	გაშლის	v	pres-2|subj-1
+two orders	1	ვიმალები	იმალება	v	subj-1|pres-2
+two orders	1	ვიმალები	იმალება	v	pres-2|subj-1
+two orders	1	ვაკეთებთ	აკეთებს	v	subj-1|pres-pl
+two orders	1	ვაკეთებთ	აკეთებს	v	pres-pl|subj-1
+two orders	1	ვიმალებით	იმალება	v	subj-1|pres-pl
+two orders	1	ვიმალებით	იმალება	v	pres-pl|subj-1
+two orders	1	გინდათ	უნდა	v	obj-2|pres-pl
+two orders	1	გინდათ	უნდა	v	pres-pl|obj-2
+two orders	1	მხატავენ	ხატავს	v	obj-1|pres-3pl
+two orders	1	მხატავენ	ხატავს	v	pres-3pl|obj-1
+two orders	1	გვჭრიან	ჭრის	v	obj-1pl|pres-3pl
+two orders	1	გვჭრიან	ჭრის	v	pres-3pl|obj-1pl
+two orders	1	გვეხმარებიან	ეხმარება	v	obj-1pl|pres-3pl
+two orders	1	გვეხმარებიან	ეხმარება	v	pres-3pl|obj-1pl
+two orders	1	მოვდივარ	მოდის	v	subj-1|theme-12
+two orders	1	მოვდივარ	მოდის	v	theme-12|subj-1
+two orders	1	მიყვარხარ	უყვარს	v	obj-1|theme-12
+two orders	1	მიყვარხარ	უყვარს	v	theme-12|obj-1
+two orders	1	მოვდივართ	მოდის	v	subj-1|theme-12
+two orders	1	მოვდივართ	მოდის	v	theme-12|subj-1
+two orders	1	მიყვარხართ	უყვარს	v	obj-1|theme-12
+two orders	1	მიყვარხართ	უყვარს	v	theme-12|obj-1
+perfect	1	დამალულვარ	დამალული	*	perf-pass
+perfect	1	გაზრდილვარ	გაზრდილი	*	perf-pass
+perfect	1	დამალულხარ	დამალული	*	perf-pass
+perfect	1	გაზრდილხარ	გაზრდილი	*	perf-pass
+perfect	1	დამალულა	დამალული	*	perf-pass
+perfect	1	გაზრდილა	გაზრდილი	*	perf-pass
+perfect	1	დამალულვართ	დამალული	*	perf-pass
+perfect	1	გაზრდილვართ	გაზრდილი	*	perf-pass
+perfect	1	დამალულხართ	დამალული	*	perf-pass
+perfect	1	გაზრდილხართ	გაზრდილი	*	perf-pass
+perfect	1	დამალულან	დამალული	*	perf-pass
+perfect	1	გაზრდილან	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყავი	დამალული	*	perf-pass
+perfect	1	გაზრდილიყავი	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყო	დამალული	*	perf-pass
+perfect	1	გაზრდილიყო	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყავით	დამალული	*	perf-pass
+perfect	1	გაზრდილიყავით	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყვნენ	დამალული	*	perf-pass
+perfect	1	გაზრდილიყვნენ	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყოს	დამალული	*	perf-pass
+perfect	1	გაზრდილიყოს	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყოთ	დამალული	*	perf-pass
+perfect	1	გაზრდილიყოთ	გაზრდილი	*	perf-pass
+perfect	1	დამალულიყონ	დამალული	*	perf-pass
+perfect	1	გაზრდილიყონ	გაზრდილი	*	perf-pass
+person	1	ვთხოვე	სთხოვს	v	subj-1|aor
+person	1	ვკითხე	ჰკითხავს	v	subj-1|aor
+perfect	1	გაუტეხივარ	გატეხავს	v	perf|inv-pl
+perfect	1	გაეთბოთ	გაათბობს	v	pluperf|inv-pl
+case	1	სამშობლოსი	სამშობლო	n	gen
+plural	1	დედათ	დედა	n	pl-archaic
+case	1	მეფედა	მეფე	n	adv|ext
+postposition	1	მასში	ის	*	pron
+postposition	1	მასზე	ის	*	pron
+clitic	1	ამავე	ეს	*	pron|cl-ve
+copula	1	ადრეა	ადრე	*	cop
+copula	1	ბოლოა	ბოლო	*	cop
+copula	1	კენგურუა	კენგურუ	*	cop
+negative	0	დაიმალა	დაიმალებება	*	*
+pronoun	1	შენად	შენ	*	pron
+pronoun	1	ჩვენად	ჩვენ	*	pron
+pronoun	1	თქვენად	თქვენ	*	pron
+word	1	მოიცა	მოიცდის	v	word
+word	1	თავის	თავისი	*	word
+word	1	მითხარ	ეუბნება	v	word
+word	1	უთხარი	ეუბნება	v	word
+word	1	ვეღარა	ვეღარ	*	word
+pronoun	1	თქვენა	თქვენ	*	pron
+negative	0	გაღმა	აღებს	*	*
+negative	0	გაღმა	აღება	*	*
+negative	0	მოსული	სულებს	*	*
+negative	0	შესული	სულებს	*	*
+negative	0	დაწერილი	დაწერებს	*	*
+word	1	თქვი	ამბობს	v	word
+word	1	თქვით	ამბობს	v	word
+word	1	უთხარით	ეუბნება	v	word
+word	1	მითხარით	ეუბნება	v	word
+word	1	გვითხარი	ეუბნება	v	word
+word	1	გვითხარით	ეუბნება	v	word
+word	1	უთხრეს	ეუბნება	v	word
+two orders	1	ვაკეთებდი	აკეთებს	v	subj-1|impf
+two orders	1	ვაკეთებდი	აკეთებს	v	impf|subj-1
+two orders	1	ვხატავდით	ხატავს	v	subj-1|impf
+two orders	1	ვხატავდით	ხატავს	v	impf|subj-1
+two orders	1	გიყვარდა	უყვარს	v	obj-2|impf
+two orders	1	გიყვარდა	უყვარს	v	impf|obj-2
+two orders	1	დავწერე	დაწერს	v	subj-1|aor
+two orders	1	დავწერე	დაწერს	v	aor|subj-1
+two orders	1	გავაკეთეთ	გააკეთებს	v	subj-1|aor
+two orders	1	გავაკეთეთ	გააკეთებს	v	aor|subj-1
+two orders	1	დამიძახა	დაუძახებს	v	obj-1|aor
+two orders	1	დამიძახა	დაუძახებს	v	aor|obj-1
+one order	1	ვაკეთებდე	აკეთებს	v	subj-1|subj
+one order	1	დავწერო	დაწერს	v	subj-1|opt
+negative	0	გათავებული	თავდების	*	*
+negative	0	გეტყოდა	ეტყობა	*	*
+negative	0	მომაწოდე	აწობს	*	*
+perfect	1	შეუნახავს	შეინახავს	v	perf
+perfect	1	დაუნახავს	დაინახავს	v	perf
+pronoun	1	ჩემით	მე	*	pron
+pronoun	1	ჩემად	მე	*	pron
+pronoun	1	ჩვენით	ჩვენ	*	pron
+pronoun	1	თქვენით	თქვენ	*	pron
+pronoun	1	იგინი	იგი	*	pron
+pronoun	1	მათით	ის	*	pron
+pronoun	1	იმათით	ის	*	pron
+pronoun	1	იმათად	ის	*	pron
+word	1	დანიშვნა	დანიშნავს	v	word
+word	1	დანიშვნის	დანიშნავს	v	word
+word	1	კვლას	კლავს	v	word
+constraint	0	ამოდი	მოდის	*	*
+negative	0	იყო	არი	*	*
+negative	0	დაუწყო	დაიწყები	*	*
+pronoun	1	იმათი	მათი	*	pron
+word	1	სამხრეთ	სამხრეთი	*	word
+word	1	ჩრდილო	ჩრდილოეთი	*	word
+word	1	იანი	-იანი	*	word
+word	1	მდე	-მდე	*	word
+word	1	იან	-იანი	*	word
+word	1	ში	-ში	*	word
+word	1	ით	-ით	*	word
+word	1	დან	-დან	*	word
+word	1	აღწერით	აღწერს	v	word
+word	1	გაუგია	იგებს	v	word
+word	1	ფენები	ფენა	*	word
+word	1	ფენების	ფენა	*	word
+word	1	ფენებში	ფენა	*	word
+word	1	ფენით	ფენა	*	word
+word	1	ფენებს	ფენა	*	word
+word	1	ფენად	ფენა	*	word
+word	1	ფენიდან	ფენა	*	word
+word	1	ფენებად	ფენა	*	word
+word	1	ფენისგან	ფენა	*	word
+word	1	ფენებიდან	ფენა	*	word
+word	1	ფენებით	ფენა	*	word
+word	1	ფენებზე	ფენა	*	word
+word	1	ფენისთვის	ფენა	*	word
+word	1	ფენისა	ფენა	*	word
+word	1	ბაზები	ბაზა	*	word
+word	1	ბაზების	ბაზა	*	word
+word	1	ბაზად	ბაზა	*	word
+word	1	ბაზიდან	ბაზა	*	word
+word	1	ბაზებზე	ბაზა	*	word
+word	1	ბაზებს	ბაზა	*	word
+word	1	ბაზებში	ბაზა	*	word
+word	1	ბაზით	ბაზა	*	word
+word	1	ბაზებთან	ბაზა	*	word
+word	1	ბაზისა	ბაზა	*	word
+word	1	ფილების	ფილა	*	word
+word	1	ფილები	ფილა	*	word
+word	1	ფილის	ფილა	*	word
+word	1	ფილით	ფილა	*	word
+word	1	ფილებს	ფილა	*	word
+word	1	ფილებზე	ფილა	*	word
+word	1	კერები	კერა	*	word
+word	1	კერად	კერა	*	word
+word	1	კერების	კერა	*	word
+word	1	კერებში	კერა	*	word
+word	1	კერებს	კერა	*	word
+word	1	კერიდან	კერა	*	word
+word	1	ფლორის	ფლორა	*	word
+word	1	ფლორისა	ფლორა	*	word
+word	1	ფლორითა	ფლორა	*	word
+word	1	ფლორით	ფლორა	*	word
+word	1	დინებები	დინება	*	word
+word	1	დინებების	დინება	*	word
+word	1	დინებებს	დინება	*	word
+word	1	დინამიკის	დინამიკა	*	word
+word	1	დინამიკით	დინამიკა	*	word
+word	1	დინამიკისა	დინამიკა	*	word
+word	1	სატირის	სატირა	*	word
+word	1	სატირისა	სატირა	*	word
+word	1	ჭები	ჭა	*	word
+word	1	ჭალები	ჭალა	*	word
+word	1	მალები	მალა	*	word
+word	1	მალების	მალა	*	word
+word	1	ტონამდე	ტონა	*	word
+perfect	1	მოუტანია	მოიტანს	v	perf
+perfect	1	შეუტანია	შეიტანს	v	perf
+pluperfect	1	დაელაპარაკა	დაილაპარაკებს	v	pluperf
+negative	0	გამოსულ	ამოსულს	*	*
+negative	0	გადაწყვეტილი	გადაწყვეტილება	*	*
+negative	0	ჩაგიდეს	ჩაის	*	*
+pronoun	1	იმასა	ის	*	pron
+pronoun	1	ამასა	ეს	*	pron
+pronoun	1	მაგასა	ეგ	*	pron
+constraint	0	უცნობია	იცნობს	*	*
+perfect	1	უნახავს	ნახავს	v	perf
+word	1	მოუგია	იგებს	v	word
+word	1	ერთ	ერთი	n	word
+word	1	სამ	სამი	n	word
+word	1	რიგით	რიგი	*	word
+word	1	რაოდენობით	რაოდენობა	*	word
+word	1	ვანის	ვანი	*	word
+word	1	ბატონებთან	ბატონი	*	word
+word	1	ელი	ელის	v	word
+word	1	დაწვა	წევს	v	word
+word	1	უმუშავია	მუშაობს	v	word
+word	1	მიმუშავია	მუშაობს	v	word
+word	1	უმუშავიათ	მუშაობს	v	word
+word	1	გიმუშავია	მუშაობს	v	word
+word	1	გვიმუშავია	მუშაობს	v	word
+word	1	არას	არა	*	word
+word	1	შინა	შინ	*	word
+word	1	დანიშვნას	დანიშნავს	v	word
+word	1	დანიშვნასა	დანიშნავს	v	word
+word	1	დანიშვნისა	დანიშნავს	v	word
+word	1	დანიშვნაზე	დანიშნავს	v	word
+word	1	დანიშვნაში	დანიშნავს	v	word
+word	1	ფენებსა	ფენა	*	word
+word	1	ფენებისა	ფენა	*	word
+word	1	დინებებზე	დინება	*	word
+word	1	მალებს	მალა	*	word
