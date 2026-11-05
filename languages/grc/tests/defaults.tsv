@@ -1,0 +1,13 @@
+# options: default
+# Hand-written: the Doric transform and the capital-letter processor are off here.
+# category	valid	source	term	rule	reasons
+default	1	δίκης	δίκη	n	*
+default	1	Ἀθηναίων	Ἀθηναῖος	*	*
+default	1	ψυχῆς	ψυχή	n	*
+default	0	δίκαν	δίκη	n	*
+default	0	ἀθηναίων	Ἀθηναῖος	*	*
+default	0	ἔλαβε	ἔλαψ	*	*
+# Yomitan's datives without the iota subscript, which the final set leaves out (README.md, "Rule provenance"): with the defaults
+# nothing reads them; with every option on the dual does (tests/yomitan.tsv).
+dative	0	ανθρωπω	ανθρωπος	*	*
+dative	0	δωρω	δωρον	*	*

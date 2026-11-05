@@ -1,0 +1,5 @@
+# Exceptions that are wholeWord rules: measure.py wholeword (README.md, Measurements 6).
+θεῷ
+πλέον
+σταθμῷ
+νηός
