@@ -417,11 +417,20 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
                     std::vector<Variant>& variants, size_t& count, std::vector<Variant>& next_items,
                     bool* limit_reached, SearchBudget* budget) {
   // With a budget (section 7.4), each builtin or step list applied costs its
-  // work; once it is spent, a variant is kept as it is, as if the processor's
-  // remaining lists had not changed it.
+  // work, and each variant a processor keeps costs a unit plus a unit per
+  // SearchBounds::work_bytes bytes (4 a code point), for the hashing, copying
+  // and sorting that keep it. Once the budget is spent, a variant is kept as
+  // it is, as if the processor's remaining lists had not changed it, and the
+  // remaining processors do not run: the variants are the result.
   const auto spent = [budget] { return budget != nullptr && budget->spent(); };
   const auto charge_builtin = [budget](const std::u32string& output) {
     if (budget != nullptr) budget->spend(1 + 4 * output.size() / SearchBounds::work_bytes);
+  };
+  const auto charge_kept = [budget, &variants, &count] {
+    if (budget == nullptr) return;
+    size_t units = 0;
+    for (size_t k = 0; k < count; ++k) units += 1 + 4 * variants[k].first.size() / SearchBounds::work_bytes;
+    budget->spend(units);
   };
   static thread_local std::u32string scratch;
   static thread_local std::vector<std::u32string> outputs;
@@ -430,6 +439,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
   // it was given, as if the list had not changed it.
   const size_t max_code_points = step_limit(count == 0 ? 0 : variants[0].first.size());
   for (const auto& processor : processors) {
+    if (spent()) return;
     if (processor.optional && !enabled.contains(processor.id)) {
       continue;
     }
@@ -484,6 +494,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
                 ByText{});
       std::swap(variants, next_items);
       count = next_count;
+      charge_kept();
       continue;
     }
     if (!processor.builtins.empty()) {
@@ -512,6 +523,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
                 ByText{});
       std::swap(variants, next_items);
       count = next.count;
+      charge_kept();
       continue;
     }
     for (size_t vi = 0; vi < count; ++vi) {
@@ -553,6 +565,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
               ByText{});
     std::swap(variants, next_items);
     count = next.count;
+    charge_kept();
   }
 }
 }  // namespace

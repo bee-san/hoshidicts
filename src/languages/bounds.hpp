@@ -19,6 +19,8 @@ namespace hoshidicts::lang {
 //   writes (its output, and each step of its `then` list at 4 bytes a code
 //   point) and one per code point a regular expression reads;
 // - a step list or builtin a processor applies costs the same;
+// - each variant a processor keeps costs a unit, plus one per `work_bytes`
+//   bytes of it (4 a code point);
 // - a text a lookup looks up in its dictionaries costs a unit;
 // - everything else a search or a processor does in proportion to the size of
 //   a text or of a pack (rules skipped by their conditions, trie edges, stem
@@ -38,7 +40,8 @@ struct SearchBounds {
 // SearchBounds::max_work units whatever number of prefixes, processed
 // variants and variant pass readings it searches; a search given none has
 // one of its own. A search that finds the budget spent records its text and
-// nothing more, and processors that find it spent return the texts they have.
+// nothing more, and processors that find it spent stop: the variants they
+// have are the result.
 struct SearchBudget {
   size_t work_left = SearchBounds::max_work;
   size_t ops = 0;  // operations not yet charged, fewer than ops_per_unit

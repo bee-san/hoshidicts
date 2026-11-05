@@ -1246,8 +1246,8 @@ void test_search_bounds() {
       // Its work: 1 for the try, (1024 output bytes + 4 x (16 + 128 + 1024)
       // code points written) / 256 = 22, and 2 + 16 + 128 code points the
       // regular expression read: 169; as a corpus row also 1 for the
-      // decapitalize preprocessor. An optional rule that is off is one
-      // operation, a 64th of a unit.
+      // decapitalize preprocessor and 1 for the variant it keeps. An optional
+      // rule that is off is one operation, a 64th of a unit.
       const auto with_optional = load(
           transforms_json(
               transform(
@@ -1264,7 +1264,7 @@ void test_search_bounds() {
         lang::SearchBudget budget;
         lang::Deinflections list2;
         with_optional->data().transforms->deinflect("as", list2, nullptr, nullptr, &budget);
-        check(source.work == 170 && budget.used() == 169 && list2.size() == 1,
+        check(source.work == 171 && budget.used() == 169 && list2.size() == 1,
               "the work of a multiplying then list: " + std::to_string(source.work) + " and " +
                   std::to_string(budget.used()));
       }
@@ -1356,8 +1356,9 @@ void test_search_bounds() {
   {
     // A lookup's searches need one budget together (lookup_search): with a
     // cache that says the searches of a and ab use 600,000 units each, the
-    // lookup of ab needs 1,200,002 (its two prefixes each cost a unit of
-    // preprocessing), past the budget, though neither search reached a bound.
+    // lookup of ab needs 1,200,004 (its two prefixes each cost 2 units of
+    // preprocessing: the list and the variant kept), past the budget, though
+    // neither search reached a bound.
     const auto pack =
         load(transforms_json(transform(
                  "s", R"({"type":"suffix","inflected":"s","deinflected":"","conditionsIn":[],"conditionsOut":[]})")),
@@ -1369,9 +1370,9 @@ void test_search_bounds() {
       cache["ab"].work = 600000;
       cache["ab"].searches = 1;
       const auto lookup = lang::lookup_search(pack->data(), "ab", 16, lang::TestOptions::All, cache);
-      check(lookup.bound == Bound::Work && lookup.work == 1200002 && lookup.searches == 2 && lookup.steps.empty() &&
+      check(lookup.bound == Bound::Work && lookup.work == 1200004 && lookup.searches == 2 && lookup.steps.empty() &&
                 lang::describe(lookup) ==
-                    "more than 1048576 units of work in one lookup (1200002 counted, in 2 searches)",
+                    "more than 1048576 units of work in one lookup (1200004 counted, in 2 searches)",
             "a lookup that needs more than one budget: " + lang::describe(lookup));
       lang::SearchCache fresh;
       check(lang::lookup_search(pack->data(), "ab", 16, lang::TestOptions::All, fresh).bound == Bound::None,
@@ -1708,8 +1709,9 @@ void test_work_accounting() {
     const std::vector<lang::Processor> processors{doubling};
     lang::SearchBudget budget;
     const auto v = lang::process_text(processors, "abcd", {}, nullptr, &budget);
-    // 1, (4 x 8 written) / 256 = 0, and 4 code points read.
-    check(v.size() == 2 && budget.used() == 5, "a processor's work: " + std::to_string(budget.used()));
+    // 1, (4 x 8 written) / 256 = 0, and 4 code points read; then a unit for
+    // each of the 2 variants kept.
+    check(v.size() == 2 && budget.used() == 7, "a processor's work: " + std::to_string(budget.used()));
     lang::SearchBudget spent;
     spent.work_left = 0;
     const auto w = lang::process_text(processors, "abcd", {}, nullptr, &spent);
@@ -1721,6 +1723,28 @@ void test_work_accounting() {
     const auto x = lang::process_text(replace, "abcd", {}, nullptr, &spent2);
     check(x.size() == 1 && x[0].text == "abcd" && x[0].steps == 0,
           "a spent budget keeps the text with keepInput false");
+    // The builtin paths charge the variants they keep too. Japanese's 8
+    // processors on テスト (the path for at most 32 variants) apply 17
+    // builtins and keep 15 variants, a unit each: 32. An alternatives step
+    // that makes 16 variants of aaaa (1 + 4 x 64 / 256 = 2, and 16 kept),
+    // then Japanese's kana processor (2 builtins on each of the 16, too many
+    // for that path: 32, and 16 kept), cost 66.
+    const auto japanese = hoshidicts::LanguageRegistry::with_builtin();
+    const auto& ja_processors = japanese.find("ja")->data().preprocessors;
+    lang::SearchBudget ja_budget;
+    const auto ja = lang::process_text(ja_processors, "テスト", {}, nullptr, &ja_budget);
+    check(ja.size() == 2 && ja_budget.used() == 32,
+          "Japanese processors charge builtins and kept variants: " + std::to_string(ja_budget.used()));
+    lang::Step fan_out;
+    fan_out.kind = lang::StepKind::Alternatives;
+    fan_out.alternatives = {{U"a", {U"b"}}};
+    lang::Processor fan{"fan", "", true, false, {{fan_out}}};
+    fan.finish();
+    const std::vector<lang::Processor> fan_kana{fan, ja_processors[1]};
+    lang::SearchBudget fan_budget;
+    const auto fanned = lang::process_text(fan_kana, "aaaa", {}, nullptr, &fan_budget);
+    check(ja_processors[1].id == "kana" && fanned.size() == 16 && fan_budget.used() == 66,
+          "builtins on many variants charge the variants kept: " + std::to_string(fan_budget.used()));
   }
   {
     // normalize_text (readingNormalizer, formOfNormalizer) stays within the
@@ -2543,12 +2567,49 @@ void test_lookup_budget() {
     check(simulated.bound != lang::BoundHit::Bound::None && simulated.work > lang::SearchBounds::max_work,
           "lookup_search counts the postprocessors' work: " + std::to_string(simulated.work));
   }
+  // Processors charge each variant they keep by its length, and stop once
+  // the budget is spent (section 7.4; the third audit's pe packs). x48 makes
+  // each a 48, without keeping the input, and alt the alternatives a -> b,
+  // so a x 16 gives 4,096 variants of 768 code points. Each processor after
+  // them has an empty step list: it applies it 4,096 times at a unit and
+  // keeps the 4,096 variants at 1 + 4 x 768 / 256 = 13 units each, so 64 of
+  // them spend the budget on the text alone. Without the charge for the
+  // variants kept they would cost 64 x 4,096 = 262,144 units, and at a unit
+  // a variant twice that. With 60,000 of them a lookup still ends at once,
+  // since those after the budget is spent do not run (each would sort and
+  // hash all the variants again: 17.5 s for 30,000 in the audit).
+  {
+    const auto pe = [&](const std::string& code, int empties) {
+      std::string processors = R"(,{"id":"x48","keepInput":false,"variants":[[{"map":{"a":")" + std::string(48, 'a') +
+                               R"("}}]]},{"id":"alt","variants":[[{"alternatives":{"a":["b"]},"limit":4096}]]})";
+      for (int i = 0; i < empties; ++i) processors += R"(,{"id":"e)" + std::to_string(i) + R"(","variants":[[]]})";
+      std::string pack = language;
+      const std::string decapitalize = R"({"id":"decapitalize","variants":[[{"case":"lower"}]]})";
+      pack.insert(pack.find(decapitalize) + decapitalize.size(), processors);
+      pack.replace(pack.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":")" + code + "\"");
+      check(registry.add(pack, transforms_json(past), &error), "add the " + code + " pack: " + error);
+    };
+    pe("zx", 64);
+    lang::SearchCache cache;
+    const auto whole =
+        lang::lookup_search(registry.find("zx")->data(), std::string(16, 'a'), 0, lang::TestOptions::All, cache);
+    check(whole.bound == lang::BoundHit::Bound::Work && whole.work > lang::SearchBounds::max_work,
+          "processors charge the variants they keep: " + std::to_string(whole.work));
+    pe("zy", 60000);
+    const Lookup pe_lookup(query, registry);
+    LookupOptions options;
+    options.language = "zy";
+    const auto start = std::chrono::steady_clock::now();
+    pe_lookup.lookup(std::string(16, 'a'), 16, 16, options);
+    const double seconds = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
+    check(seconds < 10, "processors stop once the budget is spent: " + std::to_string(seconds) + " s");
+  }
   // Lookup charges a unit for each text it looks up (section 7.4). With -ed
   // and the 2-rule fan-out on a, the prefixes a lookup of walked + a x 17
-  // scans before walked use 944,086 units without that unit and 1,271,744
-  // with it (327,658 forms), so only with it is the budget spent when
-  // walked is searched: walk is then found as the prefix walk, not from
-  // walked. With a x 10 (29,519 units) the budget lasts either way.
+  // scans before walked use about 944,000 units without that unit and about
+  // 1,272,000 with it (327,658 forms), so only with it is the budget spent
+  // when walked is searched: walk is then found as the prefix walk, not from
+  // walked. With a x 10 (about 29,500 units) the budget lasts either way.
   {
     std::string fan_language = language;
     fan_language.replace(fan_language.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":"zm")");
@@ -2571,15 +2632,15 @@ void test_lookup_budget() {
     check(first_of(17) == "walk|walk", "each form looked up is charged: " + first_of(17));
   }
   // lookup_search, as Lookup, charges a unit for each text looked up: a
-  // lookup of walked alone (scan 0) costs 1 for decapitalize, 1 for the -ed
-  // try and 2 for the forms walked and walk.
+  // lookup of walked alone (scan 0) costs 1 for decapitalize and 1 for the
+  // variant it keeps, 1 for the -ed try and 2 for the forms walked and walk.
   {
     std::string language2 = language;
     language2.replace(language2.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":"zl")");
     check(registry.add(language2, transforms_json(past), &error), "add the looked-up forms pack: " + error);
     lang::SearchCache cache;
     const auto one = lang::lookup_search(registry.find("zl")->data(), "walked", 0, lang::TestOptions::All, cache);
-    check(one.work == 1 + 1 + 2, "a lookup's forms are charged: " + std::to_string(one.work));
+    check(one.work == 1 + 1 + 1 + 2, "a lookup's forms are charged: " + std::to_string(one.work));
   }
   std::filesystem::remove_all(root);
 }

@@ -136,8 +136,9 @@ struct EnabledOptions {
 // The variants of section 6.1, sorted by code points. `limit_reached` is set
 // when an input reached max_text_variants. With `budget` (section 7.4), each
 // step list or builtin a processor applies costs a unit of it, plus a unit per
-// SearchBounds::work_bytes bytes it writes and its operations; once it is
-// spent, the processors stop adding variants, so the text and those made
+// SearchBounds::work_bytes bytes it writes and its operations, and each
+// variant a processor keeps costs a unit plus a unit per work_bytes bytes;
+// once it is spent, the processors stop, so the text and the variants made
 // before are what is left.
 std::vector<TextVariant> process_text(std::span<const Processor> processors, std::string_view input,
                                       const EnabledOptions& enabled, bool* limit_reached = nullptr,
