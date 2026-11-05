@@ -22,6 +22,9 @@
 // 5. Every `own` and `both` transform has a passing `valid = 1` row; the
 //    rules no row exercises are printed.
 // 6. README.md has the sections of languages/_template/README.md.
+// 7. The searches lookups of the corpus strings, the host.sample texts and
+//    inputs built from the rules' affixes make stay within the search bounds
+//    (section 7.4), with every option on or with the pack's defaults.
 #include <glaze/glaze.hpp>
 #include <utf8proc.h>
 
@@ -419,6 +422,83 @@ void check_lookup_tsv(const fs::path& tests, const std::shared_ptr<const hoshidi
   fs::remove_all(dir);
 }
 
+// 7. The search bounds (section 7.4), on the searches lookups make: a lookup
+// of every corpus string (all its prefixes), one at every cursor position of
+// the host.sample texts (16 code points) and one of every input built from
+// the rules' affixes (the whole input), with every option on and with the
+// pack's defaults. No search may reach a bound, and no lookup may need more
+// work than one budget. One failure names how many lookups do and shows the
+// first with its chain; the next four are printed.
+void check_search_bounds(const fs::path& tests, const lang::PackData& pack) {
+  if (!pack.transforms) return;
+  const auto strings = corpus_strings(tests, pack);
+  const auto affixes = lang::affix_inputs(pack, strings);
+  // The lookups: (text, scan length, 0 for the whole text only).
+  std::vector<std::pair<std::string, size_t>> lookups;
+  const auto code_points = [](const std::string& text) {
+    std::u32string cps;
+    lang::decode_utf8(text, cps);
+    return cps.size();
+  };
+  for (const auto& text : strings) lookups.emplace_back(text, std::max<size_t>(16, code_points(text)));
+  size_t cursors = 0;
+  for (const auto& text : pack.sample_texts) {
+    for (size_t i = 1; i < text.size(); ++i) {
+      if ((static_cast<unsigned char>(text[i]) & 0xC0) == 0x80) continue;
+      lookups.emplace_back(text.substr(i), 16);
+      ++cursors;
+    }
+  }
+  for (const auto& text : affixes) lookups.emplace_back(text, 0);
+  // With no optional processor, transform or variant pass (every pass is
+  // optional), the pack's defaults are every option on.
+  const bool options =
+      pack.has_optional_processors || pack.transforms->has_optional_transforms || !pack.variant_passes.empty();
+  std::vector<lang::TestOptions> modes = {lang::TestOptions::All};
+  if (options) modes.push_back(lang::TestOptions::Default);
+  std::vector<lang::SearchCache> caches(modes.size());
+  lang::SourceSearch reach;
+  size_t busiest = 0;
+  size_t reached = 0;
+  std::string first;
+  std::vector<std::string> more;
+  for (const auto& [text, scan] : lookups) {
+    for (size_t m = 0; m < modes.size(); ++m) {
+      const lang::SourceSearch search = lang::lookup_search(pack, text, scan, modes[m], caches[m]);
+      reach.depth = std::max(reach.depth, search.depth);
+      reach.growth = std::max(reach.growth, search.growth);
+      reach.results = std::max(reach.results, search.results);
+      busiest = std::max(busiest, search.work);
+      if (search.bound == lang::BoundHit::Bound::None) continue;
+      const std::string where = text + (modes[m] == lang::TestOptions::Default ? " (with the pack's defaults)" : "") +
+                                ": " + lang::describe(search);
+      if (reached++ == 0) {
+        first = where;
+      } else if (more.size() < 4) {
+        more.push_back(where);
+      }
+      break;  // a lookup counts once, whatever its modes
+    }
+  }
+  if (reached > 0) {
+    fail("the deinflection search reached a bound (docs/languages.md 7.4) in " + std::to_string(reached) + " of " +
+         std::to_string(lookups.size()) + " lookups; the first, " + first);
+    for (const auto& m : more) note("also " + m);
+    return;
+  }
+  size_t texts = 0;
+  for (const auto& cache : caches) texts += cache.size();
+  note("search bounds: " + std::to_string(lookups.size()) + " lookups (" + std::to_string(strings.size()) +
+       " of corpus strings and host.sample texts, " + std::to_string(cursors) + " at their cursor positions, " +
+       std::to_string(affixes.size()) + " of inputs built from the rules' affixes; " + std::to_string(texts) +
+       " texts searched) stay within them: the longest chain has " + std::to_string(reach.depth) + " of " +
+       std::to_string(lang::SearchBounds::max_depth) + " rules, the longest output adds " +
+       std::to_string(reach.growth) + " of " + std::to_string(lang::SearchBounds::max_growth) +
+       " code points, the largest search holds " + std::to_string(reach.results) + " of " +
+       std::to_string(lang::SearchBounds::max_results) + " deinflections, the busiest lookup uses " +
+       std::to_string(busiest) + " of " + std::to_string(lang::SearchBounds::max_work) + " units of work");
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -609,6 +689,9 @@ int main(int argc, char** argv) {
       }
     }
   }
+
+  // 7. The search bounds.
+  check_search_bounds(tests, data);
 
   return finish();
 }

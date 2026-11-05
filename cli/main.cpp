@@ -353,23 +353,33 @@ int cmd_deinflect(Context& context, const Arguments& args) {
     }
     out += "{\"input\":" + json_string(input) + ",\"results\":[";
     lang::Deinflections list;
+    // A search a bound cut short (section 7.4) is reported on stderr.
+    lang::BoundHit hit;
+    lang::SourceSearch search;
+    lang::SearchBudget budget;  // the input's searches share one, as a lookup's do
+    size_t work_left = budget.work_left;
     if (pack.transforms) {
-      pack.transforms->deinflect(input, list, &enabled_transforms);
+      pack.transforms->deinflect(input, list, &enabled_transforms, &hit, &budget);
+      lang::add_search(pack, list, 0, hit, work_left - budget.work_left, input, search);
+      work_left = budget.work_left;
     } else {
       list.push_back(lang::Deinflection{input, 0, lang::Deinflection::npos, lang::Deinflection::none, 0});
     }
-    // An enabled variant pass's readings follow, as a corpus row sees them.
+    // An enabled variant pass's readings follow, as a corpus row sees them,
+    // within the input's budget (section 7.4).
     for (const auto* pass : passes) {
-      std::vector<std::string> readings;
-      pass->builtin->variants(input, readings);
-      for (auto& reading : readings) {
+      lang::read_pass(*pass, input, budget, [&](std::string reading) {
         if (pack.transforms) {
-          pack.transforms->deinflect_from_step(std::move(reading), pass->step, list, &enabled_transforms);
+          const size_t begin = list.size();
+          pack.transforms->deinflect_from_step(std::move(reading), pass->step, list, &enabled_transforms, &hit,
+                                               &budget);
+          lang::add_search(pack, list, begin, hit, work_left - budget.work_left, input, search);
+          work_left = budget.work_left;
         } else if (!reading.empty()) {
           list.push_back(lang::Deinflection{std::move(reading), 0, lang::Deinflection::npos,
                                             lang::Deinflection::step_base + pass->step, 1});
         }
-      }
+      });
     }
     for (size_t i = 0; i < list.size(); ++i) {
       const auto& d = list[i];
@@ -392,6 +402,13 @@ int cmd_deinflect(Context& context, const Arguments& args) {
       out += "]}";
     }
     out += "]}\n";
+    if (search.bound != lang::BoundHit::Bound::None) {
+      std::cout << out;
+      out.clear();
+      std::cout.flush();
+      std::cerr << "hoshidicts-cli: deinflect " << pack.code << " " << input
+                << ": the search reached a bound (docs/languages.md 7.4): " << lang::describe(search) << "\n";
+    }
     if (out.size() > (1 << 20)) {
       std::cout << out;
       out.clear();
@@ -649,14 +666,10 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
     std::string found = text;
     RawTerms target = QueryAccess::query_raw(query, text, pins, &target_rows);
     if (pack.form_of_normalizer && target.terms.empty() && target_rows.empty()) {
-      std::u32string in;
-      std::u32string out;
-      if (hoshidicts::lang::decode_utf8(text, in)) {
-        hoshidicts::lang::apply_single(*pack.form_of_normalizer, in, out);
-        if (std::string normalized = hoshidicts::lang::to_utf8(out); !normalized.empty() && normalized != text) {
-          target = QueryAccess::query_raw(query, normalized, pins, &target_rows);
-          found = std::move(normalized);
-        }
+      if (std::string normalized = hoshidicts::lang::normalize_text(*pack.form_of_normalizer, text);
+          !normalized.empty() && normalized != text) {
+        target = QueryAccess::query_raw(query, normalized, pins, &target_rows);
+        found = std::move(normalized);
       }
     }
     if (target.terms.empty()) continue;
@@ -744,7 +757,12 @@ int cmd_eval_language(Context& context, const Arguments& args) {
   size_t first_ranked = 0;
   for (const auto& row : rows) {
     bool limit = false;
-    const auto list = lang::deinflect_source(pack, row.source, &limit, file_options);
+    lang::SourceSearch search;
+    const auto list = lang::deinflect_source(pack, row.source, &limit, file_options, &search);
+    if (search.bound != lang::BoundHit::Bound::None) {
+      std::cerr << "hoshidicts-cli: " << args.positional[1] << ":" << row.line << ": " << row.source
+                << ": the search reached a bound (docs/languages.md 7.4): " << lang::describe(search) << "\n";
+    }
     std::vector<size_t> matching;
     error.clear();
     const bool has = lang::row_matches(pack, row, list, &matching, &error);

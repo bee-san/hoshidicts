@@ -60,6 +60,25 @@ struct VariantPass {
   uint32_t step = 0;  // its trace step
 };
 
+// Reads `text` with `pass` (section 4.4) within `budget` (section 7.4).
+// Reading the text costs text_units of it, and each reading the pass makes
+// costs text_units of the reading before `search` gets it, in order. Once the
+// budget is spent, no reading is made or given. Returns false when the
+// budget is spent, so that a caller reads no further text.
+template <typename Search>
+bool read_pass(const VariantPass& pass, const std::string& text, SearchBudget& budget, Search&& search) {
+  if (budget.spent()) return false;
+  budget.spend(text_units(std::string_view(text)));
+  std::vector<std::string> readings;
+  pass.builtin->variants(text, readings);
+  for (auto& reading : readings) {
+    if (budget.spent()) return false;
+    budget.spend(text_units(std::string_view(reading)));
+    search(std::move(reading));
+  }
+  return !budget.spent();
+}
+
 // A list of steps by the name tests/classes.json gives it (section 12.1): a
 // processor id, `lookup.readingNormalizer`, `lookup.formOfNormalizer`,
 // `presentation.displayTransforms.<name>` or `transforms[i].rules[j].then`; a

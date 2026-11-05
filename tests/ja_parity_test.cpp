@@ -29,6 +29,7 @@
 #include "hoshidicts/languages.hpp"
 #include "hoshidicts/lookup.hpp"
 #include "hoshidicts/query.hpp"
+#include "languages/corpus.hpp"
 #include "languages/pack.hpp"
 #include "languages/steps.hpp"
 #include "reference/deinflector.hpp"
@@ -221,7 +222,8 @@ int run_deinflect(const fs::path& repo) {
   const Deinflector now;
   const legacy::Deinflector old;
   size_t results = 0;
-  for (const auto& input : all_inputs(repo)) {
+  const auto inputs = all_inputs(repo);
+  for (const auto& input : inputs) {
     const auto a = now.deinflect(input);
     const auto b = old.deinflect(input);
     compare_deinflections(input, a, b, false);
@@ -232,6 +234,82 @@ int run_deinflect(const fs::path& repo) {
     results += nb.size();
   }
   std::printf("ja-deinflect-parity: %zu comparisons, %zu deinflections, %zu failures\n", compared, results, failures);
+  // The search bounds (section 7.4) never cut a Japanese search short: every
+  // input and each of its processed variants, as deinflect() and lookups
+  // search them, and their cat-speech readings.
+  const auto pack = hoshidicts::builtin_language_pack("ja");
+  const auto& data = pack->data();
+  namespace lang = hoshidicts::lang;
+  const lang::VariantPass* neko = data.find_pass("nekoSpeech");
+  if (neko == nullptr) fail("the Japanese pack has no nekoSpeech pass");
+  lang::SourceSearch reach;
+  const size_t before = failures;
+  const auto search = [&](const std::string& text, const lang::VariantPass* pass) {
+    lang::SourceSearch one;
+    lang::Deinflections list;
+    lang::BoundHit hit;
+    lang::SearchBudget budget;
+    size_t work_left = budget.work_left;
+    if (pass == nullptr) {
+      data.transforms->deinflect(text, list, nullptr, &hit, &budget);
+      lang::add_search(data, list, 0, hit, work_left - budget.work_left, text, one);
+    } else {
+      std::vector<std::string> readings;
+      pass->builtin->variants(text, readings);
+      for (auto& reading : readings) {
+        const size_t begin = list.size();
+        data.transforms->deinflect_from_step(std::move(reading), pass->step, list, nullptr, &hit, &budget);
+        lang::add_search(data, list, begin, hit, work_left - budget.work_left, text, one);
+        work_left = budget.work_left;
+      }
+    }
+    if (one.bound != lang::BoundHit::Bound::None) {
+      fail("a search bound cut the search of " + text + " short: " + lang::describe(one));
+    }
+    reach.depth = std::max(reach.depth, one.depth);
+    reach.growth = std::max(reach.growth, one.growth);
+    reach.results = std::max(reach.results, one.results);
+    reach.searches += one.searches;
+  };
+  for (const auto& input : inputs) {
+    std::vector<std::string> texts = {input};
+    for (auto& variant : lang::process_text(data.preprocessors, input, {})) {
+      if (variant.text != input) texts.push_back(std::move(variant.text));
+    }
+    for (const auto& text : texts) {
+      if (text.empty()) continue;
+      search(text, nullptr);
+      if (neko != nullptr) search(text, neko);
+    }
+  }
+  // And no lookup needs more work than one budget: the searches a lookup of
+  // 16 code points makes (every prefix, its variants, their cat-speech
+  // readings), for the corpus sources, the deep chains and every tenth
+  // generated string.
+  std::vector<std::string> lookups = corpus_sources(repo);
+  for (auto& s : deep_chains()) lookups.push_back(std::move(s));
+  {
+    const auto gen = generated(corpus_sources(repo), 100000);
+    for (size_t i = 0; i < gen.size(); i += 10) lookups.push_back(gen[i]);
+  }
+  lang::SearchCache cache;
+  size_t busiest = 0;
+  for (const auto& text : lookups) {
+    const lang::SourceSearch lookup = lang::lookup_search(data, text, 16, lang::TestOptions::All, cache);
+    if (lookup.bound != lang::BoundHit::Bound::None)
+      fail("a lookup of " + text + " reached a bound: " + lang::describe(lookup));
+    busiest = std::max(busiest, lookup.work);
+  }
+  const size_t cut = failures - before;
+  std::printf(
+      "ja-deinflect-parity: %s (%zu searches, %zu lookups, %zu failures): the longest chain has %zu of %u rules, "
+      "the longest output adds %zu of %zu code points, the largest search holds %zu of %zu deinflections, the busiest "
+      "lookup uses %zu of %zu units of work\n",
+      cut == 0 ? "the search bounds never cut a search or a lookup short"
+               : "search bounds cut searches or lookups short",
+      reach.searches, lookups.size(), cut, reach.depth, lang::SearchBounds::max_depth, reach.growth,
+      lang::SearchBounds::max_growth, reach.results, lang::SearchBounds::max_results, busiest,
+      lang::SearchBounds::max_work);
   return failures == 0 && compared > 100000 ? 0 : 1;
 }
 

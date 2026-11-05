@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "conditions": {
+    "n": {"name": "Noun", "isDictionaryForm": true}
+  },
+  "transforms": [
+    {
+      "id": "name",
+      "name": "name",
+      "description": "Proper-name endings without conditions",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "e", "deinflected": "is", "conditionsIn": [], "conditionsOut": []},
+        {"type": "suffix", "inflected": "is", "deinflected": "ae", "conditionsIn": [], "conditionsOut": []}
+      ]
+    }
+  ]
+}

@@ -547,6 +547,22 @@ that display transforms and `then` steps may not use `builtin` or
 `alternatives`. Hosts implement `case`, `normalize`, `strip`, `map` and
 `pattern` for display transforms.
 
+A text a step writes, a `map` value, an alternative or a `pattern`
+replacement, is at most 64 code points, and an `alternatives` step's `limit`
+at most 4,096; packs past either do not load.
+And the engine stops a step list once its text has more than 16 × (n + 32)
+code points, n being the code points of the text it was given (for
+processors, the text `process_text` was given; for a rule's `then` list,
+the search's input), with a repeated `pattern` checked after every round. A
+processor whose list goes past that adds nothing for the text, as if the
+list had not changed it (with `"keepInput": false` the text is kept), a
+`readingNormalizer` or `formOfNormalizer` leaves its text as it was, and a
+rule's output is dropped (section 7.4). So a pattern that doubles the text,
+repeated 16 times, stops after the round that passes the limit instead of
+writing 65,536 copies; a `normalize` step expands one code point to at most
+18 (NFKD of U+FDFA), well within it. `tests/classes.json` records a step
+applied alone, without the limit (section 12.1).
+
 ### 6.3 Builtins
 
 Builtins are the only code a pack can name. Each is small, deterministic and
@@ -710,7 +726,8 @@ parts.
  "stemChange": {"from": ["ie"], "to": "e", "occurrence": "first"}}
 ```
 
-`from` lists strings to look for in the stem; `occurrence` picks the `first`
+`from` lists strings to look for in the stem, at most 64 of at most 64 code
+points each; `occurrence` picks the `first`
 or `last` match of any of them that satisfies `between`, and at one position
 the longest `from` wins. Optional `between` is a class that every code point
 between the change and the end of the stem must belong to, with
@@ -724,7 +741,10 @@ instead of the four single fields: `{"type": "circumfix", "prefixes": [["و",
 combination, expanded when the pack loads. Arabic's generated rules fit in a
 few dozen such rows instead of 6,570.
 
-Affixes are at most 64 code points; the conformance test rejects longer ones.
+Affixes, and the texts a rule writes in their place (`deinflected`,
+`deinflectedPrefix`, `deinflectedSuffix`, the deinflected half of a
+cross-product pair, `stemChange.to` and a pattern's `replacement`), are at
+most 64 code points; packs with longer ones do not load (section 7.4).
 
 ### 7.4 Recursion and cycles
 
@@ -738,24 +758,168 @@ Deinflection is the depth-first search hoshidicts uses today:
    trie of prefixes, longest first; then `phrasal` rules through a trie of
    first-word endings, longest first; then `interposedObject` and `replace`
    rules in file order. Rules that match at one node apply in file order.
-3. Recurse into every output with the rule's `conditionsOut`.
+3. Expand every output the same way, with the rule's `conditionsOut`, before
+   the next rule applies to its input (depth first), within the bounds below.
 
 For Japanese, which has only suffix and whole-word rules, this is today's
-order exactly (section 11). There is no depth limit, as today and as in
-Yomitan. An output equal to one already produced by the same rule from the
-same text earlier in the same trace is skipped, as Yomitan's `isCycle` skips
-it, but the engine checks only outputs that are not shorter than their input
-(section 7.5), where Yomitan checks every one. A cycle that passes through a
-shortening rule is therefore cut one step later than in Yomitan: with `b` → ""
-and `a` → `ab`, the text `ab` gives `ab`, `a`, `ab` and `a` again, with a
-longer trace, where Yomitan stops after the second `ab`. The repeated result
-has the text and conditions of an earlier one, so the sets the differential
-check compares and the results of a lookup are the same. No Yomitan language
-at d3c54c1, Japanese included, reaches a cycle on its test sources, their
-prefixes or inputs built from its affixes. An output that is the empty text
-is neither recorded nor expanded, as today (れば → "" from "れば"); an empty
-text is never a headword. Yomitan records such outputs, so the differential
-check drops them on Yomitan's side.
+order exactly (section 11). An output equal to one already produced by the
+same rule from the same text earlier in the same trace is skipped, as
+Yomitan's `isCycle` skips it, but the engine checks only outputs that are
+not shorter than their input (section 7.5), where Yomitan checks every one.
+A cycle that passes through a shortening rule is therefore cut one step
+later than in Yomitan: with `b` → "" and `a` → `ab`, the text `ab` gives
+`ab`, `a`, `ab` and `a` again, with a longer trace, where Yomitan stops after
+the second `ab`. The repeated result has the text and conditions of an
+earlier one, so the sets the differential check compares and the results of
+a lookup are the same. No Yomitan language at d3c54c1, Japanese included,
+reaches a cycle on its test sources, their prefixes or inputs built from its
+affixes. An output that is the empty text is neither recorded nor expanded,
+as today (れば → "" from "れば"); an empty text is never a headword. Yomitan
+records such outputs, so the differential check drops them on Yomitan's
+side.
+
+**Bounds.** The cycle check does not stop rules that keep making new texts.
+With `e` → `is` and `is` → `ae`, neither with conditions, *Rome* gives
+*Romis*, *Romae*, *Romais*, *Romaae*, … for ever, growing a code point every
+second step. The search before these bounds recursed until the stack
+overflowed; Yomitan's `LanguageTransformer.transform` (d3c54c1), a loop over
+a growing list, never returns. These bounds make every search, every rule
+application and every processor end in bounded time and memory, whatever a
+pack says, with one exception: the matching of a single regular expression.
+A `pattern` rule or step is matched by the platform's `std::wregex`, which
+libc++ (Hachidori's WebAssembly build, Apple and Android) stops after 4,096
+steps per code unit of the text, the rule or step then not applying, and
+libstdc++ (GCC builds, such as `hoshidicts-cli` and CI) does not stop at all.
+So a pack must not use ambiguous repetition such as `(?:a+)+` (section 7.6).
+The text a search starts from (a processed variant of the scanned text, or a
+variant pass's reading) is its input:
+
+| Bound | Value | What happens |
+| --- | ---: | --- |
+| growth | 32 code points | an output more than 32 code points longer than the input is neither recorded nor expanded |
+| depth | 128 rules | an output that would be the 129th rule of its chain is neither recorded nor expanded |
+| results | 65,536 | the search stops once it holds 65,536 deinflections, the input included |
+| work | 1,048,576 units | the search stops when its work budget is spent; a lookup's searches and processors share one budget |
+
+The work budget counts what a search and a lookup do:
+
+- a unit for every rule application a search tries (every rule whose
+  conditions and options let it apply to a text), whether it gives an output
+  or not;
+- a unit for every 256 bytes the application writes: its output, and each
+  step of its `then` list, a code point counting 4 bytes;
+- a unit for every code point a regular expression reads: a `pattern` rule,
+  and each round of a `pattern` step (the steps the matcher takes on them are
+  not counted; see above);
+- a unit for every 64 operations that grow with a text or with a pack: a
+  rule its conditions or options skip, a code point a trie walk reads, a step
+  of the cycle check, a byte the stem constraints and `replace`, `phrasal`
+  and `interposedObject` rules read, a `stemChange` string tried at a stem
+  position, a `map` or `alternatives` key tried, and for each optional
+  processor a processor list visits, on or off, the look-up of its id in the
+  request's options (about log2 of the options it enables, which a lookup
+  sorts once);
+- for each builtin or step list a pre- or postprocessor applies, a unit, with
+  its writes, reads and operations counted as above;
+- for each variant a pre- or postprocessor keeps, a unit, and a unit for every
+  256 bytes of it (a code point counting 4), for the hashing, copying and
+  sorting that keep it;
+- for each text a variant pass reads, and each reading it makes, the same: a
+  unit, and a unit for every 256 bytes;
+- a unit for every text a lookup looks up in its dictionaries: each
+  deinflection, or each of its postprocessed forms, and each variant by which
+  it recognises long keys (section 9.1).
+
+A search given no budget has one of its own. A lookup gives one budget to
+everything it does: every prefix it scans and its processed variants, every
+search of them, every variant pass reading and its search, every
+postprocessed form. Once the budget is spent, each later search records its
+input and nothing more, processors stop, the variants made so far being the
+result, variant passes make no more readings, and the texts left are still
+looked up, so the text as written always is. `Deinflector::deinflect_neko_speech`,
+a corpus row (section 12.2) and `hoshidicts-cli deinflect` share one budget
+across a text's processors and searches in the same way. The budget is per
+lookup: a host that makes many lookups for one request, as Hachidori's
+segmenter makes one for each code point of its text, multiplies it, and
+should limit such requests itself.
+
+Load-time limits keep each unit small. The texts a rule writes are at most
+64 code points (7.3), as are those of steps (6.2), so a rule's output before
+its `then` list is at most 64 times its input; a `stemChange` has at most 64
+`from` strings of at most 64 code points; an `alternatives` step makes at
+most 4,096 texts. A step list stops once its text has more than 16 × (n + 32)
+code points, n being the code points of the search's input: in a rule's
+`then` list the text so far is the output, which the growth bound drops (a
+`then` step that writes 8 copies of each code point, with `repeat`, stops at
+its third round on a 2-code-point input). Processors use the same limit
+(section 6.2). A trie node's children are found by binary search, however
+many it has.
+
+Growth and depth end every chain; the results bound also ends a search whose
+rules fan out, which 2 rules can make exponential (each replacing the first
+`a` with `b` or with `c` gives 2^17 − 1 texts from 16 `a`s, all of one
+length); the work budget ends a search whose rules each apply to every text
+(with 2,000 rules that append to a text, the search of `a` spends it holding
+315 deinflections), and a lookup whose processors make many variants of each
+prefix, or whose postprocessors make thousands of forms of each
+deinflection. Only an output a bound drops, and what the work after a spent
+budget would have found, is lost; everything recorded before stays, in the
+same order. Memory is bounded with the work. Before the budget is spent,
+every deinflection a lookup holds costs at least two units (its try, or the
+reading or variant it is, and its look-up), and a unit pays for at most 256
+bytes of text; once it is spent, each prefix the lookup still scans adds its
+text and nothing more. The most memory a lookup took in these tests and the
+audits' adversarial packs is 163 MB natively, in 0.71 s: processors that
+make 4,096 variants of 768 code points from 16, read by the `ja.nekoSpeech`
+pass (about 87,000 readings of 1.8 KB when the budget is spent). A pack whose
+two rules both append to every text, on 16 code points of 4 bytes each
+(349,606 deinflections of up to 192 bytes), with a postprocessor that makes
+up to 4,096 forms of each, takes 130 MB, in 0.52 s, and 97 MB, in 0.22 s,
+without the postprocessor.
+
+The values come from two censuses. The first measured the unbounded search
+on main 5ca9a6f, for the 15 packs on main and the 11 in open pull requests:
+each pack's corpus strings and their prefixes, `host.sample` texts and their
+windows of 1 to 16 code points, inputs built from its affixes, 20,000
+generated strings (rule endings chained onto stems), and for Japanese the
+206,148 inputs of `ja-deinflect-parity`, each with every option on and with
+the defaults:
+
+| | Deepest chain | Longest output | Largest search |
+| --- | ---: | ---: | ---: |
+| Japanese, the parity inputs | 44 rules (食べ + させ × 40 + られなかった) | +1 | 212 |
+| any pack, corpus, prefixes, samples, affix inputs | 10 rules (Tagalog) | +17 (Serbo-Croatian *i* → *i/languages M to Z*) | 2,694 (Ancient Greek) |
+| any pack, generated strings | 15 rules (Tagalog) | +13 (English placeholders) | 6,058 (Ancient Greek) |
+
+The second measured the work of whole lookups with these bounds
+(`lookup_search`, which counts all of the above), for the 26 packs on main
+6d89fda and in open pull requests: a lookup of every corpus string, one at
+every cursor position of the `host.sample` texts, of every input built from
+the affixes, of 5,000 generated strings and, for Japanese, of the parity
+inputs, with every option on and with the defaults, at scan lengths 16 and
+32 (1,202,416 lookups each):
+
+| | Scan 16 | Scan 32 |
+| --- | ---: | ---: |
+| Japanese, the parity inputs | 12,750 units | 12,750 units |
+| any pack, corpus strings and samples | 87,105 (Arabic) | 87,105 (Arabic) |
+| any pack, every input | 313,194 (Arabic, a generated string) | 488,534 (Arabic, a generated string) |
+
+The depth bound is about 3 times the parity test's deepest chain and 8 times
+the deepest from other inputs; the margin is about twice the longest output;
+the results bound about 10 times the largest search; the work budget about
+12 times the busiest lookup of real text and 2.1 times the busiest of all.
+None is reached by any input of either census, so every result above is the
+same with the bounds, and `ja-deinflect-parity` checks that none is reached
+on its inputs, their processed variants and their cat-speech readings, nor by
+the lookups of its sources, deep chains and generated strings. A pack that
+reaches one fails the conformance test (section 12.1 step 7), and
+`hoshidicts-cli deinflect` and `eval-language` say so on standard error
+(section 10.3).
+
+The search keeps its own stack of the texts it is expanding, so a chain of
+128 rules takes no more native or WebAssembly stack than a chain of one; the
+recursion it replaced took about 2 KiB of native stack per rule.
 
 The trace of a result lists the transforms applied, in application order, as
 `{id, name, description}`. Yomitan lists them newest first; converters and
@@ -763,10 +927,15 @@ tests reverse it.
 
 ### 7.5 Speed
 
-The engine keeps the matches of one trie walk in a fixed array (64 entries,
-the affix limit), allocates nothing per rule application except the output
-string, and runs the cycle check only for rules whose output is not shorter
-than their input. Repeated outputs are not deduplicated during the search,
+The engine keeps the matches of one trie walk (at most 64 per trie, the
+affix limit) on the search's own stack, which each thread reuses from one
+search to the next, allocates nothing per rule application except the
+output string (a buffer of its own, so that a long output a bound drops is
+never carried into a later result), and runs the cycle check only for rules
+whose output is not shorter than their input. The growth bound counts the
+input's code points only once an output is longer than a quarter of the
+input's bytes plus the margin, and an output's only when it is longer than
+the limit in bytes. Repeated outputs are not deduplicated during the search,
 and each one is looked up (section 9.5).
 
 ### 7.6 The `pattern` dialect
@@ -828,17 +997,22 @@ classic locale) and JavaScript give the same results:
   to groups that can match the empty text can. The checks are the same in
   `tools/lib/classes.mjs` and the engine. A pattern can still take
   exponential time in both implementations, as `(a+)+b` does in JavaScript;
-  keep repeated groups unnested. Such a pattern also differs in libc++: it
+  write each repeated part so that only one way of repeating it can match a
+  given text. Such a pattern also differs in libc++: it
   gives up a match attempt after 4,096 steps per code unit of the remaining
   text and throws `error_complexity`, and the engine then treats the text as
   not matching, so the step or rule does nothing where JavaScript and
   libstdc++ replace. Overlapping alternatives under a quantifier cause this
   as much as nested quantifiers: `(?:a|aa)+b|c` with `Z` on 18 `a`s and a
   `c` gives the 18 `a`s and `Z` in JavaScript and libstdc++ and the text
-  unchanged in libc++, and `(?:a+)+b|c` differs from 13 `a`s on. Lookups
-  try texts as long as the scan length (16 code points by default), so
-  write each repeated part so that only one way of repeating it can match a
-  given text.
+  unchanged in libc++, and `(?:a+)+b|c` differs from 13 `a`s on. A pattern
+  can see a text much longer than the scan length (16 code points by
+  default): a processor's steps may make up to 16 × (n + 32) code points of
+  n, and a rule's output may be 32 code points longer than its input (7.4),
+  so 16 `a`s behind a `map` of `a` to `aaaa` reach a rule's pattern as 64.
+  The work budget does not count a match's steps (7.4), so write each
+  repeated part so that only one way of repeating it can match a given
+  text.
 - Exact rules: quantifiers `{m}`, `{m,}` and `{m,n}` with m ≤ n ≤ 65535; a
   back-reference `\N` only after group N has closed and never followed by a
   digit; outside classes the escapes `\` + one of `^$\.*+?()[]{}|/` and
@@ -1648,6 +1822,14 @@ the output: its line is
 (`"variants"` for `preprocess`), the message also goes to standard error,
 and the command exits with status 1 after answering every line.
 
+When a search reaches a bound (section 7.4), `deinflect` still prints the
+results recorded before it and exits with status 0, and writes one line to
+standard error after that input's line, with the bound and the chain in the
+form of the conformance test's message (section 12.1 step 7):
+`hoshidicts-cli: deinflect lp Rome: the search reached a bound (docs/languages.md 7.4): an output more than 32 code points longer than ...`.
+`eval-language` writes the same for each corpus row whose search reaches
+one, naming the file and line.
+
 `--transforms <file>` measures another rule file with the pack:
 `sources/own.json` or `sources/yomitan.json` with `eval-language`
 (section 14 step 5), or Yomitan's rules in the differential check
@@ -1793,7 +1975,13 @@ Japanese transform id equal to its name:
   `cases.tsv` (today's whole-word, historical kana and cat-speech cases), every
   prefix of every source, deep chains such as 食べ + させ × 40 + る, and
   100,000 strings built from a fixed seed by chaining rule endings onto kana,
-  kanji and Latin stems.
+  kanji and Latin stems. It also requires that no search of these inputs, of
+  their processed variants or of their cat-speech readings reaches a search
+  bound (section 7.4), and that no lookup of the sources, the deep chains and
+  every tenth generated string needs more than one work budget, and prints
+  how far they went: the longest chain has 44 rules, the longest output adds
+  1 code point, the largest search holds 212 deinflections, the busiest
+  lookup uses 7,242 units of work.
 - `ja-process-parity`: processor variants and steps for the same inputs.
 - `ja-lookup-parity`: `lookup()` and `lookup_dictionary()` results (matched,
   deinflected, trace, term, frequencies, pitches, preprocessor steps) on a
@@ -1855,8 +2043,8 @@ For every pack it checks:
    `formOfIgnore`, `formOfNormalizer`, `confirmedOrder` and `ownEntry` at their
    defaults when `formOf` is `asTerm`,
    engine-effect settings boolean, setting effects naming declared processors,
-   transforms, passes, display transforms or optional capabilities, affixes of
-   at most 64 code points.
+   transforms, passes, display transforms or optional capabilities, affixes
+   and the texts rules and steps write of at most 64 code points.
 2. Every class parses and means the same in the engine and in JavaScript, and
    every pattern and `case` step gives the same output in both on the pack's
    corpus strings. The expectations are `tests/classes.json`, written with
@@ -1915,6 +2103,53 @@ For every pack it checks:
 5. Coverage: every `own` and `both` transform has at least one passing
    `valid = 1` row, and the rules no row exercises are printed.
 6. `README.md` exists and has the sections of the template.
+7. The search bounds (section 7.4), on the searches lookups make. The test
+   looks up every corpus string (the sources of every deinflection TSV,
+   `text.tsv` inputs, `lookup.tsv` texts and the `host.sample` strings) whole,
+   with all its prefixes; each `host.sample` text at every cursor position,
+   16 code points; and every input built from the rules' affixes (each
+   rule's inflected form alone, on stems of the pack's eight most used
+   letters and on its first three short words, `circumfix` and `phrasal`
+   frames, `stemChange` contexts and pattern anchors, as the differential
+   check builds them, section 8.2), the whole input only. Each lookup makes
+   the searches `Lookup` makes, every prefix, each processed variant and each
+   variant pass reading (more than a lookup with word resolution or no pass
+   to try makes), with every option on and, when the pack has options, with
+   its defaults. No search may reach a bound, and the searches of no lookup
+   may need more work together than one budget. A pack that fails fails
+   once, with the number of lookups that do and the first of them with its
+   chain: the rule of each step named by its transform id and its index in
+   that transform, the first and last five steps of a longer chain, and each
+   text of more than 48 code points shown by its first 40. For the results
+   bound it also names the three rules that made the most of that search's
+   deinflections, and for the work bound the three that used the most of its
+   work. Its lookups count the processors' work and the forms looked up, as a
+   lookup does (section 7.4). For the loop of section 7.4 the line is (one line,
+   wrapped here):
+
+   ```text
+   FAIL lp: the deinflection search reached a bound (docs/languages.md 7.4) in 23 of 39 lookups;
+     the first, Rome: an output more than 32 code points longer than the text the search started
+     from, after 65 steps: Rome -name[0]-> Romis -name[1]-> Romae -name[0]-> Romais -name[1]->
+     Romaae -name[0]-> Romaais ... (55 more) ... -name[0]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaais
+     -name[1]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae -name[0]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaais
+     -name[1]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaae -name[0]-> Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaais (dropped)
+   ```
+
+   The next four lookups that fail follow, each on a line starting "also". A
+   conforming pack's line says how far its searches went, so its author sees
+   how close they come:
+
+   ```text
+   ja: search bounds: 7354 lookups (1474 of corpus strings and host.sample texts, 86 at their cursor
+     positions, 5794 of inputs built from the rules' affixes; 40423 texts searched) stay within them:
+     the longest chain has 6 of 128 rules, the longest output adds 1 of 32 code points, the largest
+     search holds 41 of 65536 deinflections, the busiest lookup uses 3298 of 1048576 units of work
+   ```
+
+   Such a loop usually comes from rules whose outputs have no conditions
+   (7.2), which every rule may then apply to again; giving the outputs
+   conditions ends it (`tests/fixtures/conformance/lp`).
 
 ### 12.2 Corpus format
 
@@ -2339,6 +2574,17 @@ who measures better values uses them and says why.
 
 ## 16. Known limits
 
+- **One regular expression is not bounded inside.** The work budget (7.4)
+  counts the code points a `pattern` reads, not the steps the regular
+  expression takes on them. A pattern with ambiguous repetition, such as
+  `(?:a+)+b`, which the dialect allows (7.6), can take exponential time on
+  one text of a lookup's length or longer: libc++ (WebAssembly, Apple,
+  Android) gives up after 4,096 steps per code unit and the rule or step
+  does not apply, and libstdc++ never gives up. Review and the conformance
+  run of a pack's pull request are what keep such patterns out; write each
+  repeated part so that only one way of repeating it can match.
+- **The work budget is per lookup.** A host request that makes many lookups,
+  such as segmenting a text into words, gets a budget for each (7.4).
 - **No morphology.** Deinflection proposes forms; it does not analyse.
   Agglutinative languages (Korean, Basque, Georgian) produce long traces and
   some false candidates, which the dictionary query and part-of-speech filter

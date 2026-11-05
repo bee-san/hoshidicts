@@ -603,4 +603,40 @@ if(HOSHIDICTS_LANGUAGE_TESTS)
                      -DEDIT=language.json "-DFROM=\"ownEntry\": \"afterReferences\"" "-DTO=\"ownEntry\": \"last\""
                      "-DREASON=fn: language.json: lookup.ownEntry: must be one of first, afterReferences, not \"last\""
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    # A pack whose rules loop, growing the text, fails with the input and the
+    # chain that reached a search bound (7.4, 12.1 step 7); with conditions on
+    # the outputs the loop is gone and the pack conforms.
+    add_test(NAME language-search-bounds
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/lp
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
+                     "-DREASON=lp: the deinflection search reached a bound (docs/languages.md 7.4) in 23 of 39 lookups; the first, Rome: an output more than 32 code points longer than the text the search started from, after 65 steps: Rome -name[0]-> Romis -name[1]-> Romae -name[0]-> Romais -name[1]-> Romaae -name[0]-> Romaais ... (55 more) ..."
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    # The defaults count too: an optional processor that rewrites the final e
+    # and is hides the loop when every option is on, but not with the pack's
+    # defaults, which hosts use.
+    add_test(NAME language-search-bounds-defaults
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/lp
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/search-bounds-defaults
+                     -DEDIT=language.json "-DFROM=\"preprocessors\": [],"
+                     "-DTO=\"preprocessors\": [{\"id\": \"ending\", \"variants\": [[{\"map\": {\"e\": \"a\", \"is\": \"us\"}, \"at\": \"end\"}]], \"keepInput\": false, \"optional\": true}],"
+                     "-DREASON=lp: the deinflection search reached a bound (docs/languages.md 7.4) in 23 of 39 lookups; the first, Rome (with the pack's defaults): an output more than 32 code points longer"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    # A lookup that reaches a bound in both modes counts once: an optional
+    # processor that leaves the loop alone.
+    add_test(NAME language-search-bounds-both-modes
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/lp
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/search-bounds-both-modes
+                     -DEDIT=language.json "-DFROM=\"preprocessors\": [],"
+                     "-DTO=\"preprocessors\": [{\"id\": \"quote\", \"variants\": [[{\"map\": {\"q\": \"k\"}}]], \"optional\": true}],"
+                     "-DREASON=lp: the deinflection search reached a bound (docs/languages.md 7.4) in 23 of 39 lookups; the first, Rome: an output more than 32 code points longer"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    add_test(NAME language-search-bounds-conditions
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/lp
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/search-bounds-conditions
+                     -DEDIT=transforms.json "-DFROM=\"conditionsOut\": []" "-DTO=\"conditionsOut\": [\"n\"]"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_accepts_test.cmake)
 endif()

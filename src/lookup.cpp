@@ -198,6 +198,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     option_storage.emplace_back("nekoSpeech");
     option_ids = option_storage;
   }
+  // The request's options, a sorted set (section 7.4).
   const lang::EnabledOptions enabled{option_ids};
   std::vector<bool> enabled_transforms;
   const std::vector<bool>* enabled_transforms_ptr = nullptr;
@@ -228,19 +229,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     }
   }
 
-  // The pack's readingNormalizer (section 9.6).
+  // The pack's readingNormalizer (section 9.6), within the step limit
+  // (section 6.2).
   struct Normalizer : DictionaryQuery::ReadingNormalizer {
     const lang::StepList* steps = nullptr;
-    std::string normalize(std::string_view reading) const override {
-      std::u32string in;
-      if (!lang::decode_utf8(reading, in)) {
-        return std::string(reading);
-      }
-      std::u32string out;
-      std::vector<std::u32string> outputs;
-      lang::apply_steps(*steps, in, outputs);
-      return outputs.empty() ? std::string(reading) : lang::to_utf8(outputs.front());
-    }
+    std::string normalize(std::string_view reading) const override { return lang::normalize_text(*steps, reading); }
   };
   std::optional<Normalizer> normalizer_storage;
   if (pack.reading_normalizer) {
@@ -259,6 +252,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   std::vector<Candidate> candidates;
   ankerl::unordered_dense::map<uint64_t, uint32_t> index;
   std::vector<Deinflections> deinflection_store;
+  // The work budget all the searches of this lookup share (section 7.4).
+  lang::SearchBudget search_budget;
   std::vector<RawTerms> term_store;
   // Postprocessed forms the candidates look at (only with postprocessors;
   // a deque allocates even when empty, so it is made on first use).
@@ -525,13 +520,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // lookup.formOfNormalizer (section 9.10): a reference's text after the
   // pack's steps, or empty when they leave it as it is (or empty it).
   const auto normalize_form_of = [&](const std::string& text) {
-    std::string normalized;
-    std::u32string in;
-    if (lang::decode_utf8(text, in)) {
-      std::u32string out;
-      lang::apply_single(*pack.form_of_normalizer, in, out);
-      normalized = lang::to_utf8(out);
-    }
+    std::string normalized = lang::normalize_text(*pack.form_of_normalizer, text);
     if (normalized == text) normalized.clear();
     return normalized;
   };
@@ -566,7 +555,10 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // (section 9.3), and records the forms that need no part of speech for the
   // metadata-only pass.
   auto merge_deinflection = [&](size_t matched_len, const Deinflection* base, uint32_t di, int steps, bool probe) {
+    // Each form looked up costs a unit of the lookup's budget, and the
+    // postprocessors theirs (section 7.4).
     if (pack.postprocessors.empty()) {
+      search_budget.spend(1);
       merge(matched_len, base, di, base[di].text, steps);
       if (probe && metadata_only && base[di].conditions == 0) {
         metadata_probes.push_back(
@@ -577,7 +569,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     if (!forms) {
       forms = std::make_unique<std::deque<std::string>>();
     }
-    for (auto& variant : lang::process_text(pack.postprocessors, base[di].text, enabled)) {
+    for (auto& variant : lang::process_text(pack.postprocessors, base[di].text, enabled, nullptr, &search_budget)) {
+      search_budget.spend(1);
       forms->push_back(std::move(variant.text));
       const std::string& form = forms->back();
       merge(matched_len, base, di, form, steps + variant.steps);
@@ -594,9 +587,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     prefix_variants.reserve(variants.size());
     for (const auto& variant : variants) {
       if (pack.postprocessors.empty()) {
+        search_budget.spend(1);
         prefix_variants.push_back(variant.text);
       } else {
-        for (auto& post : lang::process_text(pack.postprocessors, variant.text, enabled)) {
+        for (auto& post : lang::process_text(pack.postprocessors, variant.text, enabled, nullptr, &search_budget)) {
+          search_budget.spend(1);
           prefix_variants.push_back(std::move(post.text));
         }
       }
@@ -608,14 +603,14 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // Scans one prefix of the input: every processed variant, deinflected, looked
   // up, and merged into the candidates keeping the longest matched form.
   auto scan_prefix = [&](std::string_view search_str, size_t codepoints) {
-    auto processor_results = lang::process_text(pack.preprocessors, search_str, enabled);
+    auto processor_results = lang::process_text(pack.preprocessors, search_str, enabled, nullptr, &search_budget);
     if (!word_resolution && codepoints == scan_index::long_key_prefix_codepoints) {
       add_prefix_variants(processor_results);
     }
     for (auto& variant : processor_results) {
       Deinflections deinflection_results;
       if (transforms != nullptr) {
-        transforms->deinflect(variant.text, deinflection_results, enabled_transforms_ptr);
+        transforms->deinflect(variant.text, deinflection_results, enabled_transforms_ptr, nullptr, &search_budget);
       } else {
         deinflection_results.push_back(Deinflection{variant.text, 0, Deinflection::npos, Deinflection::none, 0});
       }
@@ -690,7 +685,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     if (window >= scan_index::long_key_prefix_codepoints) {
       add_prefix_variants(lang::process_text(
           pack.preprocessors, std::string_view(lookup_string.data(), offsets[scan_index::long_key_prefix_codepoints]),
-          enabled));
+          enabled, nullptr, &search_budget));
     }
     for (size_t p = window; p > 0; --p) {
       if (boundary(p)) {
@@ -721,44 +716,43 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // Variant passes (NekoPara's cat speech, LookupOptions::neko_speech): a
   // pass's reading counts only for a prefix longer than every ordinary match,
   // long keys included, so it can only add a term or lengthen one; every
-  // ordinary result above is otherwise kept as it is.
-  if (!passes.empty()) {
-    size_t ordinary_len = 0;
-    for (const auto& candidate : candidates) {
-      ordinary_len = std::max(ordinary_len, candidate.matched_len);
-    }
+  // ordinary result above is otherwise kept as it is. The passes read within
+  // the lookup's budget and stop once it is spent (section 7.4).
+  const auto read_passes = [&](size_t ordinary_len) {
     for (auto& prefix : scanned) {
       if (prefix.length <= ordinary_len) {
         continue;
       }
       for (const auto& variant : prefix.variants) {
         for (const lang::VariantPass* pass : passes) {
-          std::vector<std::string> readings;
-          pass->builtin->variants(variant.text, readings);
-          if (readings.empty()) {
-            continue;
-          }
           Deinflections deinflection_results;
-          for (auto& reading : readings) {
+          const bool more = lang::read_pass(*pass, variant.text, search_budget, [&](std::string reading) {
             if (transforms != nullptr) {
               transforms->deinflect_from_step(std::move(reading), pass->step, deinflection_results,
-                                              enabled_transforms_ptr);
+                                              enabled_transforms_ptr, nullptr, &search_budget);
             } else if (!reading.empty()) {
               deinflection_results.push_back(Deinflection{std::move(reading), 0, Deinflection::npos,
                                                           Deinflection::step_base + pass->step, 1});
             }
+          });
+          if (!deinflection_results.empty()) {
+            const Deinflection* base = deinflection_results.data();
+            for (uint32_t di = 0; di < deinflection_results.size(); ++di) {
+              merge_deinflection(prefix.length, base, di, variant.steps, false);
+            }
+            deinflection_store.push_back(std::move(deinflection_results));
           }
-          if (deinflection_results.empty()) {
-            continue;
-          }
-          const Deinflection* base = deinflection_results.data();
-          for (uint32_t di = 0; di < deinflection_results.size(); ++di) {
-            merge_deinflection(prefix.length, base, di, variant.steps, false);
-          }
-          deinflection_store.push_back(std::move(deinflection_results));
+          if (!more) return;
         }
       }
     }
+  };
+  if (!passes.empty()) {
+    size_t ordinary_len = 0;
+    for (const auto& candidate : candidates) {
+      ordinary_len = std::max(ordinary_len, candidate.matched_len);
+    }
+    read_passes(ordinary_len);
   }
 
   // The references the rows the passes found named.
