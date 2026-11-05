@@ -49,6 +49,15 @@ struct LookupOptions {
   // Dictionaries (paths) whose terms skip the part-of-speech filter
   // (section 9.4), for dictionaries without `rules` such as MDX imports.
   std::vector<std::string> pos_filter_exempt;
+  // Decompress each result's glossaries into GlossaryEntry::glossary. Off, a
+  // glossary keeps its dictionary, tags and score but has no text and no
+  // compressed data, and the results are otherwise exactly those with it: for
+  // a caller that only ranks or splits text, such as Hachidori's segmenter,
+  // which looks up every position of a sentence and reads no glossary.
+  bool glossary_text = true;
+  // Collect each result's pitches. Off, no result has any, and the results
+  // and their order are otherwise exactly those with it.
+  bool pitches = true;
 };
 
 class Lookup {

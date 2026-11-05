@@ -391,7 +391,9 @@ int main() {
           // A name without a reading, as JMnedict stores names (hachidori#658).
           R"(["銃五","","","",0,["Jūgo, a surname"],10,""],)"
           R"(["日本","にほん","","",0,["Japan"],11,""],["日本語","にほんご","","",0,["Japanese"],12,""],)"
-          R"(["日","ひ","","",0,["day"],13,""]])"}});
+          R"(["日","ひ","","",0,["day"],13,""],)"
+          // Two senses in one dictionary, the higher score second in the bank.
+          R"(["二義語","にぎご","","",0,["first sense"],14,""],["二義語","にぎご","","",5,["second sense"],15,""]])"}});
     // 重複語's two readings are listed against both their lexical order and
     // their ranks, so each order a test expects is the one it names.
     const std::string frequency = import_dict(
@@ -613,6 +615,94 @@ int main() {
     // On: lookup_dictionary answers one term dictionary only.
     const auto scoped = terms(lookup.lookup_dictionary("東京タワー", defined, 32, 16, on));
     check(same(scoped, {"東京/とうきょう"}), "lookup_dictionary, on: expected [東京/とうきょう], got " + join(scoped));
+
+    // Without glossary text and pitches (LookupOptions::glossary_text and
+    // pitches, both on by default): the same results in the same order, with
+    // the same matches, frequencies and glossary dictionaries, tags and scores,
+    // but no glossary text, no compressed data and no pitches.
+    {
+      const auto described = [](const std::vector<LookupResult>& results, bool details) {
+        std::vector<std::string> out;
+        for (const auto& result : results) {
+          const auto& term = result.term;
+          std::string line = result.matched + "|" + result.deinflected + "|" + term.expression + "/" + term.reading +
+                             "|" + term.rules + "|" + std::to_string(term.score) + "|" +
+                             std::to_string(result.trace.size()) + "|" + std::to_string(result.preprocessor_steps);
+          for (const auto& entry : term.frequencies) {
+            line += "|f:" + entry.dict_name;
+            for (const auto& value : entry.frequencies) {
+              line += ":" + std::to_string(value.value) + "=" + value.display_value;
+            }
+          }
+          for (const auto& glossary : term.glossaries) {
+            line += "|g:" + glossary.dict_name + ":" + glossary.definition_tags + ":" + glossary.term_tags + ":" +
+                    std::to_string(glossary.score);
+            if (details) {
+              line += ":" + glossary.glossary;
+            } else if (!glossary.glossary.empty() || glossary.compressed_data != nullptr ||
+                       glossary.compressed_size != 0 || glossary.zstd_dict != nullptr) {
+              line += ":kept";
+            }
+          }
+          if (details) {
+            line += "|p:" + std::to_string(term.pitches.size());
+          } else if (!term.pitches.empty()) {
+            line += "|p:kept";
+          }
+          out.push_back(line);
+        }
+        return out;
+      };
+      // Also with a dictionary selection, as Hachidori's language profiles send
+      // one: a lookup reads a selection's frequency and pitch rows apart.
+      for (const auto& [metadata, selected] :
+           std::vector<std::pair<bool, bool>>{{false, false}, {true, false}, {false, true}, {true, true}}) {
+        LookupOptions full;
+        if (selected) {
+          full.dictionaries = std::vector<std::string>{defined, frequency, pitch};
+        }
+        full.metadata_only_terms = metadata;
+        full.frequency_order = LookupFrequencyOrder::Ascending;
+        full.frequency_dictionary = "meta-frequency";
+        LookupOptions bare = full;
+        bare.glossary_text = false;
+        bare.pitches = false;
+        for (const std::string text :
+             {"東京タワー", "重複語", "銃五", "寿限無", "日本語", "食べた", "ことた", "た", "二義語"}) {
+          const auto with = lookup.lookup(text, 32, 16, full);
+          const auto without = lookup.lookup(text, 32, 16, bare);
+          // The full results do have text and pitches, so a bare result that kept
+          // them would differ.
+          std::vector<std::string> expected = described(with, false);
+          for (auto& line : expected) {
+            if (const size_t at = line.find("|p:kept"); at != std::string::npos) {
+              line.erase(at, 7);
+            }
+            for (size_t at; (at = line.find(":kept")) != std::string::npos;) {
+              line.erase(at, 5);
+            }
+          }
+          const auto got = described(without, false);
+          check(same(got, expected), text + (metadata ? ", metadata on" : "") + (selected ? ", selected" : "") +
+                                         ", bare: expected " + join(expected) + ", got " + join(got));
+          const bool texts = std::ranges::any_of(with, [](const LookupResult& r) {
+            return std::ranges::any_of(r.term.glossaries, [](const GlossaryEntry& g) { return !g.glossary.empty(); });
+          });
+          check(texts || with.empty() ||
+                    std::ranges::all_of(with, [](const LookupResult& r) { return r.term.glossaries.empty(); }),
+                text + ": the full lookup decompressed its glossaries");
+        }
+        const bool pitched = std::ranges::any_of(lookup.lookup("東京タワー", 32, 16, full),
+                                                 [](const LookupResult& r) { return !r.term.pitches.empty(); });
+        check(!metadata || pitched, "東京タワー, metadata on: the full lookup has the tower's pitch");
+        // Without text, a dictionary's glossaries are still sorted by score:
+        // 二義語's second row comes first.
+        const auto senses = lookup.lookup("二義語", 32, 16, bare);
+        check(!senses.empty() && senses[0].term.glossaries.size() == 2 && senses[0].term.glossaries[0].score == 5 &&
+                  senses[0].term.glossaries[1].score == 0,
+              "二義語, bare: the higher-scored sense first");
+      }
+    }
   }
 
   std::filesystem::remove_all(root);
