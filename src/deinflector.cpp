@@ -70,14 +70,12 @@ std::vector<DeinflectionResult> Deinflector::deinflect_neko_speech(const std::st
   if (pass == nullptr || !pack.transforms) {
     return {};
   }
-  std::vector<std::string> readings;
-  pass->builtin->variants(text, readings);
   hoshidicts::lang::Deinflections deinflections;
-  // The readings' searches share one work budget, as a lookup's do.
+  // The readings and their searches share one work budget, as a lookup's do.
   hoshidicts::lang::SearchBudget budget;
-  for (auto& reading : readings) {
+  hoshidicts::lang::read_pass(*pass, text, budget, [&](std::string reading) {
     pack.transforms->deinflect_from_step(std::move(reading), pass->step, deinflections, nullptr, nullptr, &budget);
-  }
+  });
   return convert(pack, deinflections);
 }
 

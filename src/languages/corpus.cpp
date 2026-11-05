@@ -198,12 +198,12 @@ std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::stri
       list.push_back(Deinflection{variant.text, 0, Deinflection::npos, Deinflection::none, 0});
     }
     emit(list);
-    if (!all) continue;  // every variant pass is optional (section 4.4)
+    // Every variant pass is optional (section 4.4), and none reads once the
+    // budget is spent (section 7.4).
+    if (!all || budget.spent()) continue;
     for (const auto& pass : pack.variant_passes) {
-      std::vector<std::string> readings;
-      pass.builtin->variants(variant.text, readings);
       Deinflections pass_list;
-      for (auto& reading : readings) {
+      read_pass(pass, variant.text, budget, [&](std::string reading) {
         if (pack.transforms) {
           // Each reading is its own search, in the same list.
           const size_t begin = pass_list.size();
@@ -213,7 +213,7 @@ std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::stri
         } else if (!reading.empty()) {
           pass_list.push_back(Deinflection{std::move(reading), 0, Deinflection::npos, Deinflection::step_base + pass.step, 1});
         }
-      }
+      });
       emit(pass_list);
     }
   }
@@ -317,12 +317,19 @@ SourceSearch lookup_search(const PackData& pack, std::string_view text, size_t s
       for (const auto& v : variants) lookup.work += post_forms(v.text, enough);
     }
     for (const auto& variant : variants) {
+      if (lookup.work >= enough) break;
       if (!variant.text.empty()) search(variant.text, nullptr, variant.text);
       if (!o.all) continue;  // every variant pass is optional (section 4.4)
+      // As read_pass does in Lookup: the text and each reading cost
+      // text_units, and no reading is made past the budget.
       for (const auto& pass : pack.variant_passes) {
+        if (lookup.work >= enough) break;
+        lookup.work += text_units(std::string_view(variant.text));
         std::vector<std::string> readings;
         pass.builtin->variants(variant.text, readings);
         for (auto& reading : readings) {
+          if (lookup.work >= enough) break;
+          lookup.work += text_units(std::string_view(reading));
           if (!reading.empty()) search(std::move(reading), &pass, variant.text);
         }
       }

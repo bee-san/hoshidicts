@@ -5,6 +5,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <string_view>
 
 namespace hoshidicts::lang {
 
@@ -19,8 +20,11 @@ namespace hoshidicts::lang {
 //   writes (its output, and each step of its `then` list at 4 bytes a code
 //   point) and one per code point a regular expression reads;
 // - a step list or builtin a processor applies costs the same;
-// - each variant a processor keeps costs a unit, plus one per `work_bytes`
-//   bytes of it (4 a code point);
+// - each variant a processor keeps, and each reading a variant pass makes,
+//   costs text_units: a unit, plus one per `work_bytes` bytes of it (4 a
+//   code point);
+// - deciding whether an optional processor is on, on or off, counts as
+//   operations: it looks the processor's id up in the request's options;
 // - a text a lookup looks up in its dictionaries costs a unit;
 // - everything else a search or a processor does in proportion to the size of
 //   a text or of a pack (rules skipped by their conditions, trie edges, stem
@@ -35,13 +39,23 @@ struct SearchBounds {
   static constexpr size_t ops_per_unit = 64;
 };
 
+// The units a text of `code_points` costs when a processor keeps it or a
+// variant pass makes it (section 7.4).
+constexpr size_t text_units(size_t code_points) { return 1 + 4 * code_points / SearchBounds::work_bytes; }
+// The same for a UTF-8 text.
+inline size_t text_units(std::string_view utf8) {
+  size_t n = 0;
+  for (unsigned char c : utf8) n += (c & 0xC0) != 0x80;
+  return text_units(n);
+}
+
 // The work left to what shares it (section 7.4). A lookup gives all of its
-// searches and processors one budget, so that it ends within
+// searches, processors and variant passes one budget, so that it ends within
 // SearchBounds::max_work units whatever number of prefixes, processed
 // variants and variant pass readings it searches; a search given none has
 // one of its own. A search that finds the budget spent records its text and
-// nothing more, and processors that find it spent stop: the variants they
-// have are the result.
+// nothing more, processors that find it spent stop, the variants they have
+// being the result, and variant passes make no more readings.
 struct SearchBudget {
   size_t work_left = SearchBounds::max_work;
   size_t ops = 0;  // operations not yet charged, fewer than ops_per_unit

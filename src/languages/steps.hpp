@@ -122,24 +122,31 @@ struct TextVariant {
 
 inline constexpr size_t max_text_variants = 4096;
 
-// Ids a request enabled (optional processors, transforms, variant passes).
-struct EnabledOptions {
-  std::span<const std::string> ids;
-  bool contains(std::string_view id) const {
-    for (const auto& x : ids) {
-      if (x == id) return true;
-    }
-    return false;
-  }
+// Ids a request enabled (optional processors, transforms, variant passes),
+// sorted once, so that contains() compares an id with about log2 of them
+// however many a request enables (section 7.4). It refers to the request's
+// strings, which must outlive it.
+class EnabledOptions {
+ public:
+  EnabledOptions() = default;
+  explicit EnabledOptions(std::span<const std::string> ids);
+  bool contains(std::string_view id) const;
+  // The operations contains(id) costs: one for each id it may compare `id`
+  // with, plus one per 64 bytes of `id` for each; one when none is enabled.
+  size_t lookup_ops(std::string_view id) const;
+
+ private:
+  std::vector<std::string_view> ids_;
 };
 
 // The variants of section 6.1, sorted by code points. `limit_reached` is set
 // when an input reached max_text_variants. With `budget` (section 7.4), each
 // step list or builtin a processor applies costs a unit of it, plus a unit per
-// SearchBounds::work_bytes bytes it writes and its operations, and each
-// variant a processor keeps costs a unit plus a unit per work_bytes bytes;
-// once it is spent, the processors stop, so the text and the variants made
-// before are what is left.
+// SearchBounds::work_bytes bytes it writes and its operations, each variant a
+// processor keeps costs text_units, and deciding whether an optional
+// processor is on costs the operations of looking its id up
+// (EnabledOptions::lookup_ops); once it is spent, the processors stop, so the
+// text and the variants made before are what is left.
 std::vector<TextVariant> process_text(std::span<const Processor> processors, std::string_view input,
                                       const EnabledOptions& enabled, bool* limit_reached = nullptr,
                                       SearchBudget* budget = nullptr);

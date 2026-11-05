@@ -21,6 +21,9 @@
 #if defined(__unix__) || defined(__APPLE__)
 #include <limits.h>
 #include <pthread.h>
+#if defined(__linux__)
+#include <sys/resource.h>
+#endif
 #endif
 
 #include "hoshidicts/deinflector.hpp"
@@ -1382,7 +1385,8 @@ void test_search_bounds() {
   {
     // Deinflector::deinflect_neko_speech gives its readings one budget: with
     // 2,000 appending rules the first reading's search spends it, and the
-    // other four readings record their texts only.
+    // pass makes no more readings (section 7.4): none of the results is the
+    // reading だ, ら, ま or じゃ.
     std::string rules;
     for (int i = 0; i < 2000; ++i) {
       rules += std::string(i ? "," : "") + R"({"type":"suffix","inflected":"","deinflected":"x)" + std::to_string(i) +
@@ -1395,8 +1399,12 @@ void test_search_bounds() {
       const auto results = Deinflector(pack).deinflect_neko_speech("にゃ");
       lang::Deinflections one;
       pack->data().transforms->deinflect("な", one);
-      check(results.size() == one.size() + 4, "the readings share one budget: " + std::to_string(results.size()) +
-                                                  " results, one reading alone " + std::to_string(one.size()));
+      const bool others = std::ranges::any_of(results, [](const DeinflectionResult& r) {
+        return r.text == "だ" || r.text == "ら" || r.text == "ま" || r.text == "じゃ";
+      });
+      check(!others && results.size() <= one.size() && results.size() + 8 > one.size(),
+            "the readings share one budget: " + std::to_string(results.size()) + " results, one reading alone " +
+                std::to_string(one.size()));
     }
   }
   {
@@ -1745,6 +1753,100 @@ void test_work_accounting() {
     const auto fanned = lang::process_text(fan_kana, "aaaa", {}, nullptr, &fan_budget);
     check(ja_processors[1].id == "kana" && fanned.size() == 16 && fan_budget.used() == 66,
           "builtins on many variants charge the variants kept: " + std::to_string(fan_budget.used()));
+    // An optional processor costs the look-up of its id in the request's
+    // options, on or off (section 7.4): 64 that are off cost an operation
+    // each with no options, 1 unit, and 2 each against 3 options, 2 units.
+    lang::Processor off_processor{"off", "", true, true, {{case_step(lang::CaseMode::Upper)}}};
+    std::vector<lang::Processor> offs;
+    for (int i = 0; i < 64; ++i) {
+      off_processor.id = "off" + std::to_string(i);
+      offs.push_back(off_processor);
+    }
+    lang::SearchBudget off_budget;
+    const auto kept = lang::process_text(offs, "a", {}, nullptr, &off_budget);
+    const std::vector<std::string> three{"x", "y", "z"};
+    lang::SearchBudget three_budget;
+    const auto kept3 = lang::process_text(offs, "a", lang::EnabledOptions{three}, nullptr, &three_budget);
+    check(kept.size() == 1 && kept[0].text == "a" && off_budget.used() == 1 && kept3.size() == 1 &&
+              three_budget.used() == 2,
+          "optional processors that are off cost operations: " + std::to_string(off_budget.used()) + " and " +
+              std::to_string(three_budget.used()));
+  }
+  {
+    // The request's options are a sorted set (section 7.4).
+    const std::vector<std::string> ids{"pass", "b", "zeta", "a"};
+    const lang::EnabledOptions set{ids};
+    const lang::EnabledOptions none;
+    check(set.contains("a") && set.contains("b") && set.contains("pass") && set.contains("zeta") &&
+              !set.contains("c") && !set.contains("") && !none.contains("a") && set.lookup_ops("a") == 3 &&
+              none.lookup_ops("a") == 1 && set.lookup_ops(std::string(64, 'q')) == 6,
+          "enabled options");
+  }
+  {
+    // A variant pass reads within a budget (read_pass, section 7.4): the
+    // text and each reading cost text_units, and no reading is made once the
+    // budget is spent.
+    const auto japanese = hoshidicts::LanguageRegistry::with_builtin();
+    const auto& pass = japanese.find("ja")->data().variant_passes.at(0);
+    std::vector<std::string> given;
+    const auto collect = [&](std::string reading) { given.push_back(std::move(reading)); };
+    lang::SearchBudget fresh;
+    const bool more = lang::read_pass(pass, "にゃにゃ", fresh, collect);
+    check(more && given.size() == 10 && fresh.used() == 11,
+          "a pass's readings are charged: " + std::to_string(fresh.used()));
+    given.clear();
+    lang::SearchBudget three;
+    three.work_left = 3;
+    check(!lang::read_pass(pass, "にゃにゃ", three, collect) && given.size() == 2 && given[0] == "なにゃ" &&
+              three.spent(),
+          "a pass stops when the budget is spent: " + std::to_string(given.size()) + " readings");
+    given.clear();
+    lang::SearchBudget spent;
+    spent.work_left = 0;
+    check(!lang::read_pass(pass, "にゃ", spent, collect) && given.empty(), "a spent budget makes no reading");
+    check(lang::text_units(size_t{63}) == 1 && lang::text_units(size_t{64}) == 2 &&
+              lang::text_units(std::string_view("にゃ")) == 1,
+          "text_units");
+    // lookup_search counts the pass as Lookup does: the lookup of にゃ alone
+    // (scan 0) costs 3 units without the pass (decapitalize, the variant it
+    // keeps, the form looked up) and 11 more with it (the text read, 5
+    // readings, and the 5 forms looked up).
+    const auto with_neko =
+        load(transforms_json(transform(
+                 "s", R"({"type":"suffix","inflected":"s","deinflected":"","conditionsIn":[],"conditionsOut":[]})")),
+             &error, R"(,"variantPasses":[{"id":"neko","builtin":"ja.nekoSpeech","optional":true}])");
+    check(with_neko != nullptr, "the neko pack loads: " + error);
+    if (with_neko) {
+      lang::SearchCache all_cache;
+      lang::SearchCache default_cache;
+      const auto all = lang::lookup_search(with_neko->data(), "にゃ", 0, lang::TestOptions::All, all_cache);
+      const auto defaults =
+          lang::lookup_search(with_neko->data(), "にゃ", 0, lang::TestOptions::Default, default_cache);
+      check(defaults.work == 3 && all.work == 3 + 11 && all.searches == 6,
+            "lookup_search charges the pass: " + std::to_string(defaults.work) + " and " + std::to_string(all.work));
+      // Past the budget it reads no pass: a cache that says the search of
+      // にゃ used 2,000,000 units leaves the readings unsearched.
+      lang::SearchCache full;
+      full["にゃ"].work = 2000000;
+      full["にゃ"].searches = 1;
+      const auto past_budget = lang::lookup_search(with_neko->data(), "にゃ", 0, lang::TestOptions::All, full);
+      check(past_budget.bound == Bound::Work && past_budget.searches == 1 && full.size() == 1,
+            "lookup_search reads no pass past the budget: " + std::to_string(past_budget.searches) + " searches");
+    }
+    // With the budget spent, read_pass does not even call the builtin.
+    static int pass_calls = 0;
+    static const lang::PassBuiltin counting{"test.count", "count", "",
+                                            [](const std::string&, std::vector<std::string>& out) {
+                                              ++pass_calls;
+                                              out.emplace_back("x");
+                                            }};
+    const lang::VariantPass counted_pass{"count", &counting, 0};
+    lang::SearchBudget none_left;
+    none_left.work_left = 0;
+    lang::read_pass(counted_pass, "a", none_left, collect);
+    lang::SearchBudget some_left;
+    lang::read_pass(counted_pass, "a", some_left, collect);
+    check(pass_calls == 1, "a spent budget calls no pass builtin: " + std::to_string(pass_calls) + " calls");
   }
   {
     // normalize_text (readingNormalizer, formOfNormalizer) stays within the
@@ -1788,7 +1890,7 @@ void test_work_accounting() {
   {
     // A corpus row's variant pass readings share its budget (deinflect_source),
     // as Deinflector::deinflect_neko_speech's do: with 2,000 appending rules
-    // the search of にゃ spends it, and each reading records its text only.
+    // the search of にゃ spends it, and the pass makes no readings.
     std::string rules;
     for (int i = 0; i < 2000; ++i) {
       rules += std::string(i ? "," : "") + R"({"type":"suffix","inflected":"","deinflected":"x)" + std::to_string(i) +
@@ -1800,9 +1902,8 @@ void test_work_accounting() {
       bool limit = false;
       const auto all = lang::deinflect_source(pack->data(), "にゃ", &limit, lang::TestOptions::All);
       const auto defaults = lang::deinflect_source(pack->data(), "にゃ", &limit, lang::TestOptions::Default);
-      check(all.size() == defaults.size() + 5,
-            "a corpus row's readings share its budget: " + std::to_string(all.size()) + " and " +
-                std::to_string(defaults.size()));
+      check(all.size() == defaults.size(), "a corpus row's readings share its budget: " + std::to_string(all.size()) +
+                                               " and " + std::to_string(defaults.size()));
     }
   }
   {
@@ -2603,6 +2704,118 @@ void test_lookup_budget() {
     pe_lookup.lookup(std::string(16, 'a'), 16, 16, options);
     const double seconds = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
     check(seconds < 10, "processors stop once the budget is spent: " + std::to_string(seconds) + " s");
+  }
+  // Variant passes read within the lookup's budget (section 7.4; the delta
+  // audit's vp packs): with the 2,000 appending rules the search of aにゃ
+  // spends it, so the pass makes no reading. With a dictionary that has aな,
+  // a reading made anyway would find aな for the whole of aにゃ.
+  {
+    const std::string pass_index = R"({"title":"passes","format":3,"revision":"1"})";
+    const std::string pass_bank = R"([["aな","","","",0,["a na"],0,""],["a","","","",0,["the letter"],0,""]])";
+    {
+      std::ofstream(root / "passes.zip", std::ios::binary)
+          << build_zip({{"index.json", pass_index}, {"term_bank_1.json", pass_bank}});
+    }
+    const auto pass_import = dictionary_importer::import((root / "passes.zip").string(), root.string());
+    check(pass_import.success, "import the passes dictionary: " + pass_import.error);
+    DictionaryQuery pass_query;
+    check(pass_query.add_term_dict((root / "passes").string()), "load the passes dictionary");
+    const auto with_pass = [&](const std::string& code, const std::string& rules, const std::string& processors) {
+      std::string pack = language;
+      pack.replace(pack.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":")" + code + "\"");
+      const std::string decapitalize = R"({"id":"decapitalize","variants":[[{"case":"lower"}]]})";
+      pack.replace(pack.find(decapitalize), decapitalize.size(), decapitalize + processors);
+      pack.replace(
+          pack.find(R"("transforms":"transforms.json")"), std::strlen(R"("transforms":"transforms.json")"),
+          R"("transforms":"transforms.json","variantPasses":[{"id":"neko","builtin":"ja.nekoSpeech","optional":true}])");
+      check(registry.add(pack, transforms_json(rules), &error), "add the " + code + " pack: " + error);
+    };
+    with_pass("zu", past, "");
+    with_pass("zv", past + "," + transform("wide", wide), "");
+    const Lookup pass_lookup(pass_query, registry);
+    const auto first_of = [&](const std::string& code, const std::string& text) {
+      LookupOptions options;
+      options.language = code;
+      options.language_options = {"neko"};
+      const auto results = pass_lookup.lookup(text, 16, 16, options);
+      return results.empty() ? std::string("(none)") : results.front().term.expression + "|" + results.front().matched;
+    };
+    check(first_of("zu", "aにゃ") == "aな|aにゃ", "a pass reading within the budget: " + first_of("zu", "aにゃ"));
+    check(first_of("zv", "aにゃ") == "a|a", "no pass reading once the budget is spent: " + first_of("zv", "aにゃ"));
+    // The vpb pack: each a becomes 16 x にゃx, and alternatives x -> y make
+    // 256 variants of each prefix, each with 1,280 readings of 768 code
+    // points. Reading them all held 3.7 GB; within the budget a lookup ends
+    // at once in about 150 MB.
+    with_pass(
+        "zz", past, R"(,{"id":"nx","keepInput":false,"variants":[[{"map":{"a":")" + [] {
+          std::string s;
+          for (int i = 0; i < 16; ++i) s += "にゃx";
+          return s;
+        }() + R"("}}]]},{"id":"alt","variants":[[{"alternatives":{"x":["y"]},"limit":256}]]})");
+#if defined(__linux__)
+    rusage before{};
+    getrusage(RUSAGE_SELF, &before);
+#endif
+    const auto start = std::chrono::steady_clock::now();
+    first_of("zz", std::string(16, 'a'));
+    const double seconds = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
+    check(seconds < 10, "a lookup with many pass readings ends: " + std::to_string(seconds) + " s");
+#if defined(__linux__)
+    rusage after{};
+    getrusage(RUSAGE_SELF, &after);
+    const long grown_mb = (after.ru_maxrss - before.ru_maxrss) / 1024;
+    check(grown_mb < 1024, "a lookup with many pass readings stays within the budget's memory: " +
+                               std::to_string(grown_mb) + " MB more");
+#endif
+    lang::SearchCache pass_cache;
+    const auto counted =
+        lang::lookup_search(registry.find("zz")->data(), std::string(16, 'a'), 16, lang::TestOptions::All, pass_cache);
+    check(counted.bound == lang::BoundHit::Bound::Work,
+          "lookup_search counts the pass readings: " + std::to_string(counted.work));
+  }
+  // Optional processors cost operations whether on or off, and the options
+  // are a sorted set (section 7.4; the delta audit's od and oo packs). With
+  // the 2-rule fan-out, each of the lookup's deinflections goes through
+  // 100,000 postprocessors that are off: 1,562 units each, so the budget is
+  // spent after a few hundred, and the rest are not walked (31.7 s before).
+  // 60,000 optional preprocessors, all on, cost 2 units each for the empty
+  // list and the variant kept (each compared with all the options before,
+  // 12.1 s for 30,000).
+  {
+    const auto optional_processors = [](int n) {
+      std::string list;
+      for (int i = 0; i < n; ++i) list += R"(,{"id":"o)" + std::to_string(i) + R"(","optional":true,"variants":[[]]})";
+      return list;
+    };
+    std::string off = language;
+    off.replace(off.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":"zo")");
+    off.replace(off.find(R"("transforms":"transforms.json")"), std::strlen(R"("transforms":"transforms.json")"),
+                R"("transforms":"transforms.json","postprocessors":[)" + optional_processors(100000).substr(1) + "]");
+    const std::string fan_rules = transforms_json(transform(
+        "f",
+        R"({"type":"replace","inflected":"a","deinflected":"b","occurrence":"first","conditionsIn":[],"conditionsOut":[]},
+               {"type":"replace","inflected":"a","deinflected":"c","occurrence":"first","conditionsIn":[],"conditionsOut":[]})"));
+    check(registry.add(off, fan_rules, &error), "add the off postprocessors pack: " + error);
+    std::string on = language;
+    on.replace(on.find(R"("code":"xx")"), std::strlen(R"("code":"xx")"), R"("code":"zn")");
+    const std::string decapitalize = R"({"id":"decapitalize","variants":[[{"case":"lower"}]]})";
+    on.replace(on.find(decapitalize), decapitalize.size(), decapitalize + optional_processors(60000));
+    check(registry.add(on, transforms_json(past), &error), "add the optional preprocessors pack: " + error);
+    std::vector<std::string> all_on;
+    for (int i = 0; i < 60000; ++i) all_on.push_back("o" + std::to_string(i));
+    const Lookup options_lookup(query, registry);
+    const auto timed = [&](const std::string& code, const std::vector<std::string>& ids) {
+      LookupOptions options;
+      options.language = code;
+      options.language_options = ids;
+      const auto start = std::chrono::steady_clock::now();
+      options_lookup.lookup(std::string(16, 'a'), 16, 16, options);
+      return std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
+    };
+    const double off_seconds = timed("zo", {});
+    check(off_seconds < 10, "postprocessors that are off are charged: " + std::to_string(off_seconds) + " s");
+    const double on_seconds = timed("zn", all_on);
+    check(on_seconds < 10, "optional processors all on: " + std::to_string(on_seconds) + " s");
   }
   // Lookup charges a unit for each text it looks up (section 7.4). With -ed
   // and the 2-rule fan-out on a, the prefixes a lookup of walked + a x 17

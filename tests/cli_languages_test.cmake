@@ -74,9 +74,10 @@ foreach(options "" "--options;nekoSpeech")
 endforeach()
 list(GET counts 0 alone)
 list(GET counts 1 with_pass)
-math(EXPR expected "${alone} + 5")
-if(NOT with_pass EQUAL expected OR alone LESS 100)
-  message(SEND_ERROR "search budget, readings: ${alone} results alone, ${with_pass} with the pass (expected ${expected})")
+# The search of にゃ spends the budget, so the pass makes no readings
+# (docs/languages.md 7.4): the same results with it as without.
+if(NOT with_pass EQUAL alone OR alone LESS 100)
+  message(SEND_ERROR "search budget, readings: ${alone} results alone, ${with_pass} with the pass (expected ${alone})")
 else()
   message(STATUS "ok: search budget, readings share it")
 endif()

@@ -5,6 +5,7 @@
 #include <utf8.h>
 
 #include <algorithm>
+#include <bit>
 #include <iterator>
 
 #include "case_mapping.hpp"
@@ -205,6 +206,18 @@ void apply_alternatives(const Step& step, const std::u32string& text, std::vecto
 }
 
 }  // namespace
+
+EnabledOptions::EnabledOptions(std::span<const std::string> ids) {
+  ids_.assign(ids.begin(), ids.end());
+  std::ranges::sort(ids_);
+}
+
+bool EnabledOptions::contains(std::string_view id) const { return std::ranges::binary_search(ids_, id); }
+
+size_t EnabledOptions::lookup_ops(std::string_view id) const {
+  if (ids_.empty()) return 1;
+  return static_cast<size_t>(std::bit_width(ids_.size())) * (1 + id.size() / 64);
+}
 
 void apply_step(const Step& step, const std::u32string& in, std::u32string& out) {
   StepLimit unlimited;
@@ -429,7 +442,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
   const auto charge_kept = [budget, &variants, &count] {
     if (budget == nullptr) return;
     size_t units = 0;
-    for (size_t k = 0; k < count; ++k) units += 1 + 4 * variants[k].first.size() / SearchBounds::work_bytes;
+    for (size_t k = 0; k < count; ++k) units += text_units(variants[k].first.size());
     budget->spend(units);
   };
   static thread_local std::u32string scratch;
@@ -440,8 +453,11 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
   const size_t max_code_points = step_limit(count == 0 ? 0 : variants[0].first.size());
   for (const auto& processor : processors) {
     if (spent()) return;
-    if (processor.optional && !enabled.contains(processor.id)) {
-      continue;
+    // Deciding whether an optional processor is on looks its id up in the
+    // request's options: operations, as for a rule its options skip.
+    if (processor.optional) {
+      if (budget != nullptr) budget->add_ops(enabled.lookup_ops(processor.id));
+      if (!enabled.contains(processor.id)) continue;
     }
     NextVariants next{next_items};
     if (!processor.builtins.empty() && count * (processor.builtins.size() + 1) <= index_from) {

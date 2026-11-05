@@ -365,11 +365,10 @@ int cmd_deinflect(Context& context, const Arguments& args) {
     } else {
       list.push_back(lang::Deinflection{input, 0, lang::Deinflection::npos, lang::Deinflection::none, 0});
     }
-    // An enabled variant pass's readings follow, as a corpus row sees them.
+    // An enabled variant pass's readings follow, as a corpus row sees them,
+    // within the input's budget (section 7.4).
     for (const auto* pass : passes) {
-      std::vector<std::string> readings;
-      pass->builtin->variants(input, readings);
-      for (auto& reading : readings) {
+      lang::read_pass(*pass, input, budget, [&](std::string reading) {
         if (pack.transforms) {
           const size_t begin = list.size();
           pack.transforms->deinflect_from_step(std::move(reading), pass->step, list, &enabled_transforms, &hit,
@@ -380,7 +379,7 @@ int cmd_deinflect(Context& context, const Arguments& args) {
           list.push_back(lang::Deinflection{std::move(reading), 0, lang::Deinflection::npos,
                                             lang::Deinflection::step_base + pass->step, 1});
         }
-      }
+      });
     }
     for (size_t i = 0; i < list.size(); ++i) {
       const auto& d = list[i];

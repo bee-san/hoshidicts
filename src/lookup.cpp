@@ -198,6 +198,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     option_storage.emplace_back("nekoSpeech");
     option_ids = option_storage;
   }
+  // The request's options, a sorted set (section 7.4).
   const lang::EnabledOptions enabled{option_ids};
   std::vector<bool> enabled_transforms;
   const std::vector<bool>* enabled_transforms_ptr = nullptr;
@@ -715,25 +716,17 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // Variant passes (NekoPara's cat speech, LookupOptions::neko_speech): a
   // pass's reading counts only for a prefix longer than every ordinary match,
   // long keys included, so it can only add a term or lengthen one; every
-  // ordinary result above is otherwise kept as it is.
-  if (!passes.empty()) {
-    size_t ordinary_len = 0;
-    for (const auto& candidate : candidates) {
-      ordinary_len = std::max(ordinary_len, candidate.matched_len);
-    }
+  // ordinary result above is otherwise kept as it is. The passes read within
+  // the lookup's budget and stop once it is spent (section 7.4).
+  const auto read_passes = [&](size_t ordinary_len) {
     for (auto& prefix : scanned) {
       if (prefix.length <= ordinary_len) {
         continue;
       }
       for (const auto& variant : prefix.variants) {
         for (const lang::VariantPass* pass : passes) {
-          std::vector<std::string> readings;
-          pass->builtin->variants(variant.text, readings);
-          if (readings.empty()) {
-            continue;
-          }
           Deinflections deinflection_results;
-          for (auto& reading : readings) {
+          const bool more = lang::read_pass(*pass, variant.text, search_budget, [&](std::string reading) {
             if (transforms != nullptr) {
               transforms->deinflect_from_step(std::move(reading), pass->step, deinflection_results,
                                               enabled_transforms_ptr, nullptr, &search_budget);
@@ -741,18 +734,25 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
               deinflection_results.push_back(Deinflection{std::move(reading), 0, Deinflection::npos,
                                                           Deinflection::step_base + pass->step, 1});
             }
+          });
+          if (!deinflection_results.empty()) {
+            const Deinflection* base = deinflection_results.data();
+            for (uint32_t di = 0; di < deinflection_results.size(); ++di) {
+              merge_deinflection(prefix.length, base, di, variant.steps, false);
+            }
+            deinflection_store.push_back(std::move(deinflection_results));
           }
-          if (deinflection_results.empty()) {
-            continue;
-          }
-          const Deinflection* base = deinflection_results.data();
-          for (uint32_t di = 0; di < deinflection_results.size(); ++di) {
-            merge_deinflection(prefix.length, base, di, variant.steps, false);
-          }
-          deinflection_store.push_back(std::move(deinflection_results));
+          if (!more) return;
         }
       }
     }
+  };
+  if (!passes.empty()) {
+    size_t ordinary_len = 0;
+    for (const auto& candidate : candidates) {
+      ordinary_len = std::max(ordinary_len, candidate.matched_len);
+    }
+    read_passes(ordinary_len);
   }
 
   // The references the rows the passes found named.
