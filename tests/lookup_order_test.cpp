@@ -391,7 +391,9 @@ int main() {
           // A name without a reading, as JMnedict stores names (hachidori#658).
           R"(["銃五","","","",0,["Jūgo, a surname"],10,""],)"
           R"(["日本","にほん","","",0,["Japan"],11,""],["日本語","にほんご","","",0,["Japanese"],12,""],)"
-          R"(["日","ひ","","",0,["day"],13,""]])"}});
+          R"(["日","ひ","","",0,["day"],13,""],)"
+          // Two senses in one dictionary, the higher score second in the bank.
+          R"(["二義語","にぎご","","",0,["first sense"],14,""],["二義語","にぎご","","",5,["second sense"],15,""]])"}});
     // 重複語's two readings are listed against both their lexical order and
     // their ranks, so each order a test expects is the one it names.
     const std::string frequency = import_dict(
@@ -651,15 +653,22 @@ int main() {
         }
         return out;
       };
-      for (const bool metadata : {false, true}) {
+      // Also with a dictionary selection, as Hachidori's language profiles send
+      // one: a lookup reads a selection's frequency and pitch rows apart.
+      for (const auto& [metadata, selected] :
+           std::vector<std::pair<bool, bool>>{{false, false}, {true, false}, {false, true}, {true, true}}) {
         LookupOptions full;
+        if (selected) {
+          full.dictionaries = std::vector<std::string>{defined, frequency, pitch};
+        }
         full.metadata_only_terms = metadata;
         full.frequency_order = LookupFrequencyOrder::Ascending;
         full.frequency_dictionary = "meta-frequency";
         LookupOptions bare = full;
         bare.glossary_text = false;
         bare.pitches = false;
-        for (const std::string text : {"東京タワー", "重複語", "銃五", "寿限無", "日本語", "食べた", "ことた", "た"}) {
+        for (const std::string text :
+             {"東京タワー", "重複語", "銃五", "寿限無", "日本語", "食べた", "ことた", "た", "二義語"}) {
           const auto with = lookup.lookup(text, 32, 16, full);
           const auto without = lookup.lookup(text, 32, 16, bare);
           // The full results do have text and pitches, so a bare result that kept
@@ -674,8 +683,8 @@ int main() {
             }
           }
           const auto got = described(without, false);
-          check(same(got, expected),
-                text + (metadata ? ", metadata on" : "") + ", bare: expected " + join(expected) + ", got " + join(got));
+          check(same(got, expected), text + (metadata ? ", metadata on" : "") + (selected ? ", selected" : "") +
+                                         ", bare: expected " + join(expected) + ", got " + join(got));
           const bool texts = std::ranges::any_of(with, [](const LookupResult& r) {
             return std::ranges::any_of(r.term.glossaries, [](const GlossaryEntry& g) { return !g.glossary.empty(); });
           });
@@ -686,6 +695,12 @@ int main() {
         const bool pitched = std::ranges::any_of(lookup.lookup("東京タワー", 32, 16, full),
                                                  [](const LookupResult& r) { return !r.term.pitches.empty(); });
         check(!metadata || pitched, "東京タワー, metadata on: the full lookup has the tower's pitch");
+        // Without text, a dictionary's glossaries are still sorted by score:
+        // 二義語's second row comes first.
+        const auto senses = lookup.lookup("二義語", 32, 16, bare);
+        check(!senses.empty() && senses[0].term.glossaries.size() == 2 && senses[0].term.glossaries[0].score == 5 &&
+                  senses[0].term.glossaries[1].score == 0,
+              "二義語, bare: the higher-scored sense first");
       }
     }
   }

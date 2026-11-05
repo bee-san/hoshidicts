@@ -1289,7 +1289,9 @@ each request from the right ones without reloading.
 
 Splitting running text into words (Hachidori's word highlighting) is done by
 hosts on top of `lookup`; Hachidori's segmenter lives in its
-`wasm/bindings.cpp`. A pack supplies what a segmenter needs:
+`wasm/bindings.cpp`. A segmenter that reads no glossary text or pitches can
+turn off `LookupOptions::glossary_text` and `pitches`; everything else in the
+results stays the same. A pack supplies what a segmenter needs:
 
 - `scan` segmentation: the pack's `functionWords`, around which the segmenter
   may split (Japanese particles, as today).

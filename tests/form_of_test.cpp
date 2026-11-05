@@ -303,6 +303,11 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
                               R"("formOf": "follow")", R"("formOf": "follow", "confirmedOrder": "references")"),
                      transforms, &error),
         "the character resolution copy with confirmedOrder references loads: " + error);
+  // fn is fo with a readingNormalizer, so readings are merged (9.6).
+  check(registry.add(replaced(replaced(language, R"("code": "fo")", R"("code": "fn")"), R"("readingNormalizer": null)",
+                              R"("readingNormalizer": [{"case": "lower"}])"),
+                     transforms, &error),
+        "the readingNormalizer copy loads: " + error);
   const Lookup lookup(query, registry);
   const auto run = [&](const std::string& text, const std::string& code = "fo", LookupOptions options = {}) {
     options.language = code;
@@ -585,21 +590,26 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
     };
     LookupOptions metadata;
     metadata.metadata_only_terms = true;
-    for (const auto& [text, options] : std::vector<std::pair<std::string, LookupOptions>>{
-             {"walked", {}}, {"unwalked", {}}, {"left", {}}, {"leaves", {}}, {"strode", metadata}, {"Walked", {}}}) {
-      const auto full = run(text, "fo", options);
-      const auto bare = run(text, "fo", bare_of(options));
-      check(!full.empty() && without_text(bare) == without_text(full),
-            "no glossary text or pitches: " + text + " gives the same results" + mode + ": " + brief(bare));
-      check(std::ranges::none_of(bare,
-                                 [](const LookupResult& r) {
-                                   return !r.term.pitches.empty() ||
-                                          std::ranges::any_of(r.term.glossaries, [](const GlossaryEntry& g) {
-                                            return !g.glossary.empty() || g.compressed_data != nullptr ||
-                                                   g.compressed_size != 0 || g.zstd_dict != nullptr;
-                                          });
-                                 }),
-            "no glossary text or pitches: " + text + " has none" + mode);
+    // fo, and fn, whose terms' frequencies and pitches are read for their
+    // merged readings.
+    for (const std::string code : {"fo", "fn"}) {
+      for (const auto& [text, options] : std::vector<std::pair<std::string, LookupOptions>>{
+               {"walked", {}}, {"unwalked", {}}, {"left", {}}, {"leaves", {}}, {"strode", metadata}, {"Walked", {}}}) {
+        const auto full = run(text, code, options);
+        const auto bare = run(text, code, bare_of(options));
+        const std::string what = "no glossary text or pitches: " + text + " (" + code + ")";
+        check(!full.empty() && without_text(bare) == without_text(full),
+              what + " gives the same results" + mode + ": " + brief(bare));
+        check(std::ranges::none_of(bare,
+                                   [](const LookupResult& r) {
+                                     return !r.term.pitches.empty() ||
+                                            std::ranges::any_of(r.term.glossaries, [](const GlossaryEntry& g) {
+                                              return !g.glossary.empty() || g.compressed_data != nullptr ||
+                                                     g.compressed_size != 0 || g.zstd_dict != nullptr;
+                                            });
+                                   }),
+              what + " has none" + mode);
+      }
     }
     // The full lookup has the text and the pronunciation the bare one leaves out.
     const auto walked = run("walked");
