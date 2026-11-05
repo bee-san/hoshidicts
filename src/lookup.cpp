@@ -482,20 +482,27 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     }
   };
 
-  const auto collect_metadata = [&](RawTerms& terms) {
+  // Without `pitches`, only the frequencies.
+  const auto collect_metadata = [&](RawTerms& terms, bool pitches) {
     for (auto& term : terms.terms) {
       if (term.merged != UINT32_MAX) {
         query_.collect_frequencies(term.expression, terms.normalized->merged_readings[term.merged], term.frequencies, pins,
                                    selection);
-        query_.collect_pitches(term.expression, terms.normalized->merged_readings[term.merged], term.pitches, pins,
-                               selection);
+        if (pitches) {
+          query_.collect_pitches(term.expression, terms.normalized->merged_readings[term.merged], term.pitches, pins,
+                                 selection);
+        }
       } else if (selection.all) {
         query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
-        query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
+        if (pitches) {
+          query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
+        }
       } else {
         const std::string_view reading = term.reading;
         query_.collect_frequencies(term.expression, std::span(&reading, 1), term.frequencies, pins, selection);
-        query_.collect_pitches(term.expression, std::span(&reading, 1), term.pitches, pins, selection);
+        if (pitches) {
+          query_.collect_pitches(term.expression, std::span(&reading, 1), term.pitches, pins, selection);
+        }
       }
     }
   };
@@ -511,7 +518,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       note_references(matched_len, base, di, steps);
     }
     filter_by_pos(terms, base[di].conditions);
-    collect_metadata(terms);
+    collect_metadata(terms, options.pitches);
     add_terms(matched_len, base, di, &form, steps, std::move(terms), SIZE_MAX);
   };
 
@@ -549,7 +556,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
           reference.text = std::move(normalized);
         }
       }
-      collect_metadata(terms);
+      collect_metadata(terms, options.pitches);
       add_terms(reference.matched_len, reference.base, reference.index, &reference.text, reference.steps,
                 std::move(terms), SIZE_MAX, &reference);
     }
@@ -806,9 +813,13 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
         if (existing != nullptr && has_glossaries(*existing)) {
           continue;
         }
-        collect_metadata(terms);
+        // Its pitches decide whether it is a term, so they are read either way.
+        collect_metadata(terms, true);
         if (terms.terms.front().frequencies.empty() && terms.terms.front().pitches.empty()) {
           continue;
+        }
+        if (!options.pitches) {
+          terms.terms.front().pitches.clear();
         }
         add_terms(probe.length, probe.base, probe.index, probe.form, probe.steps, std::move(terms),
                   term_dictionary_count + i);
@@ -1108,15 +1119,18 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   retained.reserve(kept.size());
   for (const uint32_t i : kept) {
     Candidate& c = candidates[i];
-    retained.push_back(LookupResult{.matched = lookup_string.substr(0, c.matched_len),
-                                    .deinflected = *c.form,
-                                    .trace = trace_of(c),
-                                    .term = query_.build_term(term_store[c.store_index], *c.term, pins),
-                                    .preprocessor_steps = c.steps});
+    retained.push_back(
+        LookupResult{.matched = lookup_string.substr(0, c.matched_len),
+                     .deinflected = *c.form,
+                     .trace = trace_of(c),
+                     .term = query_.build_term(term_store[c.store_index], *c.term, pins, options.glossary_text),
+                     .preprocessor_steps = c.steps});
   }
 
-  for (auto& r : retained) {
-    query_.materialize(r.term);
+  if (options.glossary_text) {
+    for (auto& r : retained) {
+      query_.materialize(r.term);
+    }
   }
 
   return retained;

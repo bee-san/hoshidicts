@@ -273,7 +273,9 @@ class DictionaryQuery {
   // The form-of references of a row query_raw listed in form_of_rows, read
   // from its glossary, appended to `out`.
   static void read_form_of(const RawFormOfRow& row, BlobPins& pins, std::vector<FormOfReference>& out);
-  TermResult build_term(const RawTerms& raw, RawTerm& term, BlobPins& pins) const;
+  // Without `compressed`, the glossaries point at no compressed data, and
+  // nothing of their blobs is read.
+  TermResult build_term(const RawTerms& raw, RawTerm& term, BlobPins& pins, bool compressed = true) const;
   void collect_frequencies(std::string_view expression, std::string_view reading,
                            std::vector<FrequencyEntry>& out, BlobPins& pins) const;
   void collect_pitches(std::string_view expression, std::string_view reading, std::vector<PitchEntry>& out,

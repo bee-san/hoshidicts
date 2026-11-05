@@ -731,7 +731,7 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
   return raw;
 }
 
-TermResult DictionaryQuery::build_term(const RawTerms& raw, RawTerm& term, BlobPins& pins) const {
+TermResult DictionaryQuery::build_term(const RawTerms& raw, RawTerm& term, BlobPins& pins, bool compressed) const {
   TermResult result{.expression = std::string(term.expression),
                     .reading = std::string(term.reading),
                     .rules = {},
@@ -756,9 +756,11 @@ TermResult DictionaryQuery::build_term(const RawTerms& raw, RawTerm& term, BlobP
     entry.dict_name = *g.dict_name;
     entry.definition_tags = g.definition_tags;
     entry.term_tags = g.term_tags;
-    entry.compressed_data = g.blobs->range(g.compressed_offset, g.compressed_size, pins);
-    entry.compressed_size = g.compressed_size;
-    entry.zstd_dict = g.zstd_dict;
+    if (compressed) {
+      entry.compressed_data = g.blobs->range(g.compressed_offset, g.compressed_size, pins);
+      entry.compressed_size = g.compressed_size;
+      entry.zstd_dict = g.zstd_dict;
+    }
     entry.score = g.score;
     entry.drop_form_of = g.drop_form_of;
   }
