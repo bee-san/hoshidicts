@@ -60,6 +60,11 @@ std::shared_ptr<const page> page_cache::get(uint64_t file_id, const file_reader&
   return fresh;
 }
 
+bool page_cache::contains(uint64_t file_id, uint64_t index) const {
+  std::lock_guard lock(mutex_);
+  return index_.contains(key{.file = file_id, .index = index});
+}
+
 void page_cache::forget(uint64_t file_id) {
   std::lock_guard lock(mutex_);
   for (auto it = lru_.begin(); it != lru_.end();) {

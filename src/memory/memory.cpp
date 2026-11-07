@@ -383,6 +383,17 @@ bool file_reader::read(void* out, size_t len, uint64_t offset) const {
   return true;
 }
 
+void file_reader::advise(uint64_t offset, size_t len) const {
+#if !defined(_WIN32) && defined(POSIX_FADV_WILLNEED)
+  if (fd_ >= 0) {
+    posix_fadvise(fd_, static_cast<off_t>(offset), static_cast<off_t>(len), POSIX_FADV_WILLNEED);
+  }
+#else
+  (void)offset;
+  (void)len;
+#endif
+}
+
 void file_reader::close() {
 #ifdef _WIN32
   if (handle_ != nullptr) {

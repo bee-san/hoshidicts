@@ -38,6 +38,10 @@ class BlobFile {
   const uint8_t* range(uint64_t offset, size_t length, BlobPins& pins) const {
     return paged() ? paged_range(offset, length, pins) : mapping_.data + offset;
   }
+  // Tells a paged file that `length` bytes at `offset` will be read soon, so
+  // that the pages of them the cache does not hold can be read ahead together
+  // (file_reader::advise).
+  void advise(uint64_t offset, size_t length) const;
   // Scalar index probes copy their slot and release each page immediately;
   // they need neither the query's pins nor a spill allocation at a boundary.
   void copy(uint64_t offset, size_t length, void* out) const;
