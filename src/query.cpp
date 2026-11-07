@@ -92,6 +92,11 @@ bool read_whole(const std::filesystem::path& path, std::string& out, std::ios::o
 
 struct DictionaryQuery::DictionaryData {
   int version;
+#ifdef HOSHIDICTS_YOMITAN
+  // The term records hold the fields for Yomitan's host after the score
+  // (.hoshidicts_yomitan_1).
+  bool yomitan_rows = false;
+#endif
   // The imported summary's tag-bank rows (empty before they were stored).
   std::vector<SummaryTag> tags;
   hash::linear table;
@@ -379,6 +384,9 @@ bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict,
 
   dict.data = std::make_shared<DictionaryData>();
   dict.data->version = version;
+#ifdef HOSHIDICTS_YOMITAN
+  dict.data->yomitan_rows = std::filesystem::is_regular_file(path / ".hoshidicts_yomitan_1");
+#endif
   dict.data->tags = std::move(summary.tags);
 
   const bool index_paged = index_storage == DictionaryIndexStorage::Paged;
@@ -1254,3 +1262,40 @@ bool DictionaryQuery::hash_index_paged(const std::string& path) const {
   const auto* dict = find_loaded(path);
   return dict && dict->data->table.paged();
 }
+
+#ifdef HOSHIDICTS_YOMITAN
+std::vector<DictionaryFiles> QueryAccess::dictionaries(const DictionaryQuery& query, DictionaryKind kind) {
+  const std::vector<DictionaryQuery::Dictionary>* list = nullptr;
+  switch (kind) {
+    case DictionaryKind::Term:
+      list = &query.term_dicts_;
+      break;
+    case DictionaryKind::Frequency:
+      list = &query.freq_dicts_;
+      break;
+    case DictionaryKind::Pitch:
+      list = &query.pitch_dicts_;
+      break;
+    case DictionaryKind::Kanji:
+      list = &query.kanji_dicts_;
+      break;
+  }
+  std::vector<DictionaryFiles> files;
+  files.reserve(list->size());
+  for (const auto& dict : *list) {
+    const auto& data = *dict.data;
+    files.push_back(DictionaryFiles{.name = &dict.name,
+                                    .data = &data,
+                                    .table = &data.table,
+                                    .blobs = &data.blobs,
+                                    .zstd_dict = data.zstd_dict,
+                                    .yomitan_rows = data.yomitan_rows});
+  }
+  return files;
+}
+
+std::string QueryAccess::decompress_glossary(const DictionaryFiles& dict, uint64_t offset, uint32_t size,
+                                             BlobPins& pins) {
+  return DictionaryQuery::decompress_glossary(dict.blobs->range(offset, size, pins), size, dict.zstd_dict);
+}
+#endif

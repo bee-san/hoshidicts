@@ -71,12 +71,25 @@ struct ImportWarnings {
   size_t unreadableResources = 0;
 };
 
+#ifdef HOSHIDICTS_YOMITAN
+// An image a glossary shows, with the first term row that shows it.
+struct ImportImage {
+  std::string path;
+  std::string expression;
+  std::string reading;
+};
+#endif
+
 struct ImportResult {
   bool success = false;
   std::string title;
   Summary summary;
   std::string error;
   ImportWarnings warnings;
+#ifdef HOSHIDICTS_YOMITAN
+  // Each image the term glossaries show, once, in the order the banks first show it.
+  std::vector<ImportImage> images;
+#endif
 };
 
 namespace dictionary_importer {
