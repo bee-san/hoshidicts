@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <cstring>
 #include <glaze/glaze.hpp>
 
 #include "form_of.hpp"
@@ -42,6 +43,18 @@ struct Term {
   int64_t sequence = 0;
   std::string_view term_tags;
 };
+
+#ifdef HOSHIDICTS_YOMITAN
+namespace yomitan_parser {
+// The hash-table key a sequenced dictionary files each row under besides its
+// expression and reading. It starts with a NUL, which no term holds.
+inline std::string sequence_key(int64_t sequence) {
+  std::string key(1 + sizeof(sequence), '\0');
+  std::memcpy(key.data() + 1, &sequence, sizeof(sequence));
+  return key;
+}
+}  // namespace yomitan_parser
+#endif
 
 struct Meta {
   std::string_view expression;
@@ -115,4 +128,12 @@ FormOfKind form_of_kind(std::string_view definitions);
 // `definitions` without its top-level array items, which are form-of data;
 // unchanged when it is not a well-formed array.
 std::string without_form_of(std::string_view definitions);
+#ifdef HOSHIDICTS_YOMITAN
+// Whether a row's definitions hold one that is not an array, which Yomitan
+// shows.
+bool has_shown_definition(std::string_view definitions);
+// Appends the path of each image a glossary shows: an image item's, or that of
+// an img element anywhere in a structured-content item.
+void add_glossary_image_paths(std::string_view glossary, std::vector<std::string>& paths);
+#endif
 };

@@ -41,6 +41,20 @@ uint64_t linear::operator()(std::string_view key) const {
   throw std::runtime_error("hash.table has no empty slot in its probe chain");
 }
 
+void linear::advise(std::string_view key) const {
+  if (!file_.paged() || ptr_->capacity == 0) {
+    return;
+  }
+  uint64_t h = XXH3_64bits(key.data(), key.size());
+  if (!bloom_->contains(h)) {
+    return;
+  }
+  // The slot and the few after it that most probe chains end within.
+  constexpr size_t advised_slots = 4;
+  const uint64_t pos = h % ptr_->capacity;
+  file_.advise(sizeof(uint32_t) + pos * sizeof(slot), advised_slots * sizeof(slot));
+}
+
 void linear::build_to_file(const std::vector<std::pair<uint64_t, uint64_t>>& hash_entries,
                            const std::filesystem::path& path) {
   ptr_->capacity = std::max<uint64_t>(hash_entries.size() * 10 / 7, 16);

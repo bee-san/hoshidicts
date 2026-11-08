@@ -13,6 +13,9 @@ class linear {
   linear();
   ~linear();
   uint64_t operator()(std::string_view key) const;
+  // Tells a paged table that looking up `key` will read its slot soon
+  // (BlobFile::advise).
+  void advise(std::string_view key) const;
 
   void build_to_file(const std::vector<std::pair<uint64_t, uint64_t>>& hash_entries, const std::filesystem::path& path);
   bool load(BlobFile file);

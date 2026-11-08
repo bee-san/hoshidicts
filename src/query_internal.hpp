@@ -69,6 +69,27 @@ struct RawTerms {
   std::unique_ptr<NormalizedReadings> normalized;  // only with a reading normalizer
 };
 
+#ifdef HOSHIDICTS_YOMITAN
+namespace hash {
+class linear;
+}
+
+enum class DictionaryKind : uint8_t { Term, Frequency, Pitch, Kanji };
+
+// A loaded dictionary's files, which stay valid while it stays loaded.
+struct DictionaryFiles {
+  const std::string* name;
+  // Shared by every kind its path is loaded as.
+  const void* data;
+  const hash::linear* table;
+  const BlobFile* blobs;
+  const ZSTD_DDict_s* zstd_dict;
+  // The term records hold the fields for Yomitan's host after the score
+  // (.hoshidicts_yomitan_1).
+  bool yomitan_rows;
+};
+#endif
+
 // The raw terms of every loaded term dictionary for `expression`, and the
 // form-of references of a row, for the library's own tools (hoshidicts-cli
 // eval-language), as a lookup reads them.
@@ -80,4 +101,12 @@ struct QueryAccess {
   static void read_form_of(const RawFormOfRow& row, BlobPins& pins, std::vector<FormOfReference>& out) {
     DictionaryQuery::read_form_of(row, pins, out);
   }
+#ifdef HOSHIDICTS_YOMITAN
+  // The files of the loaded dictionaries of a kind, in load order, for
+  // Yomitan's host, which reads their records itself.
+  static std::vector<DictionaryFiles> dictionaries(const DictionaryQuery& query, DictionaryKind kind);
+  // The glossary of `size` bytes at `offset` of a term dictionary's blobs.
+  static std::string decompress_glossary(const DictionaryFiles& dict, uint64_t offset, uint32_t size,
+                                         BlobPins& pins);
+#endif
 };

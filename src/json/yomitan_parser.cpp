@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <charconv>
 #include <cstring>
+#include <functional>
 #include <limits>
 #include <optional>
 #include <string>
@@ -560,3 +561,87 @@ std::string yomitan_parser::without_form_of(std::string_view definitions) {
   out += ']';
   return out;
 }
+
+#ifdef HOSHIDICTS_YOMITAN
+bool yomitan_parser::has_shown_definition(std::string_view definitions) {
+  // Most rows' first definition is one; arrays are only walked past.
+  const char* p = definitions.data();
+  const char* const end = p + definitions.size();
+  p = skip_space(p, end);
+  if (p == end || *p != '[') return false;
+  p = skip_space(p + 1, end);
+  while (p < end && *p != ']') {
+    if (*p != '[') return true;
+    p = skip_value(p, end);
+    if (p == nullptr) return false;
+    p = skip_space(p, end);
+    if (p == end || *p != ',') return false;
+    p = skip_space(p + 1, end);
+  }
+  return false;
+}
+
+void yomitan_parser::add_glossary_image_paths(std::string_view glossary, std::vector<std::string>& paths) {
+  // Every image names a path; few glossaries do, so only those are scanned.
+  // JSON has a quote every few bytes, where a search that starts with one stops.
+  static const std::boyer_moore_horspool_searcher path_key(std::string_view("\"path\"").begin(),
+                                                           std::string_view("\"path\"").end());
+  if (std::search(glossary.begin(), glossary.end(), path_key) == glossary.end()) {
+    return;
+  }
+  // The objects the scan is in: an image is an object whose "type" is "image"
+  // (a definition) or whose "tag" is "img" (structured content), and its path
+  // is taken when the object ends.
+  struct Object {
+    bool image = false;
+    bool has_path = false;
+    std::string_view path;
+  };
+  std::vector<Object> objects;
+  const char* p = glossary.data();
+  const char* const end = p + glossary.size();
+  while (p < end) {
+    if (*p == '{') {
+      objects.emplace_back();
+      ++p;
+    } else if (*p == '}') {
+      if (!objects.empty()) {
+        const Object& object = objects.back();
+        if (object.image && object.has_path) {
+          paths.push_back(decode_string(object.path));
+        }
+        objects.pop_back();
+      }
+      ++p;
+    } else if (*p == '"') {
+      const char* const string_end = skip_string(p, end);
+      if (string_end == nullptr) return;
+      const char* q = skip_space(string_end, end);
+      if (objects.empty() || q == end || *q != ':') {
+        p = string_end;
+        continue;
+      }
+      // A key: its value is read here when it is a string.
+      const std::string_view key(p + 1, static_cast<size_t>(string_end - p - 2));
+      q = skip_space(q + 1, end);
+      if (q == end || *q != '"') {
+        p = q;
+        continue;
+      }
+      const char* const value_end = skip_string(q, end);
+      if (value_end == nullptr) return;
+      const std::string_view value(q, static_cast<size_t>(value_end - q));
+      Object& object = objects.back();
+      if (key == "path") {
+        object.has_path = true;
+        object.path = value;
+      } else if ((key == "type" && value == "\"image\"") || (key == "tag" && value == "\"img\"")) {
+        object.image = true;
+      }
+      p = value_end;
+    } else {
+      ++p;
+    }
+  }
+}
+#endif

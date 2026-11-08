@@ -68,6 +68,36 @@ void BlobFile::copy(uint64_t offset, size_t length, void* out) const {
   cache_->trim();
 }
 
+void BlobFile::advise(uint64_t offset, size_t length) const {
+  if (!paged() || offset >= size_) {
+    return;
+  }
+  const size_t page_bytes = cache_->page_bytes();
+  const uint64_t end = std::min<uint64_t>(size_, offset + length);
+  // Each run of pages the cache does not hold, with the bytes a page reads past its end.
+  uint64_t run_start = 0;
+  uint64_t run_end = 0;
+  for (uint64_t index = offset / page_bytes; index * page_bytes < end; ++index) {
+    if (cache_->contains(file_id_, index)) {
+      continue;
+    }
+    const uint64_t page_start = index * page_bytes;
+    const uint64_t page_end = std::min<uint64_t>(size_, page_start + page_bytes + memory::page_cache::lookahead_bytes);
+    if (run_end > run_start && page_start <= run_end) {
+      run_end = page_end;
+      continue;
+    }
+    if (run_end > run_start) {
+      reader_.advise(run_start, run_end - run_start);
+    }
+    run_start = page_start;
+    run_end = page_end;
+  }
+  if (run_end > run_start) {
+    reader_.advise(run_start, run_end - run_start);
+  }
+}
+
 const uint8_t* BlobFile::paged_range(uint64_t offset, size_t length, BlobPins& pins) const {
   return BlobCursor(*this, offset, pins).bytes(length);
 }

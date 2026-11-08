@@ -16,6 +16,12 @@ option(HOSHIDICTS_TESTS "hoshidicts unit tests (ctest)" OFF)
 # from a Blob there, so dictionary files are opened read-write for the copy
 # (see src/memory/memory.cpp).
 option(HOSHIDICTS_WASMFS "The Emscripten build links against WasmFS" OFF)
+# Yomitan's host (its Safari and Chromium builds): the importer validates banks
+# as Yomitan's schema did, lists the images glossaries show, and keeps more of a
+# term in its record (its form-of references, whether it has definitions Yomitan
+# shows, and its sequence); QueryAccess gives the host the dictionaries' files,
+# whose records it reads itself.
+option(HOSHIDICTS_YOMITAN "The importer and query API of Yomitan's host" OFF)
 option(HOSHIDICTS_DEINFLECTOR_TESTS "Japanese conjugation parity tests" OFF)
 option(HOSHIDICTS_LANGUAGE_TESTS "language pack conformance tests (docs/languages.md 12.1)" OFF)
 
@@ -116,6 +122,11 @@ add_library(hoshidicts
 
 if(HOSHIDICTS_WASMFS)
   target_compile_definitions(hoshidicts PRIVATE HOSHIDICTS_WASMFS=1)
+endif()
+
+if(HOSHIDICTS_YOMITAN)
+  # Public: the headers declare the API it adds.
+  target_compile_definitions(hoshidicts PUBLIC HOSHIDICTS_YOMITAN=1)
 endif()
 
 # Language packs are parsed once per pack (docs/languages.md 13), so the

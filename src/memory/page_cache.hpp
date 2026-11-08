@@ -55,6 +55,8 @@ class page_cache {
   std::shared_ptr<const page> get(uint64_t file_id, const file_reader& file, uint64_t index,
                                 page_kind kind = page_kind::entries);
 
+  // Whether the cache holds page `index` of `file`.
+  bool contains(uint64_t file_id, uint64_t index) const;
   // Drops the pages of a file that is going away.
   void forget(uint64_t file_id);
 

@@ -61,6 +61,9 @@ class file_reader {
   // Copies `len` bytes at `offset` into `out`; false on an I/O error or a
   // range beyond the end of the file.
   bool read(void* out, size_t len, uint64_t offset) const;
+  // Tells the system that `len` bytes at `offset` will be read soon. Only a
+  // hint, which a file system that reads in batches can read ahead by.
+  void advise(uint64_t offset, size_t len) const;
 
  private:
   void close();
